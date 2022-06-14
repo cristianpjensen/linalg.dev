@@ -1,5 +1,4 @@
 import { useDrag } from "@use-gesture/react";
-import { useSpring, animated } from "@react-spring/web";
 import { useEffect, useState } from "react";
 
 export default function Pane() {
@@ -23,28 +22,24 @@ export default function Pane() {
     };
   }, []);
 
-  const [{ x, y }, api] = useSpring(() => ({
-    x: 0,
-    y: 0,
-    config: { clamp: true, duration: 1, progress: 1 },
-  }));
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
-  const bind = useDrag(({ offset: [x, y] }) => {
-    const gridX = Math.round(x / 24) * 24;
-    const gridY = Math.round(y / 24) * 24;
-    api.start({ x: gridX, y: gridY });
+  const bind = useDrag(({ offset: [currentX, currentY] }) => {
+    setX(Math.round(currentX / 24) * 24);
+    setY(Math.round(currentY / 24) * 24);
   });
 
   return (
-    <animated.div
+    <div
       className="w-72 h-56 bg-slate-200 shadow-md hover:shadow-lg transition-shadow"
-      style={{ x, y }}
+      style={{ translate: `${x}px ${y}px` }}
     >
       <div
         {...bind()}
         className="w-72 h-8 bg-slate-300"
         style={{ cursor: pointerDown ? "grabbing" : "grab" }}
       />
-    </animated.div>
+    </div>
   );
 }
