@@ -1,5 +1,6 @@
-import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { useEffect, useState } from "react";
+import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
+import { useStore } from "../stores";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
@@ -39,7 +40,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
 
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const [scale, setScale] = useState(1);
+  const { scale, setScale } = useStore();
 
   const bind = useGesture(
     {

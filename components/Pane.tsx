@@ -1,5 +1,6 @@
 import { useDrag } from "@use-gesture/react";
 import { useEffect, useState } from "react";
+import { useStore } from "../stores";
 
 export default function Pane() {
   const [pointerDown, setPointerDown] = useState(false);
@@ -24,10 +25,11 @@ export default function Pane() {
 
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const scale = useStore((state) => state.scale);
 
   const bind = useDrag(({ offset: [currentX, currentY] }) => {
-    setX(Math.round(currentX / 24) * 24);
-    setY(Math.round(currentY / 24) * 24);
+    setX(Math.round((currentX / scale) / 24) * 24);
+    setY(Math.round((currentY / scale) / 24) * 24);
   });
 
   return (
