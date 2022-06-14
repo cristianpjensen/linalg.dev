@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
-export default function InfiniteGrid() {
+interface InfiniteGridProps {
+  children: React.ReactNode;
+}
+
+export default function InfiniteGrid({ children }: InfiniteGridProps) {
   const [pointerDown, setPointerDown] = useState(false);
 
   const pointerDownHandler = () => {
@@ -37,13 +41,15 @@ export default function InfiniteGrid() {
   const [style, api] = useSpring(() => ({
     x: 0,
     y: 0,
-    scale: 32,
+    scale: 1,
+    backgroundSize: 24,
     config: { clamp: true, duration: 1, progress: 1 },
   }));
 
   const bind = useGesture(
     {
-      onDrag: ({ pinching, cancel, offset: [x, y] }) => {
+      onDrag: ({ pinching, cancel, offset: [x, y], ...rest }) => {
+        console.log(rest);
         if (pinching) return cancel();
         api.start({ x, y });
       },
@@ -51,7 +57,7 @@ export default function InfiniteGrid() {
         first,
         origin: [ox, oy],
         movement: [ms],
-        offset: [s],
+        offset: [scale],
         memo,
       }) => {
         if (first) {
@@ -62,7 +68,7 @@ export default function InfiniteGrid() {
 
         const x = memo[0] - (ms - 1) * memo[2];
         const y = memo[1] - (ms - 1) * memo[3];
-        api.start({ scale: s * 32, x, y });
+        api.start({ scale, x, y, backgroundSize: scale * 24 });
 
         return memo;
       },
@@ -75,17 +81,27 @@ export default function InfiniteGrid() {
   return (
     <div className="w-screen h-screen relative overflow-hidden">
       <animated.div
-        className="bg-neutral-200 absolute top-0 bottom-0 left-0 right-0 bg-repeat touch-none select-none"
+        className="bg-slate-100 absolute top-0 bottom-0 left-0 right-0 bg-repeat touch-none select-none"
         style={{
           backgroundImage:
-            "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACTSURBVHgB7dSxDcIwEAVQO1AwACVDUFJQICUFM2WAZCUK0lFQMgKDoIRzQZMNkN+TLH39ztLd5RTGcbzknE8lz/P86vv+liqxGYbhGp8/R96WF/nQdV2apumdKtCE47r8TUMNmlS5ZlmW57osdyBVYlN2vW3bXazCPkb/E90jjuA9AQAAAAAAAAAAAAAAAADAX/kC44AeIErC7QEAAAAASUVORK5CYII=)",
-          backgroundSize: style.scale,
+            "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgB7dOrEcMwEEBByTYITCkpITA9GaunQJeQUgIN9IkEUoRHu+Tm4L2Ziymlx7qurxjjmXM+9n3/hIks27Y9W2u3Wut9hAiTWcbx/6VHOMNkllLKu0f4jhfo8wgAAAAAAAAAAAAAAAAAAAAX9APY5yL/ZyiGWAAAAABJRU5ErkJggg==)",
+          backgroundSize: style.backgroundSize,
           backgroundPositionX: style.x,
           backgroundPositionY: style.y,
           cursor: pointerDown ? "grabbing" : "grab",
         }}
         {...bind()}
       />
+      <animated.div
+        className="w-0 h-0"
+        style={{
+          translateX: style.x,
+          translateY: style.y,
+          scale: style.scale,
+        }}
+      >
+        {children}
+      </animated.div>
     </div>
   );
 }

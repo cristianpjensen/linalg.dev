@@ -3,6 +3,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import InfiniteGrid from "../components/InfiniteGrid";
+import Pane from "../components/Pane";
 const VectorSpace = dynamic(() => import("../components/VectorSpace"), {
   ssr: false,
 });
@@ -16,7 +17,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <InfiniteGrid />
+      <InfiniteGrid>
+        <Pane />
+      </InfiniteGrid>
     </div>
   );
 };
