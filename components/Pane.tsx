@@ -34,7 +34,7 @@ export default function Pane() {
 
   return (
     <div
-      className="w-72 h-56 bg-slate-200 shadow-md hover:shadow-lg transition-shadow"
+      className="w-72 h-56 rounded overflow-hidden bg-slate-200 shadow-md hover:shadow-lg transition-shadow"
       style={{ translate: `${x}px ${y}px` }}
     >
       <div

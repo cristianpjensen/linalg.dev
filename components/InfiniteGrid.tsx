@@ -56,7 +56,6 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
           memo = [x, y];
         }
 
-        if (pinching) return cancel();
         setX(memo[0] + (mx - ix));
         setY(memo[1] + (my - iy));
 
@@ -86,7 +85,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
       },
     },
     {
-      pinch: { scaleBounds: { min: 0.2, max: 4 } },
+      pinch: { scaleBounds: { min: 0.2, max: 2 } },
     }
   );
 
