@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^0.1.5",
     "@radix-ui/react-icons": "^1.1.1",
     "@use-gesture/react": "^10.2.15",
     "next": "12.1.6",
