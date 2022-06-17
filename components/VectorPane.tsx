@@ -1,15 +1,22 @@
-import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { useDrag } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
+import { ArrowRightIcon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { useDrag } from "@use-gesture/react";
+import * as HoverCard from "@radix-ui/react-hover-card";
 import { useStore } from "../stores";
 
 interface PaneProps {
   id: number;
+  title: string;
   x: number;
   y: number;
 }
 
-export default function VectorPane({ id, x: initX, y: initY }: PaneProps) {
+export default function VectorPane({
+  id,
+  title,
+  x: initX,
+  y: initY,
+}: PaneProps) {
   const [pointerDown, setPointerDown] = useState(false);
 
   const pointerDownHandler = () => {
@@ -46,7 +53,7 @@ export default function VectorPane({ id, x: initX, y: initY }: PaneProps) {
 
   const onRemove = useCallback(() => {
     removeVector(id);
-  }, []);
+  }, [id]);
 
   return (
     <div
@@ -55,20 +62,42 @@ export default function VectorPane({ id, x: initX, y: initY }: PaneProps) {
     >
       <div
         {...bind()}
-        className="w-72 h-8 bg-slate-400"
+        className="flex flex-row flex-nowrap pl-2 w-72 h-8 bg-slate-400"
         style={{
           cursor: pointerDown ? "grabbing" : "grab",
           touchAction: "none",
         }}
       >
-        <div className="flex justify-center items-center h-8 w-8">
-          <button
-            onClick={onRemove}
-            className="flex justify-center items-center h-6 w-6 text-slate-200 hover:bg-slate-300/30 rounded"
-          >
-            <CrossCircledIcon />
-          </button>
+        <div className="flex grow justify-left items-center text-sm text-slate-200 select-none">
+          {title}
         </div>
+
+          <HoverCard.Root>
+            <HoverCard.Trigger>
+              <button
+                onClick={onRemove}
+                className="flex justify-center items-center h-8 w-8 text-slate-200 hover:bg-slate-300/30"
+              >
+                <CrossCircledIcon />
+              </button>
+            </HoverCard.Trigger>
+
+            <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
+              remove vector
+            </HoverCard.Content>
+          </HoverCard.Root>
+
+          <HoverCard.Root>
+            <HoverCard.Trigger>
+              <button className="flex justify-center items-center h-8 w-8 text-slate-200 hover:bg-slate-300/30">
+                <ArrowRightIcon />
+              </button>
+            </HoverCard.Trigger>
+
+            <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
+              connect to another node
+            </HoverCard.Content>
+          </HoverCard.Root>
       </div>
     </div>
   );

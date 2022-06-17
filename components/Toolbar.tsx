@@ -87,7 +87,7 @@ function Tool({ icon, title, description }: ToolProps) {
         </div>
       </HoverCard.Trigger>
 
-      <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs w-40 text-center transition-opacity">
+      <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
         {description}
       </HoverCard.Content>
     </HoverCard.Root>

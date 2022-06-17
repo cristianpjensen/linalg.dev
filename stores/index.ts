@@ -33,7 +33,7 @@ export const useStore = create<Store>((set) => ({
         ...state.vectors,
         {
           id: state.vectors.length,
-          title: "",
+          title: "Vector",
           canvasX: x,
           canvasY: y,
           x: 0,

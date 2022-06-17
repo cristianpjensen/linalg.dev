@@ -24,8 +24,8 @@ const Home: NextPage = () => {
       <div>
         <Toolbar />
         <InfiniteGrid>
-          {vectors.map(({ id, canvasX, canvasY }) => (
-            <VectorPane key={id} id={id} x={canvasX} y={canvasY} />
+          {vectors.map(({ id, title, canvasX, canvasY }) => (
+            <VectorPane key={id} title={title} id={id} x={canvasX} y={canvasY} />
           ))}
         </InfiniteGrid>
       </div>
