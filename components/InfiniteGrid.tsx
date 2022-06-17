@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { useStore } from "../stores";
 
@@ -38,20 +38,33 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     };
   }, []);
 
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const { scale, setScale } = useStore();
+  const [x, setX] = useState(400);
+  const [y, setY] = useState(400);
+  const { scale, setScale, tool, addVector } = useStore((state) => ({
+    scale: state.scale,
+    setScale: state.setScale,
+    tool: state.tool,
+    addVector: state.addVector,
+  }));
+
+  const onGridClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (tool !== "Vector") {
+        return;
+      }
+
+      addVector(e.pageX - x, e.pageY - y);
+    },
+    [tool]
+  );
 
   const bind = useGesture(
     {
-      onDrag: ({
-        initial: [ix, iy],
-        xy: [mx, my],
-        first,
-        pinching,
-        cancel,
-        memo,
-      }) => {
+      onDrag: ({ initial: [ix, iy], xy: [mx, my], first, memo }) => {
+        if (tool !== "") {
+          return;
+        }
+
         if (first) {
           memo = [x, y];
         }
@@ -68,6 +81,10 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         first,
         memo,
       }) => {
+        if (tool !== "") {
+          return;
+        }
+
         if (first) {
           const tx = ox - (x + 12);
           const ty = oy - (y + 12);
@@ -99,8 +116,10 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
           backgroundSize: scale * 24,
           backgroundPositionX: x,
           backgroundPositionY: y,
-          cursor: pointerDown ? "grabbing" : "grab",
+          cursor:
+            tool === "" ? (pointerDown ? "grabbing" : "grab") : "crosshair",
         }}
+        onClick={onGridClick}
         {...bind()}
       />
       <div
