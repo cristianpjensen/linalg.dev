@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
+import {
+  createUseGesture,
+  dragAction,
+  pinchAction,
+  wheelAction,
+} from "@use-gesture/react";
 import { useStore } from "../stores";
 
-const useGesture = createUseGesture([dragAction, pinchAction]);
+const useGesture = createUseGesture([dragAction, pinchAction, wheelAction]);
 
 interface InfiniteGridProps {
   children: React.ReactNode;
@@ -38,14 +43,18 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     };
   }, []);
 
-  const [x, setX] = useState(400);
-  const [y, setY] = useState(400);
-  const { scale, setScale, tool, addVector } = useStore((state) => ({
-    scale: state.scale,
-    setScale: state.setScale,
-    tool: state.tool,
-    addVector: state.addVector,
-  }));
+  const { x, setX, y, setY, scale, setXYS, tool, addVector } = useStore(
+    (state) => ({
+      x: state.x,
+      setX: state.setX,
+      y: state.y,
+      setY: state.setY,
+      scale: state.scale,
+      setXYS: state.setXYS,
+      tool: state.tool,
+      addVector: state.addVector,
+    })
+  );
 
   const onGridClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -53,7 +62,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         return;
       }
 
-      addVector(e.pageX - x, e.pageY - y);
+      addVector(e.pageX - x, e.pageY - y, "Vector");
     },
     [tool]
   );
@@ -81,10 +90,6 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         first,
         memo,
       }) => {
-        if (tool !== "") {
-          return;
-        }
-
         if (first) {
           const tx = ox - (x + 12);
           const ty = oy - (y + 12);
@@ -93,10 +98,23 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
 
         const currentX = memo[0] - (ms - 1) * memo[2];
         const currentY = memo[1] - (ms - 1) * memo[3];
+        setXYS(currentX, currentY, currentScale);
 
-        setScale(currentScale);
-        setX(currentX);
-        setY(currentY);
+        return memo;
+      },
+      onWheel: ({ delta: [_, d], first, memo }) => {
+        // TODO: Fix implementation.
+        if (first) {
+          memo = [x, y, scale];
+        }
+
+        if (scale <= 0.2 && d > 0) {
+          return memo;
+        }
+
+        if (scale >= 2 && d < 0) {
+          return memo;
+        }
 
         return memo;
       },
@@ -107,7 +125,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
   );
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden">
+    <div className="w-full h-screen relative overflow-hidden">
       <div
         className="bg-slate-100 absolute top-0 bottom-0 left-0 right-0 bg-repeat touch-none select-none"
         style={{

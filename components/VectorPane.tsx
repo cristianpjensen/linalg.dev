@@ -1,77 +1,58 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRightIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import { useDrag } from "@use-gesture/react";
 import * as HoverCard from "@radix-ui/react-hover-card";
+import { MathInput } from "react-three-linalg";
 import { useStore } from "../stores";
+import MoveablePane from "./MoveablePane";
 
 interface PaneProps {
   id: number;
   title: string;
-  x: number;
-  y: number;
 }
 
-export default function VectorPane({
-  id,
-  title,
-  x: initX,
-  y: initY,
-}: PaneProps) {
-  const [pointerDown, setPointerDown] = useState(false);
-
-  const pointerDownHandler = () => {
-    setPointerDown(true);
-  };
-
-  const pointerUpHandler = () => {
-    setPointerDown(false);
-  };
-
-  useEffect(() => {
-    document.addEventListener("pointerdown", pointerDownHandler);
-    document.addEventListener("pointerup", pointerUpHandler);
-
-    return () => {
-      document.removeEventListener("pointerdown", pointerDownHandler);
-      document.removeEventListener("pointerup", pointerUpHandler);
-    };
-  }, []);
-
-  const { scale, removeVector } = useStore((state) => ({
-    scale: state.scale,
+// TODO: Render this component on load once, so it doesn't take forever for it
+// to render the first time when used. This long loading is caused by the
+// MathInput component.
+export default function VectorPane({ id, title }: PaneProps) {
+  const {
+    vector,
+    removeVector,
+    setVectorX,
+    setVectorY,
+    setVectorZ,
+    setVectorPane,
+  } = useStore((state) => ({
+    vector: state.vectors.find((v) => v.id === id),
     removeVector: state.removeVector,
+    setVectorX: state.setVectorX,
+    setVectorY: state.setVectorY,
+    setVectorZ: state.setVectorZ,
+    setVectorPane: state.setVectorPane,
   }));
-  const roundToGrid = (x: number) => Math.round(x / (scale * 24)) * 24;
 
-  const [x, setX] = useState(roundToGrid(initX));
-  const [y, setY] = useState(roundToGrid(initY));
+  if (!vector) {
+    return null;
+  }
 
-  const bind = useDrag(({ offset: [currentX, currentY] }) => {
-    setX(roundToGrid(initX + currentX));
-    setY(roundToGrid(initY + currentY));
-  });
+  const [x] = useState(vector.canvasX);
+  const [y] = useState(vector.canvasY);
 
-  const onRemove = useCallback(() => {
-    removeVector(id);
-  }, [id]);
+  const onDragEnd = (x: number, y: number) => {
+    setVectorPane(id, x, y);
+  };
+  const onRemove = () => removeVector(id);
+  const onEditX = (x: number) => setVectorX(id, x);
+  const onEditY = (y: number) => setVectorY(id, y);
+  const onEditZ = (z: number) => setVectorZ(id, z);
 
   return (
-    <div
-      className="w-72 h-56 rounded overflow-hidden bg-slate-200 absolute shadow-md hover:shadow-lg transition-shadow"
-      style={{ translate: `${x}px ${y}px` }}
-    >
-      <div
-        {...bind()}
-        className="flex flex-row flex-nowrap pl-2 w-72 h-8 bg-slate-400"
-        style={{
-          cursor: pointerDown ? "grabbing" : "grab",
-          touchAction: "none",
-        }}
-      >
-        <div className="flex grow justify-left items-center text-sm text-slate-200 select-none">
-          {title}
-        </div>
-
+    <MoveablePane
+      title={title}
+      x={x}
+      y={y}
+      onDragEnd={onDragEnd}
+      headerChildren={
+        <>
           <HoverCard.Root>
             <HoverCard.Trigger>
               <button
@@ -98,7 +79,34 @@ export default function VectorPane({
               connect to another node
             </HoverCard.Content>
           </HoverCard.Root>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-nowrap items-center gap-4">
+          <label className="text-red-500" htmlFor="x">
+            x:
+          </label>
+          <MathInput value={vector.vector.x} onChange={onEditX} />
+          <div>{Math.round((vector.vector.x + Number.EPSILON) * 100) / 100}</div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4">
+          <label className="text-green-500" htmlFor="y">
+            y:
+          </label>
+          <MathInput value={vector.vector.y} onChange={onEditY} />
+          <div>{Math.round((vector.vector.y + Number.EPSILON) * 100) / 100}</div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4">
+          <label className="text-blue-500" htmlFor="z">
+            z:
+          </label>
+          <MathInput value={vector.vector.z} onChange={onEditZ} />
+          <div>{Math.round((vector.vector.z + Number.EPSILON) * 100) / 100}</div>
+        </div>
       </div>
-    </div>
+    </MoveablePane>
   );
 }

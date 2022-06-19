@@ -54,7 +54,7 @@ function ZoomControl() {
   ]);
 
   return (
-    <div className="flex justify-center items-center px-4 cursor-pointer hover:bg-slate-200">
+    <div className="flex justify-center items-center px-4 cursor-pointer w-20 hover:bg-slate-200">
       {Math.round(scale * 100)}%{" "}
       <CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
     </div>
