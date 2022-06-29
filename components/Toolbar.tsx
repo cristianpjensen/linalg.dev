@@ -11,7 +11,7 @@ import {
   RulerSquareIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
-import * as HoverCard from "@radix-ui/react-hover-card";
+import { Tooltip } from "./Tooltip";
 import { ToolEnum, useStore } from "../stores";
 
 export default function Toolbar() {
@@ -71,26 +71,19 @@ function Tool({ icon, title, description }: ToolProps) {
   const [tool, setTool] = useStore(({ tool, setTool }) => [tool, setTool]);
 
   return (
-    <HoverCard.Root>
-      <HoverCard.Trigger>
-        <div
-          className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
-            tool === title ? "bg-slate-500 text-white" : "hover:bg-slate-200"
-          }`}
-          onClick={() => {
-            setTool(title);
-          }}
-        >
-          {icon &&
-            cloneElement(icon, { className: title !== "" ? "mr-2" : "" })}{" "}
-          {title}
-        </div>
-      </HoverCard.Trigger>
-
-      <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
-        {description}
-      </HoverCard.Content>
-    </HoverCard.Root>
+    <Tooltip tip={description}>
+      <div
+        className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
+          tool === title ? "bg-slate-500 text-white" : "hover:bg-slate-200"
+        }`}
+        onClick={() => {
+          setTool(title);
+        }}
+      >
+        {icon && cloneElement(icon, { className: title !== "" ? "mr-2" : "" })}{" "}
+        {title}
+      </div>
+    </Tooltip>
   );
 }
 

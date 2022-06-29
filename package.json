@@ -11,6 +11,8 @@
   "dependencies": {
     "@radix-ui/react-hover-card": "^0.1.5",
     "@radix-ui/react-icons": "^1.1.1",
+    "@react-three/drei": "^9.13.2",
+    "@svgr/webpack": "^6.2.1",
     "@use-gesture/react": "^10.2.15",
     "next": "12.1.6",
     "react": "18.1.0",

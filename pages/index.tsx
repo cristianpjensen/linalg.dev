@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import Toolbar from "../components/Toolbar";
-import { useStore } from "../stores";
+import { useNodeStore } from "../stores/nodes";
 
 const VectorSpace = dynamic(() => import("../components/VectorSpace"), {
   ssr: false,
@@ -15,7 +15,7 @@ const VectorPane = dynamic(() => import("../components/VectorPane"), {
 });
 
 const Home: NextPage = () => {
-  const { vectors } = useStore((state) => ({ vectors: state.vectors }));
+  const { vectors } = useNodeStore((state) => ({ vectors: state.vectors }));
 
   return (
     <div>
@@ -25,8 +25,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-row"> 
-        <div className="w-6/12 h-full">
+      <div className="flex flex-row">
+        {/* <div className="w-6/12 h-full"> */}
+        <div className="w-full h-full">
           <Toolbar />
           <Grid>
             {vectors.map(({ id, title }) => (
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
           </Grid>
         </div>
 
-        <VectorSpace />
+        {/* <VectorSpace /> */}
       </div>
     </div>
   );

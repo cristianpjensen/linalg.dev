@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { ArrowRightIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import * as HoverCard from "@radix-ui/react-hover-card";
+import { CrossCircledIcon, DotIcon } from "@radix-ui/react-icons";
 import { MathInput } from "react-three-linalg";
-import { useStore } from "../stores";
+import { MathX, MathY, MathZ } from "./icons";
+import { useNodeStore } from "../stores/nodes";
 import MoveablePane from "./MoveablePane";
+import { Tooltip } from "./Tooltip";
 
 interface PaneProps {
   id: number;
@@ -14,31 +15,25 @@ interface PaneProps {
 // to render the first time when used. This long loading is caused by the
 // MathInput component.
 export default function VectorPane({ id, title }: PaneProps) {
-  const {
-    vector,
-    removeVector,
-    setVectorX,
-    setVectorY,
-    setVectorZ,
-    setVectorPane,
-  } = useStore((state) => ({
-    vector: state.vectors.find((v) => v.id === id),
-    removeVector: state.removeVector,
-    setVectorX: state.setVectorX,
-    setVectorY: state.setVectorY,
-    setVectorZ: state.setVectorZ,
-    setVectorPane: state.setVectorPane,
-  }));
+  const { vector, removeVector, setVectorX, setVectorY, setVectorZ } =
+    useNodeStore((state) => ({
+      vector: state.vectors.find((v) => v.id === id),
+      removeVector: state.removeVector,
+      setVectorX: state.setVectorX,
+      setVectorY: state.setVectorY,
+      setVectorZ: state.setVectorZ,
+    }));
 
   if (!vector) {
     return null;
   }
 
-  const [x] = useState(vector.canvasX);
-  const [y] = useState(vector.canvasY);
+  const [x] = useState(vector.x);
+  const [y] = useState(vector.y);
 
   const onDragEnd = (x: number, y: number) => {
-    setVectorPane(id, x, y);
+    vector.x = x;
+    vector.y = y;
   };
   const onRemove = () => removeVector(id);
   const onEditX = (x: number) => setVectorX(id, x);
@@ -53,58 +48,64 @@ export default function VectorPane({ id, title }: PaneProps) {
       onDragEnd={onDragEnd}
       headerChildren={
         <>
-          <HoverCard.Root>
-            <HoverCard.Trigger>
-              <button
-                onClick={onRemove}
-                className="flex justify-center items-center h-8 w-8 text-slate-200 hover:bg-slate-300/30"
-              >
-                <CrossCircledIcon />
-              </button>
-            </HoverCard.Trigger>
-
-            <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
-              remove vector
-            </HoverCard.Content>
-          </HoverCard.Root>
-
-          <HoverCard.Root>
-            <HoverCard.Trigger>
-              <button className="flex justify-center items-center h-8 w-8 text-slate-200 hover:bg-slate-300/30">
-                <ArrowRightIcon />
-              </button>
-            </HoverCard.Trigger>
-
-            <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-40 text-center">
-              connect to another node
-            </HoverCard.Content>
-          </HoverCard.Root>
+          <Tooltip tip="remove vector">
+            <button
+              onClick={onRemove}
+              className="flex justify-center items-center h-8 w-8 text-slate-200 hover:bg-slate-300/30"
+            >
+              <CrossCircledIcon />
+            </button>
+          </Tooltip>
         </>
       }
     >
       <div className="flex flex-col gap-4 p-4">
-        <div className="flex flex-nowrap items-center gap-4">
-          <label className="text-red-500" htmlFor="x">
-            x:
+        <div className="flex flex-row flex-nowrap items-center gap-4">
+          <label className="text-red-600 w-3 h-3" htmlFor="x">
+            <MathX />
           </label>
-          <MathInput value={vector.vector.x} onChange={onEditX} />
-          <div>{Math.round((vector.vector.x + Number.EPSILON) * 100) / 100}</div>
+
+          <div className="grow">
+            <MathInput value={vector.vectorX} onChange={onEditX} />
+          </div>
+
+          <Tooltip tip="connect to another node">
+            <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-slate-400/30">
+              <DotIcon />
+            </button>
+          </Tooltip>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="text-green-500" htmlFor="y">
-            y:
+        <div className="flex flex-row flex-nowrap items-center gap-4">
+          <label className="text-green-600 w-3 h-3" htmlFor="y">
+            <MathY />
           </label>
-          <MathInput value={vector.vector.y} onChange={onEditY} />
-          <div>{Math.round((vector.vector.y + Number.EPSILON) * 100) / 100}</div>
+
+          <div className="grow">
+            <MathInput value={vector.vectorY} onChange={onEditY} />
+          </div>
+
+          <Tooltip tip="connect to another node">
+            <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-slate-400/30">
+              <DotIcon />
+            </button>
+          </Tooltip>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="text-blue-500" htmlFor="z">
-            z:
+        <div className="flex flex-row flex-nowrap items-center gap-4">
+          <label className="text-blue-600 w-3 h-3" htmlFor="z">
+            <MathZ />
           </label>
-          <MathInput value={vector.vector.z} onChange={onEditZ} />
-          <div>{Math.round((vector.vector.z + Number.EPSILON) * 100) / 100}</div>
+
+          <div className="grow">
+            <MathInput value={vector.vectorZ} onChange={onEditZ} />
+          </div>
+
+          <Tooltip tip="connect to another node">
+            <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-slate-400/30">
+              <DotIcon />
+            </button>
+          </Tooltip>
         </div>
       </div>
     </MoveablePane>
