@@ -116,7 +116,16 @@ function DimensionInput({
       </label>
 
       <div className="grow">
-        <MathInput value={value} onChange={onChange} />
+        <MathInput
+          value={value}
+          onChange={onChange}
+          style={{
+            backgroundColor: "transparent",
+            fontSize: 20,
+            color: "rgb(15, 23, 42)",
+            borderColor: "rgb(71, 85, 105)",
+          }}
+        />
       </div>
 
       <Tooltip tip={`connect ${dimension} to another node`}>

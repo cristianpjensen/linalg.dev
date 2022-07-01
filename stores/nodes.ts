@@ -74,11 +74,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
       vectors: [
         ...state.vectors,
         {
-          id:
-            state.vectors.length +
-            state.constants.length +
-            state.operators.length +
-            state.matrices.length,
+          id: getId(),
           type: "vector",
           title,
           x,
@@ -100,11 +96,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
       constants: [
         ...state.constants,
         {
-          id:
-            state.vectors.length +
-            state.constants.length +
-            state.operators.length +
-            state.matrices.length,
+          id: getId(),
           type: "constant",
           title,
           x,
@@ -121,11 +113,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
       operators: [
         ...state.operators,
         {
-          id:
-            state.vectors.length +
-            state.constants.length +
-            state.operators.length +
-            state.matrices.length,
+          id: getId(),
           type: "operator",
           title,
           x,
@@ -146,11 +134,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
       matrices: [
         ...state.matrices,
         {
-          id:
-            state.vectors.length +
-            state.constants.length +
-            state.operators.length +
-            state.matrices.length,
+          id: getId(),
           type: "matrix",
           title,
           x,
@@ -288,3 +272,6 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
 }));
 
 const getRandomValue = () => Math.round(Math.random() * 10 - 5);
+
+let id = 0;
+const getId = () => id++;
