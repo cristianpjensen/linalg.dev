@@ -148,7 +148,22 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         }}
         onClick={onGridClick}
         {...bind()}
-      />
+      >
+        <div
+          className="w-0 h-0"
+          style={{ translate: `${x}px ${y}px`, transform: `scale(${scale})` }}
+        >
+          <div
+            className="absolute w-2 bg-slate-400 rounded-sm"
+            style={{ height: 1.25, marginLeft: -3.375 }}
+          />
+          <div
+            className="absolute h-2 bg-slate-400 rounded-sm"
+            style={{ width: 1.25, marginTop: -3.375 }}
+          />
+        </div>
+      </div>
+
       <div
         className="w-0 h-0"
         style={{
