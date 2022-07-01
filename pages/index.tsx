@@ -10,7 +10,7 @@ const VectorSpace = dynamic(() => import("../components/VectorSpace"), {
 const Grid = dynamic(() => import("../components/InfiniteGrid"), {
   ssr: false,
 });
-const VectorPane = dynamic(() => import("../components/VectorPane"), {
+const Vectors = dynamic(() => import("../components/panes/Vector"), {
   ssr: false,
 });
 
@@ -26,17 +26,15 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-row">
-        {/* <div className="w-6/12 h-full"> */}
-        <div className="w-full h-full">
+        <div className="w-6/12 h-full">
+        {/* <div className="w-full h-full"> */}
           <Toolbar />
           <Grid>
-            {vectors.map(({ id, title }) => (
-              <VectorPane key={id} title={title} id={id} />
-            ))}
+            <Vectors />
           </Grid>
         </div>
 
-        {/* <VectorSpace /> */}
+        <VectorSpace />
       </div>
     </div>
   );

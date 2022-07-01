@@ -7,6 +7,7 @@ import {
 } from "@use-gesture/react";
 import { useStore } from "../stores";
 import { useNodeStore } from "../stores/nodes";
+import { GRID_SIZE } from "./constants";
 
 const useGesture = createUseGesture([dragAction, pinchAction, wheelAction]);
 
@@ -44,7 +45,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     };
   }, []);
 
-  const { x, setX, y, setY, scale, setXYS, tool } = useStore(
+  const { x, setX, y, setY, scale, setXYS, tool, setTool } = useStore(
     (state) => ({
       x: state.x,
       setX: state.setX,
@@ -53,6 +54,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
       scale: state.scale,
       setXYS: state.setXYS,
       tool: state.tool,
+      setTool: state.setTool,
     })
   );
 
@@ -64,7 +66,12 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         return;
       }
 
-      addVector("Vector", e.pageX - x, e.pageY - y);
+      addVector(
+        "Vector",
+        Math.round((e.pageX - x) / (GRID_SIZE * scale)) * GRID_SIZE,
+        Math.round((e.pageY - y) / (GRID_SIZE * scale)) * GRID_SIZE
+      );
+      setTool("");
     },
     [tool]
   );
@@ -133,7 +140,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         style={{
           backgroundImage:
             "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgB7dOrEcMwEEBByTYITCkpITA9GaunQJeQUgIN9IkEUoRHu+Tm4L2Ziymlx7qurxjjmXM+9n3/hIks27Y9W2u3Wut9hAiTWcbx/6VHOMNkllLKu0f4jhfo8wgAAAAAAAAAAAAAAAAAAAAX9APY5yL/ZyiGWAAAAABJRU5ErkJggg==)",
-          backgroundSize: scale * 24,
+          backgroundSize: scale * GRID_SIZE,
           backgroundPositionX: x,
           backgroundPositionY: y,
           cursor:

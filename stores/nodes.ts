@@ -1,7 +1,7 @@
 import create from "zustand";
 import * as THREE from "three";
 
-type ValueNode = ConstantNode | OperatorNode;
+export type ValueNode = ConstantNode | OperatorNode;
 type Operator = "+" | "-" | "*" | "/";
 
 interface Node {
@@ -56,13 +56,10 @@ interface NodeStore {
     y: number
   ) => void;
   addMatrix: (title: string, x: number, y: number) => void;
-  setVectorX: (id: number, x: number) => void;
-  setVectorY: (id: number, y: number) => void;
-  setVectorZ: (id: number, z: number) => void;
-  removeVector: (id: number) => void;
-  removeConstant: (id: number) => void;
-  removeOperator: (id: number) => void;
-  removeMatrix: (id: number) => void;
+  setVectorDimension: (id: number, dimension: "x" | "y" | "z", value: number) => void;
+  setNodePosition: (id: number, x: number, y: number) => void;
+  setNodeDimensions: (id: number, width: number, height: number) => void;
+  removeNode: (id: number) => void;
   linkVector: (axis: "x" | "y" | "z", id1: number, id2: number) => void;
   getVector: (id: number) => THREE.Vector3;
 }
@@ -86,8 +83,8 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           title,
           x,
           y,
-          width: 240,
-          height: 240,
+          width: 320,
+          height: 264,
           vectorX: getRandomValue(),
           vectorY: getRandomValue(),
           vectorZ: getRandomValue(),
@@ -165,45 +162,58 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
       ],
     }));
   },
-  setVectorX: (id, x) => {
+  setVectorDimension: (id, dimension, x) => {
+    set((state) => {
+      const vector = state.vectors.find((v) => v.id === id);
+      if (vector) {
+        const newVector = { ...vector };
+        // @ts-ignore
+        newVector[`vector${dimension.toUpperCase()}`] = x;
+        return {
+          vectors: [...state.vectors.filter((v) => v.id !== id), newVector],
+        };
+      }
+      return state;
+    })
+  },
+  setNodePosition: (id, x, y) => {
     set((state) => ({
       vectors: state.vectors.map((vector) =>
-        vector.id === id ? { ...vector, vectorX: x } : vector
+        vector.id === id ? { ...vector, x, y } : vector
+      ),
+      constants: state.constants.map((constant) =>
+        constant.id === id ? { ...constant, x, y } : constant
+      ),
+      operators: state.operators.map((operator) =>
+        operator.id === id ? { ...operator, x, y } : operator
+      ),
+      matrices: state.matrices.map((matrix) =>
+        matrix.id === id ? { ...matrix, x, y } : matrix
       ),
     }));
   },
-  setVectorY: (id, y) => {
+  setNodeDimensions: (id, width, height) => {
     set((state) => ({
       vectors: state.vectors.map((vector) =>
-        vector.id === id ? { ...vector, vectorY: y } : vector
+        vector.id === id ? { ...vector, width, height } : vector
+      ),
+      constants: state.constants.map((constant) =>
+        constant.id === id ? { ...constant, width, height } : constant
+      ),
+      operators: state.operators.map((operator) =>
+        operator.id === id ? { ...operator, width, height } : operator
+      ),
+      matrices: state.matrices.map((matrix) =>
+        matrix.id === id ? { ...matrix, width, height } : matrix
       ),
     }));
   },
-  setVectorZ: (id, z) => {
+  removeNode: (id) => {
     set((state) => ({
-      vectors: state.vectors.map((vector) =>
-        vector.id === id ? { ...vector, vectorZ: z } : vector
-      ),
-    }));
-  },
-  removeVector: (id) => {
-    set((state) => ({
-      vectors: state.vectors.filter((node) => node.id !== id),
-    }));
-  },
-  removeConstant: (id) => {
-    set((state) => ({
-      constants: state.constants.filter((node) => node.id !== id),
-    }));
-  },
-  removeOperator: (id) => {
-    set((state) => ({
-      operators: state.operators.filter((node) => node.id !== id),
-    }));
-  },
-  removeMatrix: (id) => {
-    set((state) => ({
-      matrices: state.matrices.filter((node) => node.id !== id),
+      vectors: state.vectors.filter((vector) => vector.id !== id),
+      constants: state.constants.filter((constant) => constant.id !== id),
+      operators: state.operators.filter((operator) => operator.id !== id),
+      matrices: state.matrices.filter((matrix) => matrix.id !== id),
     }));
   },
   linkVector: (axis, id1, id2) => {

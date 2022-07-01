@@ -2,6 +2,7 @@ import { useDrag } from "@use-gesture/react";
 import { useState } from "react";
 import { usePointerDown } from "../hooks/usePointerDown";
 import { useStore } from "../stores";
+import { GRID_SIZE } from "./constants";
 
 interface MoveablePaneProps {
   title: string;
@@ -29,7 +30,7 @@ export default function MoveablePane({
   headerClassName,
 }: MoveablePaneProps) {
   const scale = useStore((state) => state.scale);
-  const roundToGrid = (x: number) => Math.round(x / (scale * 24)) * 24;
+  const roundToGrid = (x: number) => Math.round(x / (scale * GRID_SIZE)) * GRID_SIZE;
   const pointerDown = usePointerDown();
 
   const [x, setX] = useState(roundToGrid(initX));
