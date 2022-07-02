@@ -7,7 +7,7 @@ import {
 } from "@use-gesture/react";
 import { useUIStore } from "../stores/ui";
 import { useNodeStore } from "../stores/nodes";
-import { GRID_SIZE } from "./constants";
+import { GRID_SIZE, VECTOR_HEIGHT, VECTOR_WIDTH } from "./constants";
 
 const useGesture = createUseGesture([dragAction, pinchAction, wheelAction]);
 
@@ -68,8 +68,10 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
 
       addVector(
         "Vector",
-        Math.round((e.pageX - x) / (GRID_SIZE * scale)) * GRID_SIZE,
-        Math.round((e.pageY - y) / (GRID_SIZE * scale)) * GRID_SIZE
+        Math.round((e.pageX - x - VECTOR_WIDTH * 0.5) / (GRID_SIZE * scale)) *
+          GRID_SIZE,
+        Math.round((e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)) *
+          GRID_SIZE
       );
       setTool("");
     },

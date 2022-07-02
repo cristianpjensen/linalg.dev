@@ -1,13 +1,13 @@
 import Draggable, { DraggableData } from "react-draggable";
 import { ResizableBox, ResizeCallbackData } from "react-resizable";
+import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { usePointerDown } from "../../hooks/usePointerDown";
 import { useNodeStore } from "../../stores/nodes";
 import { useUIStore } from "../../stores/ui";
 import { GRID_SIZE } from "../constants";
+import { Tooltip } from "../Tooltip";
 
 import "react-resizable/css/styles.css";
-import { Tooltip } from "../Tooltip";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
 
 interface PaneProps {
   children?: React.ReactNode;
