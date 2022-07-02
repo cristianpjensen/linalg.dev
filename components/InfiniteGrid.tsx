@@ -5,7 +5,7 @@ import {
   pinchAction,
   wheelAction,
 } from "@use-gesture/react";
-import { useStore } from "../stores";
+import { useUIStore } from "../stores/ui";
 import { useNodeStore } from "../stores/nodes";
 import { GRID_SIZE } from "./constants";
 
@@ -45,7 +45,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     };
   }, []);
 
-  const { x, setX, y, setY, scale, setXYS, tool, setTool } = useStore(
+  const { x, setX, y, setY, scale, setXYS, tool, setTool } = useUIStore(
     (state) => ({
       x: state.x,
       setX: state.setX,
@@ -62,7 +62,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
 
   const onGridClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (tool !== "Vector") {
+      if (tool !== "vector") {
         return;
       }
 

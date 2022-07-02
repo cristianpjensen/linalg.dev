@@ -2,7 +2,7 @@ import Draggable, { DraggableData } from "react-draggable";
 import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import { usePointerDown } from "../../hooks/usePointerDown";
 import { useNodeStore } from "../../stores/nodes";
-import { useStore } from "../../stores";
+import { useUIStore } from "../../stores/ui";
 import { GRID_SIZE } from "../constants";
 
 import "react-resizable/css/styles.css";
@@ -18,6 +18,8 @@ interface PaneProps {
   height: number;
   headerProps: PaneHeaderProps;
   className?: string;
+  blurred?: boolean;
+  selectable?: boolean;
   bg?: string;
   resizable?: boolean;
 }
@@ -31,10 +33,15 @@ export function Pane({
   height,
   headerProps,
   className,
+  blurred = false,
+  selectable = false,
   bg = "bg-slate-200",
   resizable = false,
 }: PaneProps) {
-  const scale = useStore((state) => state.scale);
+  const { scale, setTool } = useUIStore((state) => ({
+    scale: state.scale,
+    setTool: state.setTool,
+  }));
   const setNodePosition = useNodeStore((state) => state.setNodePosition);
   const setNodeDimensions = useNodeStore((state) => state.setNodeDimensions);
 
@@ -49,6 +56,10 @@ export function Pane({
     setNodeDimensions(id, width, height);
   };
 
+  const onSelectClick = () => {
+    setTool("");
+  };
+
   return (
     <Draggable
       defaultPosition={{ x, y }}
@@ -57,7 +68,7 @@ export function Pane({
       onStop={onDragStop}
       handle=".handle"
     >
-      <div className="absolute">
+      <div className={`absolute ${blurred && "opacity-40"}`}>
         <ResizableBox
           width={width}
           height={height}
@@ -75,6 +86,13 @@ export function Pane({
             <PaneHeader id={id} {...headerProps} />
             <div className={className}>{children}</div>
           </div>
+          {selectable && (
+            <div
+              className="absolute -top-2 -left-2 bg-blue-400 opacity-0 hover:opacity-30 cursor-pointer transition-opacity border-blue-900 border-2 rounded"
+              style={{ width: width + 16, height: height + 16 }}
+              onClick={onSelectClick}
+            />
+          )}
         </ResizableBox>
       </div>
     </Draggable>

@@ -1,11 +1,16 @@
 import { DotIcon, MagicWandIcon } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as Slider from "@radix-ui/react-slider";
+import { useState } from "react";
 import { MathInput } from "react-three-linalg";
+import TeX from "@matejmazur/react-katex";
 import { useNodeStore, ValueNode, VectorNode } from "../../stores/nodes";
+import { useUIStore } from "../../stores/ui";
 import { MathX, MathY, MathZ } from "../icons";
 import { Tooltip } from "../Tooltip";
 import { Pane } from "./Pane";
+
+import "katex/dist/katex.min.css";
 
 export default function Vectors() {
   const vectors = useNodeStore((state) => state.vectors);
@@ -40,10 +45,13 @@ function VectorPane({
   },
 }: VectorPaneProps) {
   const setVectorDimension = useNodeStore((state) => state.setVectorDimension);
+  const tool = useUIStore((state) => state.tool);
 
   const onChangeX = (x: number) => setVectorDimension(id, "x", x);
   const onChangeY = (y: number) => setVectorDimension(id, "y", y);
   const onChangeZ = (z: number) => setVectorDimension(id, "z", z);
+
+  const [link, type, linkId] = tool.split("-");
 
   return (
     <Pane
@@ -52,54 +60,15 @@ function VectorPane({
       y={y}
       width={width}
       height={height}
+      blurred={
+        (link === "link" && type !== "vector") || linkId === id.toString()
+      }
+      selectable={
+        link === "link" && type === "vector" && linkId !== id.toString()
+      }
       headerProps={{
         title,
-        children: (
-          <Popover.Root>
-            <Popover.Trigger>
-              <Tooltip tip={`modify attributes of ${title.toLowerCase()}`}>
-                <button className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20">
-                  <MagicWandIcon aria-label="Modify vector attributes" />
-                </button>
-              </Tooltip>
-            </Popover.Trigger>
-
-            <Popover.Content>
-              <div className="flex flex-col gap-6 bg-slate-100 border-slate-400 border-2 rounded w-80 items-center p-4">
-                <h2 className="text-slate-800 font-medium text-base">
-                  Modifiers
-                </h2>
-
-                <ModifierFieldset label="Color">
-                  <input className="rounded outline-none w-full pl-2 pr-2 pt-1 pb-1 text-slate-800 bg-slate-100 font-md font-mono shadow-b1 shadow-slate-400 focus:shadow-b2 focus:shadow-slate-500" />
-                </ModifierFieldset>
-
-                <ModifierFieldset label="Opacity">
-                  <Slider.Root
-                    className="w-full h-5 relative select-none touch-none flex items-center"
-                    defaultValue={[100]}
-                    max={100}
-                    min={0}
-                    aria-label="Opacity"
-                  >
-                    <Slider.Track className="relative bg-slate-300 rounded-full grow h-1">
-                      <Slider.Range className="bg-slate-400 rounded-full h-full absolute" />
-                    </Slider.Track>
-                    <Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-slate-400 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)]" />
-                  </Slider.Root>
-                </ModifierFieldset>
-
-                <ModifierFieldset label="Origin">
-                  <Tooltip tip="connect the origin to another vector">
-                    <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20">
-                      <DotIcon />
-                    </button>
-                  </Tooltip>
-                </ModifierFieldset>
-              </div>
-            </Popover.Content>
-          </Popover.Root>
-        ),
+        children: <ModifierOptions title={title} id={id} />,
       }}
       className="flex gap-4 flex-col p-4"
     >
@@ -143,6 +112,12 @@ function DimensionInput({
   dimension,
   onChange,
 }: DimensionInputProps) {
+  const setTool = useUIStore((state) => state.setTool);
+
+  const linkValue = () => {
+    setTool(`link-value-${id}`);
+  };
+
   return (
     <div className="flex flex-row flex-nowrap items-center gap-4 pt-1">
       <label
@@ -178,11 +153,83 @@ function DimensionInput({
       </div>
 
       <Tooltip tip={`connect ${dimension} to a value node`}>
-        <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20">
+        <button
+          className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
+          onClick={linkValue}
+        >
           <DotIcon />
         </button>
       </Tooltip>
     </div>
+  );
+}
+
+interface ModifierOptionsProps {
+  title: string;
+  id: number;
+}
+
+function ModifierOptions({ title, id }: ModifierOptionsProps) {
+  const setTool = useUIStore((state) => state.setTool);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const linkOrigin = () => {
+    setTool(`link-vector-${id}`);
+    setIsOpen(false);
+  };
+
+  return (
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger>
+        <Tooltip tip={`modify attributes of ${title.toLowerCase()}`}>
+          <button className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20">
+            <MagicWandIcon aria-label="Modify vector attributes" />
+          </button>
+        </Tooltip>
+      </Popover.Trigger>
+
+      <Popover.Content>
+        <div className="flex flex-col gap-6 bg-slate-100 border-slate-400 border-2 rounded w-80 items-center p-4">
+          <h2 className="text-slate-800 font-medium text-base">Modifiers</h2>
+
+          <ModifierFieldset label="Color">
+            <input className="rounded outline-none w-full pl-2 pr-2 pt-1 pb-1 text-slate-800 bg-slate-100 font-md font-mono shadow-b1 shadow-slate-400 focus:shadow-b2 focus:shadow-slate-500" />
+          </ModifierFieldset>
+
+          <ModifierFieldset label="Opacity">
+            <Slider.Root
+              className="w-full h-5 relative select-none touch-none flex items-center"
+              defaultValue={[100]}
+              max={100}
+              min={0}
+              step={10}
+              aria-label="Opacity"
+            >
+              <Slider.Track className="relative bg-slate-300 rounded-full grow h-1">
+                <Slider.Range className="bg-slate-400 rounded-full h-full absolute" />
+              </Slider.Track>
+              <Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-slate-400 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)]" />
+            </Slider.Root>
+          </ModifierFieldset>
+
+          <ModifierFieldset label="Origin">
+            <TeX
+              className="grow"
+              block
+            >{`\\begin{bmatrix} 0 & 0 & 0 \\end{bmatrix}^\\top`}</TeX>
+
+            <Tooltip tip="connect the origin to another vector">
+              <button
+                className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
+                onClick={linkOrigin}
+              >
+                <DotIcon />
+              </button>
+            </Tooltip>
+          </ModifierFieldset>
+        </div>
+      </Popover.Content>
+    </Popover.Root>
   );
 }
 

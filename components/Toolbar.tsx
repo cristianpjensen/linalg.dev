@@ -12,7 +12,7 @@ import {
   SunIcon,
 } from "@radix-ui/react-icons";
 import { Tooltip } from "./Tooltip";
-import { ToolEnum, useStore } from "../stores";
+import { useUIStore } from "../stores/ui";
 
 export default function Toolbar() {
   return (
@@ -20,12 +20,12 @@ export default function Toolbar() {
       <Tool icon={<HandIcon />} title="" description="drag to pan the canvas" />
       <Tool
         icon={<ArrowTopRightIcon />}
-        title="Vector"
+        title="vector"
         description="press anywhere on the canvas to add a vector"
       />
       <Tool
         icon={<LayersIcon />}
-        title="Matrix"
+        title="matrix"
         description="drag to make a matrix environment"
       />
 
@@ -48,7 +48,7 @@ export default function Toolbar() {
 }
 
 function ZoomControl() {
-  const [scale, setScale] = useStore(({ scale, setScale }) => [
+  const [scale, setScale] = useUIStore(({ scale, setScale }) => [
     scale,
     setScale,
   ]);
@@ -62,13 +62,15 @@ function ZoomControl() {
 }
 
 interface ToolProps {
-  title: ToolEnum;
+  title: string;
   icon: React.ReactElement;
   description: string;
 }
 
 function Tool({ icon, title, description }: ToolProps) {
-  const [tool, setTool] = useStore(({ tool, setTool }) => [tool, setTool]);
+  const [tool, setTool] = useUIStore(({ tool, setTool }) => [tool, setTool]);
+
+  const titleCapitalized = title.charAt(0).toUpperCase() + title.slice(1);
 
   return (
     <Tooltip tip={description}>
@@ -81,7 +83,7 @@ function Tool({ icon, title, description }: ToolProps) {
         }}
       >
         {icon && cloneElement(icon, { className: title !== "" ? "mr-2" : "" })}{" "}
-        {title}
+        {titleCapitalized}
       </div>
     </Tooltip>
   );
