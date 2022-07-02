@@ -1,5 +1,6 @@
-import { DotIcon } from "@radix-ui/react-icons";
-import LineTo from "react-lineto";
+import { DotIcon, MagicWandIcon } from "@radix-ui/react-icons";
+import * as Popover from "@radix-ui/react-popover";
+import * as Slider from "@radix-ui/react-slider";
 import { MathInput } from "react-three-linalg";
 import { useNodeStore, ValueNode, VectorNode } from "../../stores/nodes";
 import { MathX, MathY, MathZ } from "../icons";
@@ -51,7 +52,55 @@ function VectorPane({
       y={y}
       width={width}
       height={height}
-      headerProps={{ title }}
+      headerProps={{
+        title,
+        children: (
+          <Popover.Root>
+            <Popover.Trigger>
+              <Tooltip tip={`modify attributes of ${title.toLowerCase()}`}>
+                <button className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20">
+                  <MagicWandIcon aria-label="Modify vector attributes" />
+                </button>
+              </Tooltip>
+            </Popover.Trigger>
+
+            <Popover.Content>
+              <div className="flex flex-col gap-6 bg-slate-100 border-slate-400 border-2 rounded w-80 items-center p-4">
+                <h2 className="text-slate-800 font-medium text-base">
+                  Modifiers
+                </h2>
+
+                <ModifierFieldset label="Color">
+                  <input className="rounded outline-none w-full pl-2 pr-2 pt-1 pb-1 text-slate-800 bg-slate-100 font-md font-mono shadow-b1 shadow-slate-400 focus:shadow-b2 focus:shadow-slate-500" />
+                </ModifierFieldset>
+
+                <ModifierFieldset label="Opacity">
+                  <Slider.Root
+                    className="w-full h-5 relative select-none touch-none flex items-center"
+                    defaultValue={[100]}
+                    max={100}
+                    min={0}
+                    aria-label="Opacity"
+                  >
+                    <Slider.Track className="relative bg-slate-300 rounded-full grow h-1">
+                      <Slider.Range className="bg-slate-400 rounded-full h-full absolute" />
+                    </Slider.Track>
+                    <Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-slate-400 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)]" />
+                  </Slider.Root>
+                </ModifierFieldset>
+
+                <ModifierFieldset label="Origin">
+                  <Tooltip tip="connect the origin to another vector">
+                    <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20">
+                      <DotIcon />
+                    </button>
+                  </Tooltip>
+                </ModifierFieldset>
+              </div>
+            </Popover.Content>
+          </Popover.Root>
+        ),
+      }}
       className="flex gap-4 flex-col p-4"
     >
       <DimensionInput
@@ -99,10 +148,10 @@ function DimensionInput({
       <label
         className={`${
           dimension === "x"
-            ? "text-red-600"
+            ? "text-red-700"
             : dimension === "y"
-            ? "text-green-600"
-            : "text-blue-600"
+            ? "text-green-700"
+            : "text-blue-700"
         } w-3 h-3`}
         htmlFor={dimension}
       >
@@ -115,7 +164,7 @@ function DimensionInput({
         )}
       </label>
 
-      <div className="grow">
+      <div className="grow cursor-text">
         <MathInput
           value={value}
           onChange={onChange}
@@ -128,16 +177,27 @@ function DimensionInput({
         />
       </div>
 
-      <Tooltip tip={`connect ${dimension} to another node`}>
-        <button
-          id={`${dimension}-${id}`}
-          className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
-        >
+      <Tooltip tip={`connect ${dimension} to a value node`}>
+        <button className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20">
           <DotIcon />
         </button>
-
-        {link && <LineTo from={`${dimension}-${id}`} to={`${link.id}`} />}
       </Tooltip>
     </div>
+  );
+}
+
+interface ModifierFieldsetProps {
+  label: string;
+  children?: React.ReactNode;
+}
+
+function ModifierFieldset({ label, children }: ModifierFieldsetProps) {
+  return (
+    <fieldset className="flex gap-4 w-full items-center">
+      <label className="w-16 text-sm text-slate-800">{label}</label>
+      <div className="inline-flex flex-1 items-center justify-end">
+        {children}
+      </div>
+    </fieldset>
   );
 }

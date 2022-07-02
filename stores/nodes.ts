@@ -79,7 +79,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           title,
           x,
           y,
-          width: 320,
+          width: 312,
           height: 264,
           vectorX: getRandomValue(),
           vectorY: getRandomValue(),
