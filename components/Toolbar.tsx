@@ -11,6 +11,8 @@ import {
   RulerSquareIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
+import * as Popover from "@radix-ui/react-popover";
+import * as TWEEN from "@tweenjs/tween.js";
 import { Tooltip } from "./Tooltip";
 import { useUIStore } from "../stores/ui";
 
@@ -48,16 +50,75 @@ export default function Toolbar() {
 }
 
 function ZoomControl() {
-  const [scale, setScale] = useUIStore(({ scale, setScale }) => [
+  const [x, y, scale, setXYS] = useUIStore(({ x, y, scale, setXYS }) => [
+    x,
+    y,
     scale,
-    setScale,
+    setXYS,
   ]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const tweenScale = (newScale: number) => {
+    const tween = new TWEEN.Tween({ x: x, y: y, scale: scale })
+      .to(
+        {
+          x: x - (newScale / scale - 1) * ((window.innerWidth / 2) - x + 12),
+          y: y - (newScale / scale - 1) * ((window.innerHeight / 2) - y + 12),
+          scale: newScale,
+        },
+        400
+      )
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate((tween) => {
+        setXYS(tween.x, tween.y, tween.scale);
+      })
+
+    setIsOpen(false);
+    tween.start();
+  };
+
+  const onClick200 = () => tweenScale(2);
+  const onClick100 = () => tweenScale(1);
+  const onClick50 = () => tweenScale(0.5);
+  const onClick20 = () => tweenScale(0.2);
+  const onClickZoomIn = () => tweenScale(scale * 1.2);
+  const onClickZoomOut = () => tweenScale(scale * 0.8);
+
   return (
-    <div className="flex justify-center items-center px-4 cursor-pointer w-20 hover:bg-slate-200">
-      {Math.round(scale * 100)}%{" "}
-      <CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
-    </div>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger>
+        <div className="flex justify-center items-center px-4 cursor-pointer w-20 h-full hover:bg-slate-200">
+          {Math.round(scale * 100)}%
+          <CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
+        </div>
+      </Popover.Trigger>
+
+      <Popover.Content className="w-32 bg-slate-50 text-xs shadow-xs rounded-b">
+        <ZoomButton onClick={onClick200}>200%</ZoomButton>
+        <ZoomButton onClick={onClick100}>100%</ZoomButton>
+        <ZoomButton onClick={onClick50}>50%</ZoomButton>
+        <ZoomButton onClick={onClick20}>20%</ZoomButton>
+        <ZoomButton onClick={onClickZoomIn}>Zoom in</ZoomButton>
+        <ZoomButton onClick={onClickZoomOut}>Zoom out</ZoomButton>
+      </Popover.Content>
+    </Popover.Root>
+  );
+}
+
+interface ZoomButtonProps {
+  children: React.ReactNode;
+  onClick: () => void;
+}
+
+function ZoomButton({ children, onClick }: ZoomButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="w-full flex justify-center items-center h-10 hover:bg-slate-200"
+    >
+      {children}
+    </button>
   );
 }
 

@@ -78,62 +78,46 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     [tool]
   );
 
-  const bind = useGesture(
-    {
-      onDrag: ({ initial: [ix, iy], xy: [mx, my], first, memo }) => {
-        if (tool !== "") {
-          return;
-        }
+  const bind = useGesture({
+    onDrag: ({ initial: [ix, iy], xy: [mx, my], first, memo }) => {
+      if (tool !== "") {
+        return;
+      }
 
-        if (first) {
-          memo = [x, y];
-        }
+      if (first) {
+        memo = [x, y];
+      }
 
-        setX(memo[0] + (mx - ix));
-        setY(memo[1] + (my - iy));
+      setX(memo[0] + (mx - ix));
+      setY(memo[1] + (my - iy));
 
-        return memo;
-      },
-      onPinch: ({
-        origin: [ox, oy],
-        movement: [ms],
-        offset: [currentScale],
-        first,
-        memo,
-      }) => {
-        if (first) {
-          const tx = ox - (x + 12);
-          const ty = oy - (y + 12);
-          memo = [x, y, tx, ty];
-        }
-
-        const currentX = memo[0] - (ms - 1) * memo[2];
-        const currentY = memo[1] - (ms - 1) * memo[3];
-        setXYS(currentX, currentY, currentScale);
-
-        return memo;
-      },
-      onWheel: ({ delta: [_, d], first, memo }) => {
-        // TODO: Fix implementation.
-        if (first) {
-          memo = [x, y, scale];
-        }
-
-        if (scale <= 0.2 && d > 0) {
-          return memo;
-        }
-
-        if (scale >= 2 && d < 0) {
-          return memo;
-        }
-
-        return memo;
-      },
+      return memo;
     },
-    {
-      pinch: { scaleBounds: { min: 0.2, max: 2 } },
-    }
-  );
+    onPinch: ({
+      origin: [ox, oy],
+      movement: [ms],
+      direction: [dir],
+      first,
+      memo,
+    }) => {
+      if ((scale <= 0.2 && dir === -1) || (scale >= 2 && dir === 1)) {
+        return memo;
+      }
+
+      if (first) {
+        const tx = ox - x + 12;
+        const ty = oy - y + 12;
+        memo = [x, y, tx, ty, scale];
+      }
+
+      const currentX = memo[0] - (ms - 1) * memo[2];
+      const currentY = memo[1] - (ms - 1) * memo[3];
+
+      setXYS(currentX, currentY, Math.min(Math.max(ms * memo[4], 0.2), 2));
+
+      return memo;
+    },
+  });
 
   return (
     <div className="w-full h-screen relative overflow-hidden">

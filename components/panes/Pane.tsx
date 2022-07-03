@@ -68,7 +68,7 @@ export function Pane({
       onStop={onDragStop}
       handle=".handle"
     >
-      <div className={`absolute ${blurred && "opacity-40"}`}>
+      <div className={`absolute ${blurred && "opacity-40 pointer-events-none"}`}>
         <ResizableBox
           width={width}
           height={height}
