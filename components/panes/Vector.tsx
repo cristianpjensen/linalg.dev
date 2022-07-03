@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MathInput } from "react-three-linalg";
 import TeX from "@matejmazur/react-katex";
 import { useNodeStore, ValueNode, VectorNode } from "../../stores/nodes";
-import { useUIStore } from "../../stores/ui";
+import { useUIStore } from "../../stores";
 import { MathX, MathY, MathZ } from "../icons";
 import { Tooltip } from "../Tooltip";
 import { Pane } from "./Pane";
@@ -68,8 +68,11 @@ function VectorPane({
       }
       headerProps={{
         title,
+        bg: "bg-slate-600 dark:bg-slate-900",
+        text: "text-slate-200 dark:text-slate-100",
         children: <ModifierOptions title={title} id={id} />,
       }}
+      bg="bg-slate-200 dark:bg-slate-700"
       className="flex gap-4 flex-col p-4"
     >
       <DimensionInput

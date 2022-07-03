@@ -11,8 +11,11 @@ export function Tooltip({ children, tip, hotkey }: TooltipProps) {
     <HoverCard.Root>
       <HoverCard.Trigger>{children}</HoverCard.Trigger>
 
-      <HoverCard.Content className="bg-slate-900 text-white p-2 rounded text-xs max-w-[172px] text-center">
-        {tip} &nbsp;<span className="text-slate-400">{hotkey?.toUpperCase()}</span>
+      <HoverCard.Content className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm max-w-[172px] text-center">
+        {tip}
+        {hotkey && (
+          <span className="text-gray-400"> &nbsp;{hotkey.toUpperCase()}</span>
+        )}
       </HoverCard.Content>
     </HoverCard.Root>
   );

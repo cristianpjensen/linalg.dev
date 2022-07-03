@@ -1,13 +1,4 @@
 import create from "zustand";
-import * as THREE from "three";
-
-export type VectorPane = {
-  id: number;
-  title: string;
-  canvasX: number;
-  canvasY: number;
-  vector: THREE.Vector3;
-};
 
 interface UIStore {
   x: number;
@@ -19,16 +10,30 @@ interface UIStore {
   setXYS: (x: number, y: number, scale: number) => void;
   tool: string;
   setTool: (tool: string) => void;
+  darkMode: boolean;
+  setDarkMode: (darkMode: boolean) => void;
 }
 
-export const useUIStore = create<UIStore>((set) => ({
-  x: 0,
+const useUIStore = create<UIStore>((set) => ({
+  x: 10,
   setX: (x) => set({ x }),
-  y: 0,
+  y: 58,
   setY: (y) => set({ y }),
   scale: 1,
   setScale: (scale) => set({ scale }),
   setXYS: (x, y, scale) => set({ x, y, scale }),
   tool: "",
   setTool: (tool) => set({ tool }),
+  darkMode: false,
+  setDarkMode: (darkMode) => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+
+    set({ darkMode });
+  },
 }));
+
+export default useUIStore;

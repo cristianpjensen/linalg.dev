@@ -276,3 +276,5 @@ const getRandomValue = () => Math.round(Math.random() * 10 - 5);
 
 let id = 0;
 const getId = () => id++;
+
+export default useNodeStore;

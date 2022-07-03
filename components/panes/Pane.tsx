@@ -3,7 +3,7 @@ import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { usePointerDown } from "../../hooks/usePointerDown";
 import { useNodeStore } from "../../stores/nodes";
-import { useUIStore } from "../../stores/ui";
+import { useUIStore } from "../../stores";
 import { GRID_SIZE } from "../constants";
 import { Tooltip } from "../Tooltip";
 
@@ -35,7 +35,7 @@ export function Pane({
   className,
   blurred = false,
   selectable = false,
-  bg = "bg-slate-200",
+  bg = "bg-zinc-200 dark:bg-zinc-800",
   resizable = false,
 }: PaneProps) {
   const { scale, setTool } = useUIStore((state) => ({
@@ -110,8 +110,8 @@ function PaneHeader({
   children,
   id,
   title = "",
-  bg = "bg-slate-500",
-  text = "text-slate-100",
+  bg = "bg-zinc-500 dark:bg-zinc-300",
+  text = "text-zinc-100 dark:text-zinc-900",
 }: PaneHeaderProps & { id: number }) {
   const removeNode = useNodeStore((state) => state.removeNode);
   const onRemove = () => {

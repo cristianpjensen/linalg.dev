@@ -14,12 +14,14 @@ import {
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
 import { Tooltip } from "./Tooltip";
-import { useUIStore } from "../stores/ui";
+import { useUIStore } from "../stores";
 import { useHotkeys } from "react-hotkeys-hook";
 
 export default function Toolbar() {
+  const setDarkMode = useUIStore((state) => state.setDarkMode);
+
   return (
-    <div className="w-screen h-12 absolute top-0 left-0 z-10 bg-slate-50 shadow-sm antialiased text-xs flex flex-row flex-nowrap">
+    <div className="w-screen h-12 absolute top-0 left-0 z-10 bg-white dark:bg-black shadow-sm antialiased text-xs flex flex-row flex-nowrap">
       <Tool
         icon={<HandIcon />}
         title=""
@@ -48,7 +50,7 @@ export default function Toolbar() {
 
       <ZoomControl />
 
-      <Toggle icon={<SunIcon />} altIcon={<MoonIcon />} />
+      <Toggle icon={<SunIcon />} altIcon={<MoonIcon />} onClick={setDarkMode} />
       <Toggle icon={<InfoCircledIcon />} />
       <a className="h-12" href="https://github.com/cristianpjensen/linalg.dev">
         <Toggle icon={<GitHubLogoIcon />} />
@@ -105,13 +107,13 @@ function ZoomControl() {
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger>
-        <div className="flex justify-center items-center px-4 cursor-pointer w-20 h-full hover:bg-slate-200">
+        <div className="flex justify-center items-center px-4 cursor-pointer w-20 h-full hover:bg-zinc-200 dark:hover:bg-zinc-700">
           {Math.round(scale * 100)}%
           <CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
         </div>
       </Popover.Trigger>
 
-      <Popover.Content className="w-32 bg-slate-50 text-xs shadow-md rounded-b">
+      <Popover.Content className="w-32 text-xs shadow-md rounded-b bg-white dark:bg-black text-white">
         <ZoomButton onClick={onClick200} hotkey="1">
           200%
         </ZoomButton>
@@ -145,9 +147,9 @@ function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex justify-center items-center h-10 hover:bg-slate-200"
+      className="w-full flex justify-center items-center h-10 hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
-      <div className="flex w-full absolute justify-left pl-3 text-gray-400">
+      <div className="flex w-full absolute justify-left pl-3 text-zinc-400 dark:text-zinc-500">
         {hotkey?.toUpperCase()}
       </div>
 
@@ -173,7 +175,7 @@ function Tool({ icon, title, description, hotkey }: ToolProps) {
     <Tooltip tip={description} hotkey={hotkey}>
       <div
         className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
-          tool === title ? "bg-slate-500 text-white" : "hover:bg-slate-200"
+          tool === title ? "bg-offblack dark:bg-offwhite text-white dark:text-black" : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
         }`}
         onClick={() => {
           setTool(title);
@@ -193,7 +195,7 @@ interface ToolDropdownProps {
 
 function ToolDropdown({ icon, title }: ToolDropdownProps) {
   return (
-    <div className="flex justify-center items-center h-12 px-4 cursor-pointer hover:bg-slate-200">
+    <div className="flex justify-center items-center h-12 px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
       {cloneElement(icon, { className: title !== "" ? "mr-2" : "" })} {title}
       <CaretDownIcon className="ml-0.5 hover:translate-y-0.5 transition-transform" />
     </div>
@@ -204,23 +206,23 @@ interface ToggleProps {
   icon: React.ReactElement;
   altIcon?: React.ReactElement;
   initialValue?: boolean;
-  onPress?: (value: boolean) => void;
+  onClick?: (value: boolean) => void;
 }
 
-function Toggle({ icon, altIcon, initialValue = false, onPress }: ToggleProps) {
+function Toggle({ icon, altIcon, initialValue = false, onClick }: ToggleProps) {
   const [state, setState] = useState(initialValue);
 
-  const onClick = () => {
+  const onComponentClick = () => {
     setState((prev) => {
-      onPress && onPress(!prev);
+      onClick && onClick(!prev);
       return !prev;
     });
   };
 
   return (
     <div
-      onClick={onClick}
-      className="flex justify-center items-center h-12 w-12 cursor-pointer hover:bg-slate-200"
+      onClick={onComponentClick}
+      className="flex justify-center items-center h-12 w-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
       {state ? (altIcon ? altIcon : icon) : icon}
     </div>
