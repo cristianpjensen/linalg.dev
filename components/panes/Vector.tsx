@@ -152,7 +152,7 @@ function DimensionInput({
         />
       </div>
 
-      <Tooltip tip={`connect ${dimension} to a value node`}>
+      <Tooltip tip={`Connect ${dimension} to a value node`}>
         <button
           className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
           onClick={linkValue}
@@ -181,7 +181,7 @@ function ModifierOptions({ title, id }: ModifierOptionsProps) {
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger>
-        <Tooltip tip={`modify attributes of ${title.toLowerCase()}`}>
+        <Tooltip tip={`Modify attributes of ${title.toLowerCase()}`}>
           <button className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20">
             <MagicWandIcon aria-label="Modify vector attributes" />
           </button>
@@ -218,7 +218,7 @@ function ModifierOptions({ title, id }: ModifierOptionsProps) {
               block
             >{`\\begin{bmatrix} 0 & 0 & 0 \\end{bmatrix}^\\top`}</TeX>
 
-            <Tooltip tip="connect the origin to another vector">
+            <Tooltip tip="Connect the origin to another vector">
               <button
                 className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
                 onClick={linkOrigin}

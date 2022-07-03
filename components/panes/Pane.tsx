@@ -131,7 +131,7 @@ function PaneHeader({
 
       {children}
 
-      <Tooltip tip="remove vector">
+      <Tooltip tip="Remove vector">
         <button
           onClick={onRemove}
           className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20"
