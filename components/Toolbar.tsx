@@ -13,12 +13,12 @@ import {
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
-import { Tooltip } from "./Tooltip";
-import { useUIStore } from "../stores";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Tooltip } from "./Tooltip";
+import { useUIStore, setDarkMode } from "../stores";
 
 export default function Toolbar() {
-  const setDarkMode = useUIStore((state) => state.setDarkMode);
+  const darkMode = localStorage.getItem("theme");
 
   return (
     <div className="w-screen h-12 absolute top-0 left-0 z-10 bg-white dark:bg-black shadow-sm antialiased text-xs flex flex-row flex-nowrap">
@@ -50,7 +50,12 @@ export default function Toolbar() {
 
       <ZoomControl />
 
-      <Toggle icon={<SunIcon />} altIcon={<MoonIcon />} onClick={setDarkMode} />
+      <Toggle
+        icon={<SunIcon />}
+        altIcon={<MoonIcon />}
+        toggled={darkMode === "dark"}
+        onClick={setDarkMode}
+      />
       <Toggle icon={<InfoCircledIcon />} />
       <a className="h-12" href="https://github.com/cristianpjensen/linalg.dev">
         <Toggle icon={<GitHubLogoIcon />} />
@@ -113,7 +118,7 @@ function ZoomControl() {
         </div>
       </Popover.Trigger>
 
-      <Popover.Content className="w-32 text-xs shadow-md rounded-b bg-white dark:bg-black text-white">
+      <Popover.Content className="w-32 text-xs shadow-md rounded-b bg-white dark:bg-black text-black dark:text-white">
         <ZoomButton onClick={onClick200} hotkey="1">
           200%
         </ZoomButton>
@@ -175,7 +180,9 @@ function Tool({ icon, title, description, hotkey }: ToolProps) {
     <Tooltip tip={description} hotkey={hotkey}>
       <div
         className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
-          tool === title ? "bg-offblack dark:bg-offwhite text-white dark:text-black" : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+          tool === title
+            ? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+            : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
         }`}
         onClick={() => {
           setTool(title);
@@ -205,12 +212,12 @@ function ToolDropdown({ icon, title }: ToolDropdownProps) {
 interface ToggleProps {
   icon: React.ReactElement;
   altIcon?: React.ReactElement;
-  initialValue?: boolean;
+  toggled?: boolean;
   onClick?: (value: boolean) => void;
 }
 
-function Toggle({ icon, altIcon, initialValue = false, onClick }: ToggleProps) {
-  const [state, setState] = useState(initialValue);
+function Toggle({ icon, altIcon, toggled, onClick }: ToggleProps) {
+  const [state, setState] = useState(toggled);
 
   const onComponentClick = () => {
     setState((prev) => {
@@ -224,7 +231,7 @@ function Toggle({ icon, altIcon, initialValue = false, onClick }: ToggleProps) {
       onClick={onComponentClick}
       className="flex justify-center items-center h-12 w-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
-      {state ? (altIcon ? altIcon : icon) : icon}
+      {state && altIcon ? altIcon : icon}
     </div>
   );
 }

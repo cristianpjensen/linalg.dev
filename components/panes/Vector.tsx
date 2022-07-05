@@ -72,7 +72,7 @@ function VectorPane({
         text: "text-slate-200 dark:text-slate-100",
         children: <ModifierOptions title={title} id={id} />,
       }}
-      bg="bg-slate-200 dark:bg-slate-700"
+      bg="bg-slate-200 dark:bg-slate-600"
       className="flex gap-4 flex-col p-4"
     >
       <DimensionInput
@@ -126,10 +126,10 @@ function DimensionInput({
       <label
         className={`${
           dimension === "x"
-            ? "text-red-700"
+            ? "text-red-700 dark:text-red-300"
             : dimension === "y"
-            ? "text-green-700"
-            : "text-blue-700"
+            ? "text-green-700 dark:text-green-300"
+            : "text-blue-700 dark:text-blue-300"
         } w-3 h-3`}
         htmlFor={dimension}
       >
@@ -157,7 +157,7 @@ function DimensionInput({
 
       <Tooltip tip={`Connect ${dimension} to a value node`}>
         <button
-          className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
+          className="flex justify-center items-center h-8 w-8 rounded text-slate-800 dark:text-slate-300 hover:bg-gray-500/20"
           onClick={linkValue}
         >
           <DotIcon />
@@ -192,11 +192,11 @@ function ModifierOptions({ title, id }: ModifierOptionsProps) {
       </Popover.Trigger>
 
       <Popover.Content>
-        <div className="flex flex-col gap-6 bg-slate-100 border-slate-400 border-2 rounded w-80 items-center p-4">
-          <h2 className="text-slate-800 font-medium text-base">Modifiers</h2>
+        <div className="flex flex-col gap-6 bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 border-2 rounded w-80 items-center p-4">
+          <h2 className="text-slate-800 dark:text-slate-200 font-medium text-base">Modifiers</h2>
 
           <ModifierFieldset label="Color">
-            <input className="rounded outline-none w-full pl-2 pr-2 pt-1 pb-1 text-slate-800 bg-slate-100 font-md font-mono shadow-b1 shadow-slate-400 focus:shadow-b2 focus:shadow-slate-500" />
+            <input className="rounded outline-none w-full pl-2 pr-2 pt-1 pb-1 text-slate-800 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 font-md font-mono shadow-b1 shadow-slate-400 dark:shadow-slate-500 focus:shadow-b2 focus:shadow-slate-500 dark:focus:shadow-slate-400" />
           </ModifierFieldset>
 
           <ModifierFieldset label="Opacity">
@@ -208,22 +208,22 @@ function ModifierOptions({ title, id }: ModifierOptionsProps) {
               step={10}
               aria-label="Opacity"
             >
-              <Slider.Track className="relative bg-slate-300 rounded-full grow h-1">
-                <Slider.Range className="bg-slate-400 rounded-full h-full absolute" />
+              <Slider.Track className="relative bg-slate-300 dark:bg-slate-600 rounded-full grow h-1">
+                <Slider.Range className="bg-slate-400 dark:bg-slate-500 rounded-full h-full absolute" />
               </Slider.Track>
-              <Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-slate-400 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)]" />
+              <Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-slate-400 dark:bg-slate-500 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)] dark:focus:shadow-[0_0_0_5px_rgba(255,255,255,0.1)]" />
             </Slider.Root>
           </ModifierFieldset>
 
           <ModifierFieldset label="Origin">
             <TeX
-              className="grow"
+              className="grow text-slate-800 dark:text-slate-200"
               block
             >{`\\begin{bmatrix} 0 & 0 & 0 \\end{bmatrix}^\\top`}</TeX>
 
             <Tooltip tip="Connect the origin to another vector">
               <button
-                className="flex justify-center items-center h-8 w-8 rounded text-slate-800 hover:bg-gray-500/20"
+                className="flex justify-center items-center h-8 w-8 rounded text-slate-800 dark:text-slate-100 hover:bg-gray-500/20"
                 onClick={linkOrigin}
               >
                 <DotIcon />
@@ -244,7 +244,7 @@ interface ModifierFieldsetProps {
 function ModifierFieldset({ label, children }: ModifierFieldsetProps) {
   return (
     <fieldset className="flex gap-4 w-full items-center">
-      <label className="w-16 text-sm text-slate-800">{label}</label>
+      <label className="w-16 text-sm text-slate-800 dark:text-slate-300">{label}</label>
       <div className="inline-flex flex-1 items-center justify-end">
         {children}
       </div>

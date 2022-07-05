@@ -10,8 +10,6 @@ interface UIStore {
   setXYS: (x: number, y: number, scale: number) => void;
   tool: string;
   setTool: (tool: string) => void;
-  darkMode: boolean;
-  setDarkMode: (darkMode: boolean) => void;
 }
 
 const useUIStore = create<UIStore>((set) => ({
@@ -24,16 +22,6 @@ const useUIStore = create<UIStore>((set) => ({
   setXYS: (x, y, scale) => set({ x, y, scale }),
   tool: "",
   setTool: (tool) => set({ tool }),
-  darkMode: false,
-  setDarkMode: (darkMode) => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-
-    set({ darkMode });
-  },
 }));
 
 export default useUIStore;
