@@ -3,6 +3,7 @@ import TeX from "@matejmazur/react-katex";
 import { useNodeStore, useUIStore } from "../../stores";
 import type { Operator, OperatorNode } from "../../stores/nodes";
 import { Pane } from "./Pane";
+import { DotIcon } from "@radix-ui/react-icons";
 
 export default function Operators() {
   const operators = useNodeStore((state) => state.operators);
@@ -58,7 +59,7 @@ function OperatorPane({
       className="p-4"
     >
       <div className="flex flex-row text-yellow-ext-900 cursor-text dark:text-yellow-ext-100">
-        <div className="grow">
+        <div className="flex flex-col grow">
           <MathInput
             value={value1}
             onChange={onChangeLeft}
@@ -67,13 +68,15 @@ function OperatorPane({
               color: "none",
             }}
           />
+
+          <button className="flex items-center justify-center w-8 h-8 mx-auto mt-1 rounded text-yellow-ext-800 dark:text-yellow-ext-300 hover:bg-gray-500/20">
+            <DotIcon />
+          </button>
         </div>
 
-        <TeX className="flex items-center justify-center w-4 m-2">
-          {operator}
-        </TeX>
+        <TeX className="flex items-center justify-center w-8 h-12">{operator}</TeX>
 
-        <div className="grow">
+        <div className="flex flex-col grow">
           <MathInput
             value={value2}
             onChange={onChangeRight}
@@ -82,6 +85,10 @@ function OperatorPane({
               color: "none",
             }}
           />
+
+          <button className="flex items-center justify-center w-8 h-8 mx-auto mt-1 rounded text-yellow-ext-800 dark:text-yellow-ext-300 hover:bg-gray-500/20">
+            <DotIcon />
+          </button>
         </div>
       </div>
     </Pane>

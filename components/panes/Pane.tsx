@@ -76,6 +76,7 @@ export function Pane({
           resizeHandles={resizable ? ["se"] : []}
           onResizeStop={onResizeStop}
           axis={resizable ? "both" : "none"}
+          minConstraints={[width, height]}
           draggableOpts={{
             grid: [GRID_SIZE * scale, GRID_SIZE * scale],
           }}
