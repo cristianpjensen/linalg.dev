@@ -13,9 +13,15 @@ const Grid = dynamic(() => import("../components/InfiniteGrid"), {
 const Vectors = dynamic(() => import("../components/panes/Vector"), {
   ssr: false,
 });
-const Toolbar = dynamic(() => import("../components/Toolbar"), {
+const Constants = dynamic(() => import("../components/panes/Constant"), {
   ssr: false,
 })
+const Operators = dynamic(() => import("../components/panes/Operator"), {
+  ssr: false,
+})
+const Toolbar = dynamic(() => import("../components/Toolbar"), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -45,6 +51,8 @@ const Home: NextPage = () => {
         <div className="w-full h-full">
           <Toolbar />
           <Grid>
+            <Constants />
+            <Operators />
             <Vectors />
           </Grid>
         </div>

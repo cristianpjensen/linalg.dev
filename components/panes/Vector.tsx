@@ -4,8 +4,8 @@ import * as Slider from "@radix-ui/react-slider";
 import { useState } from "react";
 import { MathInput } from "react-three-linalg";
 import TeX from "@matejmazur/react-katex";
-import { useNodeStore, ValueNode, VectorNode } from "../../stores/nodes";
-import { useUIStore } from "../../stores";
+import { useNodeStore, useUIStore } from "../../stores";
+import type { ValueNode, VectorNode } from "../../stores/nodes";
 import { MathX, MathY, MathZ } from "../icons";
 import { Tooltip } from "../Tooltip";
 import { Pane } from "./Pane";
@@ -46,12 +46,11 @@ function VectorPane({
 }: VectorPaneProps) {
   const setVectorDimension = useNodeStore((state) => state.setVectorDimension);
   const tool = useUIStore((state) => state.tool);
+  const [link, type, linkId] = tool.split("-");
 
   const onChangeX = (x: number) => setVectorDimension(id, "x", x);
   const onChangeY = (y: number) => setVectorDimension(id, "y", y);
   const onChangeZ = (z: number) => setVectorDimension(id, "z", z);
-
-  const [link, type, linkId] = tool.split("-");
 
   return (
     <Pane
@@ -142,14 +141,14 @@ function DimensionInput({
         )}
       </label>
 
-      <div className="grow cursor-text">
+      <div className="grow cursor-text text-slate-900 dark:text-slate-100">
         <MathInput
           value={value}
           onChange={onChange}
           style={{
             backgroundColor: "transparent",
             fontSize: 20,
-            color: "rgb(15, 23, 42)",
+            color: "none",
             borderColor: "rgb(71, 85, 105)",
           }}
         />
@@ -193,7 +192,9 @@ function ModifierOptions({ title, id }: ModifierOptionsProps) {
 
       <Popover.Content>
         <div className="flex flex-col items-center gap-6 p-4 border-2 rounded bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 w-80">
-          <h2 className="text-base font-medium text-slate-800 dark:text-slate-200">Modifiers</h2>
+          <h2 className="text-base font-medium text-slate-800 dark:text-slate-200">
+            Modifiers
+          </h2>
 
           <ModifierFieldset label="Color">
             <input className="w-full pt-1 pb-1 pl-2 pr-2 font-mono rounded outline-none text-slate-800 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 font-md shadow-b1 shadow-slate-400 dark:shadow-slate-500 focus:shadow-b2 focus:shadow-slate-500 dark:focus:shadow-slate-400" />
@@ -244,7 +245,9 @@ interface ModifierFieldsetProps {
 function ModifierFieldset({ label, children }: ModifierFieldsetProps) {
   return (
     <fieldset className="flex items-center w-full gap-4">
-      <label className="w-16 text-sm text-slate-800 dark:text-slate-300">{label}</label>
+      <label className="w-16 text-sm text-slate-800 dark:text-slate-300">
+        {label}
+      </label>
       <div className="inline-flex items-center justify-end flex-1">
         {children}
       </div>

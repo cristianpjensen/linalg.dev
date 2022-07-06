@@ -53,22 +53,39 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     })
   );
 
-  const addVector = useNodeStore((state) => state.addVector);
+  const { addVector, addConstant, addOperator } = useNodeStore((state) => ({
+    addVector: state.addVector,
+    addConstant: state.addConstant,
+    addOperator: state.addOperator,
+  }));
 
   const onGridClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (tool !== "vector") {
+      if (tool === "") {
         return;
       }
 
-      addVector(
-        "Vector",
+      const currentX =
         Math.round((e.pageX - x - VECTOR_WIDTH * 0.5) / (GRID_SIZE * scale)) *
-          GRID_SIZE,
+        GRID_SIZE;
+      const currentY =
         Math.round((e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)) *
-          GRID_SIZE
-      );
-      setTool("");
+        GRID_SIZE;
+
+      if (tool === "vector") {
+        addVector("Vector", currentX, currentY);
+        setTool("");
+      }
+
+      if (tool === "constant") {
+        addConstant("Constant", currentX, currentY);
+        setTool("");
+      }
+
+      if (tool === "operator") {
+        addOperator("Operator", "+", currentX, currentY);
+        setTool("");
+      }
     },
     [tool]
   );

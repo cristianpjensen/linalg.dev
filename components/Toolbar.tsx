@@ -53,15 +53,15 @@ export default function Toolbar() {
         tools={[
           {
             icon: <BoxIcon />,
-            title: "Constant",
+            title: "constant",
             description: "Press anywhere on the canvas to add a constant",
             hotkey: "c",
           },
           {
             icon: <PlusIcon />,
-            title: "Expression",
-            description: "Press anywhere on the canvas to add an expression",
-            hotkey: "e",
+            title: "operator",
+            description: "Press anywhere on the canvas to add a mathematical operator",
+            hotkey: "o",
           },
         ]}
       />

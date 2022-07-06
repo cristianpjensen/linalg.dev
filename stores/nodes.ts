@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { VECTOR_HEIGHT, VECTOR_WIDTH } from "../components/constants";
 
 export type ValueNode = ConstantNode | OperatorNode;
-type Operator = "+" | "-" | "*" | "/";
+export type Operator = "+" | "-" | "*" | "/";
 
 interface Node {
   id: number;
@@ -58,6 +58,9 @@ interface NodeStore {
   ) => void;
   addMatrix: (title: string, x: number, y: number) => void;
   setVectorDimension: (id: number, dimension: "x" | "y" | "z", value: number) => void;
+  setConstantValue: (id: number, value: number) => void;
+  setOperatorValue: (id: number, index: 1 | 2, value: number) => void;
+  setOperatorType: (id: number, operator: Operator) => void;
   setNodePosition: (id: number, x: number, y: number) => void;
   setNodeDimensions: (id: number, width: number, height: number) => void;
   removeNode: (id: number) => void;
@@ -102,8 +105,8 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           title,
           x,
           y,
-          width: 240,
-          height: 240,
+          width: 144,
+          height: 120,
           value: getRandomValue(),
         },
       ],
@@ -120,7 +123,7 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           x,
           y,
           width: 240,
-          height: 240,
+          height: 144,
           operator,
           value1: getRandomValue(),
           value2: getRandomValue(),
@@ -149,15 +152,59 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
   },
   setVectorDimension: (id, dimension, x) => {
     set((state) => {
-      const vector = state.vectors.find((v) => v.id === id);
-      if (vector) {
-        const newVector = { ...vector };
-        // @ts-ignore
-        newVector[`vector${dimension.toUpperCase()}`] = x;
-        return {
-          vectors: [...state.vectors.filter((v) => v.id !== id), newVector],
-        };
+      const index = state.vectors.findIndex((v) => v.id === id);
+
+      if (index === -1) {
+        return state;
       }
+
+      if (dimension === "x") {
+        state.vectors[index].vectorX = x;
+      } else if (dimension === "y") {
+        state.vectors[index].vectorY = x;
+      } else if (dimension === "z") {
+        state.vectors[index].vectorZ = x;
+      }
+
+      return state;
+    })
+  },
+  setConstantValue: (id, value) => {
+    set((state) => {
+      const index = state.constants.findIndex((v) => v.id === id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      state.constants[index].value = value;
+
+      return state;
+    })
+  },
+  setOperatorValue: (id, valueIndex, value) => {
+    set((state) => {
+      const index = state.operators.findIndex((v) => v.id === id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      state.operators[index][`value${valueIndex}`] = value;
+
+      return state;
+    })
+  },
+  setOperatorType: (id, operator) => {
+    set((state) => {
+      const index = state.operators.findIndex((v) => v.id === id);
+
+      if (index === -1) {
+        return state;
+      }
+
+      state.operators[index].operator = operator;
+
       return state;
     })
   },
