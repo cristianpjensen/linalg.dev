@@ -1,6 +1,6 @@
 import create from "zustand";
 import * as THREE from "three";
-import { VECTOR_HEIGHT, VECTOR_WIDTH } from "../components/constants";
+import { CONSTANT_HEIGHT, CONSTANT_WIDTH, OPERATOR_HEIGHT, OPERATOR_WIDTH, VECTOR_HEIGHT, VECTOR_WIDTH } from "../components/constants";
 
 export type ValueNode = ConstantNode | OperatorNode;
 export type Operator = "+" | "-" | "*" | "/";
@@ -105,8 +105,8 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           title,
           x,
           y,
-          width: 144,
-          height: 120,
+          width: CONSTANT_WIDTH,
+          height: CONSTANT_HEIGHT,
           value: getRandomValue(),
         },
       ],
@@ -122,8 +122,8 @@ export const useNodeStore = create<NodeStore>((set, get) => ({
           title,
           x,
           y,
-          width: 240,
-          height: 144,
+          width: OPERATOR_WIDTH,
+          height: OPERATOR_HEIGHT,
           operator,
           value1: getRandomValue(),
           value2: getRandomValue(),

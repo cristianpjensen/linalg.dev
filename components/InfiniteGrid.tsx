@@ -2,7 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { useUIStore } from "../stores";
 import { useNodeStore } from "../stores/nodes";
-import { GRID_SIZE, VECTOR_HEIGHT, VECTOR_WIDTH } from "./constants";
+import {
+  CONSTANT_HEIGHT,
+  CONSTANT_WIDTH,
+  GRID_SIZE,
+  OPERATOR_HEIGHT,
+  OPERATOR_WIDTH,
+  VECTOR_HEIGHT,
+  VECTOR_WIDTH,
+} from "./constants";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
@@ -65,24 +73,43 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         return;
       }
 
-      const currentX =
-        Math.round((e.pageX - x - VECTOR_WIDTH * 0.5) / (GRID_SIZE * scale)) *
-        GRID_SIZE;
-      const currentY =
-        Math.round((e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)) *
-        GRID_SIZE;
-
       if (tool === "vector") {
+        const currentX =
+          Math.round((e.pageX - x - VECTOR_WIDTH * 0.5) / (GRID_SIZE * scale)) *
+          GRID_SIZE;
+        const currentY =
+          Math.round(
+            (e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
+          ) * GRID_SIZE;
+
         addVector("Vector", currentX, currentY);
         setTool("");
       }
 
       if (tool === "constant") {
+        const currentX =
+          Math.round(
+            (e.pageX - x - CONSTANT_WIDTH * 0.5) / (GRID_SIZE * scale)
+          ) * GRID_SIZE;
+        const currentY =
+          Math.round(
+            (e.pageY - y - CONSTANT_HEIGHT * 0.5) / (GRID_SIZE * scale)
+          ) * GRID_SIZE;
+
         addConstant("Constant", currentX, currentY);
         setTool("");
       }
 
       if (tool === "operator") {
+        const currentX =
+          Math.round(
+            (e.pageX - x - OPERATOR_WIDTH * 0.5) / (GRID_SIZE * scale)
+          ) * GRID_SIZE;
+        const currentY =
+          Math.round(
+            (e.pageY - y - OPERATOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
+          ) * GRID_SIZE;
+
         addOperator("Operator", "+", currentX, currentY);
         setTool("");
       }
