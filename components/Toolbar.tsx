@@ -1,13 +1,16 @@
-import { cloneElement, useCallback, useState } from "react";
+import { cloneElement, useState } from "react";
 import {
   ArrowTopRightIcon,
+  BoxIcon,
   CaretDownIcon,
   FontFamilyIcon,
   GitHubLogoIcon,
+  GroupIcon,
   HandIcon,
   InfoCircledIcon,
   LayersIcon,
   MoonIcon,
+  PlusIcon,
   RulerSquareIcon,
   SunIcon,
 } from "@radix-ui/react-icons";
@@ -18,10 +21,13 @@ import { Tooltip } from "./Tooltip";
 import { useUIStore, setDarkMode } from "../stores";
 
 export default function Toolbar() {
-  const darkMode = localStorage.getItem("theme");
+  const darkMode =
+    localStorage.getItem("theme") === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
-    <div className="w-screen h-12 absolute top-0 left-0 z-10 bg-white dark:bg-black shadow-sm antialiased text-xs flex flex-row flex-nowrap">
+    <div className="absolute top-0 left-0 z-10 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
       <Tool
         icon={<HandIcon />}
         title=""
@@ -41,10 +47,31 @@ export default function Toolbar() {
         hotkey="m"
       />
 
-      <ToolDropdown icon={<FontFamilyIcon />} title="Math" />
-      <ToolDropdown icon={<RulerSquareIcon />} title="Linear algebra" />
+      <ToolDropdown
+        icon={<FontFamilyIcon />}
+        title="Math"
+        tools={[
+          {
+            icon: <BoxIcon />,
+            title: "Constant",
+            description: "Press anywhere on the canvas to add a constant",
+            hotkey: "c",
+          },
+          {
+            icon: <PlusIcon />,
+            title: "Expression",
+            description: "Press anywhere on the canvas to add an expression",
+            hotkey: "e",
+          },
+        ]}
+      />
+      <ToolDropdown
+        icon={<RulerSquareIcon />}
+        title="Linear algebra"
+        tools={[]}
+      />
 
-      <div className="grow flex justify-center items-center text-sm">
+      <div className="flex items-center justify-center text-sm grow">
         Linear algebra
       </div>
 
@@ -53,7 +80,7 @@ export default function Toolbar() {
       <Toggle
         icon={<SunIcon />}
         altIcon={<MoonIcon />}
-        toggled={darkMode === "dark"}
+        toggled={darkMode}
         onClick={setDarkMode}
       />
       <Toggle icon={<InfoCircledIcon />} />
@@ -112,13 +139,17 @@ function ZoomControl() {
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger>
-        <div className="flex justify-center items-center px-4 cursor-pointer w-20 h-full hover:bg-zinc-200 dark:hover:bg-zinc-700">
+        <div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
           {Math.round(scale * 100)}%
-          <CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
+          <CaretDownIcon
+            className={`ml-05 hover:translate-y-0.5 transition-transform ${
+              isOpen ? "translate-y-0.5" : ""
+            }`}
+          />
         </div>
       </Popover.Trigger>
 
-      <Popover.Content className="w-32 text-xs shadow-md rounded-b bg-white dark:bg-black text-black dark:text-white">
+      <Popover.Content className="w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
         <ZoomButton onClick={onClick200} hotkey="1">
           200%
         </ZoomButton>
@@ -152,9 +183,9 @@ function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex justify-center items-center h-10 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+      className="flex items-center justify-center w-full h-10 hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
-      <div className="flex w-full absolute justify-left pl-3 text-zinc-400 dark:text-zinc-500">
+      <div className="absolute flex w-full pl-3 justify-left text-zinc-400 dark:text-zinc-500">
         {hotkey?.toUpperCase()}
       </div>
 
@@ -167,17 +198,18 @@ interface ToolProps {
   title: string;
   icon: React.ReactElement;
   description: string;
+  tooltipSide?: "left" | "right" | "top" | "bottom";
   hotkey?: string;
 }
 
-function Tool({ icon, title, description, hotkey }: ToolProps) {
+function Tool({ icon, title, description, tooltipSide, hotkey }: ToolProps) {
   const [tool, setTool] = useUIStore(({ tool, setTool }) => [tool, setTool]);
   if (hotkey) useHotkeys(hotkey, () => setTool(title));
 
   const titleCapitalized = title.charAt(0).toUpperCase() + title.slice(1);
 
   return (
-    <Tooltip tip={description} hotkey={hotkey}>
+    <Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
       <div
         className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
           tool === title
@@ -198,14 +230,47 @@ function Tool({ icon, title, description, hotkey }: ToolProps) {
 interface ToolDropdownProps {
   title: string;
   icon: React.ReactElement;
+  tools: Array<ToolProps>;
 }
 
-function ToolDropdown({ icon, title }: ToolDropdownProps) {
+function ToolDropdown({ icon, title, tools }: ToolDropdownProps) {
+  const [currentTool, setTool] = useUIStore((state) => [
+    state.tool,
+    state.setTool,
+  ]);
+  const isSelected = tools.some((tool) => tool.title === currentTool);
+  const [isOpen, setIsOpen] = useState(false);
+
+  tools.forEach((tool) => {
+    if (tool.hotkey) useHotkeys(tool.hotkey, () => setTool(tool.title));
+  });
+
   return (
-    <div className="flex justify-center items-center h-12 px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
-      {cloneElement(icon, { className: title !== "" ? "mr-2" : "" })} {title}
-      <CaretDownIcon className="ml-0.5 hover:translate-y-0.5 transition-transform" />
-    </div>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger>
+        <div
+          className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
+            isSelected
+              ? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+              : "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+          }`}
+        >
+          {cloneElement(icon, { className: title !== "" ? "mr-2" : "" })}{" "}
+          {title}
+          <CaretDownIcon
+            className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
+              isOpen ? "translate-y-0.5" : ""
+            }`}
+          />
+        </div>
+      </Popover.Trigger>
+
+      <Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+        {tools.map((tool) => (
+          <Tool key={tool.title} tooltipSide="right" {...tool} />
+        ))}
+      </Popover.Content>
+    </Popover.Root>
   );
 }
 
@@ -229,7 +294,7 @@ function Toggle({ icon, altIcon, toggled, onClick }: ToggleProps) {
   return (
     <div
       onClick={onComponentClick}
-      className="flex justify-center items-center h-12 w-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
+      className="flex items-center justify-center w-12 h-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
     >
       {state && altIcon ? altIcon : icon}
     </div>

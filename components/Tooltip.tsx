@@ -1,22 +1,34 @@
-import * as HoverCard from "@radix-ui/react-hover-card";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 interface TooltipProps {
   children: React.ReactNode;
   tip: string;
+  side?: "left" | "right" | "top" | "bottom";
   hotkey?: string;
 }
 
-export function Tooltip({ children, tip, hotkey }: TooltipProps) {
+export function Tooltip({
+  children,
+  tip,
+  side = "bottom",
+  hotkey,
+}: TooltipProps) {
   return (
-    <HoverCard.Root>
-      <HoverCard.Trigger>{children}</HoverCard.Trigger>
+    <TooltipPrimitive.Root>
+      <TooltipPrimitive.Trigger>{children}</TooltipPrimitive.Trigger>
 
-      <HoverCard.Content className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm max-w-[172px] text-center">
+      <TooltipPrimitive.Content
+        side={side}
+        className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm max-w-[172px]"
+      >
         {tip}
         {hotkey && (
-          <span className="text-gray-400"> &nbsp;{hotkey.toUpperCase()}</span>
+          <span className="text-zinc-400 dark:text-zinc-500">
+            {" "}
+            &nbsp;{hotkey.toUpperCase()}
+          </span>
         )}
-      </HoverCard.Content>
-    </HoverCard.Root>
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Root>
   );
 }

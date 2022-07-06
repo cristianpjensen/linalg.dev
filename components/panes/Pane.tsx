@@ -88,7 +88,7 @@ export function Pane({
           </div>
           {selectable && (
             <div
-              className="absolute -top-2 -left-2 bg-blue-400 opacity-0 hover:opacity-30 cursor-pointer transition-opacity border-blue-900 border-2 rounded"
+              className="absolute transition-opacity bg-blue-400 border-2 border-blue-900 rounded opacity-0 cursor-pointer -top-2 -left-2 hover:opacity-30"
               style={{ width: width + 16, height: height + 16 }}
               onClick={onSelectClick}
             />
@@ -125,7 +125,7 @@ function PaneHeader({
       className={`handle w-full h-8 pl-2 flex flex-row flex-nowrap text-sm ${text} ${bg}`}
       style={{ cursor: pointerDown ? "grabbing" : "grab" }}
     >
-      <div className="flex grow justify-left items-center select-none">
+      <div className="flex items-center select-none grow justify-left">
         {title}
       </div>
 
@@ -134,7 +134,7 @@ function PaneHeader({
       <Tooltip tip="Remove vector">
         <button
           onClick={onRemove}
-          className="flex justify-center items-center h-8 w-8 hover:bg-gray-300/20"
+          className="flex items-center justify-center w-8 h-8 hover:bg-gray-300/20"
         >
           <CrossCircledIcon />
         </button>
