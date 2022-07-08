@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
-import { useUIStore } from "../stores";
-import { useNodeStore } from "../stores/nodes";
+import { useUIStore, useNodeStore } from "../stores";
 import {
   CONSTANT_HEIGHT,
   CONSTANT_WIDTH,
@@ -82,7 +81,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
             (e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
           ) * GRID_SIZE;
 
-        addVector("Vector", currentX, currentY);
+        addVector(currentX, currentY);
         setTool("");
       }
 
@@ -96,7 +95,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
             (e.pageY - y - CONSTANT_HEIGHT * 0.5) / (GRID_SIZE * scale)
           ) * GRID_SIZE;
 
-        addConstant("Constant", currentX, currentY);
+        addConstant(currentX, currentY);
         setTool("");
       }
 
@@ -110,7 +109,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
             (e.pageY - y - OPERATOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
           ) * GRID_SIZE;
 
-        addOperator("Operator", "+", currentX, currentY);
+        addOperator(currentX, currentY);
         setTool("");
       }
     },

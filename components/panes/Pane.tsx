@@ -2,8 +2,8 @@ import Draggable, { DraggableData } from "react-draggable";
 import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { usePointerDown } from "../../hooks/usePointerDown";
-import { useNodeStore } from "../../stores/nodes";
-import { useUIStore } from "../../stores";
+import { useUIStore, useNodeStore } from "../../stores";
+import type { NodeType } from "../../stores/types";
 import { GRID_SIZE } from "../constants";
 import { Tooltip } from "../Tooltip";
 
@@ -12,6 +12,7 @@ import "react-resizable/css/styles.css";
 interface PaneProps {
   children?: React.ReactNode;
   id: number;
+  type: NodeType;
   x: number;
   y: number;
   width: number;
@@ -27,6 +28,7 @@ interface PaneProps {
 export function Pane({
   children,
   id,
+  type,
   x,
   y,
   width,
@@ -46,7 +48,7 @@ export function Pane({
   const setNodeDimensions = useNodeStore((state) => state.setNodeDimensions);
 
   const onDragStop = (_: unknown, { x, y }: DraggableData) => {
-    setNodePosition(id, x, y);
+    setNodePosition(id, type, x, y);
   };
 
   const onResizeStop = (
@@ -68,7 +70,9 @@ export function Pane({
       onStop={onDragStop}
       handle=".handle"
     >
-      <div className={`absolute ${blurred && "opacity-40 pointer-events-none"}`}>
+      <div
+        className={`absolute ${blurred && "opacity-40 pointer-events-none"}`}
+      >
         <ResizableBox
           width={width}
           height={height}
@@ -84,7 +88,7 @@ export function Pane({
           <div
             className={`w-full h-full rounded overflow-hidden shadow-md hover:shadow-lg transition-shadow ${bg}`}
           >
-            <PaneHeader id={id} {...headerProps} />
+            <PaneHeader id={id} type={type} {...headerProps} />
             <div className={className}>{children}</div>
           </div>
           {selectable && (
@@ -110,15 +114,13 @@ interface PaneHeaderProps {
 function PaneHeader({
   children,
   id,
+  type,
   title = "",
   bg = "bg-zinc-500 dark:bg-zinc-300",
   text = "text-zinc-100 dark:text-zinc-900",
-}: PaneHeaderProps & { id: number }) {
+}: PaneHeaderProps & { id: number; type: NodeType }) {
   const removeNode = useNodeStore((state) => state.removeNode);
-  const onRemove = () => {
-    removeNode(id);
-  };
-
+  const onRemove = () => removeNode(id, type);
   const pointerDown = usePointerDown();
 
   return (
