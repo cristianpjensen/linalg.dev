@@ -16,6 +16,10 @@ import type {
   VectorNode,
 } from "./types";
 
+function getRandomValue() {
+  return Math.round(Math.random() * 10 - 5);
+}
+
 /**
  * The current tool being used.
  */
@@ -37,7 +41,7 @@ export const selectedLink = atom<SelectedLink>({
   },
 });
 
-export const defaultVector: VectorNode = {
+export const defaultVector: () => VectorNode = () => ({
   title: "Vector",
   dimensions: {
     width: VECTOR_WIDTH,
@@ -45,9 +49,9 @@ export const defaultVector: VectorNode = {
   },
   position: { x: 0, y: 0 },
   vector: {
-    x: 0,
-    y: 0,
-    z: 0,
+    x: getRandomValue(),
+    y: getRandomValue(),
+    z: getRandomValue(),
   },
   link: {
     x: null,
@@ -55,7 +59,7 @@ export const defaultVector: VectorNode = {
     z: null,
   },
   origin: null,
-};
+});
 
 /**
  * Function that returns the vector for the ID and if the ID does not exist, it
@@ -67,15 +71,15 @@ export const vectors = atomFamily<VectorNode, number>({
   default: defaultVector,
 });
 
-export const defaultConstant: ConstantNode = {
+export const defaultConstant: () => ConstantNode = () => ({
   title: "Constant",
   dimensions: {
     width: CONSTANT_WIDTH,
     height: CONSTANT_HEIGHT,
   },
   position: { x: 0, y: 0 },
-  value: 0,
-};
+  value: getRandomValue(),
+});
 
 /**
  * Function that returns the constant for the ID and if the ID does not exist,
@@ -86,7 +90,7 @@ export const constants = atomFamily<ConstantNode, number>({
   default: defaultConstant,
 });
 
-export const defaultOperator: OperatorNode = {
+export const defaultOperator: () => OperatorNode = () => ({
   title: "Operator",
   dimensions: {
     width: OPERATOR_WIDTH,
@@ -95,14 +99,14 @@ export const defaultOperator: OperatorNode = {
   position: { x: 0, y: 0 },
   operator: "+",
   values: {
-    left: 0,
-    right: 0,
+    left: getRandomValue(),
+    right: getRandomValue(),
   },
   link: {
     left: null,
     right: null,
   },
-};
+});
 
 /**
  * Function that returns the operator for the ID and if the ID does not exist,

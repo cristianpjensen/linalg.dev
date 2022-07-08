@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
-import { RecoilState, useRecoilCallback } from "recoil";
 import { useUIStore } from "../stores";
 import {
   CONSTANT_HEIGHT,
@@ -16,16 +15,12 @@ import {
   defaultConstant,
   defaultOperator,
   defaultVector,
-  ids,
   operators,
   vectors,
 } from "../stores/atoms";
-import {
-  VectorNode,
-  NodeType,
-  OperatorNode,
-  ConstantNode,
-} from "../stores/types";
+import { VectorNode, OperatorNode, ConstantNode } from "../stores/types";
+import useCreateNode from "../hooks/useCreateNode";
+import { useEffect } from "react";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
@@ -34,9 +29,23 @@ interface InfiniteGridProps {
 }
 
 export default function InfiniteGrid({ children }: InfiniteGridProps) {
-  const [pointerDown, setPointerDown] = useState(false);
-  const onPointerDown = () => setPointerDown(true);
-  const onPointerUp = () => setPointerDown(false);
+  useEffect(() => {
+    // Disables default browser pinch-to-zoom when pinching the grid. Such that
+    // it only zooms in as wanted on the grid.
+    const grid = document.getElementById("grid");
+
+    const disablePinchToZoom = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    grid?.addEventListener("wheel", disablePinchToZoom, { passive: false });
+
+    return () => {
+      grid?.removeEventListener("wheel", disablePinchToZoom);
+    };
+  }, []);
 
   const { x, setX, y, setY, scale, setXYS, tool, setTool } = useUIStore(
     (state) => ({
@@ -112,6 +121,8 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     [tool]
   );
 
+  const [pointerDown, setPointerDown] = useState(false);
+
   const bind = useGesture({
     onDrag: ({ initial: [ix, iy], xy: [mx, my], first, memo }) => {
       if (tool !== "") {
@@ -126,6 +137,16 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
       setY(memo[1] + (my - iy));
 
       return memo;
+    },
+    onDragStart: () => {
+      if (tool !== "") {
+        return;
+      }
+
+      setPointerDown(true);
+    },
+    onDragEnd: () => {
+      setPointerDown(false);
     },
     onPinch: ({
       origin: [ox, oy],
@@ -157,6 +178,7 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     <div className="relative w-full h-screen overflow-hidden">
       <div
         className="absolute top-0 bottom-0 left-0 right-0 bg-repeat select-none bg-offwhite dark:bg-offblack touch-none"
+        id="grid"
         style={{
           backgroundImage:
             "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgB7dOrEcMwEEBByTYITCkpITA9GaunQJeQUgIN9IkEUoRHu+Tm4L2Ziymlx7qurxjjmXM+9n3/hIks27Y9W2u3Wut9hAiTWcbx/6VHOMNkllLKu0f4jhfo8wgAAAAAAAAAAAAAAAAAAAAX9APY5yL/ZyiGWAAAAABJRU5ErkJggg==)",
@@ -167,8 +189,6 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
             tool === "" ? (pointerDown ? "grabbing" : "grab") : "crosshair",
         }}
         onClick={onGridClick}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
         {...bind()}
       >
         <div
@@ -196,29 +216,6 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
         {children}
       </div>
     </div>
-  );
-}
-
-let id = 0;
-const getId = () => id++;
-
-function useCreateNode<T>(
-  atomFamily: (param: number) => RecoilState<T>,
-  type: NodeType,
-  defaultValue: T
-) {
-  return useRecoilCallback(
-    ({ set }) =>
-      (x: number, y: number) => {
-        const id = getId();
-
-        set(ids, (ids) => [...ids, { id, type }]);
-        set(atomFamily(id), {
-          ...defaultValue,
-          position: { x, y },
-        });
-      },
-    []
   );
 }
 

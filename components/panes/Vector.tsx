@@ -51,16 +51,16 @@ function VectorPane({ id }: VectorPaneProps) {
   const onChangeZ = (z: number) =>
     setNode({ ...node, vector: { ...node.vector, z } });
 
-  const onPositionChange = (position: { x: number, y: number }) => {
-    setNode({ ...node, position });
-  }
+  const onDrag = (x: number, y: number) => {
+    setNode({ ...node, position: { x, y } });
+  };
 
   return (
     <Pane
       id={id}
       {...node.position}
       {...node.dimensions}
-      onDragStop={onPositionChange}
+      onDrag={onDrag}
       blurred={
         (link === "link" && type !== "vector") || linkId === id.toString()
       }

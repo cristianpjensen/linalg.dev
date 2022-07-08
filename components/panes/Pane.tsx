@@ -1,9 +1,7 @@
 import Draggable, { DraggableData } from "react-draggable";
 import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { usePointerDown } from "../../hooks/usePointerDown";
-import { useUIStore, useNodeStore } from "../../stores";
-import type { NodeType } from "../../stores/types2";
+import { useUIStore } from "../../stores";
 import { GRID_SIZE } from "../constants";
 import { Tooltip } from "../Tooltip";
 
@@ -18,7 +16,8 @@ interface PaneProps {
   width: number;
   height: number;
   headerProps: PaneHeaderProps;
-  onDragStop?: (position: { x: number; y: number }) => void;
+  onDrag?: (x: number, y: number) => void;
+  onResize?: (width: number, height: number) => void;
   className?: string;
   blurred?: boolean;
   selectable?: boolean;
@@ -26,6 +25,14 @@ interface PaneProps {
   resizable?: boolean;
 }
 
+// TODO: Fix the re-renders when panning the grid, since none of the
+// components change. I think it is caused by the scale.
+
+// TODO: Only update scale on drag start, since otherwise it will re-render a
+// lot while scaling which makes no difference. The scale only matters when
+// the user is dragging the pane.
+
+// TODO: Add resize and drag callback props.
 export function Pane({
   children,
   id,
@@ -33,7 +40,8 @@ export function Pane({
   y,
   width,
   height,
-  onDragStop,
+  onDrag,
+  onResize,
   headerProps,
   className,
   blurred = false,
@@ -45,25 +53,16 @@ export function Pane({
     scale: state.scale,
     setTool: state.setTool,
   }));
-  const setNodePosition = useNodeStore((state) => state.setNodePosition);
-  const setNodeDimensions = useNodeStore((state) => state.setNodeDimensions);
 
-  // TODO: Fix the re-renders when panning the grid, since none of the
-  // components change. I think it is caused by the scale.
-
-  // TODO: Only update scale on drag start, since otherwise it will re-render a
-  // lot while scaling which makes no difference. The scale only matters when
-  // the user is dragging the pane.
-
-  const onDragEnd = (_: unknown, { x, y }: DraggableData) => {
-    onDragStop && onDragStop({ x, y });
+  const onDragStop = (_: unknown, { x, y }: DraggableData) => {
+    onDrag && onDrag(x, y);
   };
 
   const onResizeStop = (
     _: unknown,
     { size: { width, height } }: ResizeCallbackData
   ) => {
-    setNodeDimensions(id, width, height);
+    onResize && onResize(width, height);
   };
 
   const onSelectClick = () => {
@@ -75,7 +74,7 @@ export function Pane({
       defaultPosition={{ x, y }}
       grid={[GRID_SIZE * scale, GRID_SIZE * scale]}
       scale={scale}
-      onStop={onDragEnd}
+      onStop={onDragStop}
       handle=".handle"
     >
       <div

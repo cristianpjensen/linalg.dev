@@ -5,7 +5,6 @@ import {
   CaretDownIcon,
   FontFamilyIcon,
   GitHubLogoIcon,
-  GroupIcon,
   HandIcon,
   InfoCircledIcon,
   LayersIcon,

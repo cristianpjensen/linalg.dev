@@ -36,16 +36,16 @@ function ConstantPane({ id }: ConstantPaneProps) {
 
   const onChange = (value: number) => setNode({ ...node, value });
 
-  const onPositionChange = (position: { x: number, y: number }) => {
-    setNode({ ...node, position });
-  }
+  const onDrag = (x: number, y: number) => {
+    setNode({ ...node, position: { x, y } });
+  };
 
   return (
     <Pane
       id={id}
       {...node.position}
       {...node.dimensions}
-      onDragStop={onPositionChange}
+      onDrag={onDrag}
       blurred={
         (link === "link" && type !== "value") || linkId === id.toString()
       }
