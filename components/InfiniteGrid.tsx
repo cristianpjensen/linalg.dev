@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
-import { useUIStore, useNodeStore } from "../stores";
+import { RecoilState, useRecoilCallback } from "recoil";
+import { useUIStore } from "../stores";
 import {
   CONSTANT_HEIGHT,
   CONSTANT_WIDTH,
@@ -10,6 +11,21 @@ import {
   VECTOR_HEIGHT,
   VECTOR_WIDTH,
 } from "./constants";
+import {
+  constants,
+  defaultConstant,
+  defaultOperator,
+  defaultVector,
+  ids,
+  operators,
+  vectors,
+} from "../stores/atoms";
+import {
+  VectorNode,
+  NodeType,
+  OperatorNode,
+  ConstantNode,
+} from "../stores/types";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
@@ -19,33 +35,8 @@ interface InfiniteGridProps {
 
 export default function InfiniteGrid({ children }: InfiniteGridProps) {
   const [pointerDown, setPointerDown] = useState(false);
-
-  const pointerDownHandler = () => {
-    setPointerDown(true);
-  };
-
-  const pointerUpHandler = () => {
-    setPointerDown(false);
-  };
-
-  useEffect(() => {
-    const handler = (e: any) => e.preventDefault();
-    document.addEventListener("gesturestart", handler);
-    document.addEventListener("gesturechange", handler);
-    document.addEventListener("gestureend", handler);
-    document.addEventListener("wheel", handler, { passive: false });
-    document.addEventListener("pointerdown", pointerDownHandler);
-    document.addEventListener("pointerup", pointerUpHandler);
-
-    return () => {
-      document.removeEventListener("gesturestart", handler);
-      document.removeEventListener("gesturechange", handler);
-      document.removeEventListener("gestureend", handler);
-      document.removeEventListener("wheel", handler);
-      document.removeEventListener("pointerdown", pointerDownHandler);
-      document.removeEventListener("pointerup", pointerUpHandler);
-    };
-  }, []);
+  const onPointerDown = () => setPointerDown(true);
+  const onPointerUp = () => setPointerDown(false);
 
   const { x, setX, y, setY, scale, setXYS, tool, setTool } = useUIStore(
     (state) => ({
@@ -60,11 +51,21 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
     })
   );
 
-  const { addVector, addConstant, addOperator } = useNodeStore((state) => ({
-    addVector: state.addVector,
-    addConstant: state.addConstant,
-    addOperator: state.addOperator,
-  }));
+  const createVector = useCreateNode<VectorNode>(
+    vectors,
+    "vector",
+    defaultVector
+  );
+  const createConstant = useCreateNode<ConstantNode>(
+    constants,
+    "constant",
+    defaultConstant
+  );
+  const createOperator = useCreateNode<OperatorNode>(
+    operators,
+    "operator",
+    defaultOperator
+  );
 
   const onGridClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -73,43 +74,38 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
       }
 
       if (tool === "vector") {
-        const currentX =
-          Math.round((e.pageX - x - VECTOR_WIDTH * 0.5) / (GRID_SIZE * scale)) *
-          GRID_SIZE;
-        const currentY =
-          Math.round(
-            (e.pageY - y - VECTOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
-          ) * GRID_SIZE;
+        const position = getNodePosition(
+          { x, y },
+          { x: e.clientX, y: e.clientY },
+          { width: VECTOR_WIDTH, height: VECTOR_HEIGHT },
+          scale
+        );
 
-        addVector(currentX, currentY);
+        createVector(position.x, position.y);
         setTool("");
       }
 
       if (tool === "constant") {
-        const currentX =
-          Math.round(
-            (e.pageX - x - CONSTANT_WIDTH * 0.5) / (GRID_SIZE * scale)
-          ) * GRID_SIZE;
-        const currentY =
-          Math.round(
-            (e.pageY - y - CONSTANT_HEIGHT * 0.5) / (GRID_SIZE * scale)
-          ) * GRID_SIZE;
+        const position = getNodePosition(
+          { x, y },
+          { x: e.clientX, y: e.clientY },
+          { width: CONSTANT_WIDTH, height: CONSTANT_HEIGHT },
+          scale
+        );
 
-        addConstant(currentX, currentY);
+        createConstant(position.x, position.y);
         setTool("");
       }
 
       if (tool === "operator") {
-        const currentX =
-          Math.round(
-            (e.pageX - x - OPERATOR_WIDTH * 0.5) / (GRID_SIZE * scale)
-          ) * GRID_SIZE;
-        const currentY =
-          Math.round(
-            (e.pageY - y - OPERATOR_HEIGHT * 0.5) / (GRID_SIZE * scale)
-          ) * GRID_SIZE;
+        const position = getNodePosition(
+          { x, y },
+          { x: e.clientX, y: e.clientY },
+          { width: OPERATOR_WIDTH, height: OPERATOR_HEIGHT },
+          scale
+        );
 
-        addOperator(currentX, currentY);
+        createOperator(position.x, position.y);
         setTool("");
       }
     },
@@ -171,6 +167,8 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
             tool === "" ? (pointerDown ? "grabbing" : "grab") : "crosshair",
         }}
         onClick={onGridClick}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
         {...bind()}
       >
         <div
@@ -199,4 +197,54 @@ export default function InfiniteGrid({ children }: InfiniteGridProps) {
       </div>
     </div>
   );
+}
+
+let id = 0;
+const getId = () => id++;
+
+function useCreateNode<T>(
+  atomFamily: (param: number) => RecoilState<T>,
+  type: NodeType,
+  defaultValue: T
+) {
+  return useRecoilCallback(
+    ({ set }) =>
+      (x: number, y: number) => {
+        const id = getId();
+
+        set(ids, (ids) => [...ids, { id, type }]);
+        set(atomFamily(id), {
+          ...defaultValue,
+          position: { x, y },
+        });
+      },
+    []
+  );
+}
+
+function getNodePosition(
+  position: {
+    x: number;
+    y: number;
+  },
+  mouse: {
+    x: number;
+    y: number;
+  },
+  node: {
+    width: number;
+    height: number;
+  },
+  scale: number
+) {
+  return {
+    x:
+      Math.round(
+        (mouse.x - position.x - node.width * 0.5) / (GRID_SIZE * scale)
+      ) * GRID_SIZE,
+    y:
+      Math.round(
+        (mouse.y - position.y - node.height * 0.5) / (GRID_SIZE * scale)
+      ) * GRID_SIZE,
+  };
 }

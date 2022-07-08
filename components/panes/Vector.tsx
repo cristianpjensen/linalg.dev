@@ -4,20 +4,30 @@ import * as Popover from "@radix-ui/react-popover";
 import * as Slider from "@radix-ui/react-slider";
 import { MathInput } from "react-three-linalg";
 import TeX from "@matejmazur/react-katex";
-import { useNodeStore, useUIStore } from "../../stores";
-import type { Link } from "../../stores/types";
+import { selector, useRecoilState, useRecoilValue } from "recoil";
+import { useUIStore } from "../../stores";
+import { ids, vectors } from "../../stores/atoms";
 import { MathX, MathY, MathZ } from "../icons";
 import { Tooltip } from "../Tooltip";
 import { Pane } from "./Pane";
+import { Link } from "../../stores/types";
 
 import "katex/dist/katex.min.css";
 
+const vectorIds = selector<Array<number>>({
+  key: "vector-ids",
+  get: ({ get }) =>
+    get(ids)
+      .filter((id) => id.type === "vector")
+      .map((id) => id.id),
+});
+
 export default function Vectors() {
-  const vectors = useNodeStore((state) => state.vectors);
+  const ids = useRecoilValue(vectorIds);
 
   return (
     <>
-      {[...vectors].map(([id]) => (
+      {ids.map((id) => (
         <VectorPane key={id} id={id} />
       ))}
     </>
@@ -29,26 +39,28 @@ interface VectorPaneProps {
 }
 
 function VectorPane({ id }: VectorPaneProps) {
-  const { node, setVectorAxis } = useNodeStore((state) => ({
-    node: state.vectors.get(id),
-    setVectorAxis: state.setVectorAxis,
-  }));
-
-  if (!node) return null;
-
   const tool = useUIStore((state) => state.tool);
   const [link, type, linkId] = tool.split("-");
 
-  const onChangeX = (x: number) => setVectorAxis(id, "x", x);
-  const onChangeY = (y: number) => setVectorAxis(id, "y", y);
-  const onChangeZ = (z: number) => setVectorAxis(id, "z", z);
+  const [node, setNode] = useRecoilState(vectors(id));
+
+  const onChangeX = (x: number) =>
+    setNode({ ...node, vector: { ...node.vector, x } });
+  const onChangeY = (y: number) =>
+    setNode({ ...node, vector: { ...node.vector, y } });
+  const onChangeZ = (z: number) =>
+    setNode({ ...node, vector: { ...node.vector, z } });
+
+  const onPositionChange = (position: { x: number, y: number }) => {
+    setNode({ ...node, position });
+  }
 
   return (
     <Pane
       id={id}
       {...node.position}
       {...node.dimensions}
-      type={node.type}
+      onDragStop={onPositionChange}
       blurred={
         (link === "link" && type !== "vector") || linkId === id.toString()
       }
@@ -67,21 +79,21 @@ function VectorPane({ id }: VectorPaneProps) {
       <DimensionInput
         id={id}
         dimension="x"
-        value={node.vector.x.get()}
+        value={node.vector.x}
         link={node.link.x}
         onChange={onChangeX}
       />
       <DimensionInput
         id={id}
         dimension="y"
-        value={node.vector.y.get()}
+        value={node.vector.y}
         link={node.link.y}
         onChange={onChangeY}
       />
       <DimensionInput
         id={id}
         dimension="z"
-        value={node.vector.z.get()}
+        value={node.vector.z}
         link={node.link.z}
         onChange={onChangeZ}
       />
@@ -92,7 +104,7 @@ function VectorPane({ id }: VectorPaneProps) {
 interface DimensionInputProps {
   id: number;
   value: number;
-  link: Link | null;
+  link: Link<"constant" | "operator"> | null;
   dimension: "x" | "y" | "z";
   onChange: (value: number) => void;
 }

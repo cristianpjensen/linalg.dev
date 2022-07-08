@@ -1,14 +1,23 @@
-import { useCallback } from "react";
 import { MathInput } from "react-three-linalg";
-import { useNodeStore, useUIStore } from "../../stores";
+import { selector, useRecoilState, useRecoilValue } from "recoil";
+import { constants, ids } from "../../stores/atoms";
+import { useUIStore } from "../../stores";
 import { Pane } from "./Pane";
 
+const constantIds = selector<Array<number>>({
+  key: "constant-ids",
+  get: ({ get }) =>
+    get(ids)
+      .filter((id) => id.type === "constant")
+      .map((id) => id.id),
+});
+
 export default function Constants() {
-  const constants = useNodeStore((state) => state.constants);
+  const ids = useRecoilValue(constantIds);
 
   return (
     <>
-      {[...constants].map(([id]) => (
+      {ids.map((id) => (
         <ConstantPane key={id} id={id} />
       ))}
     </>
@@ -20,26 +29,23 @@ interface ConstantPaneProps {
 }
 
 function ConstantPane({ id }: ConstantPaneProps) {
-  const { node, setConstantValue } = useNodeStore((state) => ({
-    node: state.constants.get(id),
-    setConstantValue: state.setConstantValue,
-  }));
-  if (!node) return null;
-
-  const onChange = useCallback(
-    (value: number) => setConstantValue(id, value),
-    [id, setConstantValue]
-  );
-
   const tool = useUIStore((state) => state.tool);
   const [link, type, linkId] = tool.split("-");
+
+  const [node, setNode] = useRecoilState(constants(id));
+
+  const onChange = (value: number) => setNode({ ...node, value });
+
+  const onPositionChange = (position: { x: number, y: number }) => {
+    setNode({ ...node, position });
+  }
 
   return (
     <Pane
       id={id}
       {...node.position}
       {...node.dimensions}
-      type={node.type}
+      onDragStop={onPositionChange}
       blurred={
         (link === "link" && type !== "value") || linkId === id.toString()
       }
@@ -56,7 +62,7 @@ function ConstantPane({ id }: ConstantPaneProps) {
     >
       <div className="border-yellow-900 grow cursor-text text-green-ext-900 dark:text-green-ext-100">
         <MathInput
-          value={node.value.get()}
+          value={node.value}
           onChange={onChange}
           style={{
             backgroundColor: "transparent",

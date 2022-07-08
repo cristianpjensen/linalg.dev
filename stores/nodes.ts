@@ -19,7 +19,7 @@ import {
   Value,
   ValueNodeType,
   VectorNode,
-} from "./types";
+} from "./types2";
 
 // TODO: Make it possible to add toasts from here to signal errors or warnings.
 // TODO: Add comments.

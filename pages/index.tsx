@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import * as TWEEN from "@tweenjs/tween.js";
+import { RecoilRoot } from "recoil";
 
 const VectorSpace = dynamic(() => import("../components/VectorSpace"), {
   ssr: false,
@@ -15,10 +16,10 @@ const Vectors = dynamic(() => import("../components/panes/Vector"), {
 });
 const Constants = dynamic(() => import("../components/panes/Constant"), {
   ssr: false,
-})
+});
 const Operators = dynamic(() => import("../components/panes/Operator"), {
   ssr: false,
-})
+});
 const Toolbar = dynamic(() => import("../components/Toolbar"), {
   ssr: false,
 });
@@ -46,19 +47,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-row dark:text-white dark:bg-black">
-        {/* <div className="w-6/12 h-full"> */}
-        <div className="w-full h-full">
-          <Toolbar />
-          <Grid>
-            <Constants />
-            <Operators />
-            <Vectors />
-          </Grid>
-        </div>
+      <RecoilRoot>
+        <div className="flex flex-row dark:text-white dark:bg-black">
+          {/* <div className="w-6/12 h-full"> */}
+          <div className="w-full h-full">
+            <Toolbar />
+            <Grid>
+              <Constants />
+              <Operators />
+              <Vectors />
+            </Grid>
+          </div>
 
-        {/* <VectorSpace /> */}
-      </div>
+          {/* <VectorSpace /> */}
+        </div>
+      </RecoilRoot>
     </div>
   );
 };
