@@ -19,6 +19,10 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { Tooltip } from "./Tooltip";
 import { useUIStore, setDarkMode } from "../stores";
 
+// TODO: Give each tool its own component and a selector that only becomes true
+// when it is the selected tool. This might cause it not to re-render. 
+
+// TODO: It should not re-render on dragging the grid, so fix that.
 export default function Toolbar() {
   const darkMode =
     localStorage.getItem("theme") === "dark" ||
@@ -90,6 +94,8 @@ export default function Toolbar() {
   );
 }
 
+// TODO: Only fetch the position when zooming in or out, since otherwise they
+// are not necessary and cause a lot of unnecessary re-renders.
 function ZoomControl() {
   const [x, y, scale, setXYS] = useUIStore(({ x, y, scale, setXYS }) => [
     x,

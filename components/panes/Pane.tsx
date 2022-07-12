@@ -26,13 +26,11 @@ interface PaneProps {
 }
 
 // TODO: Fix the re-renders when panning the grid, since none of the
-// components change. I think it is caused by the scale.
+// components change -- only their parent. I think it is caused by the scale.
 
 // TODO: Only update scale on drag start, since otherwise it will re-render a
 // lot while scaling which makes no difference. The scale only matters when
 // the user is dragging the pane.
-
-// TODO: Add resize and drag callback props.
 export function Pane({
   children,
   id,
