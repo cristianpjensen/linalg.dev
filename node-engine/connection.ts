@@ -1,18 +1,27 @@
 import { v4 as uuid } from "uuid";
-import { observable, action, computed, reaction, IReactionDisposer } from "mobx";
+import { observable, action, computed, reaction, IReactionDisposer, makeObservable } from "mobx";
 
 import { InputPort, OutputPort } from "./port";
 import { Context } from "./context";
 
 export class Connection {
-	@observable public id: string;
-	@observable public fromPort: OutputPort<any>;
-	@observable public toPort: InputPort<any>;
-	@observable public context: Context;
+	public id: string;
+	public fromPort: OutputPort<any>;
+	public toPort: InputPort<any>;
+	public context: Context;
 
 	private reactionDisposer: IReactionDisposer;
 
 	constructor(context: Context, props: ConnectionProps) {
+		makeObservable(this, {
+			id: observable,
+			fromPort: observable,
+			toPort: observable,
+			context: observable,
+			destroy: action,
+			isValid: computed,
+		})
+
 		this.id = props.id || uuid();
 
 		this.context = context;
@@ -35,7 +44,7 @@ export class Connection {
 	 * Removes the connection and resets the value of the input port to its
 	 * default.
 	 */
-	@action public destroy() {
+	public destroy() {
 		this.context.removeConnection(this);
 		this.reactionDisposer();
 		this.toPort.value = this.toPort.defaultValue;
@@ -45,7 +54,7 @@ export class Connection {
 	 * A connection is valid if the validator function runs successfully. If the
 	 * validator function is not defined, then the connection is always valid.
 	 */
-	@computed public get isValid(): boolean {
+	public get isValid(): boolean {
 		return !this.toPort.validate || this.toPort.validate(this.fromPort.value);
 	}
 

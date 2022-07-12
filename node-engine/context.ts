@@ -19,7 +19,7 @@
  */
 
 import { v4 as uuid } from "uuid";
-import { observable, action } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import serializeObject from "serialize-javascript";
 
 import { Node, NodePortProps } from "./node";
@@ -28,24 +28,35 @@ import { PortType, OutputPort, InputPort } from "./port";
 import * as Nodes from "./nodes";
 
 export class Context {
-	@observable public id: string;
+	public id: string;
 
 	/**
 	 * Optional data store that can contain any information about the context.
 	 */
-	@observable public data?: Data = {};
+	public data?: Data = {};
 
 	/**
 	 * The collection of nodes in this context.
 	 */
-	@observable public nodes: Map<string, Node<any, any>>;
+	public nodes: Map<string, Node<any, any>>;
 
 	/**
 	 * The collection of connections in this context.
 	 */
-	@observable public connections: Map<string, Connection>;
+	public connections: Map<string, Connection>;
 
 	constructor(props: ContextProps) {
+		makeObservable(this, {
+			id: observable,
+			data: observable,
+			nodes: observable,
+			connections: observable,
+			addNode: action,
+			removeNode: action,
+			createConnection: action,
+			removeConnection: action,
+		})
+
 		this.id = props.id || uuid();
 		this.data = props.data;
 
@@ -57,7 +68,7 @@ export class Context {
 	 * Creates a node and adds it to the context.
 	 * @param node - The node to be added.
 	 */
-	@action public addNode(node: Node<any, any>) {
+	public addNode(node: Node<any, any>) {
 		if (node instanceof Node) {
 			this.nodes.set(node.id, node);
 			return node;
@@ -68,7 +79,7 @@ export class Context {
 	 * Removes a node from the context.
 	 * @param node - The node to be removed.
 	 */
-	@action public removeNode(node: Node<any, any>) {
+	public removeNode(node: Node<any, any>) {
 		if (node instanceof Node && this.nodes.has(node.id)) {
 			this.nodes.delete(node.id);
 		} else {
@@ -81,7 +92,7 @@ export class Context {
 	 * context.
 	 * @param props - Connection properties.
 	 */
-	@action public createConnection(props: ConnectionProps): Connection {
+	public createConnection(props: ConnectionProps): Connection {
 		const { fromPort, toPort } = props;
 
 		// Connections can only go from output to input ports.
@@ -115,7 +126,7 @@ export class Context {
 	 * Removes a connection from the context.
 	 * @param connection - The connection to be removed.
 	 */
-	@action public removeConnection(connection: Connection) {
+	public removeConnection(connection: Connection) {
 		if (this.connections.has(connection.id)) {
 			this.connections.delete(connection.id);
 		} else {

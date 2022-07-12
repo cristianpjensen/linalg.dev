@@ -1,31 +1,31 @@
 import { v4 as uuid } from "uuid";
-import { observable, action, computed } from "mobx";
+import { observable, action, computed, makeObservable } from "mobx";
 
 import { Node } from "./node";
 import { Connection } from "./connection";
 import { Data } from "./context";
 
 export abstract class Port<T> {
-	@observable public id: string;
-	@observable public abstract type: PortType;
-	@observable public defaultValue: T;
+	public id: string;
+	public abstract type: PortType;
+	public defaultValue: T;
 	
 	/**
 	 * Reference to the parent node.
 	 */
-	@observable public node: Node<any, any>;
+	public node: Node<any, any>;
 
 	/**
 	 * The port's current value. If this is an input port, then when the value
 	 * is set, the output ports of that same node are updated by calling
 	 * compute() on the parent node.
 	 */
-	@observable private _value!: T;
+	private _value!: T;
 
 	/**
 	 * Optional data store to contain information about the port.
 	 */
-	@observable public data?: Data = {};
+	public data?: Data = {};
 
 	/**
 	 * Optional validation function that will be called when the value is set.
@@ -34,6 +34,18 @@ export abstract class Port<T> {
 	public validate?(value: any): boolean;
 
 	constructor(node: Node<any, any>, props: PortProps<T>) {
+		makeObservable<Port<T>, "_value">(this, {
+			id: observable,
+			type: observable,
+			defaultValue: observable,
+			node: observable,
+			_value: observable,
+			data: observable,
+			value: computed,
+			connections: computed,
+			isConnected: computed,
+		})
+
 		this.node = node;
 		this.id = props.id || uuid();
 		this.defaultValue = props.defaultValue;
@@ -45,7 +57,7 @@ export abstract class Port<T> {
 		}
 	}
 
-	@computed public get value() {
+	public get value() {
 		return this._value;
 	}
 
@@ -60,13 +72,13 @@ export abstract class Port<T> {
 	/**
 	 * Returns an array of the connected ports.
 	 */
-	@computed public get connections() {
+	public get connections() {
 		return this.node.connections.filter((connection) => {
 			return connection.fromPort.id === this.id || connection.toPort.id === this.id;
 		});
 	}
 
-	@computed public get isConnected(): boolean {
+	public get isConnected(): boolean {
 		return this.connections.length > 0;
 	}
 
@@ -87,12 +99,20 @@ export class InputPort<T> extends Port<T> {
 export class OutputPort<T> extends Port<T> {
 	public type = PortType.OUTPUT;
 
+	constructor(node: Node<any, any>, props: PortProps<T>) {
+		super(node, props);
+
+		makeObservable(this, {
+			connect: action,
+		})
+	}
+
 	/**
 	 * Connects this port with an input port.
 	 * @param targetPort - Input port to connect to.
 	 * @returns The created connection.
 	 */
-	@action public connect(targetPort: InputPort<T>): Connection {
+	public connect(targetPort: InputPort<T>): Connection {
 		return this.node.context.createConnection({
 			fromPort: this,
 			toPort: targetPort,
