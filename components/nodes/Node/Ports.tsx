@@ -74,7 +74,7 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 			return;
 		}
 
-		if (editorContext.connectingPort === port) {
+		if (editorContext.connectingPort?.node === port.node) {
 			// If the port is currently the one being connected, cancel the connection
 			editorContext.connectingPort = null;
 		} else if (editorContext.connectingPort) {
@@ -117,7 +117,8 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 					: ""
 			} ${
 				editorContext.connectingPort &&
-				editorContext.connectingPort.type === port.type &&
+				(editorContext.connectingPort.type === port.type ||
+					editorContext.connectingPort.node === port.node) &&
 				editorContext.connectingPort !== port
 					? "opacity-40"
 					: ""

@@ -15,6 +15,7 @@ export interface IConnectionsProps {
 
 export const Connections = observer(
 	({ context, className }: IConnectionsProps) => {
+		const scale = useUIStore((state) => state.scale);
 		const mouse = useMouse(document.getElementById("editor"));
 
 		// Use states, such that the connection won't be removed when hovering over
@@ -69,8 +70,8 @@ export const Connections = observer(
 							editorContext.connectingPort.data.position.y +
 							editorContext.connectingPort.node.data.position.y
 						}
-						x2={mousePosition.x - x}
-						y2={mousePosition.y - y}
+						x2={(mousePosition.x - x) / scale}
+						y2={(mousePosition.y - y) / scale}
 					/>
 				)}
 			</svg>
