@@ -5,7 +5,7 @@ import Draggable, { DraggableData } from "react-draggable";
 import { Node as _Node } from "../../../node-engine";
 import { GRID_SIZE } from "../../constants";
 
-interface INodeRoot {
+interface INodeRootProps {
 	/**
 	 * Internal representation of the node. This is only used for getting and
 	 * setting the position of the node in the editor.
@@ -29,7 +29,7 @@ interface INodeRoot {
 }
 
 export const Root = observer(
-	({ node, children, className, style }: INodeRoot) => {
+	({ node, children, className, style }: INodeRootProps) => {
 		const onDrag = (_: unknown, { x, y }: DraggableData) => {
 			set(node.data, "position", { x, y });
 		};

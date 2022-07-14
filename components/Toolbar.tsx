@@ -62,9 +62,9 @@ export default function Toolbar() {
           },
           {
             icon: <PlusIcon />,
-            title: "operator",
+            title: "unary-operator",
             description: "Press anywhere on the canvas to add a mathematical operator",
-            hotkey: "o",
+            hotkey: "u",
           },
         ]}
       />
@@ -211,7 +211,7 @@ function Tool({ icon, title, description, tooltipSide, hotkey }: ToolProps) {
   const [tool, setTool] = useUIStore(({ tool, setTool }) => [tool, setTool]);
   if (hotkey) useHotkeys(hotkey, () => setTool(title));
 
-  const titleCapitalized = title.charAt(0).toUpperCase() + title.slice(1);
+  const titleCapitalized = (title.charAt(0).toUpperCase() + title.slice(1)).replace("-", " ");
 
   return (
     <Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>

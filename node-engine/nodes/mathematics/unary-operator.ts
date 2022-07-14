@@ -11,11 +11,17 @@ import {
 } from "../../node";
 import { InputPort, OutputPort } from "../../port";
 
+export type UnaryOperator =
+	| "square"
+	| "square root"
+	| "cubed"
+	| "cos"
+	| "tan"
+	| "sin";
+
 export interface UnaryOperatorNodeInputPorts extends NodeInputPorts {
 	x: InputPort<number>;
-	operator: InputPort<
-		"square" | "square root" | "cubed" | "cos" | "tan" | "sin"
-	>;
+	operator: InputPort<UnaryOperator>;
 }
 
 export interface UnaryOperatorNodeOutputPorts extends NodeOutputPorts {

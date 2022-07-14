@@ -7,6 +7,7 @@ import { CONSTANT_HEIGHT, CONSTANT_WIDTH, GRID_SIZE } from "./constants";
 import {
 	Context as _NodeContext,
 	ConstantNode as _ConstantNode,
+	UnaryOperatorNode as _UnaryOperatorNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 
@@ -61,8 +62,7 @@ const Editor = observer(({ context }: IEditorProps) => {
 			if (tool === "constant") {
 				new _ConstantNode(context, {
 					data: {
-						name: "Vector",
-						type: "vector",
+						name: "Constant",
 						position: getNodePosition(
 							{ x, y },
 							{ x: e.clientX, y: e.clientY },
@@ -79,7 +79,23 @@ const Editor = observer(({ context }: IEditorProps) => {
 				setTool("");
 			}
 
-			if (tool === "operator") {
+			if (tool === "unary-operator") {
+				new _UnaryOperatorNode(context, {
+					data: {
+						name: "Unary operator",
+						position: getNodePosition(
+							{ x, y },
+							{ x: e.clientX, y: e.clientY },
+							{ width: CONSTANT_WIDTH, height: CONSTANT_HEIGHT },
+							scale
+						),
+						size: {
+							width: CONSTANT_WIDTH,
+							height: CONSTANT_HEIGHT,
+						},
+					},
+				});
+
 				setTool("");
 			}
 		},
