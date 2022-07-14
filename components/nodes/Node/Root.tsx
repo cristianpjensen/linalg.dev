@@ -1,8 +1,12 @@
 import { set } from "mobx";
 import { observer } from "mobx-react-lite";
+import { useCallback, useRef } from "react";
 import Draggable, { DraggableData } from "react-draggable";
+import useOnClickOutside from "use-onclickoutside";
+import { editorContext } from "../../../editor";
 
 import { Node as _Node } from "../../../node-engine";
+import { useUIStore } from "../../../stores";
 import { GRID_SIZE } from "../../constants";
 
 interface INodeRootProps {
@@ -34,7 +38,20 @@ export const Root = observer(
 			set(node.data, "position", { x, y });
 		};
 
-		const scale = 1;
+		const scale = useUIStore((state) => state.scale);
+
+		const onClick = useCallback(() => {
+			editorContext.selectedNode = node;
+		}, []);
+
+		const onClickOutside = useCallback(() => {
+			if (editorContext.selectedNode === node) {
+				editorContext.selectedNode = null;
+			}
+		}, [editorContext.selectedNode])
+
+		const ref = useRef<HTMLDivElement>(null);
+		useOnClickOutside(ref, onClickOutside);
 
 		return (
 			<Draggable
@@ -48,7 +65,13 @@ export const Root = observer(
 				handle=".handle"
 			>
 				<div
-					className={`absolute rounded shadow-md hover:shadow-lg transition-shadow ${className}`}
+					ref={ref}
+					onClick={onClick}
+					className={`absolute rounded transition-shadow ${
+						editorContext.selectedNode === node
+							? "shadow-xl"
+							: "shadow-md hover:shadow-lg"
+					} ${className}`}
 					style={{
 						width: node.data.size.width,
 						height: node.data.size.height,

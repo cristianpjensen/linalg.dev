@@ -1,11 +1,17 @@
 import { observable } from "mobx";
-import { Port } from "../node-engine";
+
+import { Port, Node } from "../node-engine";
 
 export interface EditorContext {
 	/**
 	 * The current port that is being connected to another port.
 	 */
 	connectingPort: Port<any> | null;
+
+	/**
+	 * The currently selected node that is highlighted in the editor.
+	 */
+	selectedNode: Node | null;
 }
 
 /**
@@ -15,4 +21,5 @@ export interface EditorContext {
  */
 export const editorContext = observable<EditorContext>({
 	connectingPort: null,
+	selectedNode: null,
 });

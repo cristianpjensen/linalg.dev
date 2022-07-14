@@ -9,6 +9,8 @@ import {
 	PortType,
 } from "../../../node-engine";
 import { editorContext } from "../../../editor";
+import { useEffect } from "react";
+import { set } from "mobx";
 
 export interface INodePortsProps {
 	node: _Node;
@@ -18,23 +20,26 @@ export interface INodePortsProps {
 export const InputPorts = observer(({ node, omit }: INodePortsProps) => {
 	const omitIds = omit?.map((port) => port.id);
 
+	const inputPorts = Object.values(node.inputPorts).filter(
+		(port) => !omitIds || !omitIds.includes(port.id)
+	);
+
 	return (
 		<div className="absolute flex flex-col justify-around h-[calc(100%-32px)] top-8 -left-3">
-			{Object.values(node.inputPorts).map(
-				(port) =>
-					omitIds?.includes(port.id) || (
-						<Port key={port.id} port={port} />
-					)
-			)}
+			{inputPorts.map((port, index) => (
+				<Port key={port.id} port={port} index={index} total={inputPorts.length} />
+			))}
 		</div>
 	);
 });
 
 export const OutputPorts = observer(({ node }: INodePortsProps) => {
+	const outputPorts = Object.values(node.outputPorts);
+
 	return (
-		<div className="absolute top-8 flex flex-col justify-around h-[calc(100%-32px)] -right-3">
-			{Object.values(node.outputPorts).map((port) => (
-				<Port key={port.id} port={port} />
+		<div className="absolute top-8 flex flex-col justify-evenly h-[calc(100%-32px)] -right-3">
+			{outputPorts.map((port, index) => (
+				<Port key={port.id} port={port} index={index} total={outputPorts.length} />
 			))}
 		</div>
 	);
@@ -42,9 +47,11 @@ export const OutputPorts = observer(({ node }: INodePortsProps) => {
 
 export interface INodePortProps {
 	port: _Port<any>;
+	index: number;
+	total: number;
 }
 
-export const Port = observer(({ port }: INodePortProps) => {
+export const Port = observer(({ port, index, total }: INodePortProps) => {
 	const destroyConnections = () => {
 		port.connections.forEach((connection) => {
 			connection.destroy();
@@ -84,6 +91,13 @@ export const Port = observer(({ port }: INodePortProps) => {
 			editorContext.connectingPort = port;
 		}
 	};
+
+	useEffect(() => {
+		const sectionSize = (port.node.data.size.height - 32) / (total + 2);
+		const x = port.type === PortType.OUTPUT ? port.node.data.size.width : 0;
+		const y = sectionSize * (index + 1) + 32;
+		set(port.data, "position", { x, y: y + 14 });
+	}, [port.node.data.size, index]);
 
 	return (
 		<button

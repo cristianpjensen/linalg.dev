@@ -25,7 +25,7 @@ export abstract class Port<T> {
 	/**
 	 * Optional data store to contain information about the port.
 	 */
-	public data?: Data = {};
+	public data: Data;
 
 	/**
 	 * Optional validation function that will be called when the value is set.
@@ -38,7 +38,7 @@ export abstract class Port<T> {
 		this.id = props.id || uuid();
 		this.defaultValue = props.defaultValue;
 		this.value = props.value || props.defaultValue;
-		this.data = props.data;
+		this.data = props.data || {};
 
 		if (typeof props.validate === "function") {
 			this.validate = props.validate;

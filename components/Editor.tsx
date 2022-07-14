@@ -10,6 +10,7 @@ import {
 	UnaryOperatorNode as _UnaryOperatorNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
+import { Connections } from "./Connections";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
@@ -180,6 +181,7 @@ const Editor = observer(({ context }: IEditorProps) => {
 				onClick={onGridClick}
 				{...bind()}
 			>
+				{/* Crosshair at (0,0) */}
 				<div
 					className="w-0 h-0"
 					style={{
@@ -205,11 +207,20 @@ const Editor = observer(({ context }: IEditorProps) => {
 					transform: `scale(${scale})`,
 				}}
 			>
-				{Array.from(context.nodes.values()).map((node) => (
-					<NodeWrapper key={node.id} node={node} />
-				))}
+				<Connections className="absolute top-0 left-0 w-1 h-1 overflow-visible pointer-events-none" context={context} />
+				<Nodes context={context} />
 			</div>
 		</div>
+	);
+});
+
+const Nodes = observer(({ context }: IEditorProps) => {
+	return (
+		<>
+			{Array.from(context.nodes.values()).map((node) => (
+				<NodeWrapper key={node.id} node={node} />
+			))}
+		</>
 	);
 });
 
