@@ -101,7 +101,7 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 
 	return (
 		<button
-			className={`flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-500 transition-all duration-200 ease-out ${
+			className={`flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-400 transition-all duration-200 ${
 				editorContext.connectingPort === port
 					? "bg-zinc-600 dark:bg-zinc-300"
 					: ""
@@ -111,7 +111,7 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 				editorContext.connectingPort !== port
 					? "opacity-40"
 					: ""
-			}`}
+			} ${editorContext.selectedNode === port.node ? "border-zinc-400 dark:border-zinc-400" : ""}`}
 			onClick={onClick}
 		>
 			N

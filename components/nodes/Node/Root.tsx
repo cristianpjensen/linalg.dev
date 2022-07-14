@@ -67,10 +67,10 @@ export const Root = observer(
 				<div
 					ref={ref}
 					onClick={onClick}
-					className={`absolute rounded transition-shadow ${
+					className={`absolute rounded transition-shadow duration-200 ${
 						editorContext.selectedNode === node
-							? "shadow-xl"
-							: "shadow-md hover:shadow-lg"
+							? "shadow-b2 shadow-zinc-400 dark:shadow-zinc-400"
+							: "shadow-b1 shadow-zinc-200 dark:shadow-zinc-700"
 					} ${className}`}
 					style={{
 						width: node.data.size.width,
