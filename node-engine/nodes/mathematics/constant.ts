@@ -1,7 +1,14 @@
 import * as _ from "lodash";
+import { action, makeObservable, observable } from "mobx";
 
 import { Context } from "../../context";
-import { Node, NodeInputPorts, NodeOutputPorts, NodeProps } from "../../node";
+import {
+	Node,
+	NodeInputPorts,
+	NodeOutputPorts,
+	NodeProps,
+	NodeType,
+} from "../../node";
 import { InputPort, OutputPort } from "../../port";
 
 export interface ConstantNodeInputPorts extends NodeInputPorts {
@@ -12,10 +19,15 @@ export interface ConstantNodeOutputPorts extends NodeOutputPorts {
 	result: OutputPort<number>;
 }
 
-type ConstantProps = NodeProps<ConstantNodeInputPorts, ConstantNodeOutputPorts>;
+export interface ConstantNode extends Node {
+	inputPorts: ConstantNodeInputPorts;
+	outputPorts: ConstantNodeOutputPorts;
+}
 
-export class ConstantNode extends Node<ConstantNodeInputPorts, ConstantNodeOutputPorts> {
-	constructor(context: Context, props: ConstantProps) {
+export class ConstantNode extends Node {
+	type = NodeType.Constant;
+
+	constructor(context: Context, props: NodeProps) {
 		_.defaultsDeep(props, {
 			inputPorts: {
 				x: {
@@ -28,9 +40,14 @@ export class ConstantNode extends Node<ConstantNodeInputPorts, ConstantNodeOutpu
 					defaultValue: 0,
 				},
 			},
-		} as ConstantProps);
+		} as NodeProps);
 
 		super(context, props);
+
+		makeObservable(this, {
+			type: observable,
+			compute: action,
+		});
 	}
 
 	compute() {

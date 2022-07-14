@@ -13,15 +13,6 @@ export class Connection {
 	private reactionDisposer: IReactionDisposer;
 
 	constructor(context: Context, props: ConnectionProps) {
-		makeObservable(this, {
-			id: observable,
-			fromPort: observable,
-			toPort: observable,
-			context: observable,
-			destroy: action,
-			isValid: computed,
-		})
-
 		this.id = props.id || uuid();
 
 		this.context = context;
@@ -38,6 +29,15 @@ export class Connection {
 				this.toPort.value = value;
 			}
 		);
+
+		makeObservable(this, {
+			id: observable,
+			fromPort: observable,
+			toPort: observable,
+			context: observable,
+			destroy: action,
+			isValid: computed,
+		})
 	}
 
 	/**

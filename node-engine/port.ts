@@ -9,11 +9,11 @@ export abstract class Port<T> {
 	public id: string;
 	public abstract type: PortType;
 	public defaultValue: T;
-	
+
 	/**
 	 * Reference to the parent node.
 	 */
-	public node: Node<any, any>;
+	public node: Node;
 
 	/**
 	 * The port's current value. If this is an input port, then when the value
@@ -33,19 +33,7 @@ export abstract class Port<T> {
 	 */
 	public validate?(value: any): boolean;
 
-	constructor(node: Node<any, any>, props: PortProps<T>) {
-		makeObservable<Port<T>, "_value">(this, {
-			id: observable,
-			type: observable,
-			defaultValue: observable,
-			node: observable,
-			_value: observable,
-			data: observable,
-			value: computed,
-			connections: computed,
-			isConnected: computed,
-		})
-
+	constructor(node: Node, props: PortProps<T>) {
 		this.node = node;
 		this.id = props.id || uuid();
 		this.defaultValue = props.defaultValue;
@@ -74,7 +62,10 @@ export abstract class Port<T> {
 	 */
 	public get connections() {
 		return this.node.connections.filter((connection) => {
-			return connection.fromPort.id === this.id || connection.toPort.id === this.id;
+			return (
+				connection.fromPort.id === this.id ||
+				connection.toPort.id === this.id
+			);
 		});
 	}
 
@@ -94,17 +85,42 @@ export abstract class Port<T> {
 
 export class InputPort<T> extends Port<T> {
 	public type = PortType.INPUT;
+
+	constructor(node: Node, props: PortProps<T>) {
+		super(node, props);
+
+		makeObservable<InputPort<T>, "_value">(this, {
+			id: observable,
+			type: observable,
+			defaultValue: observable,
+			node: observable,
+			_value: observable,
+			data: observable,
+			value: computed,
+			connections: computed,
+			isConnected: computed,
+		});
+	}
 }
 
 export class OutputPort<T> extends Port<T> {
 	public type = PortType.OUTPUT;
 
-	constructor(node: Node<any, any>, props: PortProps<T>) {
+	constructor(node: Node, props: PortProps<T>) {
 		super(node, props);
 
-		makeObservable(this, {
+		makeObservable<OutputPort<T>, "_value">(this, {
+			id: observable,
+			type: observable,
+			defaultValue: observable,
+			node: observable,
+			_value: observable,
+			data: observable,
+			value: computed,
+			connections: computed,
+			isConnected: computed,
 			connect: action,
-		})
+		});
 	}
 
 	/**

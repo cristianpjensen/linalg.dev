@@ -5,8 +5,9 @@ import { InputPort, OutputPort, PortProps } from "./port";
 import { Context, Data } from "./context";
 import { Connection } from "./connection";
 
-export abstract class Node<InputPorts extends NodeInputPorts, OutputPorts extends NodeOutputPorts> {
+export abstract class Node {
 	public id: string;
+	public abstract type: NodeType;
 
 	/**
 	 * Dictionary with the input ports of the node, where the key is the name of
@@ -31,37 +32,49 @@ export abstract class Node<InputPorts extends NodeInputPorts, OutputPorts extend
 	 * Optional data store that can contain information about the node. For
 	 * example, the position and dimensions of the pane in the node environment.
 	 */
-	public data?: Data = {};
+	public data: Data;
 
-	constructor(context: Context, props: NodeProps<InputPorts, OutputPorts>) {
-		makeObservable(this, {
+	constructor(context: Context, props: NodeProps) {
+		this.id = props.id || uuid();
+		this.data = props.data || {};
+		this.context = context;
+
+		this.generatePorts(props);
+
+		makeObservable<Node, "generatePorts">(this, {
 			id: observable,
 			inputPorts: observable,
 			outputPorts: observable,
 			context: observable,
 			data: observable,
-			initialize: action,
-			compute: action,
 			destroy: action,
+			generatePorts: action,
 			connections: computed,
-		})
-
-		this.id = props.id || uuid();
-		this.data = props.data;
-		this.context = context;
-
-		for (const inputPort in props.inputPorts) {
-			this.inputPorts[inputPort] = new InputPort(this, props.inputPorts[inputPort]);
-		}
-
-		for (const outputPort in props.outputPorts) {
-			this.outputPorts[outputPort] = new OutputPort(this, props.outputPorts[outputPort]);
-		}
+		});
 
 		context.addNode(this);
 
 		this.initialize && this.initialize();
 		this.compute && this.compute();
+	}
+
+	/**
+	 * Generates in- and output ports.
+	 */
+	private generatePorts(nodeProps: NodeProps) {
+		for (const inputPort in nodeProps.inputPorts) {
+			this.inputPorts[inputPort] = new InputPort(
+				this,
+				nodeProps.inputPorts[inputPort]
+			);
+		}
+
+		for (const outputPort in nodeProps.outputPorts) {
+			this.outputPorts[outputPort] = new OutputPort(
+				this,
+				nodeProps.outputPorts[outputPort]
+			);
+		}
 	}
 
 	/**
@@ -91,9 +104,14 @@ export abstract class Node<InputPorts extends NodeInputPorts, OutputPorts extend
 	}
 
 	public get connections(): Array<Connection> {
-		return Array.from(this.context.connections.values()).filter((connection) => {
-			return connection.fromPort.node.id === this.id || connection.toPort.node.id === this.id;
-		});
+		return Array.from(this.context.connections.values()).filter(
+			(connection) => {
+				return (
+					connection.fromPort.node.id === this.id ||
+					connection.toPort.node.id === this.id
+				);
+			}
+		);
 	}
 
 	serialize() {
@@ -101,11 +119,13 @@ export abstract class Node<InputPorts extends NodeInputPorts, OutputPorts extend
 		const serializedOutputPorts: { [key: string]: any } = {};
 
 		for (const inputPort in this.inputPorts) {
-			serializedInputPorts[inputPort] = this.inputPorts[inputPort].serialize();
+			serializedInputPorts[inputPort] =
+				this.inputPorts[inputPort].serialize();
 		}
 
 		for (const outputPort in this.outputPorts) {
-			serializedOutputPorts[outputPort] = this.outputPorts[outputPort].serialize();
+			serializedOutputPorts[outputPort] =
+				this.outputPorts[outputPort].serialize();
 		}
 
 		return {
@@ -118,10 +138,10 @@ export abstract class Node<InputPorts extends NodeInputPorts, OutputPorts extend
 	}
 }
 
-export interface NodeProps<InputPorts extends NodeInputPorts, OutputPorts extends NodeOutputPorts> {
+export interface NodeProps {
 	id?: string;
-	inputPorts?: InputPorts;
-	outputPorts?: OutputPorts;
+	inputPorts?: NodePortProps<any>;
+	outputPorts?: NodePortProps<any>;
 	data?: Data;
 }
 
@@ -135,4 +155,9 @@ export interface NodeInputPorts {
 
 export interface NodeOutputPorts {
 	[key: string]: OutputPort<any>;
+}
+
+export enum NodeType {
+	Constant = "Constant",
+	UnaryOperator = "Unary operator",
 }

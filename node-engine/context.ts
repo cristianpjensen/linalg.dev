@@ -3,17 +3,17 @@
  * package of Emil Widlund (https://github.com/emilwidlund/wire). The main
  * difference is that these files contain more documentation on the
  * implementation and a couple of small differences, such as file organization.
- * 
+ *
  * @usage
  * ```typescript
  * import { Context } from "node-engine";
  * import { AdditionNode } from "node-engine/nodes";
- * 
+ *
  * const context = new Context();
- * 
+ *
  * const nodeA = new AdditionNode(context);
  * const nodeB = new AdditionNode(context);
- * 
+ *
  * nodeA.outputPorts.result.connect(nodeB.inputPorts.x);
  * ```
  */
@@ -38,7 +38,7 @@ export class Context {
 	/**
 	 * The collection of nodes in this context.
 	 */
-	public nodes: Map<string, Node<any, any>>;
+	public nodes: Map<string, Node>;
 
 	/**
 	 * The collection of connections in this context.
@@ -46,6 +46,12 @@ export class Context {
 	public connections: Map<string, Connection>;
 
 	constructor(props: ContextProps) {
+		this.id = props.id || uuid();
+		this.data = props.data;
+
+		this.nodes = new Map<string, Node>();
+		this.connections = new Map<string, Connection>();
+
 		makeObservable(this, {
 			id: observable,
 			data: observable,
@@ -55,20 +61,14 @@ export class Context {
 			removeNode: action,
 			createConnection: action,
 			removeConnection: action,
-		})
-
-		this.id = props.id || uuid();
-		this.data = props.data;
-
-		this.nodes = new Map<string, Node<any, any>>();
-		this.connections = new Map<string, Connection>();
+		});
 	}
 
 	/**
 	 * Creates a node and adds it to the context.
 	 * @param node - The node to be added.
 	 */
-	public addNode(node: Node<any, any>) {
+	public addNode(node: Node) {
 		if (node instanceof Node) {
 			this.nodes.set(node.id, node);
 			return node;
@@ -79,7 +79,7 @@ export class Context {
 	 * Removes a node from the context.
 	 * @param node - The node to be removed.
 	 */
-	public removeNode(node: Node<any, any>) {
+	public removeNode(node: Node) {
 		if (node instanceof Node && this.nodes.has(node.id)) {
 			this.nodes.delete(node.id);
 		} else {
@@ -139,8 +139,12 @@ export class Context {
 	 * @returns A serialized representation of the context.
 	 */
 	serialize() {
-		const serializedNodes = Array.from(this.nodes.values()).map((node) => node.serialize());
-		const serializedConnections = Array.from(this.connections.values()).map((connection) => connection.serialize());
+		const serializedNodes = Array.from(this.nodes.values()).map((node) =>
+			node.serialize()
+		);
+		const serializedConnections = Array.from(this.connections.values()).map(
+			(connection) => connection.serialize()
+		);
 
 		return serializeObject({
 			id: this.id,
@@ -150,7 +154,11 @@ export class Context {
 		});
 	}
 
-	static load(serialized: string): Context {
+	static load(serialized: string | null): Context {
+		if (serialized === null) {
+			return new this({});
+		}
+
 		const loadableContext: LoadableContext = eval(`(${serialized})`);
 
 		const context = new this({
@@ -185,7 +193,10 @@ export class Context {
 				}
 
 				for (const outputPort in node.outputPorts) {
-					if (node.outputPorts[outputPort].id === connection.fromPortId) {
+					if (
+						node.outputPorts[outputPort].id ===
+						connection.fromPortId
+					) {
 						fromPort = node.outputPorts[outputPort];
 					}
 				}
