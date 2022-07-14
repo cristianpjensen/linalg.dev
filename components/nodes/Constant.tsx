@@ -3,7 +3,11 @@ import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
 import { set } from "mobx";
 
-import { ConstantNode as _ConstantNode } from "../../node-engine";
+import {
+	ConstantNode as _ConstantNode,
+	ConstantNodeInputPorts as _ConstantNodeInputPorts,
+	Port,
+} from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 
@@ -25,8 +29,11 @@ export const ConstantNode = observer(({ node }: IConstantNodeProps) => {
 	};
 
 	return (
-		<Node.Root node={node} className="h-48 w-80">
-			<Node.Handle className="bg-green-ext-700 dark:bg-green-ext-900 text-green-ext-200 dark:text-green-ext-100">
+		<Node.Root node={node}>
+			<Node.Handle
+				title={node.type}
+				className="absolute bg-green-ext-700 dark:bg-green-ext-900 text-green-ext-200 dark:text-green-ext-100"
+			>
 				<Tooltip tip="Remove constant">
 					<button
 						onClick={onRemove}
@@ -37,7 +44,7 @@ export const ConstantNode = observer(({ node }: IConstantNodeProps) => {
 				</Tooltip>
 			</Node.Handle>
 
-			<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark-text-green-ext-100">
+			<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100">
 				<MathInput
 					value={node.inputPorts.x.value}
 					onChange={onValueChange}
@@ -46,6 +53,8 @@ export const ConstantNode = observer(({ node }: IConstantNodeProps) => {
 						color: "none",
 					}}
 				/>
+
+				<Node.OutputPorts node={node} />
 			</Node.Body>
 		</Node.Root>
 	);

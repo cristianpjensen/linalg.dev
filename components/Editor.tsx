@@ -1,15 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
+import { observer } from "mobx-react-lite";
+
 import { useUIStore } from "../stores";
-import {
-	CONSTANT_HEIGHT,
-	CONSTANT_WIDTH,
-	GRID_SIZE,
-	OPERATOR_HEIGHT,
-	OPERATOR_WIDTH,
-	VECTOR_HEIGHT,
-	VECTOR_WIDTH,
-} from "./constants";
+import { CONSTANT_HEIGHT, CONSTANT_WIDTH, GRID_SIZE } from "./constants";
 import {
 	Context as _NodeContext,
 	ConstantNode as _ConstantNode,
@@ -22,7 +16,7 @@ interface IEditorProps {
 	context: _NodeContext;
 }
 
-export default function Editor({ context }: IEditorProps) {
+const Editor = observer(({ context }: IEditorProps) => {
 	useEffect(() => {
 		// Disables default browser pinch-to-zoom when pinching the grid. Such that
 		// it only zooms in as wanted on the grid.
@@ -75,7 +69,7 @@ export default function Editor({ context }: IEditorProps) {
 							{ width: CONSTANT_WIDTH, height: CONSTANT_HEIGHT },
 							scale
 						),
-						dimensions: {
+						size: {
 							width: CONSTANT_WIDTH,
 							height: CONSTANT_HEIGHT,
 						},
@@ -201,7 +195,7 @@ export default function Editor({ context }: IEditorProps) {
 			</div>
 		</div>
 	);
-}
+});
 
 function getNodePosition(
 	position: {
@@ -229,3 +223,5 @@ function getNodePosition(
 			) * GRID_SIZE,
 	};
 }
+
+export default Editor;

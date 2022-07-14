@@ -21,6 +21,7 @@ const nodeContext = NodeContext.load(
 		? localStorage.getItem("node-context")
 		: null
 );
+// const nodeContext = new NodeContext({});
 
 const Home: NextPage = () => {
 	useEffect(() => {

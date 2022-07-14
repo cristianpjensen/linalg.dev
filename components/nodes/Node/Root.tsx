@@ -48,8 +48,12 @@ export const Root = observer(
 				handle=".handle"
 			>
 				<div
-					className={`absolute rounded overflow-hidden shadow-md hover:shadow-lg transition-shadow ${className}`}
-					style={style}
+					className={`absolute rounded shadow-md hover:shadow-lg transition-shadow ${className}`}
+					style={{
+						width: node.data.size.width,
+						height: node.data.size.height,
+						...style,
+					}}
 					children={children}
 				/>
 			</Draggable>
