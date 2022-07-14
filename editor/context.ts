@@ -1,6 +1,7 @@
-import { observable } from "mobx";
+import { observable, reaction, when } from "mobx";
 
 import { Port, Node } from "../node-engine";
+import { nodeContext } from "../pages";
 
 export interface EditorContext {
 	/**
@@ -23,3 +24,5 @@ export const editorContext = observable<EditorContext>({
 	connectingPort: null,
 	selectedNode: null,
 });
+
+console.log(nodeContext.nodes);

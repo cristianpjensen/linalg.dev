@@ -16,12 +16,12 @@ const Toolbar = dynamic(() => import("../components/Toolbar"), {
 	ssr: false,
 });
 
-const nodeContext = NodeContext.load(
+export const nodeContext = NodeContext.load(
 	typeof localStorage !== "undefined"
 		? localStorage.getItem("node-context")
 		: null
 );
-// const nodeContext = new NodeContext({});
+// export const nodeContext = new NodeContext({});
 
 const Home: NextPage = () => {
 	useEffect(() => {

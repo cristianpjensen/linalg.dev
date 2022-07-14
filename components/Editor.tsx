@@ -20,20 +20,18 @@ interface IEditorProps {
 
 const Editor = observer(({ context }: IEditorProps) => {
 	useEffect(() => {
-		// Disables default browser pinch-to-zoom when pinching the grid. Such that
-		// it only zooms in as wanted on the grid.
-		const grid = document.getElementById("grid");
-
+		// Disables default browser pinch-to-zoom when pinching the grid, such that
+		// it only zooms in as wanted on the grid
 		const disablePinchToZoom = (e: WheelEvent) => {
 			if (e.ctrlKey) {
 				e.preventDefault();
 			}
 		};
 
-		grid?.addEventListener("wheel", disablePinchToZoom, { passive: false });
+		window.addEventListener("wheel", disablePinchToZoom, { passive: false });
 
 		return () => {
-			grid?.removeEventListener("wheel", disablePinchToZoom);
+			window.removeEventListener("wheel", disablePinchToZoom);
 		};
 	}, []);
 
@@ -161,7 +159,7 @@ const Editor = observer(({ context }: IEditorProps) => {
 	});
 
 	return (
-		<div className="relative w-full h-screen overflow-hidden">
+		<div id="editor" className="relative w-full h-screen overflow-hidden">
 			<div
 				className="absolute top-0 bottom-0 left-0 right-0 bg-repeat select-none bg-offwhite dark:bg-offblack touch-none"
 				id="grid"
