@@ -2,7 +2,6 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
 import { set } from "mobx";
-import TeX from "@matejmazur/react-katex";
 
 import {
 	UnaryOperator,
@@ -44,7 +43,9 @@ export const UnaryOperatorNode = observer(
 				<Node.Body className="bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100">
 					<div
 						className={`transition-opacity duration-200 ease-out z-20 ${
-							node.inputPorts.x.isConnected ? "opacity-0 invisible" : "opacity-100 visible"
+							node.inputPorts.x.isConnected
+								? "opacity-0 invisible"
+								: "opacity-100 visible"
 						}`}
 					>
 						<MathInput
@@ -59,7 +60,9 @@ export const UnaryOperatorNode = observer(
 
 					<div
 						className={`font-math text-2xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-out ${
-							node.inputPorts.x.isConnected ? "opacity-100 visible" : "opacity-0 invisible"
+							node.inputPorts.x.isConnected
+								? "opacity-100 visible"
+								: "opacity-0 invisible"
 						}`}
 					>
 						{Math.round(node.inputPorts.x.value * 100) / 100}

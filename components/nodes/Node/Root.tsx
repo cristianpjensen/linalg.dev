@@ -48,7 +48,7 @@ export const Root = observer(
 			if (editorContext.selectedNode === node) {
 				editorContext.selectedNode = null;
 			}
-		}, [editorContext.selectedNode])
+		}, [editorContext.selectedNode]);
 
 		const ref = useRef<HTMLDivElement>(null);
 		useOnClickOutside(ref, onClickOutside);

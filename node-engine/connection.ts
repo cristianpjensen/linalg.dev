@@ -1,5 +1,12 @@
 import { v4 as uuid } from "uuid";
-import { observable, action, computed, reaction, IReactionDisposer, makeObservable } from "mobx";
+import {
+	observable,
+	action,
+	computed,
+	reaction,
+	IReactionDisposer,
+	makeObservable,
+} from "mobx";
 
 import { InputPort, OutputPort } from "./port";
 import { Context } from "./context";
@@ -37,7 +44,7 @@ export class Connection {
 			context: observable,
 			destroy: action,
 			isValid: computed,
-		})
+		});
 	}
 
 	/**
@@ -55,7 +62,9 @@ export class Connection {
 	 * validator function is not defined, then the connection is always valid.
 	 */
 	public get isValid(): boolean {
-		return !this.toPort.validate || this.toPort.validate(this.fromPort.value);
+		return (
+			!this.toPort.validate || this.toPort.validate(this.fromPort.value)
+		);
 	}
 
 	public serialize() {

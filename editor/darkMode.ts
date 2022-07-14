@@ -1,4 +1,4 @@
-export default function setDarkMode(darkMode: boolean | null) {
+export function setDarkMode(darkMode: boolean | null) {
   if (darkMode === null) {
     localStorage.removeItem("theme");
   } else {

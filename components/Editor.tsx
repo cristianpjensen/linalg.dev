@@ -207,7 +207,10 @@ const Editor = observer(({ context }: IEditorProps) => {
 					transform: `scale(${scale})`,
 				}}
 			>
-				<Connections className="absolute top-0 left-0 w-1 h-1 overflow-visible pointer-events-none" context={context} />
+				<Connections
+					className="absolute top-0 left-0 w-1 h-1 overflow-visible pointer-events-none"
+					context={context}
+				/>
 				<Nodes context={context} />
 			</div>
 		</div>

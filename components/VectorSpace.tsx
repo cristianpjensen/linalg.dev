@@ -7,6 +7,7 @@ import {
 	useRecoilValue,
 } from "recoil";
 import * as THREE from "three";
+
 import { ids, vectors } from "../stores/atoms";
 
 const vectorIds = selector({
@@ -33,7 +34,7 @@ const linkedVectors = selectorFamily<
 export default function VectorSpace() {
 	const ids = useRecoilValue(vectorIds);
 
-  const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
+	const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
 	return (
 		<div style={{ width: window.innerWidth / 2, backgroundColor: "black" }}>

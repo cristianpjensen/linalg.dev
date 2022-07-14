@@ -27,7 +27,12 @@ export const InputPorts = observer(({ node, omit }: INodePortsProps) => {
 	return (
 		<div className="absolute flex flex-col justify-around h-[calc(100%-32px)] top-8 -left-3">
 			{inputPorts.map((port, index) => (
-				<Port key={port.id} port={port} index={index} total={inputPorts.length} />
+				<Port
+					key={port.id}
+					port={port}
+					index={index}
+					total={inputPorts.length}
+				/>
 			))}
 		</div>
 	);
@@ -39,7 +44,12 @@ export const OutputPorts = observer(({ node }: INodePortsProps) => {
 	return (
 		<div className="absolute top-8 flex flex-col justify-evenly h-[calc(100%-32px)] -right-3">
 			{outputPorts.map((port, index) => (
-				<Port key={port.id} port={port} index={index} total={outputPorts.length} />
+				<Port
+					key={port.id}
+					port={port}
+					index={index}
+					total={outputPorts.length}
+				/>
 			))}
 		</div>
 	);
@@ -111,7 +121,11 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 				editorContext.connectingPort !== port
 					? "opacity-40"
 					: ""
-			} ${editorContext.selectedNode === port.node ? "border-zinc-400 dark:border-zinc-400" : ""}`}
+			} ${
+				editorContext.selectedNode === port.node
+					? "border-zinc-400 dark:border-zinc-400"
+					: ""
+			}`}
 			onClick={onClick}
 		>
 			N

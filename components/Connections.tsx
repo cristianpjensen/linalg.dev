@@ -47,7 +47,7 @@ export const Connection = observer(({ connection }: IConnectionProps) => {
 		editorContext.selectedNode &&
 		(fromPort.node === editorContext.selectedNode ||
 			toPort.node === editorContext.selectedNode);
-    
+
 	return (
 		<g className="cursor-pointer pointer-events-auto">
 			<path
@@ -58,7 +58,9 @@ export const Connection = observer(({ connection }: IConnectionProps) => {
 			/>
 			<path
 				className={`transition-colors duration-200 hover:stroke-zinc-400 dark:hover:stroke-zinc-400 peer-hover:stroke-zinc-400 dark:peer-hover:stroke-zinc-400 ${
-					selected ? "stroke-zinc-400" : "stroke-zinc-300 dark:stroke-zinc-600"
+					selected
+						? "stroke-zinc-400"
+						: "stroke-zinc-300 dark:stroke-zinc-600"
 				}`}
 				d={`M${sx},${sy} ${ex},${ey}`}
 				strokeWidth={2}

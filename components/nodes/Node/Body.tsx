@@ -12,7 +12,7 @@ export interface INodeBodyProps {
 	/**
 	 * Node styling.
 	 */
-  style?: React.CSSProperties;
+	style?: React.CSSProperties;
 }
 
 export const Body = ({ children, className, style }: INodeBodyProps) => {

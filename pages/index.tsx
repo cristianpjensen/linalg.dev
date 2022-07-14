@@ -25,7 +25,7 @@ const nodeContext = NodeContext.load(
 
 const Home: NextPage = () => {
 	useEffect(() => {
-    // Save the node context every 2 seconds
+		// Save the node context every 2 seconds
 		setInterval(() => {
 			localStorage.setItem("node-context", nodeContext.serialize());
 		}, 2000);
