@@ -29,7 +29,7 @@ export const Handle = ({
 
 	return (
 		<div
-			className={`handle absolute w-full h-8 pl-2 flex flex-row flex-nowrap text-sm ${className}`}
+			className={`handle absolute rounded-t w-full h-8 pl-2 flex flex-row flex-nowrap text-sm ${className}`}
 			style={{ cursor: pointerDown ? "grabbing" : "grab" }}
 			onPointerDown={onPointerDown}
 			onPointerUp={onPointerUp}

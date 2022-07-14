@@ -1,7 +1,14 @@
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 
-import { Node as _Node, Port as _Port } from "../../../node-engine";
+import {
+	Node as _Node,
+	InputPort as _InputPort,
+	OutputPort as _OutputPort,
+	Port as _Port,
+	PortType,
+} from "../../../node-engine";
+import { editorContext } from "../../../editor";
 
 export interface INodePortsProps {
 	node: _Node;
@@ -44,17 +51,61 @@ export const Port = observer(({ port }: INodePortProps) => {
 		});
 	};
 
+	const onClick = () => {
+		if (port.isConnected && port.type === PortType.INPUT) {
+			destroyConnections();
+			return;
+		}
+
+		if (editorContext.connectingPort === port) {
+			// If the port is currently the one being connected, cancel the connection
+			editorContext.connectingPort = null;
+		} else if (editorContext.connectingPort) {
+			// Connect ports if possible, otherwise set the connecting port to this
+			// one
+			if (
+				port instanceof _InputPort &&
+				editorContext.connectingPort instanceof _OutputPort
+			) {
+				editorContext.connectingPort.connect(port);
+				editorContext.connectingPort = null;
+			} else if (
+				port instanceof _OutputPort &&
+				editorContext.connectingPort instanceof _InputPort
+			) {
+				port.connect(editorContext.connectingPort);
+				editorContext.connectingPort = null;
+			} else {
+				editorContext.connectingPort = port;
+			}
+		} else {
+			// If no port is being connected, set this port to be the one being
+			// connected
+			editorContext.connectingPort = port;
+		}
+	};
+
 	return (
-		<div className="flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors duration-200 ease-out">
+		<button
+			className={`flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-500 transition-all duration-200 ease-out ${
+				editorContext.connectingPort === port
+					? "bg-zinc-600 dark:bg-zinc-300"
+					: ""
+			} ${
+				editorContext.connectingPort &&
+				editorContext.connectingPort.type === port.type &&
+				editorContext.connectingPort !== port
+					? "opacity-40"
+					: ""
+			}`}
+			onClick={onClick}
+		>
 			N
-			{port.isConnected && (
-				<button
-					className="absolute flex items-center justify-center w-6 h-6 transition-opacity bg-red-500 border-2 border-red-400 rounded-full opacity-0 hover:opacity-100 text-offwhite"
-					onClick={destroyConnections}
-				>
+			{port.isConnected && port.type === PortType.INPUT && (
+				<button className="absolute flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-400 hover:opacity-100 text-offwhite">
 					<Cross2Icon />
 				</button>
 			)}
-		</div>
+		</button>
 	);
 });
