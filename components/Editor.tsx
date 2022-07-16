@@ -2,11 +2,18 @@ import React, { useCallback, useState, useEffect } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { observer } from "mobx-react-lite";
 
-import { CONSTANT_HEIGHT, CONSTANT_WIDTH, GRID_SIZE } from "./constants";
+import {
+	CONSTANT_HEIGHT,
+	CONSTANT_WIDTH,
+	GRID_SIZE,
+	VECTOR_HEIGHT,
+	VECTOR_WIDTH,
+} from "./constants";
 import {
 	Context as _NodeContext,
 	ConstantNode as _ConstantNode,
 	UnaryOperatorNode as _UnaryOperatorNode,
+	VectorNode as _VectorNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 import { Connections } from "./Connections";
@@ -38,6 +45,13 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 		};
 	}, []);
 
+	const getNodePosition_ = (
+		mouse: { x: number; y: number },
+		size: { width: number; height: number }
+	) => {
+		return getNodePosition(editor.position, mouse, size, editor.scale);
+	};
+
 	const onGridClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			switch (editor.tool) {
@@ -48,14 +62,12 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 					new _ConstantNode(context, {
 						data: {
 							name: "Constant",
-							position: getNodePosition(
-								editor.position,
+							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{
 									width: CONSTANT_WIDTH,
 									height: CONSTANT_HEIGHT,
-								},
-								editor.scale
+								}
 							),
 							size: {
 								width: CONSTANT_WIDTH,
@@ -63,19 +75,18 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							},
 						},
 					});
+					break;
 
 				case Tool.UNARY_OPERATOR:
 					new _UnaryOperatorNode(context, {
 						data: {
 							name: "Unary operator",
-							position: getNodePosition(
-								editor.position,
+							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{
 									width: CONSTANT_WIDTH,
 									height: CONSTANT_HEIGHT,
-								},
-								editor.scale
+								}
 							),
 							size: {
 								width: CONSTANT_WIDTH,
@@ -83,6 +94,26 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							},
 						},
 					});
+					break;
+
+				case Tool.VECTOR:
+					new _VectorNode(context, {
+						data: {
+							name: "Vector",
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: VECTOR_WIDTH,
+									height: VECTOR_HEIGHT,
+								}
+							),
+							size: {
+								width: VECTOR_WIDTH,
+								height: VECTOR_HEIGHT,
+							},
+						},
+					});
+					break;
 			}
 
 			editor.tool = Tool.HAND;

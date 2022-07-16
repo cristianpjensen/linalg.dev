@@ -5,10 +5,18 @@ import { Node } from "./node";
 import { Connection } from "./connection";
 import { Data } from "./context";
 
+export enum PortValueType {
+	NUMBER = "N",
+	VECTOR = "V",
+	MATRIX = "M",
+	NONE = "-",
+}
+
 export abstract class Port<T> {
 	public id: string;
 	public abstract type: PortType;
 	public defaultValue: T;
+	public valueType: PortValueType;
 
 	/**
 	 * Reference to the parent node.
@@ -37,12 +45,11 @@ export abstract class Port<T> {
 		this.node = node;
 		this.id = props.id || uuid();
 		this.defaultValue = props.defaultValue;
+		this.valueType = props.valueType;
 		this.value = props.value || props.defaultValue;
 		this.data = props.data || {};
 
-		if (typeof props.validate === "function") {
-			this.validate = props.validate;
-		}
+		this.validate = props.validate;
 	}
 
 	public get value() {
@@ -137,13 +144,14 @@ export class OutputPort<T> extends Port<T> {
 }
 
 export enum PortType {
-	INPUT = "input",
-	OUTPUT = "output",
+	INPUT,
+	OUTPUT,
 }
 
 export type PortProps<T> = {
 	id?: string;
 	defaultValue: T;
+	valueType: PortValueType;
 	validate?: (value: any) => boolean;
 	value?: T;
 	data?: Data;

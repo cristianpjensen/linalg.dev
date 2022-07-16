@@ -157,7 +157,7 @@ const SteppedBezierLine = ({
 	x2: x6,
 	y2: y6,
 	debug = false,
-	radius = 24,
+	radius = 12,
 	className,
 	id,
 	style,

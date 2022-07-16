@@ -56,13 +56,15 @@ const Home: NextPage = () => {
 			</Head>
 
 			<div className="flex flex-row dark:text-white dark:bg-black">
-				{/* <div className="w-6/12 h-full"> */}
-				<div className="w-full h-full">
+				<div className="w-8/12 h-full border-r-4 border-zinc-600">
 					<Toolbar editorContext={editorContext} />
-					<Editor context={nodeContext} editorContext={editorContext} />
+					<Editor
+						context={nodeContext}
+						editorContext={editorContext}
+					/>
 				</div>
 
-				{/* <VectorSpace /> */}
+				<VectorSpace context={nodeContext} />
 			</div>
 		</div>
 	);

@@ -25,7 +25,7 @@ export const InputPorts = observer(({ node, omit }: INodePortsProps) => {
 	);
 
 	return (
-		<div className="absolute flex flex-col justify-around h-[calc(100%-32px)] top-8 -left-3">
+		<div className="absolute flex flex-col justify-evenly h-[calc(100%-32px)] top-8 -left-3">
 			{inputPorts.map((port, index) => (
 				<Port
 					key={port.id}
@@ -80,7 +80,9 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 		} else if (editorContext.connectingPort) {
 			// Connect ports if possible, otherwise set the connecting port to this
 			// one
-			if (
+			if (port.valueType !== editorContext.connectingPort.valueType) {
+				editorContext.connectingPort = null;
+			} else if (
 				port instanceof _InputPort &&
 				editorContext.connectingPort instanceof _OutputPort
 			) {
@@ -103,9 +105,9 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 	};
 
 	useEffect(() => {
-		const sectionSize = (port.node.data.size.height - 32) / (total + 2);
+		const sectionSize = port.node.data.size.height / (total + 1);
 		const x = port.type === PortType.OUTPUT ? port.node.data.size.width : 0;
-		const y = sectionSize * (index + 1) + 32;
+		const y = sectionSize * (index + 1) + 2;
 		set(port.data, "position", { x, y: y + 14 });
 	}, [port.node.data.size, index]);
 
@@ -118,7 +120,9 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 			} ${
 				editorContext.connectingPort &&
 				(editorContext.connectingPort.type === port.type ||
-					editorContext.connectingPort.node === port.node) &&
+					editorContext.connectingPort.node === port.node ||
+					editorContext.connectingPort.valueType !==
+						port.valueType) &&
 				editorContext.connectingPort !== port
 					? "opacity-40"
 					: ""
@@ -129,7 +133,7 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 			}`}
 			onClick={onClick}
 		>
-			N
+			{port.valueType}
 			{port.isConnected && port.type === PortType.INPUT && (
 				<button className="absolute flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-400 hover:opacity-100 text-offwhite">
 					<Cross2Icon />

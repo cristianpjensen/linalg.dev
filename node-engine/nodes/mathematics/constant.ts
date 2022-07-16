@@ -9,7 +9,7 @@ import {
 	NodeProps,
 	NodeType,
 } from "../../node";
-import { InputPort, OutputPort } from "../../port";
+import { InputPort, OutputPort, PortValueType } from "../../port";
 
 export interface ConstantNodeInputPorts extends NodeInputPorts {
 	x: InputPort<number>;
@@ -32,12 +32,14 @@ export class ConstantNode extends Node {
 			inputPorts: {
 				x: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
 				},
 			},
 			outputPorts: {
 				result: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 				},
 			},
 		} as NodeProps);

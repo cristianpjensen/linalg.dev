@@ -2,6 +2,7 @@ export * from "./Handle";
 export * from "./Root";
 export * from "./Body";
 export * from "./Ports";
+export * from "./PortNumberInput";
 
 export interface INodeProps<T> {
 	/**

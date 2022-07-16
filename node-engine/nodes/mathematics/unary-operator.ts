@@ -9,7 +9,7 @@ import {
 	NodeProps,
 	NodeType,
 } from "../../node";
-import { InputPort, OutputPort } from "../../port";
+import { InputPort, OutputPort, PortValueType } from "../../port";
 
 export type UnaryOperator =
 	| "square"
@@ -41,15 +41,18 @@ export class UnaryOperatorNode extends Node {
 			inputPorts: {
 				x: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
 				},
 				operator: {
 					defaultValue: "square",
+					valueType: PortValueType.NONE,
 				},
 			},
 			outputPorts: {
 				result: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 				},
 			},
 		} as NodeProps);

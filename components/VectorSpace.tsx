@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useRef } from "react";
 import { Space, Vector } from "react-three-linalg";
 import * as THREE from "three";
@@ -12,35 +13,43 @@ interface IVectorSpaceProps {
 	context: _NodeContext;
 }
 
-export default function VectorSpace({ context }: IVectorSpaceProps) {
+const VectorSpace = observer(({ context }: IVectorSpaceProps) => {
 	const vectors = Array.from(context.nodes.values()).filter(
 		(node) => node.type === NodeType.VECTOR
 	);
 
 	return (
-		<div style={{ width: window.innerWidth / 2, backgroundColor: "black" }}>
-			<Space width={window.innerWidth / 2}>
-				{vectors.map((node) => (
-					<VectorWrapper key={node.id} node={node as _VectorNode} />
-				))}
-			</Space>
-		</div>
+		<Space width={window.innerWidth / 3}>
+			{vectors.map((node) => (
+				<VectorWrapper key={node.id} node={node as _VectorNode} />
+			))}
+		</Space>
 	);
-}
+});
+
+export default VectorSpace;
 
 interface VectorWrapperProps {
 	node: _VectorNode;
 }
 
-function VectorWrapper({ node }: VectorWrapperProps) {
-	const ref = useRef<Vector>(null);
+const VectorWrapper = observer(({ node }: VectorWrapperProps) => {
 	const { x, y, z } = node.outputPorts.result.value;
+	const origin = node.inputPorts.origin.value;
+
+	const ref = useRef<Vector>(null);
 
 	useEffect(() => {
 		const { x, y, z } = node.outputPorts.result.value;
 		const vector = new THREE.Vector3(x, y, z);
 		ref.current?.move(vector);
-	}, [node]);
+	});
 
-	return <Vector ref={ref} vector={new THREE.Vector3(x, y, z)} />;
-}
+	return (
+		<Vector
+			ref={ref}
+			origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
+			vector={new THREE.Vector3(x, y, z)}
+		/>
+	);
+});

@@ -4,10 +4,12 @@ import {
 	Node as _Node,
 	ConstantNode as _ConstantNode,
 	UnaryOperatorNode as _UnaryOperatorNode,
+	VectorNode as _VectorNode,
 	NodeType,
 } from "../../node-engine";
 import { ConstantNode } from "./Constant";
 import { UnaryOperatorNode } from "./UnaryOperator";
+import { VectorNode } from "./Vector";
 
 export interface INodeWrapperProps {
 	node: _Node;
@@ -20,6 +22,9 @@ export const NodeWrapper = observer(({ node }: INodeWrapperProps) => {
 
 		case NodeType.UNARY_OPERATOR:
 			return <UnaryOperatorNode node={node as _UnaryOperatorNode} />;
+
+		case NodeType.VECTOR:
+			return <VectorNode node={node as _VectorNode} />;
 	}
 
 	return null;

@@ -157,12 +157,12 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 	const onClickZoomIn = () => tweenScale(editor.scale * 1.2);
 	const onClickZoomOut = () => tweenScale(editor.scale * 0.8);
 
-	useHotkeys("1", onClick200);
-	useHotkeys("2", onClick100);
-	useHotkeys("3", onClick50);
-	useHotkeys("4", onClick20);
-	useHotkeys("=", onClickZoomIn);
-	useHotkeys("-", onClickZoomOut);
+	useHotkeys("shift+1", onClick200);
+	useHotkeys("shift+2", onClick100);
+	useHotkeys("shift+3", onClick50);
+	useHotkeys("shift+4", onClick20);
+	useHotkeys("shift+=", onClickZoomIn);
+	useHotkeys("shift+-", onClickZoomOut);
 
 	return (
 		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -178,22 +178,22 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 			</Popover.Trigger>
 
 			<Popover.Content className="w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-				<ZoomButton onClick={onClick200} hotkey="1">
+				<ZoomButton onClick={onClick200} hotkey="⇧ 1">
 					200%
 				</ZoomButton>
-				<ZoomButton onClick={onClick100} hotkey="2">
+				<ZoomButton onClick={onClick100} hotkey="⇧ 2">
 					100%
 				</ZoomButton>
-				<ZoomButton onClick={onClick50} hotkey="3">
+				<ZoomButton onClick={onClick50} hotkey="⇧ 3">
 					50%
 				</ZoomButton>
-				<ZoomButton onClick={onClick20} hotkey="4">
+				<ZoomButton onClick={onClick20} hotkey="⇧ 4">
 					20%
 				</ZoomButton>
-				<ZoomButton onClick={onClickZoomIn} hotkey="=">
+				<ZoomButton onClick={onClickZoomIn} hotkey="⇧ +">
 					Zoom in
 				</ZoomButton>
-				<ZoomButton onClick={onClickZoomOut} hotkey="-">
+				<ZoomButton onClick={onClickZoomOut} hotkey="⇧ -">
 					Zoom out
 				</ZoomButton>
 			</Popover.Content>

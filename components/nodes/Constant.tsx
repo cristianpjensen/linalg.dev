@@ -10,14 +10,6 @@ import {
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 
-interface IConstantNodeProps {
-	/**
-	 * Internal representation of the node. The entire node datastructure has to
-	 * be passed, according to the MobX documentation.
-	 */
-	node: _ConstantNode;
-}
-
 export const ConstantNode = observer(
 	({ node }: Node.INodeProps<_ConstantNode>) => {
 		const onRemove = () => {

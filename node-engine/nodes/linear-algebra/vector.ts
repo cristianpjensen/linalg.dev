@@ -9,13 +9,14 @@ import {
 	NodeProps,
 	NodeType,
 } from "../../node";
-import { InputPort, OutputPort } from "../../port";
+import { InputPort, OutputPort, PortValueType } from "../../port";
 import { Vector } from "./types";
 
 export interface VectorNodeInputPorts extends NodeInputPorts {
 	x: InputPort<number>;
 	y: InputPort<number>;
 	z: InputPort<number>;
+	origin: InputPort<Vector>;
 }
 
 export interface VectorNodeOutputPorts extends NodeOutputPorts {
@@ -35,15 +36,26 @@ export class VectorNode extends Node {
 			inputPorts: {
 				x: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
 				},
 				y: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
 				},
 				z: {
 					defaultValue: 0,
+					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+				},
+				origin: {
+					defaultValue: {
+						x: 0,
+						y: 0,
+						z: 0,
+					},
+					valueType: PortValueType.VECTOR,
 				},
 			},
 			outputPorts: {
@@ -53,6 +65,7 @@ export class VectorNode extends Node {
 						y: 0,
 						z: 0,
 					},
+					valueType: PortValueType.VECTOR,
 				},
 			},
 		} as NodeProps);
