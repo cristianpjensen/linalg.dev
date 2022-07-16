@@ -7,13 +7,7 @@ import * as TWEEN from "@tweenjs/tween.js";
 import { Context as NodeContext } from "../node-engine";
 import { editorContext } from "../editor-state";
 
-const VectorSpace = dynamic(() => import("../components/VectorSpace"), {
-	ssr: false,
-});
-const Editor = dynamic(() => import("../components/Editor"), {
-	ssr: false,
-});
-const Toolbar = dynamic(() => import("../components/Toolbar"), {
+const App = dynamic(() => import("../components/App"), {
 	ssr: false,
 });
 
@@ -56,15 +50,7 @@ const Home: NextPage = () => {
 			</Head>
 
 			<div className="flex flex-row dark:text-white dark:bg-black">
-				<div className="w-8/12 h-full border-r-4 border-zinc-600">
-					<Toolbar editorContext={editorContext} />
-					<Editor
-						context={nodeContext}
-						editorContext={editorContext}
-					/>
-				</div>
-
-				<VectorSpace context={nodeContext} />
+				<App nodeContext={nodeContext} editorContext={editorContext} />
 			</div>
 		</div>
 	);

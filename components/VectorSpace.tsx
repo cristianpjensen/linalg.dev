@@ -8,22 +8,26 @@ import {
 	NodeType,
 	VectorNode as _VectorNode,
 } from "../node-engine";
+import { EditorContext } from "../editor-state";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
+	editor: EditorContext;
 }
 
-const VectorSpace = observer(({ context }: IVectorSpaceProps) => {
+const VectorSpace = observer(({ context, editor }: IVectorSpaceProps) => {
 	const vectors = Array.from(context.nodes.values()).filter(
 		(node) => node.type === NodeType.VECTOR
 	);
 
 	return (
-		<Space width={window.innerWidth / 3}>
+		<div className="border-l-4 border-zinc-600">
+		<Space width={window.innerWidth / editor.vectorSpaceSize}>
 			{vectors.map((node) => (
 				<VectorWrapper key={node.id} node={node as _VectorNode} />
 			))}
 		</Space>
+		</div>
 	);
 });
 

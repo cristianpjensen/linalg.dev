@@ -95,6 +95,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				Linear algebra
 			</div>
 
+			<VectorSpaceSizeControl editorContext={editorContext} />
 			<ZoomControl editorContext={editorContext} />
 
 			<Toggle
@@ -201,6 +202,65 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 	);
 });
 
+const VectorSpaceSizeControl = observer(
+	({ editorContext: editor }: IToolbarProps) => {
+		const [isOpen, setIsOpen] = useState(false);
+
+		const setSize = (newSize: 1 | 2 | 3 | 4 | 1e99) => {
+			editor.vectorSpaceSize = newSize;
+			setIsOpen(false);
+		};
+
+		const onClick1 = () => setSize(1);
+		const onClick2 = () => setSize(2);
+		const onClick3 = () => setSize(3);
+		const onClick4 = () => setSize(4);
+		const onClickInf = () => setSize(1e99);
+
+		useHotkeys("ctrl+1", onClick1);
+		useHotkeys("ctrl+2", onClick2);
+		useHotkeys("ctrl+3", onClick3);
+		useHotkeys("ctrl+4", onClick4);
+		useHotkeys("ctrl+5", onClickInf);
+
+		return (
+			<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+				<Popover.Trigger>
+					<div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
+						1&thinsp;/&thinsp;
+						{editor.vectorSpaceSize === 1e99
+							? "∞"
+							: editor.vectorSpaceSize}
+						<CaretDownIcon
+							className={`ml-05 hover:translate-y-0.5 transition-transform ${
+								isOpen ? "translate-y-0.5" : ""
+							}`}
+						/>
+					</div>
+				</Popover.Trigger>
+
+			<Popover.Content className="w-40 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+				<ZoomButton onClick={onClick1} hotkey="Ctl. 1">
+					1&thinsp;/&thinsp;1
+				</ZoomButton>
+				<ZoomButton onClick={onClick2} hotkey="Ctrl 2">
+					1&thinsp;/&thinsp;2
+				</ZoomButton>
+				<ZoomButton onClick={onClick3} hotkey="Ctrl 3">
+					1&thinsp;/&thinsp;3
+				</ZoomButton>
+				<ZoomButton onClick={onClick4} hotkey="Ctrl 4">
+					1&thinsp;/&thinsp;4
+				</ZoomButton>
+				<ZoomButton onClick={onClickInf} hotkey="Ctrl 5">
+					1&thinsp;/&thinsp;∞
+				</ZoomButton>
+				</Popover.Content>
+			</Popover.Root>
+		);
+	}
+);
+
 interface ZoomButtonProps {
 	children: React.ReactNode;
 	onClick: () => void;
@@ -214,7 +274,7 @@ function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
 			className="flex items-center justify-center w-full h-10 hover:bg-zinc-200 dark:hover:bg-zinc-700"
 		>
 			<div className="absolute flex w-full pl-3 justify-left text-zinc-400 dark:text-zinc-500">
-				{hotkey?.toUpperCase()}
+				{hotkey}
 			</div>
 
 			{children}

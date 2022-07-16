@@ -38,6 +38,12 @@ export interface EditorContext {
 	 * The currently selected node that is highlighted in the editor.
 	 */
 	selectedNode: Node | null;
+
+	/**
+	 * 1 / n is how much width of the screen real estate goes to the vector
+	 * space in the editor. 1e99 = infinity.
+	 */
+	vectorSpaceSize: 1 | 2 | 3 | 4 | 1e99;
 }
 
 /**
@@ -51,4 +57,5 @@ export const editorContext = observable<EditorContext>({
 	tool: Tool.HAND,
 	connectingPort: null,
 	selectedNode: null,
+	vectorSpaceSize: 3,
 });
