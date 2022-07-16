@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { action, makeObservable, observable } from "mobx";
 
 import { Context } from "../../context";
