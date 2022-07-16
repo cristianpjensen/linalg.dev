@@ -1,66 +1,46 @@
 import { useEffect, useRef } from "react";
 import { Space, Vector } from "react-three-linalg";
-import {
-	selector,
-	selectorFamily,
-	useRecoilBridgeAcrossReactRoots_UNSTABLE,
-	useRecoilValue,
-} from "recoil";
 import * as THREE from "three";
 
-import { ids, vectors } from "../stores/atoms";
+import {
+	Context as _NodeContext,
+	NodeType,
+	VectorNode as _VectorNode,
+} from "../node-engine";
 
-const vectorIds = selector({
-	key: "vector-ids",
-	get: ({ get }) =>
-		get(ids)
-			.filter((id) => id.type === "vector")
-			.map((id) => id.id),
-});
+interface IVectorSpaceProps {
+	context: _NodeContext;
+}
 
-const linkedVectors = selectorFamily<
-	{ x: number; y: number; z: number },
-	number
->({
-	key: "linked-vectors",
-	get:
-		(id) =>
-		({ get }) => {
-			const node = get(vectors(id));
-			return node.vector;
-		},
-});
-
-export default function VectorSpace() {
-	const ids = useRecoilValue(vectorIds);
-
-	const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
+export default function VectorSpace({ context }: IVectorSpaceProps) {
+	const vectors = Array.from(context.nodes.values()).filter(
+		(node) => node.type === NodeType.VECTOR
+	);
 
 	return (
 		<div style={{ width: window.innerWidth / 2, backgroundColor: "black" }}>
 			<Space width={window.innerWidth / 2}>
-				<RecoilBridge>
-					{ids.map((id) => (
-						<VectorWrapper key={id} id={id} />
-					))}
-				</RecoilBridge>
+				{vectors.map((node) => (
+					<VectorWrapper key={node.id} node={node as _VectorNode} />
+				))}
 			</Space>
 		</div>
 	);
 }
 
 interface VectorWrapperProps {
-	id: number;
+	node: _VectorNode;
 }
 
-function VectorWrapper({ id }: VectorWrapperProps) {
+function VectorWrapper({ node }: VectorWrapperProps) {
 	const ref = useRef<Vector>(null);
-	const { x, y, z } = useRecoilValue(linkedVectors(id));
+	const { x, y, z } = node.outputPorts.result.value;
 
 	useEffect(() => {
+		const { x, y, z } = node.outputPorts.result.value;
 		const vector = new THREE.Vector3(x, y, z);
 		ref.current?.move(vector);
-	}, [x, y, z]);
+	}, [node]);
 
 	return <Vector ref={ref} vector={new THREE.Vector3(x, y, z)} />;
 }

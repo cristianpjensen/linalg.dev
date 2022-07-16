@@ -158,6 +158,7 @@ export interface NodeOutputPorts {
 }
 
 export enum NodeType {
-	Constant = "Constant",
-	UnaryOperator = "Unary operator",
+	CONSTANT = "Constant",
+	UNARY_OPERATOR = "Unary operator",
+	VECTOR = "Vector",
 }

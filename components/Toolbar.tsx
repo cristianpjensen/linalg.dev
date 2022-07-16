@@ -1,7 +1,6 @@
 import { cloneElement, useState } from "react";
 import {
 	ArrowTopRightIcon,
-	BoxIcon,
 	CaretDownIcon,
 	FontFamilyIcon,
 	GitHubLogoIcon,
@@ -11,21 +10,23 @@ import {
 	MoonIcon,
 	PlusIcon,
 	RulerSquareIcon,
+	StopIcon,
 	SunIcon,
+	ValueIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
 import { useHotkeys } from "react-hotkeys-hook";
+import { observer } from "mobx-react-lite";
 
 import { Tooltip } from "./Tooltip";
-import { useUIStore } from "../stores";
-import { setDarkMode } from "../editor";
+import { EditorContext, setDarkMode, Tool as _Tool } from "../editor-state";
 
-// TODO: Give each tool its own component and a selector that only becomes true
-// when it is the selected tool. This might cause it not to re-render.
+export interface IToolbarProps {
+	editorContext: EditorContext;
+}
 
-// TODO: It should not re-render on dragging the grid, so fix that.
-export default function Toolbar() {
+const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 	const darkMode =
 		localStorage.getItem("theme") === "dark" ||
 		(!("theme" in localStorage) &&
@@ -34,45 +35,57 @@ export default function Toolbar() {
 	return (
 		<div className="absolute top-0 left-0 z-10 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
 			<Tool
+				editorContext={editorContext}
 				icon={<HandIcon />}
-				title=""
+				tool={_Tool.HAND}
 				description="Drag to pan the canvas"
 				hotkey="h"
 			/>
 			<Tool
+				editorContext={editorContext}
 				icon={<ArrowTopRightIcon />}
-				title="vector"
+				tool={_Tool.VECTOR}
 				description="Press anywhere on the canvas to add a vector"
 				hotkey="v"
 			/>
 			<Tool
+				editorContext={editorContext}
 				icon={<LayersIcon />}
-				title="matrix"
+				tool={_Tool.MATRIX}
 				description="Drag to make a matrix environment"
 				hotkey="m"
 			/>
 
 			<ToolDropdown
+				editorContext={editorContext}
 				icon={<FontFamilyIcon />}
 				title="Math"
 				tools={[
 					{
-						icon: <BoxIcon />,
-						title: "constant",
+						icon: <ValueIcon />,
+						tool: _Tool.CONSTANT,
 						description:
 							"Press anywhere on the canvas to add a constant",
 						hotkey: "c",
 					},
 					{
-						icon: <PlusIcon />,
-						title: "unary-operator",
+						icon: <StopIcon />,
+						tool: _Tool.UNARY_OPERATOR,
 						description:
 							"Press anywhere on the canvas to add a mathematical operator",
 						hotkey: "u",
 					},
+					{
+						icon: <PlusIcon />,
+						tool: _Tool.BINARY_OPERATOR,
+						description:
+							"Press anywhere on the canvas to add a mathematical operator",
+						hotkey: "b",
+					},
 				]}
 			/>
 			<ToolDropdown
+				editorContext={editorContext}
 				icon={<RulerSquareIcon />}
 				title="Linear algebra"
 				tools={[]}
@@ -82,7 +95,7 @@ export default function Toolbar() {
 				Linear algebra
 			</div>
 
-			<ZoomControl />
+			<ZoomControl editorContext={editorContext} />
 
 			<Toggle
 				icon={<SunIcon />}
@@ -99,41 +112,38 @@ export default function Toolbar() {
 			</a>
 		</div>
 	);
-}
+});
 
-// TODO: Only fetch the position when zooming in or out, since otherwise they
-// are not necessary and cause a lot of unnecessary re-renders.
-function ZoomControl() {
-	const [x, y, scale, setXYS] = useUIStore(({ x, y, scale, setXYS }) => [
-		x,
-		y,
-		scale,
-		setXYS,
-	]);
-
+const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const tweenScale = (newScale: number) => {
 		const newScale_ = Math.max(Math.min(newScale, 2), 0.2);
 
-		const tween = new TWEEN.Tween({ x: x, y: y, scale: scale })
+		const tween = new TWEEN.Tween({
+			x: editor.position.x,
+			y: editor.position.y,
+			scale: editor.scale,
+		})
 			.to(
 				{
 					x:
-						x -
-						(newScale_ / scale - 1) *
-							(window.innerWidth / 2 - x + 12),
+						editor.position.x -
+						(newScale_ / editor.scale - 1) *
+							(window.innerWidth / 2 - editor.position.x + 12),
 					y:
-						y -
-						(newScale_ / scale - 1) *
-							(window.innerHeight / 2 - y + 12),
+						editor.position.y -
+						(newScale_ / editor.scale - 1) *
+							(window.innerHeight / 2 - editor.position.y + 12),
 					scale: newScale_,
 				},
 				200
 			)
 			.easing(TWEEN.Easing.Cubic.Out)
 			.onUpdate((tween) => {
-				setXYS(tween.x, tween.y, tween.scale);
+				editor.position.x = tween.x;
+				editor.position.y = tween.y;
+				editor.scale = tween.scale;
 			});
 
 		setIsOpen(false);
@@ -144,21 +154,21 @@ function ZoomControl() {
 	const onClick100 = () => tweenScale(1);
 	const onClick50 = () => tweenScale(0.5);
 	const onClick20 = () => tweenScale(0.2);
-	const onClickZoomIn = () => tweenScale(scale * 1.2);
-	const onClickZoomOut = () => tweenScale(scale * 0.8);
+	const onClickZoomIn = () => tweenScale(editor.scale * 1.2);
+	const onClickZoomOut = () => tweenScale(editor.scale * 0.8);
 
-	useHotkeys("1", onClick200, [scale, x, y]);
-	useHotkeys("2", onClick100, [scale, x, y]);
-	useHotkeys("3", onClick50, [scale, x, y]);
-	useHotkeys("4", onClick20, [scale, x, y]);
-	useHotkeys("=", onClickZoomIn, [scale, x, y]);
-	useHotkeys("-", onClickZoomOut, [scale, x, y]);
+	useHotkeys("1", onClick200);
+	useHotkeys("2", onClick100);
+	useHotkeys("3", onClick50);
+	useHotkeys("4", onClick20);
+	useHotkeys("=", onClickZoomIn);
+	useHotkeys("-", onClickZoomOut);
 
 	return (
 		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Popover.Trigger>
 				<div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
-					{Math.round(scale * 100)}%
+					{Math.round(editor.scale * 100)}%
 					<CaretDownIcon
 						className={`ml-05 hover:translate-y-0.5 transition-transform ${
 							isOpen ? "translate-y-0.5" : ""
@@ -189,7 +199,7 @@ function ZoomControl() {
 			</Popover.Content>
 		</Popover.Root>
 	);
-}
+});
 
 interface ZoomButtonProps {
 	children: React.ReactNode;
@@ -213,91 +223,113 @@ function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
 }
 
 interface ToolProps {
-	title: string;
+	tool: _Tool;
 	icon: React.ReactElement;
 	description: string;
 	tooltipSide?: "left" | "right" | "top" | "bottom";
 	hotkey?: string;
 }
 
-function Tool({ icon, title, description, tooltipSide, hotkey }: ToolProps) {
-	const [tool, setTool] = useUIStore(({ tool, setTool }) => [tool, setTool]);
-	if (hotkey) useHotkeys(hotkey, () => setTool(title));
+const Tool = observer(
+	({
+		editorContext: editor,
+		icon,
+		tool,
+		description,
+		tooltipSide,
+		hotkey,
+	}: ToolProps & IToolbarProps) => {
+		const setTool = () => {
+			editor.tool = tool;
+		};
 
-	const titleCapitalized = (
-		title.charAt(0).toUpperCase() + title.slice(1)
-	).replace("-", " ");
+		if (hotkey) {
+			useHotkeys(hotkey, setTool);
+		}
 
-	return (
-		<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
-			<div
-				className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
-					tool === title
-						? "bg-offblack dark:bg-offwhite text-white dark:text-black"
-						: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-				}`}
-				onClick={() => {
-					setTool(title);
-				}}
-			>
-				{icon &&
-					cloneElement(icon, {
-						className: title !== "" ? "mr-2" : "",
-					})}{" "}
-				{titleCapitalized}
-			</div>
-		</Tooltip>
-	);
-}
+		const title = (tool.charAt(0).toUpperCase() + tool.slice(1)).replace(
+			"-",
+			" "
+		);
+
+		return (
+			<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
+				<div
+					className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
+						editor.tool === tool
+							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+					}`}
+					onClick={setTool}
+				>
+					<div className={`${tool !== _Tool.HAND ? "mr-2" : ""}`}>
+						{icon}
+					</div>
+					{title}
+				</div>
+			</Tooltip>
+		);
+	}
+);
 
 interface ToolDropdownProps {
+	editorContext: EditorContext;
 	title: string;
 	icon: React.ReactElement;
 	tools: Array<ToolProps>;
 }
 
-function ToolDropdown({ icon, title, tools }: ToolDropdownProps) {
-	const [currentTool, setTool] = useUIStore((state) => [
-		state.tool,
-		state.setTool,
-	]);
-	const isSelected = tools.some((tool) => tool.title === currentTool);
-	const [isOpen, setIsOpen] = useState(false);
+const ToolDropdown = observer(
+	({ editorContext: editor, icon, title, tools }: ToolDropdownProps) => {
+		const isSelected = tools.some((tool) => tool.tool === editor.tool);
+		const [isOpen, setIsOpen] = useState(false);
 
-	tools.forEach((tool) => {
-		if (tool.hotkey) useHotkeys(tool.hotkey, () => setTool(tool.title));
-	});
+		tools.forEach((tool) => {
+			// Set hotkey here, because otherwise it will only be usable when the
+			// dropdown is open
+			if (tool.hotkey) {
+				useHotkeys(tool.hotkey, () => {
+					editor.tool = tool.tool;
+				});
+			}
+		});
 
-	return (
-		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-			<Popover.Trigger>
-				<div
-					className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
-						isSelected
-							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
-							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-					}`}
-				>
-					{cloneElement(icon, {
-						className: title !== "" ? "mr-2" : "",
-					})}{" "}
-					{title}
-					<CaretDownIcon
-						className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
-							isOpen ? "translate-y-0.5" : ""
+		return (
+			<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+				<Popover.Trigger>
+					<div
+						className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
+							isSelected
+								? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+								: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
 						}`}
-					/>
-				</div>
-			</Popover.Trigger>
+					>
+						{cloneElement(icon, {
+							className: title !== "" ? "mr-2" : "",
+						})}{" "}
+						{title}
+						<CaretDownIcon
+							className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
+								isOpen ? "translate-y-0.5" : ""
+							}`}
+						/>
+					</div>
+				</Popover.Trigger>
 
-			<Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-				{tools.map((tool) => (
-					<Tool key={tool.title} tooltipSide="right" {...tool} />
-				))}
-			</Popover.Content>
-		</Popover.Root>
-	);
-}
+				<Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+					{tools.map((tool) => (
+						<Tool
+							key={tool.tool}
+							editorContext={editor}
+							tooltipSide="right"
+							{...tool}
+						/>
+					))}
+				</Popover.Content>
+			</Popover.Root>
+		);
+	}
+);
 
 interface ToggleProps {
 	icon: React.ReactElement;
@@ -325,3 +357,5 @@ function Toggle({ icon, altIcon, toggled, onClick }: ToggleProps) {
 		</div>
 	);
 }
+
+export default Toolbar;

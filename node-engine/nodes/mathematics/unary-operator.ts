@@ -34,7 +34,7 @@ export interface UnaryOperatorNode extends Node {
 }
 
 export class UnaryOperatorNode extends Node {
-	public type = NodeType.UnaryOperator;
+	public type = NodeType.UNARY_OPERATOR;
 
 	constructor(context: Context, props: NodeProps) {
 		_.defaultsDeep(props, {

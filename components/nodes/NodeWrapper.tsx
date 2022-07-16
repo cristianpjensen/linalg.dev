@@ -15,10 +15,10 @@ export interface INodeWrapperProps {
 
 export const NodeWrapper = observer(({ node }: INodeWrapperProps) => {
 	switch (node.type) {
-		case NodeType.Constant:
+		case NodeType.CONSTANT:
 			return <ConstantNode node={node as _ConstantNode} />;
 
-		case NodeType.UnaryOperator:
+		case NodeType.UNARY_OPERATOR:
 			return <UnaryOperatorNode node={node as _UnaryOperatorNode} />;
 	}
 

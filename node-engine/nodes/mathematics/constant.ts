@@ -25,7 +25,7 @@ export interface ConstantNode extends Node {
 }
 
 export class ConstantNode extends Node {
-	type = NodeType.Constant;
+	type = NodeType.CONSTANT;
 
 	constructor(context: Context, props: NodeProps) {
 		_.defaultsDeep(props, {

@@ -5,8 +5,7 @@ import useMouse from "@react-hook/mouse-position";
 import { when } from "mobx";
 
 import { Context as _Context, Connection as _Connection } from "../node-engine";
-import { editorContext } from "../editor";
-import { useUIStore } from "../stores";
+import { editorContext as editor } from "../editor-state";
 
 export interface IConnectionsProps {
 	context: _Context;
@@ -15,7 +14,6 @@ export interface IConnectionsProps {
 
 export const Connections = observer(
 	({ context, className }: IConnectionsProps) => {
-		const scale = useUIStore((state) => state.scale);
 		const mouse = useMouse(document.getElementById("editor"));
 
 		// Use states, such that the connection won't be removed when hovering over
@@ -31,28 +29,23 @@ export const Connections = observer(
 			}
 		}, [mouse]);
 
-		const { x, y } = useUIStore((state) => ({
-			x: state.x,
-			y: state.y,
-		}));
-
 		// Escape remove the currently being connected connection
 		useHotkeys("esc", () => {
-			editorContext.connectingPort = null;
+			editor.connectingPort = null;
 		});
 
 		// If the node gets deleted while it is being connected, remove the
 		// connection following the cursor
 		when(
 			() =>
-				!!editorContext.connectingPort &&
+				!!editor.connectingPort &&
 				!Array.from(context.nodes.values()).includes(
-					editorContext.connectingPort.node
+					editor.connectingPort.node
 				),
-			() => (editorContext.connectingPort = null)
+			() => (editor.connectingPort = null)
 		);
 
-		const selectedConnections = editorContext.selectedNode?.connections;
+		const selectedConnections = editor.selectedNode?.connections;
 
 		return (
 			<svg className={className} width="100%" height="100%">
@@ -68,18 +61,18 @@ export const Connections = observer(
 					/>
 				))}
 
-				{editorContext.connectingPort && (
+				{editor.connectingPort && (
 					<SteppedBezierLine
 						x1={
-							editorContext.connectingPort.data.position.x +
-							editorContext.connectingPort.node.data.position.x
+							editor.connectingPort.data.position.x +
+							editor.connectingPort.node.data.position.x
 						}
 						y1={
-							editorContext.connectingPort.data.position.y +
-							editorContext.connectingPort.node.data.position.y
+							editor.connectingPort.data.position.y +
+							editor.connectingPort.node.data.position.y
 						}
-						x2={(mousePosition.x - x) / scale}
-						y2={(mousePosition.y - y) / scale}
+						x2={(mousePosition.x - editor.position.x) / editor.scale}
+						y2={(mousePosition.y - editor.position.y) / editor.scale}
 						className="stroke-zinc-300 dark:stroke-zinc-600 opacity-40"
 						strokeWidth={2}
 						fill="none"

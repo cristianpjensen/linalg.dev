@@ -3,10 +3,9 @@ import { observer } from "mobx-react-lite";
 import { useCallback, useRef } from "react";
 import Draggable, { DraggableData } from "react-draggable";
 import useOnClickOutside from "use-onclickoutside";
-import { editorContext } from "../../../editor";
 
+import { editorContext as editor } from "../../../editor-state";
 import { Node as _Node } from "../../../node-engine";
-import { useUIStore } from "../../../stores";
 import { GRID_SIZE } from "../../constants";
 
 interface INodeRootProps {
@@ -38,17 +37,15 @@ export const Root = observer(
 			set(node.data, "position", { x, y });
 		};
 
-		const scale = useUIStore((state) => state.scale);
-
 		const onClick = useCallback(() => {
-			editorContext.selectedNode = node;
+			editor.selectedNode = node;
 		}, []);
 
 		const onClickOutside = useCallback(() => {
-			if (editorContext.selectedNode === node) {
-				editorContext.selectedNode = null;
+			if (editor.selectedNode === node) {
+				editor.selectedNode = null;
 			}
-		}, [editorContext.selectedNode]);
+		}, [editor.selectedNode]);
 
 		const ref = useRef<HTMLDivElement>(null);
 		useOnClickOutside(ref, onClickOutside);
@@ -59,8 +56,8 @@ export const Root = observer(
 					x: node.data.position ? node.data.position.x : 0,
 					y: node.data.position ? node.data.position.y : 0,
 				}}
-				grid={[scale * GRID_SIZE, scale * GRID_SIZE]}
-				scale={scale}
+				grid={[editor.scale * GRID_SIZE, editor.scale * GRID_SIZE]}
+				scale={editor.scale}
 				onDrag={onDrag}
 				handle=".handle"
 			>
@@ -68,7 +65,7 @@ export const Root = observer(
 					ref={ref}
 					onClick={onClick}
 					className={`absolute rounded transition-shadow duration-200 ${
-						editorContext.selectedNode === node
+						editor.selectedNode === node
 							? "shadow-b2 shadow-zinc-400 dark:shadow-zinc-400"
 							: "shadow-b1 shadow-zinc-200 dark:shadow-zinc-700"
 					} ${className}`}

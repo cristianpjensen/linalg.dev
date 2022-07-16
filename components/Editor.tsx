@@ -2,7 +2,6 @@ import React, { useCallback, useState, useEffect } from "react";
 import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { observer } from "mobx-react-lite";
 
-import { useUIStore } from "../stores";
 import { CONSTANT_HEIGHT, CONSTANT_WIDTH, GRID_SIZE } from "./constants";
 import {
 	Context as _NodeContext,
@@ -11,14 +10,16 @@ import {
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 import { Connections } from "./Connections";
+import { EditorContext, Tool } from "../editor-state";
 
 const useGesture = createUseGesture([dragAction, pinchAction]);
 
 interface IEditorProps {
 	context: _NodeContext;
+	editorContext: EditorContext;
 }
 
-const Editor = observer(({ context }: IEditorProps) => {
+const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 	useEffect(() => {
 		// Disables default browser pinch-to-zoom when pinching the grid, such that
 		// it only zooms in as wanted on the grid
@@ -28,98 +29,86 @@ const Editor = observer(({ context }: IEditorProps) => {
 			}
 		};
 
-		window.addEventListener("wheel", disablePinchToZoom, { passive: false });
+		window.addEventListener("wheel", disablePinchToZoom, {
+			passive: false,
+		});
 
 		return () => {
 			window.removeEventListener("wheel", disablePinchToZoom);
 		};
 	}, []);
 
-	const { x, setX, y, setY, scale, setXYS, tool, setTool } = useUIStore(
-		(state) => ({
-			x: state.x,
-			setX: state.setX,
-			y: state.y,
-			setY: state.setY,
-			scale: state.scale,
-			setXYS: state.setXYS,
-			tool: state.tool,
-			setTool: state.setTool,
-		})
-	);
-
 	const onGridClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
-			if (tool === "") {
-				return;
-			}
+			switch (editor.tool) {
+				case Tool.HAND:
+					return;
 
-			if (tool === "vector") {
-				setTool("");
-			}
-
-			if (tool === "constant") {
-				new _ConstantNode(context, {
-					data: {
-						name: "Constant",
-						position: getNodePosition(
-							{ x, y },
-							{ x: e.clientX, y: e.clientY },
-							{ width: CONSTANT_WIDTH, height: CONSTANT_HEIGHT },
-							scale
-						),
-						size: {
-							width: CONSTANT_WIDTH,
-							height: CONSTANT_HEIGHT,
+				case Tool.CONSTANT:
+					new _ConstantNode(context, {
+						data: {
+							name: "Constant",
+							position: getNodePosition(
+								editor.position,
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: CONSTANT_WIDTH,
+									height: CONSTANT_HEIGHT,
+								},
+								editor.scale
+							),
+							size: {
+								width: CONSTANT_WIDTH,
+								height: CONSTANT_HEIGHT,
+							},
 						},
-					},
-				});
+					});
 
-				setTool("");
-			}
-
-			if (tool === "unary-operator") {
-				new _UnaryOperatorNode(context, {
-					data: {
-						name: "Unary operator",
-						position: getNodePosition(
-							{ x, y },
-							{ x: e.clientX, y: e.clientY },
-							{ width: CONSTANT_WIDTH, height: CONSTANT_HEIGHT },
-							scale
-						),
-						size: {
-							width: CONSTANT_WIDTH,
-							height: CONSTANT_HEIGHT,
+				case Tool.UNARY_OPERATOR:
+					new _UnaryOperatorNode(context, {
+						data: {
+							name: "Unary operator",
+							position: getNodePosition(
+								editor.position,
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: CONSTANT_WIDTH,
+									height: CONSTANT_HEIGHT,
+								},
+								editor.scale
+							),
+							size: {
+								width: CONSTANT_WIDTH,
+								height: CONSTANT_HEIGHT,
+							},
 						},
-					},
-				});
-
-				setTool("");
+					});
 			}
+
+			editor.tool = Tool.HAND;
 		},
-		[tool]
+		[editor.tool]
 	);
 
 	const [pointerDown, setPointerDown] = useState(false);
 
 	const bind = useGesture({
 		onDrag: ({ initial: [ix, iy], xy: [mx, my], first, memo }) => {
-			if (tool !== "") {
+			if (editor.tool !== Tool.HAND) {
 				return;
 			}
 
 			if (first) {
-				memo = [x, y];
+				memo = { ...editor.position };
 			}
 
-			setX(memo[0] + (mx - ix));
-			setY(memo[1] + (my - iy));
+			editor.position.x = memo.x + (mx - ix);
+			editor.position.y = memo.y + (my - iy);
 
 			return memo;
 		},
 		onDragStart: () => {
-			if (tool !== "") {
+			if (editor.tool !== Tool.HAND) {
 				return;
 			}
 
@@ -135,24 +124,28 @@ const Editor = observer(({ context }: IEditorProps) => {
 			first,
 			memo,
 		}) => {
-			if ((scale <= 0.2 && dir === -1) || (scale >= 2 && dir === 1)) {
+			if (
+				(editor.scale <= 0.2 && dir === -1) ||
+				(editor.scale >= 2 && dir === 1)
+			) {
 				return memo;
 			}
 
 			if (first) {
-				const tx = ox - x + 12;
-				const ty = oy - y + 12;
-				memo = [x, y, tx, ty, scale];
+				const tx = ox - editor.position.x + 12;
+				const ty = oy - editor.position.y + 12;
+				memo = [
+					editor.position.x,
+					editor.position.y,
+					tx,
+					ty,
+					editor.scale,
+				];
 			}
 
-			const currentX = memo[0] - (ms - 1) * memo[2];
-			const currentY = memo[1] - (ms - 1) * memo[3];
-
-			setXYS(
-				currentX,
-				currentY,
-				Math.min(Math.max(ms * memo[4], 0.2), 2)
-			);
+			editor.position.x = memo[0] - (ms - 1) * memo[2];
+			editor.position.y = memo[1] - (ms - 1) * memo[3];
+			editor.scale = Math.min(Math.max(ms * memo[4], 0.2), 2);
 
 			return memo;
 		},
@@ -166,11 +159,11 @@ const Editor = observer(({ context }: IEditorProps) => {
 				style={{
 					backgroundImage:
 						"url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgB7dOrEcMwEEBByTYITCkpITA9GaunQJeQUgIN9IkEUoRHu+Tm4L2Ziymlx7qurxjjmXM+9n3/hIks27Y9W2u3Wut9hAiTWcbx/6VHOMNkllLKu0f4jhfo8wgAAAAAAAAAAAAAAAAAAAAX9APY5yL/ZyiGWAAAAABJRU5ErkJggg==)",
-					backgroundSize: scale * GRID_SIZE,
-					backgroundPositionX: x,
-					backgroundPositionY: y,
+					backgroundSize: editor.scale * GRID_SIZE,
+					backgroundPositionX: editor.position.x,
+					backgroundPositionY: editor.position.y,
 					cursor:
-						tool === ""
+						editor.tool === Tool.HAND
 							? pointerDown
 								? "grabbing"
 								: "grab"
@@ -183,8 +176,8 @@ const Editor = observer(({ context }: IEditorProps) => {
 				<div
 					className="w-0 h-0"
 					style={{
-						translate: `${x}px ${y}px`,
-						transform: `scale(${scale})`,
+						translate: `${editor.position.x}px ${editor.position.y}px`,
+						transform: `scale(${editor.scale})`,
 					}}
 				>
 					<div
@@ -201,8 +194,8 @@ const Editor = observer(({ context }: IEditorProps) => {
 			<div
 				className="w-0 h-0"
 				style={{
-					translate: `${x}px ${y}px`,
-					transform: `scale(${scale})`,
+					translate: `${editor.position.x}px ${editor.position.y}px`,
+					transform: `scale(${editor.scale})`,
 				}}
 			>
 				<Connections
@@ -215,7 +208,7 @@ const Editor = observer(({ context }: IEditorProps) => {
 	);
 });
 
-const Nodes = observer(({ context }: IEditorProps) => {
+const Nodes = observer(({ context }: { context: _NodeContext }) => {
 	return (
 		<>
 			{Array.from(context.nodes.values()).map((node) => (

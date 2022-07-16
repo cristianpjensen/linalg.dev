@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { set } from "mobx";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 
@@ -8,9 +10,7 @@ import {
 	Port as _Port,
 	PortType,
 } from "../../../node-engine";
-import { editorContext } from "../../../editor";
-import { useEffect } from "react";
-import { set } from "mobx";
+import { editorContext } from "../../../editor-state";
 
 export interface INodePortsProps {
 	node: _Node;
