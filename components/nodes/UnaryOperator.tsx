@@ -1,5 +1,12 @@
-import { CrossCircledIcon } from "@radix-ui/react-icons";
+import {
+	CaretDownIcon,
+	CaretUpIcon,
+	CheckIcon,
+	ChevronDownIcon,
+	CrossCircledIcon,
+} from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
+import * as Select from "@radix-ui/react-select";
 
 import {
 	InputPort as _InputPort,
@@ -8,6 +15,7 @@ import {
 } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
+import { editorContext } from "../../editor-state";
 
 export const UnaryOperatorNode = observer(
 	({ node }: Node.INodeProps<_UnaryOperatorNode>) => {
@@ -36,7 +44,14 @@ export const UnaryOperatorNode = observer(
 				</Node.Handle>
 
 				<Node.Body className="bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100">
-					<Node.PortNumberInput port={node.inputPorts.x} />
+					<div className="flex flex-col justify-between w-full h-full pb-2">
+						<Node.PortSelectInput
+							port={node.inputPorts.operator}
+							values={Object.values(UnaryOperator)}
+							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+						/>
+						<Node.PortNumberInput port={node.inputPorts.x} />
+					</div>
 
 					<Node.InputPorts
 						node={node}

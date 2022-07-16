@@ -6,6 +6,8 @@ import {
 	CONSTANT_HEIGHT,
 	CONSTANT_WIDTH,
 	GRID_SIZE,
+	UNARY_OPERATOR_HEIGHT,
+	UNARY_OPERATOR_WIDTH,
 	VECTOR_HEIGHT,
 	VECTOR_WIDTH,
 } from "./constants";
@@ -84,13 +86,13 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{
-									width: CONSTANT_WIDTH,
-									height: CONSTANT_HEIGHT,
+									width: UNARY_OPERATOR_WIDTH,
+									height: UNARY_OPERATOR_HEIGHT,
 								}
 							),
 							size: {
-								width: CONSTANT_WIDTH,
-								height: CONSTANT_HEIGHT,
+								width: UNARY_OPERATOR_WIDTH,
+								height: UNARY_OPERATOR_HEIGHT,
 							},
 						},
 					});

@@ -177,23 +177,23 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 				</div>
 			</Popover.Trigger>
 
-			<Popover.Content className="w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-				<ZoomButton onClick={onClick200} hotkey="⇧ 1">
+			<Popover.Content className="w-48 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+				<ZoomButton onClick={onClick200} hotkey="Shift 1">
 					200%
 				</ZoomButton>
-				<ZoomButton onClick={onClick100} hotkey="⇧ 2">
+				<ZoomButton onClick={onClick100} hotkey="Shift 2">
 					100%
 				</ZoomButton>
-				<ZoomButton onClick={onClick50} hotkey="⇧ 3">
+				<ZoomButton onClick={onClick50} hotkey="Shift 3">
 					50%
 				</ZoomButton>
-				<ZoomButton onClick={onClick20} hotkey="⇧ 4">
+				<ZoomButton onClick={onClick20} hotkey="Shift 4">
 					20%
 				</ZoomButton>
-				<ZoomButton onClick={onClickZoomIn} hotkey="⇧ +">
+				<ZoomButton onClick={onClickZoomIn} hotkey="Shift +">
 					Zoom in
 				</ZoomButton>
-				<ZoomButton onClick={onClickZoomOut} hotkey="⇧ -">
+				<ZoomButton onClick={onClickZoomOut} hotkey="Shift -">
 					Zoom out
 				</ZoomButton>
 			</Popover.Content>

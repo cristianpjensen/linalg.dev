@@ -3,5 +3,7 @@ export const VECTOR_WIDTH = GRID_SIZE * 8;
 export const VECTOR_HEIGHT = GRID_SIZE * 13;
 export const CONSTANT_WIDTH = GRID_SIZE * 6;
 export const CONSTANT_HEIGHT = GRID_SIZE * 5;
+export const UNARY_OPERATOR_WIDTH = GRID_SIZE * 6;
+export const UNARY_OPERATOR_HEIGHT = GRID_SIZE * 7;
 export const OPERATOR_WIDTH = GRID_SIZE * 10;
 export const OPERATOR_HEIGHT = GRID_SIZE * 6;

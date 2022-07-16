@@ -13,7 +13,7 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 	};
 
 	return (
-		<>
+		<div>
 			<div
 				className={`transition-opacity duration-200 ease-out z-20 ${
 					port.isConnected
@@ -40,6 +40,6 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 			>
 				{Math.round(port.value * 100) / 100}
 			</div>
-		</>
+		</div>
 	);
 });
