@@ -22,22 +22,20 @@ const VectorSpace = observer(({ context, editor }: IVectorSpaceProps) => {
 
 	return (
 		<div className="border-l-4 border-zinc-600">
-		<Space width={window.innerWidth / editor.vectorSpaceSize}>
-			{vectors.map((node) => (
-				<VectorWrapper key={node.id} node={node as _VectorNode} />
-			))}
-		</Space>
+			<Space width={window.innerWidth / editor.vectorSpaceSize}>
+				{vectors.map((node) => (
+					<VectorWrapper key={node.id} node={node as _VectorNode} />
+				))}
+			</Space>
 		</div>
 	);
 });
 
-export default VectorSpace;
-
-interface VectorWrapperProps {
+interface IVectorWrapperProps {
 	node: _VectorNode;
 }
 
-const VectorWrapper = observer(({ node }: VectorWrapperProps) => {
+const VectorWrapper = observer(({ node }: IVectorWrapperProps) => {
 	const { x, y, z } = node.outputPorts.result.value;
 	const origin = node.inputPorts.origin.value;
 
@@ -57,3 +55,5 @@ const VectorWrapper = observer(({ node }: VectorWrapperProps) => {
 		/>
 	);
 });
+
+export default VectorSpace;

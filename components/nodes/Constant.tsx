@@ -1,7 +1,6 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
-import { set } from "mobx";
 
 import {
 	ConstantNode as _ConstantNode,
@@ -17,7 +16,7 @@ export const ConstantNode = observer(
 		};
 
 		const onValueChange = (value: number) => {
-			set(node.inputPorts.x, "value", value);
+			node.inputPorts.x.value = value;
 		};
 
 		return (

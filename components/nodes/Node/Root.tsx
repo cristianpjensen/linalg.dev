@@ -1,4 +1,3 @@
-import { set } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useCallback, useRef } from "react";
 import Draggable, { DraggableData } from "react-draggable";
@@ -34,7 +33,7 @@ interface INodeRootProps {
 export const Root = observer(
 	({ node, children, className, style }: INodeRootProps) => {
 		const onDrag = (_: unknown, { x, y }: DraggableData) => {
-			set(node.data, "position", { x, y });
+			node.data.position = { x, y };
 		};
 
 		const onClick = useCallback(() => {

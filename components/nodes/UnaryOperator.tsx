@@ -1,6 +1,5 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
-import { set } from "mobx";
 
 import {
 	InputPort as _InputPort,
@@ -16,12 +15,8 @@ export const UnaryOperatorNode = observer(
 			node.destroy();
 		};
 
-		const onValueChange = (value: number) => {
-			set(node.inputPorts.x, "value", value);
-		};
-
 		const onOperatorChange = (operator: UnaryOperator) => {
-			set(node.inputPorts.operator, "value", operator);
+			node.inputPorts.operator.value = operator;
 		};
 
 		return (

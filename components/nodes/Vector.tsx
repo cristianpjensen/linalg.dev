@@ -1,7 +1,5 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
-import { set } from "mobx";
 import TeX from "@matejmazur/react-katex";
 
 import { VectorNode as _VectorNode } from "../../node-engine";
@@ -14,18 +12,6 @@ export const VectorNode = observer(({ node }: Node.INodeProps<_VectorNode>) => {
 	};
 
 	const { x, y, z, origin } = node.inputPorts;
-
-	const onChangeX = (value: number) => {
-		set(x, "value", value);
-	};
-
-	const onChangeY = (value: number) => {
-		set(y, "value", value);
-	};
-
-	const onChangeZ = (value: number) => {
-		set(z, "value", value);
-	};
 
 	return (
 		<Node.Root node={node}>

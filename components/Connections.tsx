@@ -71,8 +71,12 @@ export const Connections = observer(
 							editor.connectingPort.data.position.y +
 							editor.connectingPort.node.data.position.y
 						}
-						x2={(mousePosition.x - editor.position.x) / editor.scale}
-						y2={(mousePosition.y - editor.position.y) / editor.scale}
+						x2={
+							(mousePosition.x - editor.position.x) / editor.scale
+						}
+						y2={
+							(mousePosition.y - editor.position.y) / editor.scale
+						}
 						className="stroke-zinc-300 dark:stroke-zinc-600 opacity-40"
 						strokeWidth={2}
 						fill="none"
@@ -208,9 +212,13 @@ const SteppedBezierLine = ({
 				d={`
 					M ${x1.toFixed(3)} ${y1.toFixed(3)}
 					L ${x2.toFixed(3)} ${y2.toFixed(3)}
-					C ${bx1.toFixed(3)} ${by1.toFixed(3)}, ${bx2.toFixed(3)} ${by2.toFixed(3)}, ${x3.toFixed(3)} ${y3.toFixed(3)}
+					C ${bx1.toFixed(3)} ${by1.toFixed(3)}, ${bx2.toFixed(3)} ${by2.toFixed(
+					3
+				)}, ${x3.toFixed(3)} ${y3.toFixed(3)}
 					L ${x4.toFixed(3)} ${y4.toFixed(3)}
-					C ${bx3.toFixed(3)} ${by3.toFixed(3)}, ${bx4.toFixed(3)} ${by4.toFixed(3)}, ${x5.toFixed(3)} ${y5.toFixed(3)}
+					C ${bx3.toFixed(3)} ${by3.toFixed(3)}, ${bx4.toFixed(3)} ${by4.toFixed(
+					3
+				)}, ${x5.toFixed(3)} ${y5.toFixed(3)}
 					L ${x6.toFixed(3)} ${y6.toFixed(3)}
 				`}
 				className={className}

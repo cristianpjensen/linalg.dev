@@ -1,6 +1,6 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-interface TooltipProps {
+interface ITooltipProps {
 	children: React.ReactNode;
 	tip: string;
 	side?: "left" | "right" | "top" | "bottom";
@@ -12,7 +12,7 @@ export function Tooltip({
 	tip,
 	side = "bottom",
 	hotkey,
-}: TooltipProps) {
+}: ITooltipProps) {
 	return (
 		<TooltipPrimitive.Root>
 			<TooltipPrimitive.Trigger>{children}</TooltipPrimitive.Trigger>

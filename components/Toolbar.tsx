@@ -142,8 +142,7 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 			)
 			.easing(TWEEN.Easing.Cubic.Out)
 			.onUpdate((tween) => {
-				editor.position.x = tween.x;
-				editor.position.y = tween.y;
+				editor.position = { x: tween.x, y: tween.y };
 				editor.scale = tween.scale;
 			});
 
@@ -239,35 +238,35 @@ const VectorSpaceSizeControl = observer(
 					</div>
 				</Popover.Trigger>
 
-			<Popover.Content className="w-40 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-				<ZoomButton onClick={onClick1} hotkey="Ctl. 1">
-					1&thinsp;/&thinsp;1
-				</ZoomButton>
-				<ZoomButton onClick={onClick2} hotkey="Ctrl 2">
-					1&thinsp;/&thinsp;2
-				</ZoomButton>
-				<ZoomButton onClick={onClick3} hotkey="Ctrl 3">
-					1&thinsp;/&thinsp;3
-				</ZoomButton>
-				<ZoomButton onClick={onClick4} hotkey="Ctrl 4">
-					1&thinsp;/&thinsp;4
-				</ZoomButton>
-				<ZoomButton onClick={onClickInf} hotkey="Ctrl 5">
-					1&thinsp;/&thinsp;∞
-				</ZoomButton>
+				<Popover.Content className="w-40 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+					<ZoomButton onClick={onClick1} hotkey="Ctl. 1">
+						1&thinsp;/&thinsp;1
+					</ZoomButton>
+					<ZoomButton onClick={onClick2} hotkey="Ctrl 2">
+						1&thinsp;/&thinsp;2
+					</ZoomButton>
+					<ZoomButton onClick={onClick3} hotkey="Ctrl 3">
+						1&thinsp;/&thinsp;3
+					</ZoomButton>
+					<ZoomButton onClick={onClick4} hotkey="Ctrl 4">
+						1&thinsp;/&thinsp;4
+					</ZoomButton>
+					<ZoomButton onClick={onClickInf} hotkey="Ctrl 5">
+						1&thinsp;/&thinsp;∞
+					</ZoomButton>
 				</Popover.Content>
 			</Popover.Root>
 		);
 	}
 );
 
-interface ZoomButtonProps {
+interface IZoomButtonProps {
 	children: React.ReactNode;
 	onClick: () => void;
 	hotkey?: string;
 }
 
-function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
+function ZoomButton({ children, onClick, hotkey }: IZoomButtonProps) {
 	return (
 		<button
 			onClick={onClick}
@@ -282,7 +281,7 @@ function ZoomButton({ children, onClick, hotkey }: ZoomButtonProps) {
 	);
 }
 
-interface ToolProps {
+interface IToolProps {
 	tool: _Tool;
 	icon: React.ReactElement;
 	description: string;
@@ -298,7 +297,7 @@ const Tool = observer(
 		description,
 		tooltipSide,
 		hotkey,
-	}: ToolProps & IToolbarProps) => {
+	}: IToolProps & IToolbarProps) => {
 		const setTool = () => {
 			editor.tool = tool;
 		};
@@ -332,15 +331,15 @@ const Tool = observer(
 	}
 );
 
-interface ToolDropdownProps {
+interface IToolDropdownProps {
 	editorContext: EditorContext;
 	title: string;
 	icon: React.ReactElement;
-	tools: Array<ToolProps>;
+	tools: Array<IToolProps>;
 }
 
 const ToolDropdown = observer(
-	({ editorContext: editor, icon, title, tools }: ToolDropdownProps) => {
+	({ editorContext: editor, icon, title, tools }: IToolDropdownProps) => {
 		const isSelected = tools.some((tool) => tool.tool === editor.tool);
 		const [isOpen, setIsOpen] = useState(false);
 
@@ -391,14 +390,14 @@ const ToolDropdown = observer(
 	}
 );
 
-interface ToggleProps {
+interface IToggleProps {
 	icon: React.ReactElement;
 	altIcon?: React.ReactElement;
 	toggled?: boolean;
 	onClick?: (value: boolean) => void;
 }
 
-function Toggle({ icon, altIcon, toggled, onClick }: ToggleProps) {
+function Toggle({ icon, altIcon, toggled, onClick }: IToggleProps) {
 	const [state, setState] = useState(toggled);
 
 	const onComponentClick = () => {
