@@ -32,7 +32,7 @@ export const UnaryOperatorNode = observer(
 				</Node.Handle>
 
 				<Node.Body className="bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100">
-					<div className="flex flex-col justify-between w-full h-full pb-2">
+					<div className="flex flex-col justify-between w-full h-full">
 						<Node.PortSelectInput
 							port={node.inputPorts.operator}
 							values={Object.values(UnaryOperator)}

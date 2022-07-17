@@ -41,7 +41,7 @@ export const OutputPorts = observer(({ node }: INodePortsProps) => {
 	const outputPorts = Object.values(node.outputPorts);
 
 	return (
-		<div className="absolute top-8 flex flex-col justify-evenly h-[calc(100%-32px)] -right-3">
+		<div className="absolute top-8 flex flex-col justify-evenly h-[calc(100%-32px)] right-3">
 			{outputPorts.map((port, index) => (
 				<Port
 					key={port.id}
@@ -104,6 +104,8 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 	};
 
 	useEffect(() => {
+		if (port.data.position) return;
+
 		const sectionSize = port.node.data.size.height / (total + 1);
 		const x = port.type === PortType.OUTPUT ? port.node.data.size.width : 0;
 		const y = sectionSize * (index + 1) + 2;
@@ -112,7 +114,7 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 
 	return (
 		<button
-			className={`flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-400 transition-all duration-200 ${
+			className={`absolute flex justify-center items-center w-6 h-6 text-[10px] cursor-pointer font-medium border-2 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 rounded-full bg-offwhite dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-400 transition-opacity duration-200 ${
 				editor.connectingPort === port
 					? "bg-zinc-600 dark:bg-zinc-300"
 					: ""
@@ -129,6 +131,16 @@ export const Port = observer(({ port, index, total }: INodePortProps) => {
 					? "border-zinc-400 dark:border-zinc-400"
 					: ""
 			}`}
+			style={
+				port.type === PortType.INPUT
+					? {
+							left: port.data.position ? port.data.position.x : 0,
+							top: port.data.position
+								? port.data.position.y - 44
+								: 0,
+					  }
+					: {}
+			}
 			onClick={onClick}
 		>
 			{port.valueType}

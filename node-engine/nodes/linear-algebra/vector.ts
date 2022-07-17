@@ -38,16 +38,34 @@ export class VectorNode extends Node {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+					data: {
+						position: {
+							x: 0,
+							y: 73,
+						},
+					},
 				},
 				y: {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+					data: {
+						position: {
+							x: 0,
+							y: 128,
+						},
+					},
 				},
 				z: {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+					data: {
+						position: {
+							x: 0,
+							y: 183,
+						},
+					},
 				},
 				origin: {
 					defaultValue: {
@@ -56,6 +74,12 @@ export class VectorNode extends Node {
 						z: 0,
 					},
 					valueType: PortValueType.VECTOR,
+					data: {
+						position: {
+							x: 0,
+							y: 245,
+						},
+					},
 				},
 			},
 			outputPorts: {

@@ -13,7 +13,7 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 	};
 
 	return (
-		<div>
+		<div style={{ height: 50 }}>
 			<div
 				className={`transition-opacity duration-200 ease-out z-20 ${
 					port.isConnected
@@ -32,7 +32,7 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 			</div>
 
 			<div
-				className={`flex justify-center font-math text-2xl -mt-[2.5625rem] transition-opacity duration-200 z-10 ease-in ${
+				className={`flex justify-left font-math text-2xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
 					port.isConnected
 						? "opacity-100 visible"
 						: "opacity-0 invisible"

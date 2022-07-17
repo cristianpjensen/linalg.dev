@@ -44,11 +44,23 @@ export class BinaryOperatorNode extends Node {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+					data: {
+						position: {
+							x: 0,
+							y: 127,
+						}
+					}
 				},
 				y: {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
+					data: {
+						position: {
+							x: 0,
+							y: 193,
+						}
+					}
 				},
 				operator: {
 					defaultValue: BinaryOperator.ADD,
