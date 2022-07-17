@@ -19,7 +19,7 @@ export const VectorNode = observer(({ node }: Node.INodeProps<_VectorNode>) => {
 				title={node.type}
 				className="bg-slate-700 dark:bg-slate-900 text-slate-200 dark:text-slate-100"
 			>
-				<Tooltip tip="Remove constant">
+				<Tooltip tip="Remove vector">
 					<button
 						onClick={onRemove}
 						className="flex items-center justify-center w-8 h-8 hover:bg-gray-300/20"
@@ -29,13 +29,17 @@ export const VectorNode = observer(({ node }: Node.INodeProps<_VectorNode>) => {
 				</Tooltip>
 			</Node.Handle>
 
-			<Node.Body className="flex flex-col justify-evenly bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
-        <Node.PortNumberInput port={x} />
-        <Node.PortNumberInput port={y} />
-        <Node.PortNumberInput port={z} />
+			<Node.Body className="flex flex-col justify-between bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+				<Node.PortNumberInput port={x} />
+				<Node.PortNumberInput port={y} />
+				<Node.PortNumberInput port={z} />
 
 				<TeX
-					math={`\\begin{bmatrix} ${origin.value.x} & ${origin.value.y} & ${origin.value.z} \\end{bmatrix}^\\top`}
+					math={`\\begin{bmatrix} ${
+						Math.round(origin.value.x * 100) / 100
+					} & ${Math.round(origin.value.y * 100) / 100} & ${
+						Math.round(origin.value.z * 100) / 100
+					} \\end{bmatrix}^\\top`}
 					block
 				/>
 

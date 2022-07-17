@@ -3,14 +3,14 @@ import { observer } from "mobx-react-lite";
 
 import {
 	InputPort as _InputPort,
-	UnaryOperator,
-	UnaryOperatorNode as _UnaryOperatorNode,
+	BinaryOperator,
+	BinaryOperatorNode as _BinaryOperatorNode,
 } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 
-export const UnaryOperatorNode = observer(
-	({ node }: Node.INodeProps<_UnaryOperatorNode>) => {
+export const BinaryOperatorNode = observer(
+	({ node }: Node.INodeProps<_BinaryOperatorNode>) => {
 		const onRemove = () => {
 			node.destroy();
 		};
@@ -21,7 +21,7 @@ export const UnaryOperatorNode = observer(
 					title={node.type}
 					className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
 				>
-					<Tooltip tip="Remove unary operator">
+					<Tooltip tip="Remove binary operator">
 						<button
 							onClick={onRemove}
 							className="flex items-center justify-center w-8 h-8 hover:bg-gray-300/20"
@@ -35,10 +35,11 @@ export const UnaryOperatorNode = observer(
 					<div className="flex flex-col justify-between w-full h-full pb-2">
 						<Node.PortSelectInput
 							port={node.inputPorts.operator}
-							values={Object.values(UnaryOperator)}
+							values={Object.values(BinaryOperator)}
 							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
 						/>
 						<Node.PortNumberInput port={node.inputPorts.x} />
+						<Node.PortNumberInput port={node.inputPorts.y} />
 					</div>
 
 					<Node.InputPorts

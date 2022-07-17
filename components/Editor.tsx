@@ -3,6 +3,8 @@ import { createUseGesture, dragAction, pinchAction } from "@use-gesture/react";
 import { observer } from "mobx-react-lite";
 
 import {
+	BINARY_OPERATOR_HEIGHT,
+	BINARY_OPERATOR_WIDTH,
 	CONSTANT_HEIGHT,
 	CONSTANT_WIDTH,
 	GRID_SIZE,
@@ -15,6 +17,7 @@ import {
 	Context as _NodeContext,
 	ConstantNode as _ConstantNode,
 	UnaryOperatorNode as _UnaryOperatorNode,
+	BinaryOperatorNode as _BinaryOperatorNode,
 	VectorNode as _VectorNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
@@ -63,7 +66,6 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 				case Tool.CONSTANT:
 					new _ConstantNode(context, {
 						data: {
-							name: "Constant",
 							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{
@@ -82,7 +84,6 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 				case Tool.UNARY_OPERATOR:
 					new _UnaryOperatorNode(context, {
 						data: {
-							name: "Unary operator",
 							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{
@@ -98,10 +99,27 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 					});
 					break;
 
+				case Tool.BINARY_OPERATOR:
+					new _BinaryOperatorNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: BINARY_OPERATOR_WIDTH,
+									height: BINARY_OPERATOR_HEIGHT,
+								}
+							),
+							size: {
+								width: BINARY_OPERATOR_WIDTH,
+								height: BINARY_OPERATOR_HEIGHT,
+							},
+						},
+					});
+					break;
+
 				case Tool.VECTOR:
 					new _VectorNode(context, {
 						data: {
-							name: "Vector",
 							position: getNodePosition_(
 								{ x: e.clientX, y: e.clientY },
 								{

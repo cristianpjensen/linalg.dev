@@ -41,7 +41,7 @@ const Home: NextPage = () => {
 	return (
 		<div>
 			<Head>
-				<title>linalg.dev</title>
+				<title>WIP: linalg.dev</title>
 				<meta
 					name="description"
 					content="Linear algebra node environment."
