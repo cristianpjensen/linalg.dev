@@ -6,12 +6,14 @@ import {
 	UnaryOperatorNode as _UnaryOperatorNode,
 	BinaryOperatorNode as _BinaryOperatorNode,
 	VectorNode as _VectorNode,
+	SliderNode as _SliderNode,
 	NodeType,
 } from "../../node-engine";
 import { ConstantNode } from "./Constant";
 import { UnaryOperatorNode } from "./UnaryOperator";
 import { BinaryOperatorNode } from "./BinaryOperator";
 import { VectorNode } from "./Vector";
+import { SliderNode } from "./Slider";
 
 export interface INodeWrapperProps {
 	node: _Node;
@@ -30,6 +32,9 @@ export const NodeWrapper = observer(({ node }: INodeWrapperProps) => {
 
 		case NodeType.VECTOR:
 			return <VectorNode node={node as _VectorNode} />;
+
+		case NodeType.SLIDER:
+			return <SliderNode node={node as _SliderNode} />;
 	}
 
 	return null;

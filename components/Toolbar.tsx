@@ -2,6 +2,7 @@ import { cloneElement, useState } from "react";
 import {
 	ArrowTopRightIcon,
 	CaretDownIcon,
+	CommitIcon,
 	FontFamilyIcon,
 	GitHubLogoIcon,
 	HandIcon,
@@ -10,6 +11,7 @@ import {
 	MoonIcon,
 	PlusIcon,
 	RulerSquareIcon,
+	SliderIcon,
 	StopIcon,
 	SunIcon,
 	ValueIcon,
@@ -67,6 +69,13 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 						description:
 							"Press anywhere on the canvas to add a constant",
 						hotkey: "c",
+					},
+					{
+						icon: <SliderIcon />,
+						tool: _Tool.SLIDER,
+						description:
+							"Press anywhere on the canvas to add a slider",
+						hotkey: "s",
 					},
 					{
 						icon: <StopIcon />,
@@ -239,7 +248,7 @@ const VectorSpaceSizeControl = observer(
 				</Popover.Trigger>
 
 				<Popover.Content className="w-40 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-					<ZoomButton onClick={onClick1} hotkey="Ctl. 1">
+					<ZoomButton onClick={onClick1} hotkey="Ctrl 1">
 						1&thinsp;/&thinsp;1
 					</ZoomButton>
 					<ZoomButton onClick={onClick2} hotkey="Ctrl 2">
@@ -287,6 +296,7 @@ interface IToolProps {
 	description: string;
 	tooltipSide?: "left" | "right" | "top" | "bottom";
 	hotkey?: string;
+	dropdown?: boolean;
 }
 
 const Tool = observer(
@@ -297,6 +307,7 @@ const Tool = observer(
 		description,
 		tooltipSide,
 		hotkey,
+		dropdown = false,
 	}: IToolProps & IToolbarProps) => {
 		const setTool = () => {
 			editor.tool = tool;
@@ -318,13 +329,28 @@ const Tool = observer(
 						editor.tool === tool
 							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
 							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-					}`}
+					} ${dropdown ? "w-40 pl-10" : ""}`}
 					onClick={setTool}
 				>
-					<div className={`${tool !== _Tool.HAND ? "mr-2" : ""}`}>
-						{icon}
-					</div>
-					{title}
+					{dropdown ? (
+						<>
+							<div className="absolute flex items-center justify-center w-4 h-4 left-3">
+								{icon}
+							</div>
+							{title}
+						</>
+					) : (
+						<>
+							<div
+								className={`${
+									tool !== _Tool.HAND ? "mr-2" : ""
+								}`}
+							>
+								{icon}
+							</div>
+							{title}
+						</>
+					)}
 				</div>
 			</Tooltip>
 		);
@@ -381,6 +407,7 @@ const ToolDropdown = observer(
 							key={tool.tool}
 							editorContext={editor}
 							tooltipSide="right"
+							dropdown
 							{...tool}
 						/>
 					))}

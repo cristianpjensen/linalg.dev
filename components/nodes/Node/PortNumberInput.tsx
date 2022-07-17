@@ -22,7 +22,7 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 				}`}
 			>
 				<MathInput
-					value={port.value}
+					value={Math.round(port.value * 100) / 100}
 					onChange={onValueChange}
 					style={{
 						backgroundColor: "transparent",

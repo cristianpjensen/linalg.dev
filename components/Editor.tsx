@@ -8,6 +8,8 @@ import {
 	CONSTANT_HEIGHT,
 	CONSTANT_WIDTH,
 	GRID_SIZE,
+	SLIDER_HEIGHT,
+	SLIDER_WIDTH,
 	UNARY_OPERATOR_HEIGHT,
 	UNARY_OPERATOR_WIDTH,
 	VECTOR_HEIGHT,
@@ -16,6 +18,7 @@ import {
 import {
 	Context as _NodeContext,
 	ConstantNode as _ConstantNode,
+	SliderNode as _SliderNode,
 	UnaryOperatorNode as _UnaryOperatorNode,
 	BinaryOperatorNode as _BinaryOperatorNode,
 	VectorNode as _VectorNode,
@@ -76,6 +79,24 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							size: {
 								width: CONSTANT_WIDTH,
 								height: CONSTANT_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.SLIDER:
+					new _SliderNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: SLIDER_WIDTH,
+									height: SLIDER_HEIGHT,
+								}
+							),
+							size: {
+								width: SLIDER_WIDTH,
+								height: SLIDER_HEIGHT,
 							},
 						},
 					});

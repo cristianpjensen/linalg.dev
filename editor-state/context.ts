@@ -7,6 +7,7 @@ export enum Tool {
 	VECTOR = "vector",
 	MATRIX = "matrix",
 	CONSTANT = "constant",
+	SLIDER = "slider",
 	UNARY_OPERATOR = "unary-operator",
 	BINARY_OPERATOR = "binary-operator",
 	EIGENVALUES = "eigenvalues",

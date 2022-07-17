@@ -37,7 +37,7 @@ export const ConstantNode = observer(
 
 				<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100">
 					<MathInput
-						value={node.inputPorts.x.value}
+						value={Math.round(node.inputPorts.x.value * 100) / 100}
 						onChange={onValueChange}
 						style={{
 							backgroundColor: "transparent",
