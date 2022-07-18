@@ -53,11 +53,17 @@ export const Connections = observer(
 					<Connection
 						key={connection.id}
 						connection={connection}
-						selected={
-							selectedConnections
-								? selectedConnections.includes(connection)
-								: false
-						}
+						selected={false}
+					/>
+				))}
+
+				{/* Render the selected connections after, such that it gets rendered on
+				top of all the other connections. */}
+				{selectedConnections?.map((connection) => (
+					<Connection
+						key={`selected-${connection.id}`}
+						connection={connection}
+						selected={true}
 					/>
 				))}
 
