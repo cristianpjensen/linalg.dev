@@ -48,34 +48,6 @@ export const SliderNode = observer(({ node }: Node.INodeProps<_SliderNode>) => {
 		node.inputPorts.max.value = value;
 	};
 
-	const onValueChange = (value: number) => {
-		onSwitchChange(false);
-		node.inputPorts.x.value = value;
-	};
-
-	const [loop, setLoop] = useState(false);
-	const [intervalState, setIntervalState] = useState<NodeJS.Timer>();
-	const [randomValue] = useState(Math.random() * 2000);
-
-	const onSwitchChange = (value: boolean) => {
-		setLoop(value);
-
-		if (value) {
-			setIntervalState(
-				setInterval(() => {
-					const t = ((timer.value + randomValue) / 1000) % 2;
-					node.inputPorts.x.value = t > 1 ? t - 1 : 1 - t;
-				}, 100)
-			);
-		} else {
-			clearInterval(intervalState);
-		}
-	};
-
-	useEffect(() => {
-		return () => clearInterval(intervalState);
-	}, []);
-
 	return (
 		<Node.Root node={node}>
 			<Node.Handle
@@ -123,24 +95,57 @@ export const SliderNode = observer(({ node }: Node.INodeProps<_SliderNode>) => {
 					</div>
 				</div>
 
-				<SliderComponent
-					value={node.inputPorts.x.value}
-					onValueChange={onValueChange}
-				/>
-
-				<div className="flex mt-4">
-					<SwitchComponent
-						value={loop}
-						onValueChange={onSwitchChange}
-					/>
-					<Label className="flex items-center ml-2 text-sm font-medium text-green-ext-800 dark:text-green-ext-100 grow">
-						Loop
-					</Label>
-				</div>
+				<SliderInput node={node} />
 
 				<Node.OutputPorts node={node} />
 			</Node.Body>
 		</Node.Root>
+	);
+});
+
+const SliderInput = observer(({ node }: Node.INodeProps<_SliderNode>) => {
+	const onValueChange = (value: number) => {
+		onSwitchChange(false);
+		node.inputPorts.x.value = value;
+	};
+
+	const [loop, setLoop] = useState(false);
+	const [intervalState, setIntervalState] = useState<NodeJS.Timer>();
+	const [randomValue] = useState(Math.random() * 2000);
+
+	const onSwitchChange = (value: boolean) => {
+		setLoop(value);
+
+		if (value) {
+			setIntervalState(
+				setInterval(() => {
+					const t = ((timer.value + randomValue) / 1000) % 2;
+					node.inputPorts.x.value = t > 1 ? t - 1 : 1 - t;
+				}, 100)
+			);
+		} else {
+			clearInterval(intervalState);
+		}
+	};
+
+	useEffect(() => {
+		return () => clearInterval(intervalState);
+	}, []);
+
+	return (
+		<>
+			<SliderComponent
+				value={node.inputPorts.x.value}
+				onValueChange={onValueChange}
+			/>
+
+			<div className="flex mt-4">
+				<SwitchComponent value={loop} onValueChange={onSwitchChange} />
+				<Label className="flex items-center ml-2 text-sm font-medium text-green-ext-800 dark:text-green-ext-100 grow">
+					Loop
+				</Label>
+			</div>
+		</>
 	);
 });
 
