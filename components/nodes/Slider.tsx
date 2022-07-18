@@ -14,6 +14,11 @@ import {
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 
+// This timer is used for slider nodes to tap into to get their state when
+// looping. It works by taking the current timer value and modulo 2 on it. Then
+// if it is smaller than 1, it should be 1 - value and if it is greater than 1,
+// it should be value - 1. This makes it go from 0 -> 1 and then 1 -> 0, over
+// and over again.
 class Timer {
 	public value = 0;
 

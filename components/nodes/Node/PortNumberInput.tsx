@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { MathInput } from "react-three-linalg";
+import TeX from "@matejmazur/react-katex";
 
 import { InputPort as _InputPort } from "../../../node-engine";
 
@@ -31,15 +32,14 @@ export const PortNumberInput = observer(({ port }: IPortNumberInput) => {
 				/>
 			</div>
 
-			<div
-				className={`flex justify-left font-math text-2xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
+			<TeX
+				className={`flex justify-left text-xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
 					port.isConnected
 						? "opacity-100 visible"
 						: "opacity-0 invisible"
 				}`}
-			>
-				{Math.round(port.value * 100) / 100}
-			</div>
+				math={`${Math.round(port.value * 100) / 100}`}
+			/>
 		</div>
 	);
 });
