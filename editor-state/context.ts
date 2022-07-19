@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import * as THREE from "three";
 
 import { Port, Node } from "../node-engine";
 
@@ -45,6 +46,11 @@ export interface EditorContext {
 	 * space in the editor. 1e99 = infinity.
 	 */
 	vectorSpaceSize: 1 | 2 | 3 | 4 | 1e99;
+
+	/**
+	 * Current matrix.
+	 */
+	currentMatrix: THREE.Matrix3;
 }
 
 /**
@@ -59,4 +65,5 @@ export const editorContext = observable<EditorContext>({
 	connectingPort: null,
 	selectedNode: null,
 	vectorSpaceSize: 3,
+	currentMatrix: new THREE.Matrix3(),
 });

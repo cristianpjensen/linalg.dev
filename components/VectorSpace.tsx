@@ -33,10 +33,6 @@ export const VectorSpace = observer(
 	forwardRef<VectorSpace, IVectorSpaceProps>((props, ref) => {
 		const { context, editor } = props;
 
-		const vectors = Array.from(context.nodes.values()).filter(
-			(node) => node.type === NodeType.VECTOR
-		);
-
 		const spaceRef = useRef<Space>(null);
 		const groupRef = useRef<Group>(null);
 
@@ -53,26 +49,47 @@ export const VectorSpace = observer(
 					ref={spaceRef}
 					width={window.innerWidth / editor.vectorSpaceSize}
 				>
-					<Group ref={groupRef}>
-						{vectors.map((node) => (
-							<VectorWrapper
-								key={node.id}
-								node={node as _VectorNode}
-							/>
-						))}
-					</Group>
+					<Vectors ref={groupRef} context={context} editor={editor} />
 				</Space>
 			</div>
 		);
 	})
 );
 
+export interface IVectorsProps {
+	context: _NodeContext;
+	editor: EditorContext;
+}
+
+const Vectors = observer(
+	forwardRef<Group, IVectorsProps>((props, ref) => {
+		const { context, editor } = props;
+
+		const vectors = Array.from(context.nodes.values()).filter(
+			(node) => node.type === NodeType.VECTOR
+		);
+
+		return (
+			<Group ref={ref}>
+				{vectors.map((node) => (
+					<VectorWrapper
+						key={node.id}
+						node={node as _VectorNode}
+						editor={editor}
+					/>
+				))}
+			</Group>
+		);
+	})
+);
+
 export interface IVectorWrapperProps {
 	node: _VectorNode;
+	editor: EditorContext;
 }
 
 export const VectorWrapper = observer(
-	forwardRef<Vector, IVectorWrapperProps>(({ node }, ref) => {
+	forwardRef<Vector, IVectorWrapperProps>(({ node, editor }, ref) => {
 		const { x, y, z } = node.outputPorts.result.value;
 		const { x: ox, y: oy, z: oz } = node.inputPorts.origin.value;
 		const innerRef = useRef<Vector>(null);
@@ -82,7 +99,9 @@ export const VectorWrapper = observer(
 
 		useEffect(() => {
 			const { x, y, z } = node.outputPorts.result.value;
-			const vector = new THREE.Vector3(x, y, z);
+			const vector = new THREE.Vector3(x, y, z).applyMatrix3(
+				editor.currentMatrix
+			);
 			innerRef.current?.move(vector);
 		}, [
 			node.outputPorts.result.value.x,
