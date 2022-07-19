@@ -34,6 +34,7 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 		);
 		ref.current?.transform(mat);
 		editorContext.currentMatrix = editorContext.currentMatrix.multiply(mat);
+		editorContext.currentMatrixReset = false;
 	};
 
 	return (

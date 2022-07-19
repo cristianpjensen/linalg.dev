@@ -3,13 +3,13 @@ import {
 	ArrowTopRightIcon,
 	ButtonIcon,
 	CaretDownIcon,
+	DotIcon,
 	FontFamilyIcon,
 	GitHubLogoIcon,
 	HandIcon,
 	InfoCircledIcon,
 	LayersIcon,
 	MoonIcon,
-	PlusIcon,
 	RulerSquareIcon,
 	SliderIcon,
 	StopIcon,
@@ -84,7 +84,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 						hotkey: "u",
 					},
 					{
-						icon: <PlusIcon />,
+						icon: <DotIcon />,
 						tool: _Tool.BINARY_OPERATOR,
 						description:
 							"Press anywhere on the canvas to add a mathematical operator",

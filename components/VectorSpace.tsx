@@ -16,6 +16,7 @@ import {
 } from "../node-engine";
 import { EditorContext } from "../editor-state";
 import { Group } from "./three";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
@@ -43,6 +44,14 @@ export const VectorSpace = observer(
 			},
 		}));
 
+		const reset = () => {
+			// TODO: Add reset() method to space.
+			const inv = editor.currentMatrix.clone().invert();
+			spaceRef.current?.transform(inv);
+			editor.currentMatrix.identity();
+			editor.currentMatrixReset = true;
+		};
+
 		return (
 			<div className="border-l-4 border-zinc-600">
 				<Space
@@ -51,6 +60,12 @@ export const VectorSpace = observer(
 				>
 					<Vectors ref={groupRef} context={context} editor={editor} />
 				</Space>
+				<button
+					onClick={reset}
+					className="absolute flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 right-4 bottom-4 shadow-b1 shadow-zinc-400"
+				>
+					<ResetIcon />
+				</button>
 			</div>
 		);
 	})
@@ -108,6 +123,14 @@ export const VectorWrapper = observer(
 			node.outputPorts.result.value.y,
 			node.outputPorts.result.value.z,
 		]);
+
+		// If reseting, move the vector to its non-transformed position
+		useEffect(() => {
+			if (editor.currentMatrixReset) {
+				const { x, y, z } = node.outputPorts.result.value;
+				innerRef.current?.move(new THREE.Vector3(x, y, z));
+			}
+		}, [editor.currentMatrixReset]);
 
 		// Memoize the vector component, so that it is only created once and not
 		// re-rendered every time, which makes it not animate on move

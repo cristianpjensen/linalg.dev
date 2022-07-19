@@ -51,6 +51,7 @@ export interface EditorContext {
 	 * Current matrix.
 	 */
 	currentMatrix: THREE.Matrix3;
+	currentMatrixReset: boolean;
 }
 
 /**
@@ -66,4 +67,5 @@ export const editorContext = observable<EditorContext>({
 	selectedNode: null,
 	vectorSpaceSize: 3,
 	currentMatrix: new THREE.Matrix3(),
+	currentMatrixReset: false,
 });
