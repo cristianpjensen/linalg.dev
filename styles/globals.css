@@ -21,6 +21,7 @@ a {
 
 * {
 	box-sizing: border-box;
+	outline: none;
 }
 
 /* Chrome, Safari, Edge, Opera */

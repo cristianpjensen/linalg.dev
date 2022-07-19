@@ -46,7 +46,7 @@ export class MatrixNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 73,
+							y: 72,
 						},
 					},
 				},
@@ -63,7 +63,7 @@ export class MatrixNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 136,
+							y: 130,
 						},
 					},
 				},
@@ -80,14 +80,14 @@ export class MatrixNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 199,
+							y: 189,
 						},
 					},
 				},
 			},
 			outputPorts: {
 				result: {
-					defaultValue: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+					defaultValue: [1, 0, 0, 0, 1, 0, 0, 0, 1],
 					valueType: PortValueType.MATRIX,
 				},
 			},

@@ -55,6 +55,9 @@ module.exports = {
 			},
 		},
 	},
+	variants: {
+		boxShadow: ["responsive", "hover", "focus", "active", "group-hover"],
+	},
 	plugins: [
 		plugin(({ addVariant, e }) => {
 			addVariant(

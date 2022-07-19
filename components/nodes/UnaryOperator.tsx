@@ -37,8 +37,12 @@ export const UnaryOperatorNode = observer(
 							port={node.inputPorts.operator}
 							values={Object.values(UnaryOperator)}
 							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+							triggerClassName="shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200"
 						/>
-						<Node.PortNumberInput port={node.inputPorts.x} />
+						<Node.PortNumberInput
+							port={node.inputPorts.x}
+							className="absolute left-4 right-4 bottom-4 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
 					</div>
 
 					<Node.InputPorts

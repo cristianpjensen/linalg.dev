@@ -41,7 +41,7 @@ export class VectorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 73,
+							y: 72,
 						},
 					},
 				},
@@ -52,7 +52,7 @@ export class VectorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 128,
+							y: 126,
 						},
 					},
 				},
@@ -63,7 +63,7 @@ export class VectorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 183,
+							y: 182,
 						},
 					},
 				},
@@ -77,7 +77,7 @@ export class VectorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 245,
+							y: 243,
 						},
 					},
 				},

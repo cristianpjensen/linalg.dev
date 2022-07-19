@@ -36,7 +36,10 @@ export const ConstantNode = observer(
 				</Node.Handle>
 
 				<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100">
-					<Node.PortNumberInput port={node.inputPorts.x} />
+					<Node.PortNumberInput
+						port={node.inputPorts.x}
+						className="shadow-green-ext-500 dark:shadow-green-ext-700 focus:shadow-green-ext-700 dark:focus:shadow-green-ext-500 text-green-ext-900 dark:text-green-ext-200"
+					/>
 
 					<Node.InputPorts node={node} />
 					<Node.OutputPorts node={node} />

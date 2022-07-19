@@ -32,14 +32,21 @@ export const BinaryOperatorNode = observer(
 				</Node.Handle>
 
 				<Node.Body className="bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100">
-					<div className="flex flex-col justify-between w-full h-full pb-2">
+					<div className="flex flex-col gap-2 pb-2">
 						<Node.PortSelectInput
 							port={node.inputPorts.operator}
 							values={Object.values(BinaryOperator)}
 							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+							triggerClassName="flex-1 h-16 shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200"
 						/>
-						<Node.PortNumberInput port={node.inputPorts.x} />
-						<Node.PortNumberInput port={node.inputPorts.y} />
+							<Node.PortNumberInput
+								port={node.inputPorts.x}
+								className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
+							/>
+							<Node.PortNumberInput
+								port={node.inputPorts.y}
+								className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
+							/>
 					</div>
 
 					<Node.InputPorts

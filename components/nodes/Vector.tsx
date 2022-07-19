@@ -30,9 +30,18 @@ export const VectorNode = observer(({ node }: Node.INodeProps<_VectorNode>) => {
 			</Node.Handle>
 
 			<Node.Body className="flex flex-col justify-between bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
-				<Node.PortNumberInput port={x} />
-				<Node.PortNumberInput port={y} />
-				<Node.PortNumberInput port={z} />
+				<Node.PortNumberInput
+					port={x}
+					className="shadow-slate-400 focus:shadow-slate-600 dark:shadow-slate-600 dark:focus:shadow-slate-400 text-slate-900 dark:text-slate-200"
+				/>
+				<Node.PortNumberInput
+					port={y}
+					className="shadow-slate-400 focus:shadow-slate-600 dark:shadow-slate-600 dark:focus:shadow-slate-400 text-slate-900 dark:text-slate-200"
+				/>
+				<Node.PortNumberInput
+					port={z}
+					className="shadow-slate-400 focus:shadow-slate-600 dark:shadow-slate-600 dark:focus:shadow-slate-400 text-slate-900 dark:text-slate-200"
+				/>
 
 				<TeX
 					math={`\\begin{bmatrix} ${

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { makeObservable, observable } from "mobx";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
 import * as Slider from "@radix-ui/react-slider";
-import * as Switch from "@radix-ui/react-switch";
 import { Root as Label } from "@radix-ui/react-label";
 
 import {
@@ -13,6 +11,7 @@ import {
 } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
+import MathInput from "../MathInput";
 
 // This timer is used for slider nodes to tap into to get their state when
 // looping. It works by taking the current timer value and modulo 2 on it. Then
@@ -66,31 +65,25 @@ export const SliderNode = observer(({ node }: Node.INodeProps<_SliderNode>) => {
 
 			<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100">
 				<div className="flex gap-2">
-					<div className="grow">
+					<div className="min-w-0 grow">
 						<MathInput
 							value={
 								Math.round(node.inputPorts.min.value * 100) /
 								100
 							}
 							onChange={onMinChange}
-							style={{
-								backgroundColor: "transparent",
-								color: "none",
-							}}
+							className="w-full px-2 py-1 text-xl bg-transparent rounded shadow-b1 shadow-green-ext-500 focus:shadow-b2 focus:shadow-green-ext-700 dark:focus:shadow-green-ext-500 dark:shadow-green-ext-700 text-green-ext-900 dark:text-green-ext-200"
 						/>
 					</div>
 
-					<div className="grow">
+					<div className="min-w-0 grow">
 						<MathInput
 							value={
 								Math.round(node.inputPorts.max.value * 100) /
 								100
 							}
 							onChange={onMaxChange}
-							style={{
-								backgroundColor: "transparent",
-								color: "none",
-							}}
+							className="w-full px-2 py-1 text-xl bg-transparent rounded shadow-b1 shadow-green-ext-500 focus:shadow-b2 focus:shadow-green-ext-700 dark:focus:shadow-green-ext-500 dark:shadow-green-ext-700 text-green-ext-900 dark:text-green-ext-200"
 						/>
 					</div>
 				</div>
@@ -143,7 +136,7 @@ const SliderInput = observer(({ node }: Node.INodeProps<_SliderNode>) => {
 				<Node.Switch
 					value={loop}
 					onValueChange={onSwitchChange}
-					className="bg-green-ext-400 dark:bg-green-ext-900 data-state-checked:bg-green-ext-700 dark:data-state-checked:bg-green-ext-700"
+					className="bg-green-ext-400 dark:bg-green-ext-900 data-state-checked:bg-green-ext-700 dark:data-state-checked:bg-green-ext-700 focus:shadow-b2 focus:shadow-green-ext-600 dark:focus:shadow-green-ext-500"
 				/>
 				<Label className="flex items-center ml-2 text-sm font-medium text-green-ext-800 dark:text-green-ext-100 grow">
 					Loop
@@ -174,9 +167,9 @@ const SliderComponent = ({ value, onValueChange }: ISliderComponentProps) => {
 			aria-label="Value from 0 to 1"
 		>
 			<Slider.Track className="relative h-1 rounded-full bg-green-ext-400 dark:bg-green-ext-900 grow">
-				<Slider.Range className="absolute h-full rounded-full bg-green-ext-700 dark:bg-green-ext-700" />
+				<Slider.Range className="absolute h-full rounded-full bg-green-ext-600 dark:bg-green-ext-700" />
 			</Slider.Track>
-			<Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-green-ext-800 dark:bg-green-ext-500 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)] dark:focus:shadow-[0_0_0_5px_rgba(255,255,255,0.1)]" />
+			<Slider.Thumb className="block w-4 h-4 rounded-full shadow-sm focus:shadow-b2 focus:shadow-green-ext-600 dark:focus:shadow-green-ext-500 bg-green-ext-800 dark:bg-green-ext-700" />
 		</Slider.Root>
 	);
 };

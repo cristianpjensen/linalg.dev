@@ -12,18 +12,21 @@ import {
 export interface IPortSelectInputProps<T = any> {
 	port: _InputPort<T>;
 	values: Array<T>;
-	className: string;
+	className?: string;
+	triggerClassName?: string;
 }
 
 export const PortSelectInput = observer(
-	({ port, values, className }: IPortSelectInputProps) => {
+	({ port, values, className, triggerClassName }: IPortSelectInputProps) => {
 		const onValueChange = (value: string) => {
 			port.value = value;
 		};
 
 		return (
 			<Select.Root value={port.value} onValueChange={onValueChange}>
-				<Select.Trigger className="flex items-center justify-center px-3 text-sm border rounded h-10 w-full border-[rgba(255,255,255,0.2)] gap-2">
+				<Select.Trigger
+					className={`flex items-center justify-center px-3 py-2 text-sm rounded outline-none h-12 w-full gap-2 ${triggerClassName}`}
+				>
 					<Select.Value />
 					<Select.Icon>
 						<ChevronDownIcon />

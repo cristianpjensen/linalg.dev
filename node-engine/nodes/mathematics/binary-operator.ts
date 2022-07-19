@@ -47,7 +47,7 @@ export class BinaryOperatorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 127,
+							y: 116,
 						}
 					}
 				},
@@ -58,7 +58,7 @@ export class BinaryOperatorNode extends Node {
 					data: {
 						position: {
 							x: 0,
-							y: 193,
+							y: 171,
 						}
 					}
 				},

@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
-import { MathInput } from "react-three-linalg";
-import TeX from "@matejmazur/react-katex";
 
 import {
 	InputPort as _InputPort,
@@ -12,6 +10,7 @@ import {
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 import { TransformContext } from "../App";
+import MathInput from "../MathInput";
 
 export const MatrixNode = observer(({ node }: Node.INodeProps<_MatrixNode>) => {
 	const onRemove = () => {
@@ -48,7 +47,7 @@ export const MatrixNode = observer(({ node }: Node.INodeProps<_MatrixNode>) => {
 
 				<button
 					onClick={onTransform}
-					className="h-6 text-sm rounded dark:text-slate-100 text-slate-800 shadow-b1 dark:shadow-zinc-700 shadow-zinc-300 focus:shadow-b2 focus:shadow-zinc-400 dark:focus:shadow-zinc-400"
+					className="py-1 text-xs rounded dark:text-slate-100 text-slate-900 shadow-b1 dark:shadow-slate-600 shadow-slate-400 focus:shadow-b2 focus:shadow-slate-600 dark:focus:shadow-slate-400"
 				>
 					Transform
 				</button>
@@ -67,108 +66,68 @@ interface IPortVectorInputProps {
 const PortVectorInput = observer(({ port }: IPortVectorInputProps) => {
 	const onChangeX = (value: number) => {
 		port.value = {
-      ...port.value,
-      x: value,
-    }
+			...port.value,
+			x: value,
+		};
 	};
 	const onChangeY = (value: number) => {
 		port.value = {
-      ...port.value,
-      y: value,
-    }
+			...port.value,
+			y: value,
+		};
 	};
 	const onChangeZ = (value: number) => {
 		port.value = {
-      ...port.value,
-      z: value,
-    }
+			...port.value,
+			z: value,
+		};
 	};
 
 	return (
-		<div className="flex gap-2 overflow-hidden" style={{ height: 50 }}>
-			<div className="flex-1">
-				<div
-					className={`transition-opacity duration-200 ease-out z-20 ${
-						port.isConnected
-							? "opacity-0 invisible"
-							: "opacity-100 visible"
-					}`}
-				>
-					<MathInput
-						value={Math.round(port.value.x * 100) / 100}
-						onChange={onChangeX}
-						style={{
-							backgroundColor: "transparent",
-							color: "none",
-						}}
-					/>
-				</div>
-
-				<TeX
-					className={`flex justify-left text-xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
-						port.isConnected
-							? "opacity-100 visible"
-							: "opacity-0 invisible"
-					}`}
-					math={`${Math.round(port.value.x * 100) / 100}`}
+		<div className="flex h-full gap-2">
+			<div className="flex-1 min-w-0">
+				<MatrixInput
+					port={port}
+					value={Math.round(port.value.x * 100) / 100}
+					onChange={onChangeX}
 				/>
 			</div>
 
-			<div className="flex-1">
-				<div
-					className={`transition-opacity duration-200 ease-out z-20 ${
-						port.isConnected
-							? "opacity-0 invisible"
-							: "opacity-100 visible"
-					}`}
-				>
-					<MathInput
-						value={Math.round(port.value.y * 100) / 100}
-						onChange={onChangeY}
-						style={{
-							backgroundColor: "transparent",
-							color: "none",
-						}}
-					/>
-				</div>
-
-				<TeX
-					className={`flex justify-left text-xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
-						port.isConnected
-							? "opacity-100 visible"
-							: "opacity-0 invisible"
-					}`}
-					math={`${Math.round(port.value.y * 100) / 100}`}
+			<div className="flex-1 min-w-0">
+				<MatrixInput
+					port={port}
+					value={Math.round(port.value.y * 100) / 100}
+					onChange={onChangeY}
 				/>
 			</div>
 
-			<div className="flex-1">
-				<div
-					className={`transition-opacity duration-200 ease-out z-20 ${
-						port.isConnected
-							? "opacity-0 invisible"
-							: "opacity-100 visible"
-					}`}
-				>
-					<MathInput
-						value={Math.round(port.value.z * 100) / 100}
-						onChange={onChangeZ}
-						style={{
-							backgroundColor: "transparent",
-							color: "none",
-						}}
-					/>
-				</div>
-
-				<TeX
-					className={`flex justify-left text-xl -mt-[2.5625rem] ml-[0.625rem] transition-opacity duration-200 z-10 ease-in ${
-						port.isConnected
-							? "opacity-100 visible"
-							: "opacity-0 invisible"
-					}`}
-					math={`${Math.round(port.value.z * 100) / 100}`}
+			<div className="flex-1 min-w-0">
+				<MatrixInput
+					port={port}
+					value={Math.round(port.value.z * 100) / 100}
+					onChange={onChangeZ}
 				/>
 			</div>
 		</div>
+	);
+});
+
+interface IMathInputProps {
+	value: number;
+	onChange: (value: number) => void;
+	port: _InputPort<Vector>;
+}
+
+const MatrixInput = observer(({ port, value, onChange }: IMathInputProps) => {
+	return (
+		<MathInput
+			value={value}
+			onChange={onChange}
+			className={
+				"px-2 py-1 text-xl bg-transparent rounded opacity-100 shadow-slate-400 focus:shadow-slate-600 dark:focus:shadow-slate-400 dark:shadow-slate-600 text-slate-900 dark:text-slate-200 " +
+				(port.isConnected ? "shadow-none" : "shadow-b1 focus:shadow-b2")
+			}
+			disabled={port.isConnected}
+		/>
 	);
 });
