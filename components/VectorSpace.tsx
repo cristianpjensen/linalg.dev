@@ -1,5 +1,11 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useRef } from "react";
+import {
+	forwardRef,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+} from "react";
 import { Space, Vector } from "react-three-linalg";
 import * as THREE from "three";
 
@@ -9,51 +15,93 @@ import {
 	VectorNode as _VectorNode,
 } from "../node-engine";
 import { EditorContext } from "../editor-state";
+import { Group } from "./three";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
 	editor: EditorContext;
 }
 
-const VectorSpace = observer(({ context, editor }: IVectorSpaceProps) => {
-	const vectors = Array.from(context.nodes.values()).filter(
-		(node) => node.type === NodeType.VECTOR
-	);
+export type VectorSpace = {
+	/**
+	 * Transform the entire space.
+	 */
+	transform: (matrix: THREE.Matrix3) => void;
+};
 
-	return (
-		<div className="border-l-4 border-zinc-600">
-			<Space width={window.innerWidth / editor.vectorSpaceSize}>
-				{vectors.map((node) => (
-					<VectorWrapper key={node.id} node={node as _VectorNode} />
-				))}
-			</Space>
-		</div>
-	);
-});
+export const VectorSpace = observer(
+	forwardRef<VectorSpace, IVectorSpaceProps>((props, ref) => {
+		const { context, editor } = props;
 
-interface IVectorWrapperProps {
+		const vectors = Array.from(context.nodes.values()).filter(
+			(node) => node.type === NodeType.VECTOR
+		);
+
+		const spaceRef = useRef<Space>(null);
+		const groupRef = useRef<Group>(null);
+
+		useImperativeHandle(ref, () => ({
+			transform: (matrix: THREE.Matrix3) => {
+				spaceRef.current?.transform(matrix);
+				groupRef.current?.transform(matrix);
+			},
+		}));
+
+		return (
+			<div className="border-l-4 border-zinc-600">
+				<Space
+					ref={spaceRef}
+					width={window.innerWidth / editor.vectorSpaceSize}
+				>
+					<Group ref={groupRef}>
+						{vectors.map((node) => (
+							<VectorWrapper
+								key={node.id}
+								node={node as _VectorNode}
+							/>
+						))}
+					</Group>
+				</Space>
+			</div>
+		);
+	})
+);
+
+export interface IVectorWrapperProps {
 	node: _VectorNode;
 }
 
-const VectorWrapper = observer(({ node }: IVectorWrapperProps) => {
-	const { x, y, z } = node.outputPorts.result.value;
-	const origin = node.inputPorts.origin.value;
-
-	const ref = useRef<Vector>(null);
-
-	useEffect(() => {
+export const VectorWrapper = observer(
+	forwardRef<Vector, IVectorWrapperProps>(({ node }, ref) => {
 		const { x, y, z } = node.outputPorts.result.value;
-		const vector = new THREE.Vector3(x, y, z);
-		ref.current?.move(vector);
-	});
+		const { x: ox, y: oy, z: oz } = node.inputPorts.origin.value;
+		const innerRef = useRef<Vector>(null);
 
-	return (
-		<Vector
-			ref={ref}
-			origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
-			vector={new THREE.Vector3(x, y, z)}
-		/>
-	);
-});
+		// @ts-ignore
+		useImperativeHandle(ref, () => innerRef.current);
 
-export default VectorSpace;
+		useEffect(() => {
+			const { x, y, z } = node.outputPorts.result.value;
+			const vector = new THREE.Vector3(x, y, z);
+			innerRef.current?.move(vector);
+		}, [
+			node.outputPorts.result.value.x,
+			node.outputPorts.result.value.y,
+			node.outputPorts.result.value.z,
+		]);
+
+		// Memoize the vector component, so that it is only created once and not
+		// re-rendered every time, which makes it not animate on move
+		const vectorComponent = useMemo(() => {
+			return (
+				<Vector
+					ref={innerRef}
+					origin={new THREE.Vector3(ox, oy, oz)}
+					vector={new THREE.Vector3(x, y, z)}
+				/>
+			);
+		}, []);
+
+		return vectorComponent;
+	})
+);

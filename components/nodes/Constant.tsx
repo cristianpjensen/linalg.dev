@@ -36,15 +36,9 @@ export const ConstantNode = observer(
 				</Node.Handle>
 
 				<Node.Body className="bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100">
-					<MathInput
-						value={Math.round(node.inputPorts.x.value * 100) / 100}
-						onChange={onValueChange}
-						style={{
-							backgroundColor: "transparent",
-							color: "none",
-						}}
-					/>
+					<Node.PortNumberInput port={node.inputPorts.x} />
 
+					<Node.InputPorts node={node} />
 					<Node.OutputPorts node={node} />
 				</Node.Body>
 			</Node.Root>

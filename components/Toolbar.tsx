@@ -1,8 +1,8 @@
 import { cloneElement, useState } from "react";
 import {
 	ArrowTopRightIcon,
+	ButtonIcon,
 	CaretDownIcon,
-	CommitIcon,
 	FontFamilyIcon,
 	GitHubLogoIcon,
 	HandIcon,
@@ -14,7 +14,6 @@ import {
 	SliderIcon,
 	StopIcon,
 	SunIcon,
-	ValueIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
@@ -64,7 +63,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				title="Math"
 				tools={[
 					{
-						icon: <ValueIcon />,
+						icon: <ButtonIcon />,
 						tool: _Tool.CONSTANT,
 						description:
 							"Press anywhere on the canvas to add a constant",

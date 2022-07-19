@@ -30,7 +30,7 @@
     "react-dom": "18.1.0",
     "react-draggable": "^4.4.5",
     "react-hotkeys-hook": "^3.4.6",
-    "react-three-linalg": "^0.4.1",
+    "react-three-linalg": "^0.4.2",
     "serialize-javascript": "^6.0.0",
     "three": "^0.141.0",
     "use-onclickoutside": "^0.4.1",

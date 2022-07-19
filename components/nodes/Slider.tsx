@@ -140,7 +140,11 @@ const SliderInput = observer(({ node }: Node.INodeProps<_SliderNode>) => {
 			/>
 
 			<div className="flex mt-4">
-				<SwitchComponent value={loop} onValueChange={onSwitchChange} />
+				<Node.Switch
+					value={loop}
+					onValueChange={onSwitchChange}
+					className="bg-green-ext-400 dark:bg-green-ext-900 data-state-checked:bg-green-ext-700 dark:data-state-checked:bg-green-ext-700"
+				/>
 				<Label className="flex items-center ml-2 text-sm font-medium text-green-ext-800 dark:text-green-ext-100 grow">
 					Loop
 				</Label>
@@ -174,22 +178,5 @@ const SliderComponent = ({ value, onValueChange }: ISliderComponentProps) => {
 			</Slider.Track>
 			<Slider.Thumb className="w-4 h-4 block shadow-sm rounded-full outline-none bg-green-ext-800 dark:bg-green-ext-500 focus:shadow-[0_0_0_5px_rgba(0,0,0,0.1)] dark:focus:shadow-[0_0_0_5px_rgba(255,255,255,0.1)]" />
 		</Slider.Root>
-	);
-};
-
-interface ISwitchComponentProps {
-	value: boolean;
-	onValueChange: (value: boolean) => void;
-}
-
-const SwitchComponent = ({ value, onValueChange }: ISwitchComponentProps) => {
-	return (
-		<Switch.Root
-			checked={value}
-			onCheckedChange={onValueChange}
-			className="relative w-[32px] h-[21px] rounded-full bg-green-ext-400 dark:bg-green-ext-900 data-state-checked:bg-green-ext-700 dark:data-state-checked:bg-green-ext-700"
-		>
-			<Switch.Thumb className="block w-[17px] h-[17px] bg-offwhite rounded-full shadow-sm transition-transform duration-100 ease-in translate-x-[2px] will-change-transform data-state-checked:translate-x-[13px]" />
-		</Switch.Root>
 	);
 };

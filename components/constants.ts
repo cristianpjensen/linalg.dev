@@ -1,6 +1,8 @@
 export const GRID_SIZE = 24;
 export const VECTOR_WIDTH = GRID_SIZE * 8;
 export const VECTOR_HEIGHT = GRID_SIZE * 12;
+export const MATRIX_WIDTH = GRID_SIZE * 12;
+export const MATRIX_HEIGHT = GRID_SIZE * 11;
 export const CONSTANT_WIDTH = GRID_SIZE * 6;
 export const CONSTANT_HEIGHT = GRID_SIZE * 5;
 export const SLIDER_WIDTH = GRID_SIZE * 8;

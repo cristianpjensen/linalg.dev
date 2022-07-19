@@ -163,4 +163,5 @@ export enum NodeType {
 	UNARY_OPERATOR = "Unary operator",
 	BINARY_OPERATOR = "Binary operator",
 	VECTOR = "Vector",
+	MATRIX = "Matrix",
 }

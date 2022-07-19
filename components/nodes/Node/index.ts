@@ -4,6 +4,7 @@ export * from "./Body";
 export * from "./Ports";
 export * from "./PortNumberInput";
 export * from "./PortSelectInput";
+export * from "./Switch";
 
 export interface INodeProps<T> {
 	/**

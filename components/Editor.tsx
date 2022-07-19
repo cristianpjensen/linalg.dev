@@ -8,6 +8,8 @@ import {
 	CONSTANT_HEIGHT,
 	CONSTANT_WIDTH,
 	GRID_SIZE,
+	MATRIX_HEIGHT,
+	MATRIX_WIDTH,
 	SLIDER_HEIGHT,
 	SLIDER_WIDTH,
 	UNARY_OPERATOR_HEIGHT,
@@ -22,6 +24,7 @@ import {
 	UnaryOperatorNode as _UnaryOperatorNode,
 	BinaryOperatorNode as _BinaryOperatorNode,
 	VectorNode as _VectorNode,
+	MatrixNode as _MatrixNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 import { Connections } from "./Connections";
@@ -155,6 +158,23 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 						},
 					});
 					break;
+
+				case Tool.MATRIX:
+					new _MatrixNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: MATRIX_WIDTH,
+									height: MATRIX_HEIGHT,
+								}
+							),
+							size: {
+								width: MATRIX_WIDTH,
+								height: MATRIX_HEIGHT,
+							},
+						},
+					});
 			}
 
 			editor.tool = Tool.HAND;
