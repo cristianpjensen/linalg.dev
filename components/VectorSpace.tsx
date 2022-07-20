@@ -21,6 +21,7 @@ import {
 } from "../node-engine";
 import { EditorContext } from "../editor-state";
 import { Group, Space, Vector } from "./three";
+import { mergeRefs } from "react-merge-refs";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
@@ -91,7 +92,7 @@ const Vectors = observer(
 				<EffectComposer autoClear={false}>
 					<Outline
 						edgeStrength={2}
-						visibleEdgeColor={0xEEEEEE}
+						visibleEdgeColor={0x999999}
 						blur
 					/>
 				</EffectComposer>
@@ -120,9 +121,6 @@ export const VectorWrapper = observer(
 		const { x, y, z } = node.outputPorts.result.value;
 		const { x: ox, y: oy, z: oz } = node.inputPorts.origin.value;
 		const innerRef = useRef<Vector>(null);
-
-		// @ts-ignore
-		useImperativeHandle(ref, () => innerRef.current);
 
 		// Move vector when vector changes
 		useEffect(() => {
@@ -155,6 +153,9 @@ export const VectorWrapper = observer(
 			if (editor.currentMatrixReset) {
 				const { x, y, z } = node.outputPorts.result.value;
 				innerRef.current?.move(new THREE.Vector3(x, y, z));
+
+				const { x: ox, y: oy, z: oz } = node.inputPorts.origin.value;
+				innerRef.current?.moveOrigin(new THREE.Vector3(ox, oy, oz));
 			}
 		}, [editor.currentMatrixReset]);
 
@@ -167,7 +168,7 @@ export const VectorWrapper = observer(
 
 			return (
 				<Vector
-					ref={innerRef}
+					ref={mergeRefs([innerRef, ref])}
 					origin={new THREE.Vector3(ox, oy, oz)}
 					vector={new THREE.Vector3(x, y, z)}
 					outlined={editor.selectedNode === node}
