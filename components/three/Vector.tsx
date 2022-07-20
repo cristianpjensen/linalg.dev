@@ -49,6 +49,10 @@ export type Vector = {
 	 * appropriate.
 	 */
 	transform: (matrix: THREE.Matrix3) => void;
+	/**
+	 * Move origin.
+	 */
+	moveOrigin: (vec: THREE.Vector3) => void;
 };
 
 const X_ROTATION = new THREE.Matrix4().makeRotationX(Math.PI / 2);
@@ -184,11 +188,17 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 				textRef.current.transform(mat);
 			}
 
-			if (isRotationMatrix(mat)) {
+			if (isRotationMatrix(mat) && origin.equals(ORIGIN)) {
 				rotate(mat);
 			} else {
 				moveVector(currentOrigin, currentVector);
 			}
+		},
+		moveOrigin: (vec) => {
+			origin.copy(currentOrigin);
+			currentOrigin.copy(vec);
+
+			moveVector(vec, currentVector);
 		},
 	}));
 

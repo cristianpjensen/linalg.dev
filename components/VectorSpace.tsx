@@ -109,6 +109,7 @@ export const VectorWrapper = observer(
 		// @ts-ignore
 		useImperativeHandle(ref, () => innerRef.current);
 
+		// Move vector when vector changes
 		useEffect(() => {
 			const { x, y, z } = node.outputPorts.result.value;
 			const vector = new THREE.Vector3(x, y, z).applyMatrix3(
@@ -119,6 +120,19 @@ export const VectorWrapper = observer(
 			node.outputPorts.result.value.x,
 			node.outputPorts.result.value.y,
 			node.outputPorts.result.value.z,
+		]);
+
+		// Move origin when origin port changes
+		useEffect(() => {
+			const { x, y, z } = node.inputPorts.origin.value;
+			const originVector = new THREE.Vector3(x, y, z).applyMatrix3(
+				editor.currentMatrix
+			);
+			innerRef.current?.moveOrigin(originVector);
+		}, [
+			node.inputPorts.origin.value.x,
+			node.inputPorts.origin.value.y,
+			node.inputPorts.origin.value.z,
 		]);
 
 		// If reseting, move the vector to its non-transformed position
