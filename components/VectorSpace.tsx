@@ -8,6 +8,11 @@ import {
 } from "react";
 import * as THREE from "three";
 import { ResetIcon } from "@radix-ui/react-icons";
+import {
+	Selection,
+	EffectComposer,
+	Outline,
+} from "@react-three/postprocessing";
 
 import {
 	Context as _NodeContext,
@@ -82,15 +87,25 @@ const Vectors = observer(
 		);
 
 		return (
-			<Group ref={ref}>
-				{vectors.map((node) => (
-					<VectorWrapper
-						key={node.id}
-						node={node as _VectorNode}
-						editor={editor}
+			<Selection>
+				<EffectComposer autoClear={false}>
+					<Outline
+						edgeStrength={2}
+						visibleEdgeColor={0xEEEEEE}
+						blur
 					/>
-				))}
-			</Group>
+				</EffectComposer>
+
+				<Group ref={ref}>
+					{vectors.map((node) => (
+						<VectorWrapper
+							key={node.id}
+							node={node as _VectorNode}
+							editor={editor}
+						/>
+					))}
+				</Group>
+			</Selection>
 		);
 	})
 );
@@ -146,14 +161,20 @@ export const VectorWrapper = observer(
 		// Memoize the vector component, so that it is only created once and not
 		// re-rendered every time, which makes it not animate on move
 		const vectorComponent = useMemo(() => {
+			const onClick = () => {
+				editor.selectedNode = node;
+			};
+
 			return (
 				<Vector
 					ref={innerRef}
 					origin={new THREE.Vector3(ox, oy, oz)}
 					vector={new THREE.Vector3(x, y, z)}
+					outlined={editor.selectedNode === node}
+					onClick={onClick}
 				/>
 			);
-		}, []);
+		}, [editor.selectedNode]);
 
 		return vectorComponent;
 	})

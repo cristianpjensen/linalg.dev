@@ -65,6 +65,10 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 
 	const onGridClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (editor.selectedNode) {
+				editor.selectedNode = null;
+			}
+
 			switch (editor.tool) {
 				case Tool.HAND:
 					return;

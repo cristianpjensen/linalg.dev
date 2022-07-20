@@ -40,14 +40,14 @@ export const Root = observer(
 			editor.selectedNode = node;
 		}, []);
 
-		const onClickOutside = useCallback(() => {
-			if (editor.selectedNode === node) {
-				editor.selectedNode = null;
-			}
-		}, [editor.selectedNode]);
+		// const onClickOutside = useCallback(() => {
+		// 	if (editor.selectedNode === node) {
+		// 		editor.selectedNode = null;
+		// 	}
+		// }, [editor.selectedNode]);
 
 		const ref = useRef<HTMLDivElement>(null);
-		useOnClickOutside(ref, onClickOutside);
+		// useOnClickOutside(ref, onClickOutside);
 
 		return (
 			<Draggable
