@@ -2,11 +2,11 @@ import { observer } from "mobx-react-lite";
 import React, { useRef } from "react";
 import * as THREE from "three";
 
-import { Context as NodeContext, Matrix } from "./node-engine";
-import { EditorContext } from "./editor-state";
-import { VectorSpace } from "./components/VectorSpace";
-import Editor from "./components/Editor";
-import Toolbar from "./components/Toolbar";
+import { Context as NodeContext, Matrix } from "../node-engine";
+import { EditorContext } from "../editor-state";
+import { VectorSpace } from "./VectorSpace";
+import Editor from "./Editor";
+import Toolbar from "./Toolbar";
 
 export const TransformContext = React.createContext<(matrix: Matrix) => void>(
 	() => {}

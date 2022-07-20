@@ -9,7 +9,7 @@ import {
 } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
-import { TransformContext } from "../../App";
+import { TransformContext } from "../App";
 import MathInput from "../MathInput";
 
 export const MatrixNode = observer(({ node }: Node.INodeProps<_MatrixNode>) => {

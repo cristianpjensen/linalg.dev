@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import "katex/dist/katex.min.css";
-import "../src/styles/globals.css";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (

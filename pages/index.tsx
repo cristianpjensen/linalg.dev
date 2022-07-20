@@ -4,10 +4,10 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import * as TWEEN from "@tweenjs/tween.js";
 
-import { Context as NodeContext } from "../src/node-engine";
-import { editorContext } from "../src/editor-state";
+import { Context as NodeContext } from "../node-engine";
+import { editorContext } from "../editor-state";
 
-const App = dynamic(() => import("../src/App"), {
+const App = dynamic(() => import("../components/App"), {
 	ssr: false,
 });
 
