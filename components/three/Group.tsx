@@ -1,6 +1,8 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import * as THREE from "three";
-import { Vector, Plane } from "react-three-linalg";
+
+import { Vector } from "./Vector";
+import { Plane } from "./Plane";
 
 type AcceptedChildren = Vector | Plane;
 

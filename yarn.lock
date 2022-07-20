@@ -1544,7 +1544,7 @@
   dependencies:
     "@react-hook/latest" "^1.0.2"
 
-"@react-three/fiber@^8.0.14":
+"@react-three/fiber@^8.2.0":
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-8.2.0.tgz#e8fdd20a7835e091ac507e66bcc779bb9beb172d"
   integrity sha512-k9JZ7XrOplmzX3wPk1uVq0DBWzUBI8ydr0HhmgZvLp5sJ4c+DKljuTClNH1OIp5oXaHjhzP+QbSAGg+vH3bV1Q==
@@ -2087,7 +2087,7 @@ camelcase@^6.2.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-camera-controls@^1.34.4:
+camera-controls@^1.35.0:
   version "1.35.0"
   resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-1.35.0.tgz#9a17e9c7eaf89f1fb7354a9fbd2e897bb0c304b5"
   integrity sha512-A7an94BZKKdKjDqVbdABDBqQpwO5ZntcYKV2l3EgiJaxLBxpyvkMYoj5lwtBuizhkyQN+SUXPTp3jCjdy9cn0w==
@@ -3108,11 +3108,6 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-jquery@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
-  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
-
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -3705,20 +3700,6 @@ react-style-singleton@^2.2.1:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^2.0.0"
-
-react-three-linalg@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-three-linalg/-/react-three-linalg-0.4.2.tgz#a39f0f830450ad11e5ed9a23ada0b559d7ae03c7"
-  integrity sha512-zeuAy2VUm7PjmErRhZatQS7jyQuRDC3LHsVQ6xjcXl243oTlEbkDyxpLOtnhqjZB3LbDqwc/AHYglA+bUTZ2dA==
-  dependencies:
-    "@cortex-js/compute-engine" "^0.6.0"
-    "@react-three/fiber" "^8.0.14"
-    "@tweenjs/tween.js" "^18.6.4"
-    camera-controls "^1.34.4"
-    jquery "^3.6.0"
-    mathlive "^0.72.3"
-    tex-to-svg "^0.2.0"
-    troika-three-text "^0.46.4"
 
 react-use-measure@^2.1.1:
   version "2.1.1"

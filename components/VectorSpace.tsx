@@ -6,8 +6,8 @@ import {
 	useMemo,
 	useRef,
 } from "react";
-import { Space, Vector } from "react-three-linalg";
 import * as THREE from "three";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 import {
 	Context as _NodeContext,
@@ -15,8 +15,7 @@ import {
 	VectorNode as _VectorNode,
 } from "../node-engine";
 import { EditorContext } from "../editor-state";
-import { Group } from "./three";
-import { ResetIcon } from "@radix-ui/react-icons";
+import { Group, Space, Vector } from "./three";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
@@ -45,9 +44,7 @@ export const VectorSpace = observer(
 		}));
 
 		const reset = () => {
-			// TODO: Add reset() method to space.
-			const inv = editor.currentMatrix.clone().invert();
-			spaceRef.current?.transform(inv);
+			spaceRef.current?.reset();
 			editor.currentMatrix.identity();
 			editor.currentMatrixReset = true;
 		};
