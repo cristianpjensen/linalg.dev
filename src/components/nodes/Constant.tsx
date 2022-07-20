@@ -1,5 +1,4 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
 
 import {
@@ -13,10 +12,6 @@ export const ConstantNode = observer(
 	({ node }: Node.INodeProps<_ConstantNode>) => {
 		const onRemove = () => {
 			node.destroy();
-		};
-
-		const onValueChange = (value: number) => {
-			node.inputPorts.x.value = value;
 		};
 
 		return (
