@@ -55,6 +55,13 @@ export const VectorSpace = observer(
 			editor.currentMatrixReset = true;
 		};
 
+		// It untransforms every time the size of the vector window gets changed, so
+		// transform it again when that happens
+		useEffect(() => {
+			spaceRef.current?.transform(editor.currentMatrix);
+			spaceRef.current?.transform(new THREE.Matrix3());
+		}, [editor.vectorSpaceSize])
+
 		return (
 			<div className="border-l-4 border-zinc-600">
 				<Space
