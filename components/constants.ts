@@ -1,5 +1,6 @@
 export const GRID_SIZE = 24;
-export const VECTOR_WIDTH = GRID_SIZE * 8;
+
+export const VECTOR_WIDTH = GRID_SIZE * 10;
 export const VECTOR_HEIGHT = GRID_SIZE * 12;
 export const MATRIX_WIDTH = GRID_SIZE * 12;
 export const MATRIX_HEIGHT = GRID_SIZE * 11;
@@ -13,3 +14,7 @@ export const BINARY_OPERATOR_WIDTH = GRID_SIZE * 6;
 export const BINARY_OPERATOR_HEIGHT = GRID_SIZE * 9;
 export const OPERATOR_WIDTH = GRID_SIZE * 10;
 export const OPERATOR_HEIGHT = GRID_SIZE * 6;
+export const TRANSPOSE_WIDTH = GRID_SIZE * 7;
+export const TRANSPOSE_HEIGHT = GRID_SIZE * 8;
+export const EIGENVALUES_WIDTH = GRID_SIZE * 8;
+export const EIGENVALUES_HEIGHT = GRID_SIZE * 9;

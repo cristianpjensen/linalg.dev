@@ -1,5 +1,4 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { MathInput } from "react-three-linalg";
 import { observer } from "mobx-react-lite";
 
 import {

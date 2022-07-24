@@ -13,15 +13,17 @@ import {
 	EffectComposer,
 	Outline,
 } from "@react-three/postprocessing";
+import { mergeRefs } from "react-merge-refs";
 
 import {
 	Context as _NodeContext,
 	NodeType,
 	VectorNode as _VectorNode,
+	EigenvectorsNode as _EigenvectorsNode,
+	Vector as _Vector,
 } from "../node-engine";
 import { EditorContext } from "../editor-state";
 import { Group, Space, Vector } from "./three";
-import { mergeRefs } from "react-merge-refs";
 
 interface IVectorSpaceProps {
 	context: _NodeContext;
@@ -60,7 +62,7 @@ export const VectorSpace = observer(
 		useEffect(() => {
 			spaceRef.current?.transform(editor.currentMatrix);
 			spaceRef.current?.transform(new THREE.Matrix3());
-		}, [editor.vectorSpaceSize])
+		}, [editor.vectorSpaceSize]);
 
 		return (
 			<div className="border-l-4 border-zinc-600">
@@ -94,6 +96,10 @@ const Vectors = observer(
 			(node) => node.type === NodeType.VECTOR
 		);
 
+		const eigenvectors = Array.from(context.nodes.values()).filter(
+			(node) => node.type === NodeType.EIGENVECTORS
+		);
+
 		return (
 			<Selection>
 				<EffectComposer autoClear={false}>
@@ -109,6 +115,14 @@ const Vectors = observer(
 						<VectorWrapper
 							key={node.id}
 							node={node as _VectorNode}
+							editor={editor}
+						/>
+					))}
+
+					{eigenvectors.map((node) => (
+						<EigenvectorsWrapper
+							key={node.id}
+							node={node as _EigenvectorsNode}
 							editor={editor}
 						/>
 					))}
@@ -183,6 +197,116 @@ export const VectorWrapper = observer(
 				/>
 			);
 		}, [editor.selectedNode]);
+
+		return vectorComponent;
+	})
+);
+
+export interface IEigenvectorsWrapperProps {
+	node: _EigenvectorsNode;
+	editor: EditorContext;
+}
+
+export const EigenvectorsWrapper = observer(
+	forwardRef<Vector, IEigenvectorsWrapperProps>(({ node, editor }, ref) => {
+		const { x: x1, y: y1, z: z1 } = node.outputPorts.v1.value;
+		const { x: x2, y: y2, z: z2 } = node.outputPorts.v2.value;
+		const { x: x3, y: y3, z: z3 } = node.outputPorts.v3.value;
+		const ref1 = useRef<Vector>(null);
+		const ref2 = useRef<Vector>(null);
+		const ref3 = useRef<Vector>(null);
+
+		useImperativeHandle(ref, () => ({
+			move: () => {},
+			moveOrigin: () => {},
+			transform: (matrix: THREE.Matrix3) => {
+				ref1.current?.transform(matrix);
+				ref2.current?.transform(matrix);
+				ref3.current?.transform(matrix);
+			},
+		}));
+
+		// Move vectors when they change
+		useEffect(() => {
+			const { x: x1, y: y1, z: z1 } = node.outputPorts.v1.value;
+			const { x: x2, y: y2, z: z2 } = node.outputPorts.v2.value;
+			const { x: x3, y: y3, z: z3 } = node.outputPorts.v3.value;
+
+			const vector1 = new THREE.Vector3(x1, y1, z1).applyMatrix3(
+				editor.currentMatrix
+			);
+			const vector2 = new THREE.Vector3(x2, y2, z2).applyMatrix3(
+				editor.currentMatrix
+			);
+			const vector3 = new THREE.Vector3(x3, y3, z3).applyMatrix3(
+				editor.currentMatrix
+			);
+
+			ref1.current?.move(vector1);
+			ref2.current?.move(vector2);
+			ref3.current?.move(vector3);
+		}, [
+			node.outputPorts.v1.value.x,
+			node.outputPorts.v1.value.y,
+			node.outputPorts.v1.value.z,
+			node.outputPorts.v2.value.x,
+			node.outputPorts.v2.value.y,
+			node.outputPorts.v2.value.z,
+			node.outputPorts.v3.value.x,
+			node.outputPorts.v3.value.y,
+			node.outputPorts.v3.value.z,
+		]);
+
+		// If reseting, move the vectors to their non-transformed positions
+		useEffect(() => {
+			if (editor.currentMatrixReset) {
+				const { x: x1, y: y1, z: z1 } = node.outputPorts.v1.value;
+				const { x: x2, y: y2, z: z2 } = node.outputPorts.v2.value;
+				const { x: x3, y: y3, z: z3 } = node.outputPorts.v3.value;
+
+				ref1.current?.move(new THREE.Vector3(x1, y1, z1));
+				ref2.current?.move(new THREE.Vector3(x2, y2, z2));
+				ref3.current?.move(new THREE.Vector3(x3, y3, z3));
+			}
+		}, [editor.currentMatrixReset]);
+
+		// Memoize the vector components, so that it is only created once and not
+		// re-rendered every time, which makes it not animate on move
+		const vectorComponent = useMemo(() => {
+			const onClick = () => {
+				editor.selectedNode = node;
+			};
+
+			return (
+				<>
+					<Vector
+						ref={ref1}
+						vector={new THREE.Vector3(x1, y1, z1)}
+						outlined={editor.selectedNode === node}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={ref2}
+						vector={new THREE.Vector3(x2, y2, z2)}
+						outlined={editor.selectedNode === node}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={ref3}
+						vector={new THREE.Vector3(x3, y3, z3)}
+						outlined={editor.selectedNode === node}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+				</>
+			);
+		}, [editor.selectedNode]);
+
+		if (!node.inputPorts.matrix.isConnected) {
+			return null;
+		}
 
 		return vectorComponent;
 	})

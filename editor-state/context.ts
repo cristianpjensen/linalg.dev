@@ -13,6 +13,7 @@ export enum Tool {
 	BINARY_OPERATOR = "binary-operator",
 	EIGENVALUES = "eigenvalues",
 	EIGENVECTORS = "eigenvectors",
+	TRANSPOSE = "transpose",
 }
 
 export interface EditorContext {

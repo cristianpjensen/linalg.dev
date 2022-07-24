@@ -28,6 +28,7 @@
     "katex": "^0.16.0",
     "lodash": "^4.17.21",
     "mathlive": "^0.72.3",
+    "ml-matrix": "^6.10.2",
     "mobx": "^6.6.1",
     "mobx-react-lite": "^3.4.0",
     "next": "12.1.6",

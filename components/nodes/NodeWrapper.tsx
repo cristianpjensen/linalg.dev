@@ -8,6 +8,9 @@ import {
 	VectorNode as _VectorNode,
 	SliderNode as _SliderNode,
 	MatrixNode as _MatrixNode,
+	TransposeNode as _TransposeNode,
+	EigenvaluesNode as _EigenvaluesNode,
+	EigenvectorsNode as _EigenvectorsNode,
 	NodeType,
 } from "../../node-engine";
 import { ConstantNode } from "./Constant";
@@ -16,6 +19,9 @@ import { BinaryOperatorNode } from "./BinaryOperator";
 import { VectorNode } from "./Vector";
 import { SliderNode } from "./Slider";
 import { MatrixNode } from "./Matrix";
+import { TransposeNode } from "./Transpose";
+import { EigenvectorsNode } from "./Eigenvectors";
+import { EigenvaluesNode } from "./Eigenvalues";
 
 export interface INodeWrapperProps {
 	node: _Node;
@@ -40,6 +46,15 @@ export const NodeWrapper = observer(({ node }: INodeWrapperProps) => {
 
 		case NodeType.MATRIX:
 			return <MatrixNode node={node as _MatrixNode} />;
+
+		case NodeType.TRANSPOSE:
+			return <TransposeNode node={node as _TransposeNode} />;
+
+		case NodeType.EIGENVALUES:
+			return <EigenvaluesNode node={node as _EigenvaluesNode} />;
+
+		case NodeType.EIGENVECTORS:
+			return <EigenvectorsNode node={node as _EigenvectorsNode} />;
 	}
 
 	return null;

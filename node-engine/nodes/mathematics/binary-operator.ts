@@ -48,6 +48,7 @@ export class BinaryOperatorNode extends Node {
 						position: {
 							x: 0,
 							y: 116,
+							isPositioned: true,
 						}
 					}
 				},
@@ -59,6 +60,7 @@ export class BinaryOperatorNode extends Node {
 						position: {
 							x: 0,
 							y: 171,
+							isPositioned: true,
 						}
 					}
 				},

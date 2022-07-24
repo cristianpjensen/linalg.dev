@@ -48,6 +48,7 @@ export class MatrixNode extends Node {
 							x: 0,
 							y: 72,
 						},
+						isPositioned: true,
 					},
 				},
 				m2: {
@@ -65,6 +66,7 @@ export class MatrixNode extends Node {
 							x: 0,
 							y: 130,
 						},
+						isPositioned: true,
 					},
 				},
 				m3: {
@@ -82,6 +84,7 @@ export class MatrixNode extends Node {
 							x: 0,
 							y: 189,
 						},
+						isPositioned: true,
 					},
 				},
 			},

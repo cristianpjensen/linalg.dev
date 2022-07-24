@@ -7,11 +7,15 @@ import {
 	BINARY_OPERATOR_WIDTH,
 	CONSTANT_HEIGHT,
 	CONSTANT_WIDTH,
+	EIGENVALUES_HEIGHT,
+	EIGENVALUES_WIDTH,
 	GRID_SIZE,
 	MATRIX_HEIGHT,
 	MATRIX_WIDTH,
 	SLIDER_HEIGHT,
 	SLIDER_WIDTH,
+	TRANSPOSE_HEIGHT,
+	TRANSPOSE_WIDTH,
 	UNARY_OPERATOR_HEIGHT,
 	UNARY_OPERATOR_WIDTH,
 	VECTOR_HEIGHT,
@@ -25,6 +29,9 @@ import {
 	BinaryOperatorNode as _BinaryOperatorNode,
 	VectorNode as _VectorNode,
 	MatrixNode as _MatrixNode,
+	TransposeNode as _TransposeNode,
+	EigenvaluesNode as _EigenvaluesNode,
+	EigenvectorsNode as _EigenvectorsNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 import { Connections } from "./Connections";
@@ -179,6 +186,61 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							},
 						},
 					});
+					break;
+
+				case Tool.TRANSPOSE:
+					new _TransposeNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: TRANSPOSE_WIDTH,
+									height: TRANSPOSE_HEIGHT,
+								}
+							),
+							size: {
+								width: TRANSPOSE_WIDTH,
+								height: TRANSPOSE_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.EIGENVALUES:
+					new _EigenvaluesNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: EIGENVALUES_WIDTH,
+									height: EIGENVALUES_HEIGHT,
+								}
+							),
+							size: {
+								width: EIGENVALUES_WIDTH,
+								height: EIGENVALUES_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.EIGENVECTORS:
+					new _EigenvectorsNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: MATRIX_WIDTH,
+									height: MATRIX_HEIGHT,
+								}
+							),
+							size: {
+								width: MATRIX_WIDTH,
+								height: MATRIX_HEIGHT,
+							},
+						},
+					});
+					break;
 			}
 
 			editor.tool = Tool.HAND;

@@ -164,4 +164,7 @@ export enum NodeType {
 	BINARY_OPERATOR = "Binary operator",
 	VECTOR = "Vector",
 	MATRIX = "Matrix",
+	EIGENVALUES = "Eigenvalues",
+	EIGENVECTORS = "Eigenvectors",
+	TRANSPOSE = "Transpose",
 }

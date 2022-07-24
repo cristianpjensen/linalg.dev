@@ -10,10 +10,13 @@ import {
 	InfoCircledIcon,
 	LayersIcon,
 	MoonIcon,
+	RotateCounterClockwiseIcon,
 	RulerSquareIcon,
+	SizeIcon,
 	SliderIcon,
 	StopIcon,
 	SunIcon,
+	ThickArrowUpIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
@@ -46,14 +49,14 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				editorContext={editorContext}
 				icon={<ArrowTopRightIcon />}
 				tool={_Tool.VECTOR}
-				description="Press anywhere on the canvas to add a vector"
+				description="Shows a vector in the space"
 				hotkey="v"
 			/>
 			<Tool
 				editorContext={editorContext}
 				icon={<LayersIcon />}
 				tool={_Tool.MATRIX}
-				description="Drag to make a matrix environment"
+				description="Allows you to transform the space"
 				hotkey="m"
 			/>
 
@@ -66,28 +69,28 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 						icon: <ButtonIcon />,
 						tool: _Tool.CONSTANT,
 						description:
-							"Press anywhere on the canvas to add a constant",
+							"Define a constant in your environment",
 						hotkey: "c",
 					},
 					{
 						icon: <SliderIcon />,
 						tool: _Tool.SLIDER,
 						description:
-							"Press anywhere on the canvas to add a slider",
+							"Allows for animations between two values",
 						hotkey: "s",
 					},
 					{
 						icon: <StopIcon />,
 						tool: _Tool.UNARY_OPERATOR,
 						description:
-							"Press anywhere on the canvas to add a mathematical operator",
+							"Unary operator that takes a single argument",
 						hotkey: "u",
 					},
 					{
 						icon: <DotIcon />,
 						tool: _Tool.BINARY_OPERATOR,
 						description:
-							"Press anywhere on the canvas to add a mathematical operator",
+							"Binary operator that takes two arguments",
 						hotkey: "b",
 					},
 				]}
@@ -96,7 +99,29 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				editorContext={editorContext}
 				icon={<RulerSquareIcon />}
 				title="Linear algebra"
-				tools={[]}
+				tools={[
+					{
+						icon: <ThickArrowUpIcon />,
+						tool: _Tool.EIGENVALUES,
+						description:
+							"Computes the eigenvalues of a matrix",
+							hotkey: "e"
+					},
+					{
+						icon: <SizeIcon />,
+						tool: _Tool.EIGENVECTORS,
+						description:
+							"Computes and shows — in blue — the eigenvectors of a matrix",
+							hotkey: "i",
+					},
+					{
+						icon: <RotateCounterClockwiseIcon />,
+						tool: _Tool.TRANSPOSE,
+						description:
+							"Transposes a matrix",
+							hotkey: "t"
+					},
+				]}
 			/>
 
 			<div className="flex items-center justify-center text-sm grow">

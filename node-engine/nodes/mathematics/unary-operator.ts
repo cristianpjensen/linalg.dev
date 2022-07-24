@@ -48,8 +48,9 @@ export class UnaryOperatorNode extends Node {
 						position: {
 							x: 0,
 							y: 128,
-						}
-					}
+							isPositioned: true,
+						},
+					},
 				},
 				operator: {
 					defaultValue: UnaryOperator.SQUARE,
