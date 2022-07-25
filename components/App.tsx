@@ -32,18 +32,8 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 		}
 	}, []);
 
-	const transform = (m: Matrix) => {
-		const mat = new THREE.Matrix3().set(
-			m[0],
-			m[1],
-			m[2],
-			m[3],
-			m[4],
-			m[5],
-			m[6],
-			m[7],
-			m[8]
-		);
+	const transform = (matrix: Matrix) => {
+		const mat = new THREE.Matrix3().fromArray(matrix).transpose();
 		ref.current?.transform(mat);
 		editorContext.currentMatrix = editorContext.currentMatrix.multiply(mat);
 		editorContext.currentMatrixReset = false;

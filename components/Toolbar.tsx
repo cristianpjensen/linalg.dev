@@ -95,13 +95,13 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 					{
 						icon: <TransparencyGridIcon />,
 						tool: _Tool.NORM,
-						description: "Computes the norm — length — of a vector",
+						description: "Computes the norm of a vector",
 						hotkey: "n",
 					},
 					{
 						icon: <TransparencyGridIcon />,
 						tool: _Tool.TRANSFORM,
-						description: "Transforms a vector",
+						description: "Transforms and shows — in blue — a vector",
 						hotkey: "r",
 					},
 					{

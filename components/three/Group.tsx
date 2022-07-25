@@ -7,7 +7,7 @@ import { Plane } from "./Plane";
 type AcceptedChildren = Vector | Plane;
 
 export interface GroupProps {
-	children: React.ReactElement | React.ReactElement[];
+	children: any;
 }
 
 export type Group = {
