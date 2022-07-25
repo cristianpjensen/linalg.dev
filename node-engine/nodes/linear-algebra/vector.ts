@@ -42,8 +42,8 @@ export class VectorNode extends Node {
 						position: {
 							x: 0,
 							y: 72,
-							isPositioned: true,
 						},
+						isPositioned: true,
 					},
 				},
 				y: {
@@ -54,8 +54,8 @@ export class VectorNode extends Node {
 						position: {
 							x: 0,
 							y: 126,
-							isPositioned: true,
 						},
+						isPositioned: true,
 					},
 				},
 				z: {
@@ -66,8 +66,8 @@ export class VectorNode extends Node {
 						position: {
 							x: 0,
 							y: 182,
-							isPositioned: true,
 						},
+						isPositioned: true,
 					},
 				},
 				origin: {
@@ -81,8 +81,8 @@ export class VectorNode extends Node {
 						position: {
 							x: 0,
 							y: 243,
-							isPositioned: true,
 						},
+						isPositioned: true,
 					},
 				},
 			},

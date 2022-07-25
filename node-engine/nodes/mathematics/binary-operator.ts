@@ -12,11 +12,11 @@ import {
 import { InputPort, OutputPort, PortValueType } from "../../port";
 
 export enum BinaryOperator {
-    ADD = "Add",
-    SUBTRACT = "Subtract",
-    MULTIPLY = "Multiply",
-    DIVIDE = "Divide",
-    MODULO = "Modulo",
+	ADD = "Add",
+	SUBTRACT = "Subtract",
+	MULTIPLY = "Multiply",
+	DIVIDE = "Divide",
+	MODULO = "Modulo",
 }
 
 export interface BinaryOperatorNodeInputPorts extends NodeInputPorts {
@@ -48,9 +48,9 @@ export class BinaryOperatorNode extends Node {
 						position: {
 							x: 0,
 							y: 116,
-							isPositioned: true,
-						}
-					}
+						},
+						isPositioned: true,
+					},
 				},
 				y: {
 					defaultValue: 0,
@@ -60,9 +60,9 @@ export class BinaryOperatorNode extends Node {
 						position: {
 							x: 0,
 							y: 171,
-							isPositioned: true,
-						}
-					}
+						},
+						isPositioned: true,
+					},
 				},
 				operator: {
 					defaultValue: BinaryOperator.ADD,
@@ -88,23 +88,28 @@ export class BinaryOperatorNode extends Node {
 	compute() {
 		switch (this.inputPorts.operator.value) {
 			case BinaryOperator.ADD:
-				this.outputPorts.result.value = this.inputPorts.x.value + this.inputPorts.y.value;
+				this.outputPorts.result.value =
+					this.inputPorts.x.value + this.inputPorts.y.value;
 				break;
 
 			case BinaryOperator.SUBTRACT:
-                this.outputPorts.result.value = this.inputPorts.x.value - this.inputPorts.y.value;
+				this.outputPorts.result.value =
+					this.inputPorts.x.value - this.inputPorts.y.value;
 				break;
 
 			case BinaryOperator.MULTIPLY:
-                this.outputPorts.result.value = this.inputPorts.x.value * this.inputPorts.y.value;
+				this.outputPorts.result.value =
+					this.inputPorts.x.value * this.inputPorts.y.value;
 				break;
 
 			case BinaryOperator.DIVIDE:
-                this.outputPorts.result.value = this.inputPorts.x.value / this.inputPorts.y.value;
+				this.outputPorts.result.value =
+					this.inputPorts.x.value / this.inputPorts.y.value;
 				break;
 
 			case BinaryOperator.MODULO:
-                this.outputPorts.result.value = this.inputPorts.x.value % this.inputPorts.y.value;
+				this.outputPorts.result.value =
+					this.inputPorts.x.value % this.inputPorts.y.value;
 				break;
 		}
 	}

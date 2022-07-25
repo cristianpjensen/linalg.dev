@@ -2,10 +2,7 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 import TeX from "@matejmazur/react-katex";
 
-import {
-	InputPort as _InputPort,
-	EigenvaluesNode as _EigenvaluesNode,
-} from "../../node-engine";
+import { EigenvaluesNode as _EigenvaluesNode } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 

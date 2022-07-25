@@ -1,10 +1,7 @@
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 
-import {
-	ConstantNode as _ConstantNode,
-	ConstantNodeInputPorts as _ConstantNodeInputPorts,
-} from "../../node-engine";
+import { ConstantNode as _ConstantNode } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 
@@ -12,10 +9,6 @@ export const ConstantNode = observer(
 	({ node }: Node.INodeProps<_ConstantNode>) => {
 		const onRemove = () => {
 			node.destroy();
-		};
-
-		const onValueChange = (value: number) => {
-			node.inputPorts.x.value = value;
 		};
 
 		return (

@@ -2,7 +2,6 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 
 import {
-	InputPort as _InputPort,
 	BinaryOperator,
 	BinaryOperatorNode as _BinaryOperatorNode,
 } from "../../node-engine";
@@ -39,14 +38,14 @@ export const BinaryOperatorNode = observer(
 							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
 							triggerClassName="flex-1 h-16 shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200"
 						/>
-							<Node.PortNumberInput
-								port={node.inputPorts.x}
-								className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
-							/>
-							<Node.PortNumberInput
-								port={node.inputPorts.y}
-								className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
-							/>
+						<Node.PortNumberInput
+							port={node.inputPorts.x}
+							className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
+						<Node.PortNumberInput
+							port={node.inputPorts.y}
+							className="flex-1 shadow-yellow-ext-500 focus:shadow-yellow-ext-700 dark:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-600 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
 					</div>
 
 					<Node.InputPorts

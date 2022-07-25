@@ -15,7 +15,6 @@ module.exports = {
 			boxShadow: {
 				b1: "0 0 0 1px var(--tw-shadow-color)",
 				b2: "0 0 0 2px var(--tw-shadow-color)",
-				b3: "0 0 0 3px var(--tw-shadow-color)",
 			},
 			keyframes: {
 				fadein: {

@@ -83,7 +83,7 @@ export const Connections = observer(
 						y2={
 							(mousePosition.y - editor.position.y) / editor.scale
 						}
-						className="stroke-zinc-300 dark:stroke-zinc-600 opacity-40"
+						className="stroke-zinc-300 dark:stroke-zinc-700 opacity-40"
 						strokeWidth={2}
 						fill="none"
 					/>
@@ -136,7 +136,7 @@ export const Connection = observer(
 					className={`transition-colors duration-200 ${
 						selected
 							? "stroke-zinc-400"
-							: "stroke-zinc-300 dark:stroke-zinc-600 hover:stroke-zinc-400 dark:hover:stroke-zinc-400 peer-hover:stroke-zinc-400 dark:peer-hover:stroke-zinc-400"
+							: "stroke-zinc-300 dark:stroke-zinc-800 hover:stroke-zinc-400 dark:hover:stroke-zinc-500 peer-hover:stroke-zinc-500 dark:peer-hover:stroke-zinc-500"
 					}`}
 					strokeWidth={2}
 					fill="none"

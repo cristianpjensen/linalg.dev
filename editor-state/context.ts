@@ -14,6 +14,10 @@ export enum Tool {
 	EIGENVALUES = "eigenvalues",
 	EIGENVECTORS = "eigenvectors",
 	TRANSPOSE = "transpose",
+	MATRIXMULT = "matrix-multiplication",
+	NORM = "norm",
+	VECTORSCALING = "vector-scaling",
+	TRANSFORM = "transform",
 }
 
 export interface EditorContext {

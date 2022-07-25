@@ -2,7 +2,6 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 
 import {
-	InputPort as _InputPort,
 	UnaryOperator,
 	UnaryOperatorNode as _UnaryOperatorNode,
 } from "../../node-engine";

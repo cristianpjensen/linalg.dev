@@ -47,5 +47,5 @@ canvas {
 math-field {
 	--highlight-inactive: #B4D5FE;
 	--highlight: #B4D5FE;
-	--caret: rgba(0, 0, 0, 0.6);
+	--caret: rgb(122, 122, 122);
 }

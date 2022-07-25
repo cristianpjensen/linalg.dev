@@ -3,13 +3,13 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { observer } from "mobx-react-lite";
 import TeX from "@matejmazur/react-katex";
 
-import { TransposeNode as _TransposeNode } from "../../node-engine";
+import { MatrixMultiplicationNode as _MatrixMultiplicationNode } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 import { TransformContext } from "../App";
 
-export const TransposeNode = observer(
-	({ node }: Node.INodeProps<_TransposeNode>) => {
+export const MatrixMultiplicationNode = observer(
+	({ node }: Node.INodeProps<_MatrixMultiplicationNode>) => {
 		const onRemove = () => {
 			node.destroy();
 		};
@@ -27,7 +27,7 @@ export const TransposeNode = observer(
 					title={node.type}
 					className="bg-slate-700 dark:bg-slate-900 text-slate-200 dark:text-slate-100"
 				>
-					<Tooltip tip="Remove eigenvalues node">
+					<Tooltip tip="Remove matrix multiplication node">
 						<button
 							onClick={onRemove}
 							className="flex items-center justify-center w-8 h-8 hover:bg-gray-300/20"

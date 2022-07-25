@@ -14,10 +14,14 @@ import {
 	MATRIX_WIDTH,
 	SLIDER_HEIGHT,
 	SLIDER_WIDTH,
+	TRANSFORM_HEIGHT,
+	TRANSFORM_WIDTH,
 	TRANSPOSE_HEIGHT,
 	TRANSPOSE_WIDTH,
 	UNARY_OPERATOR_HEIGHT,
 	UNARY_OPERATOR_WIDTH,
+	VECTORSCALING_HEIGHT,
+	VECTORSCALING_WIDTH,
 	VECTOR_HEIGHT,
 	VECTOR_WIDTH,
 } from "./constants";
@@ -32,6 +36,10 @@ import {
 	TransposeNode as _TransposeNode,
 	EigenvaluesNode as _EigenvaluesNode,
 	EigenvectorsNode as _EigenvectorsNode,
+	VectorScalingNode as _VectorScalingNode,
+	MatrixMultiplicationNode as _MatrixMultiplicationNode,
+	TransformNode as _TransformNode,
+	NormNode as _NormNode,
 } from "../node-engine";
 import { NodeWrapper } from "./nodes/NodeWrapper";
 import { Connections } from "./Connections";
@@ -237,6 +245,78 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 							size: {
 								width: MATRIX_WIDTH,
 								height: MATRIX_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.MATRIXMULT:
+					new _MatrixMultiplicationNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: TRANSPOSE_WIDTH,
+									height: TRANSPOSE_HEIGHT,
+								}
+							),
+							size: {
+								width: TRANSPOSE_WIDTH,
+								height: TRANSPOSE_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.NORM:
+					new _NormNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: CONSTANT_WIDTH,
+									height: CONSTANT_HEIGHT,
+								}
+							),
+							size: {
+								width: CONSTANT_WIDTH,
+								height: CONSTANT_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.VECTORSCALING:
+					new _VectorScalingNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: VECTORSCALING_WIDTH,
+									height: VECTORSCALING_HEIGHT,
+								}
+							),
+							size: {
+								width: VECTORSCALING_WIDTH,
+								height: VECTORSCALING_HEIGHT,
+							},
+						},
+					});
+					break;
+
+				case Tool.TRANSFORM:
+					new _TransformNode(context, {
+						data: {
+							position: getNodePosition_(
+								{ x: e.clientX, y: e.clientY },
+								{
+									width: TRANSFORM_WIDTH,
+									height: TRANSFORM_HEIGHT,
+								}
+							),
+							size: {
+								width: TRANSFORM_WIDTH,
+								height: TRANSFORM_HEIGHT,
 							},
 						},
 					});

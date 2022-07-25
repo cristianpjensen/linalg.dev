@@ -5,10 +5,7 @@ import { observer } from "mobx-react-lite";
 import * as Slider from "@radix-ui/react-slider";
 import { Root as Label } from "@radix-ui/react-label";
 
-import {
-	SliderNode as _SliderNode,
-	ConstantNodeInputPorts as _ConstantNodeInputPorts,
-} from "../../node-engine";
+import { SliderNode as _SliderNode } from "../../node-engine";
 import { Tooltip } from "../Tooltip";
 import * as Node from "./Node";
 import MathInput from "../MathInput";

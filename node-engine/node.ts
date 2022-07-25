@@ -167,4 +167,8 @@ export enum NodeType {
 	EIGENVALUES = "Eigenvalues",
 	EIGENVECTORS = "Eigenvectors",
 	TRANSPOSE = "Transpose",
+	MATRIXMULT = "Matrix multiplication",
+	VECTORSCALING = "Vector scaling",
+	NORM = "Norm",
+	TRANSFORM = "Transform",
 }
