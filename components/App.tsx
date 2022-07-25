@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 import { Context as NodeContext, Matrix } from "../node-engine";
@@ -19,6 +19,16 @@ export interface IAppProps {
 
 const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 	const ref = useRef<VectorSpace>(null);
+
+	useEffect(() => {
+		const loadingElement = document.getElementById("loading-screen");
+		if (loadingElement) {
+			loadingElement.classList.add("animate-fadeout")
+			setTimeout(() => {
+				loadingElement.remove();
+			}, 800);
+		}
+	}, []);
 
 	const transform = (m: Matrix) => {
 		const mat = new THREE.Matrix3().set(

@@ -15,6 +15,29 @@ module.exports = {
 			boxShadow: {
 				b1: "0 0 0 1px var(--tw-shadow-color)",
 				b2: "0 0 0 2px var(--tw-shadow-color)",
+				b3: "0 0 0 3px var(--tw-shadow-color)",
+			},
+			keyframes: {
+				fadein: {
+					"0%": {
+						opacity: 0,
+					},
+					"100%": {
+						opacity: 1,
+					},
+				},
+				fadeout: {
+					"0%": {
+						opacity: 1,
+					},
+					"100%": {
+						opacity: 0,
+					},
+				},
+			},
+			animation: {
+				fadein: "fadein 0.5s ease-out",
+				fadeout: "fadeout 0.8s ease-out",
 			},
 			colors: {
 				offblack: "#0a0a0a",

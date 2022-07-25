@@ -15,7 +15,7 @@ export default function Document() {
 					href="https://unpkg.com/mathlive/dist/mathlive-static.css"
 				/>
 			</Head>
-			<body>
+			<body className="dark:bg-offblack bg-offwhite">
 				<Main />
 				<NextScript />
 			</body>

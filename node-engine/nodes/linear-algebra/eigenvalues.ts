@@ -38,7 +38,7 @@ export class EigenvaluesNode extends Node {
 		_.defaultsDeep(props, {
 			inputPorts: {
 				matrix: {
-					defaultValue: [1, 0, 0, 0, 1, 0, 0, 0, 1],
+					defaultValue: [0, 0, 0, 0, 0, 0, 0, 0, 0],
 					valueType: PortValueType.MATRIX,
 				},
 			},
@@ -79,15 +79,6 @@ export class EigenvaluesNode extends Node {
 	}
 
 	compute() {
-		if (!this.inputPorts.matrix.isConnected) {
-			this.outputPorts.e1.value = 0;
-			this.outputPorts.e2.value = 0;
-			this.outputPorts.e3.value = 0;
-			this.outputPorts.i1.value = 0;
-			this.outputPorts.i2.value = 0;
-			this.outputPorts.i3.value = 0;
-		}
-
 		const m = this.inputPorts.matrix.value;
 		const matrix = [
 			[m[0], m[1], m[2]],

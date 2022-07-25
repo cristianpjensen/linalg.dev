@@ -35,21 +35,21 @@ export class EigenvectorsNode extends Node {
 		_.defaultsDeep(props, {
 			inputPorts: {
 				matrix: {
-					defaultValue: [1, 0, 0, 0, 1, 0, 0, 0, 1],
+					defaultValue: [0, 0, 0, 0, 0, 0, 0, 0, 0],
 					valueType: PortValueType.MATRIX,
 				},
 			},
 			outputPorts: {
 				v1: {
-					defaultValue: { x: 0, y: 0, z: 0},
+					defaultValue: { x: 0, y: 0, z: 0 },
 					valueType: PortValueType.VECTOR,
 				},
 				v2: {
-					defaultValue: { x: 0, y: 0, z: 0},
+					defaultValue: { x: 0, y: 0, z: 0 },
 					valueType: PortValueType.VECTOR,
 				},
 				v3: {
-					defaultValue: { x: 0, y: 0, z: 0},
+					defaultValue: { x: 0, y: 0, z: 0 },
 					valueType: PortValueType.VECTOR,
 				},
 			},
@@ -64,12 +64,6 @@ export class EigenvectorsNode extends Node {
 	}
 
 	compute() {
-		if (!this.inputPorts.matrix.isConnected) {
-			this.outputPorts.v1.value = { x: 0, y: 0, z: 0 };
-			this.outputPorts.v2.value = { x: 0, y: 0, z: 0 };
-			this.outputPorts.v3.value = { x: 0, y: 0, z: 0 };
-		}
-
 		const m = this.inputPorts.matrix.value;
 		const matrix = [
 			[m[0], m[1], m[2]],

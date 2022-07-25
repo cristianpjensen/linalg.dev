@@ -19,6 +19,15 @@ export const EigenvectorsNode = observer(
 		const v2 = node.outputPorts.v2.value;
 		const v3 = node.outputPorts.v3.value;
 
+		const disabledNodes = [];
+		if (!node.inputPorts.matrix.isConnected) {
+			disabledNodes.push(
+				node.outputPorts.v1,
+				node.outputPorts.v2,
+				node.outputPorts.v3
+			);
+		}
+
 		return (
 			<Node.Root node={node}>
 				<Node.Handle
@@ -74,7 +83,7 @@ export const EigenvectorsNode = observer(
 					/>
 
 					<Node.InputPorts node={node} />
-					<Node.OutputPorts node={node} />
+					<Node.OutputPorts node={node} disabled={disabledNodes} />
 				</Node.Body>
 			</Node.Root>
 		);
