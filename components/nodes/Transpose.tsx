@@ -42,7 +42,17 @@ export const TransposeNode = observer(
 
 				<Node.Body className="flex flex-col justify-between bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
 					<TeX
-						math={`\\begin{bmatrix}${m[0]} & ${m[1]} & ${m[2]}\\\\${m[3]} & ${m[4]} & ${m[5]}\\\\${m[6]} & ${m[7]} & ${m[8]}\\end{bmatrix}`}
+						math={`\\begin{bmatrix}${
+							Math.round(m[0] * 100) / 100
+						} & ${Math.round(m[1] * 100) / 100} & ${
+							Math.round(m[2] * 100) / 100
+						}\\\\${Math.round(m[3] * 100) / 100} & ${
+							Math.round(m[4] * 100) / 100
+						} & ${Math.round(m[5] * 100) / 100}\\\\${
+							Math.round(m[6] * 100) / 100
+						} & ${Math.round(m[7] * 100) / 100} & ${
+							Math.round(m[8] * 100) / 100
+						}\\end{bmatrix}`}
 						block
 					/>
 

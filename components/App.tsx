@@ -23,10 +23,12 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 	useEffect(() => {
 		const loadingElement = document.getElementById("loading-screen");
 		if (loadingElement) {
-			loadingElement.classList.add("animate-fadeout")
 			setTimeout(() => {
-				loadingElement.remove();
-			}, 800);
+				loadingElement.classList.add("animate-fadeout");
+				setTimeout(() => {
+					loadingElement.remove();
+				}, 800);
+			}, 1000);
 		}
 	}, []);
 

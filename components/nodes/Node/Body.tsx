@@ -18,7 +18,7 @@ export interface INodeBodyProps {
 export const Body = ({ children, className, style }: INodeBodyProps) => {
 	return (
 		<div
-			className={`w-full h-[calc(100%-2rem)] rounded-b mt-8 p-4 ${className}`}
+			className={`w-full h-[calc(100%-2rem)] rounded-b mt-8 p-4 overflow-scroll ${className}`}
 			style={style}
 			children={children}
 		/>

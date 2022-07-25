@@ -13,11 +13,13 @@ import { InputPort, OutputPort, PortValueType } from "../../port";
 
 export enum UnaryOperator {
 	SQUARE = "Square",
-	SQRT = "Square root",
 	CUBE = "Cube",
+	SQRT = "Square root",
+	DIVIDE = "Divide",
 	SIN = "Sine",
 	COS = "Cosine",
 	TAN = "Tangent",
+	ABSOLUTE = "Absolute",
 }
 
 export interface UnaryOperatorNodeInputPorts extends NodeInputPorts {
@@ -44,13 +46,6 @@ export class UnaryOperatorNode extends Node {
 					defaultValue: 0,
 					valueType: PortValueType.NUMBER,
 					validate: (val: any) => _.isNumber(val),
-					data: {
-						position: {
-							x: 0,
-							y: 128,
-							isPositioned: true,
-						},
-					},
 				},
 				operator: {
 					defaultValue: UnaryOperator.SQUARE,
@@ -80,17 +75,21 @@ export class UnaryOperatorNode extends Node {
 					this.inputPorts.x.value * this.inputPorts.x.value;
 				break;
 
+			case UnaryOperator.CUBE:
+				this.outputPorts.result.value =
+					this.inputPorts.x.value *
+					this.inputPorts.x.value *
+					this.inputPorts.x.value;
+				break;
+
 			case UnaryOperator.SQRT:
 				this.outputPorts.result.value = Math.sqrt(
 					this.inputPorts.x.value
 				);
 				break;
 
-			case UnaryOperator.CUBE:
-				this.outputPorts.result.value =
-					this.inputPorts.x.value *
-					this.inputPorts.x.value *
-					this.inputPorts.x.value;
+			case UnaryOperator.DIVIDE:
+				this.outputPorts.result.value = 1 / this.inputPorts.x.value;
 				break;
 
 			case UnaryOperator.SIN:
@@ -107,6 +106,12 @@ export class UnaryOperatorNode extends Node {
 
 			case UnaryOperator.TAN:
 				this.outputPorts.result.value = Math.tan(
+					this.inputPorts.x.value
+				);
+				break;
+
+			case UnaryOperator.ABSOLUTE:
+				this.outputPorts.result.value = Math.abs(
 					this.inputPorts.x.value
 				);
 				break;

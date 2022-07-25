@@ -37,8 +37,9 @@ const LoadingScreen = () => {
 							preserveAspectRatio: "xMidYMid slice",
 						},
 					}}
-					height={120}
-					width={120}
+					height={80}
+					width={80}
+					ariaLabel="Loading screen"
 				/>
 			</div>
 		</div>
