@@ -1,4 +1,10 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+	forwardRef,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
 import { Canvas } from "@react-three/fiber";
@@ -225,41 +231,41 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const yLabelVector = new THREE.Vector3(0, center + 0.4, 0);
 	const zLabelVector = new THREE.Vector3(0, 0, center + 0.4);
 
-	const Mx = new THREE.Vector3(1, 0, 0);
-	const currentMx = new THREE.Vector3(1, 0, 0);
-	const My = new THREE.Vector3(0, 1, 0);
-	const currentMy = new THREE.Vector3(0, 1, 0);
-	const Mz = new THREE.Vector3(0, 0, 1);
-	const currentMz = new THREE.Vector3(0, 0, 1);
-	const xLine1 = new THREE.Vector3(size2, 0, 0);
-	const currentXLine1 = new THREE.Vector3(size2, 0, 0);
-	const xLine2 = new THREE.Vector3(-size2, 0, 0);
-	const currentXLine2 = new THREE.Vector3(-size2, 0, 0);
-	const yLine1 = new THREE.Vector3(0, size2, 0);
-	const currentYLine1 = new THREE.Vector3(0, size2, 0);
-	const yLine2 = new THREE.Vector3(0, -size2, 0);
-	const currentYLine2 = new THREE.Vector3(0, -size2, 0);
-	const zLine1 = new THREE.Vector3(0, 0, size2);
-	const currentZLine1 = new THREE.Vector3(0, 0, size2);
-	const zLine2 = new THREE.Vector3(0, 0, -size2);
-	const currentZLine2 = new THREE.Vector3(0, 0, -size2);
+	const [Mx] = useState(new THREE.Vector3(1, 0, 0));
+	const [currentMx] = useState(new THREE.Vector3(1, 0, 0));
+	const [My] = useState(new THREE.Vector3(0, 1, 0));
+	const [currentMy] = useState(new THREE.Vector3(0, 1, 0));
+	const [Mz] = useState(new THREE.Vector3(0, 0, 1));
+	const [currentMz] = useState(new THREE.Vector3(0, 0, 1));
+	const [xLine1] = useState(new THREE.Vector3(size2, 0, 0));
+	const [currentXLine1] = useState(new THREE.Vector3(size2, 0, 0));
+	const [xLine2] = useState(new THREE.Vector3(-size2, 0, 0));
+	const [currentXLine2] = useState(new THREE.Vector3(-size2, 0, 0));
+	const [yLine1] = useState(new THREE.Vector3(0, size2, 0));
+	const [currentYLine1] = useState(new THREE.Vector3(0, size2, 0));
+	const [yLine2] = useState(new THREE.Vector3(0, -size2, 0));
+	const [currentYLine2] = useState(new THREE.Vector3(0, -size2, 0));
+	const [zLine1] = useState(new THREE.Vector3(0, 0, size2));
+	const [currentZLine1] = useState(new THREE.Vector3(0, 0, size2));
+	const [zLine2] = useState(new THREE.Vector3(0, 0, -size2));
+	const [currentZLine2] = useState(new THREE.Vector3(0, 0, -size2));
 
-	const cubeBottom1 = new THREE.Vector3(size4, size4, -size4);
-	const currentCubeBottom1 = cubeBottom1.clone();
-	const cubeBottom2 = new THREE.Vector3(-size4, size4, -size4);
-	const currentCubeBottom2 = cubeBottom2.clone();
-	const cubeBottom3 = new THREE.Vector3(-size4, -size4, -size4);
-	const currentCubeBottom3 = cubeBottom3.clone();
-	const cubeBottom4 = new THREE.Vector3(size4, -size4, -size4);
-	const currentCubeBottom4 = cubeBottom4.clone();
-	const cubeTop1 = new THREE.Vector3(size4, size4, size4);
-	const currentCubeTop1 = cubeTop1.clone();
-	const cubeTop2 = new THREE.Vector3(-size4, size4, size4);
-	const currentCubeTop2 = cubeTop2.clone();
-	const cubeTop3 = new THREE.Vector3(-size4, -size4, size4);
-	const currentCubeTop3 = cubeTop3.clone();
-	const cubeTop4 = new THREE.Vector3(size4, -size4, size4);
-	const currentCubeTop4 = cubeTop4.clone();
+	const [cubeBottom1] = useState(new THREE.Vector3(size4, size4, -size4));
+	const [currentCubeBottom1] = useState(cubeBottom1.clone());
+	const [cubeBottom2] = useState(new THREE.Vector3(-size4, size4, -size4));
+	const [currentCubeBottom2] = useState(cubeBottom2.clone());
+	const [cubeBottom3] = useState(new THREE.Vector3(-size4, -size4, -size4));
+	const [currentCubeBottom3] = useState(cubeBottom3.clone());
+	const [cubeBottom4] = useState(new THREE.Vector3(size4, -size4, -size4));
+	const [currentCubeBottom4] = useState(cubeBottom4.clone());
+	const [cubeTop1] = useState(new THREE.Vector3(size4, size4, size4));
+	const [currentCubeTop1] = useState(cubeTop1.clone());
+	const [cubeTop2] = useState(new THREE.Vector3(-size4, size4, size4));
+	const [currentCubeTop2] = useState(cubeTop2.clone());
+	const [cubeTop3] = useState(new THREE.Vector3(-size4, -size4, size4));
+	const [currentCubeTop3] = useState(cubeTop3.clone());
+	const [cubeTop4] = useState(new THREE.Vector3(size4, -size4, size4));
+	const [currentCubeTop4] = useState(cubeTop4.clone());
 	const cubeBias = 0.1;
 
 	const xyLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);

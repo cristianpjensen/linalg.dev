@@ -3,6 +3,7 @@ import React, {
 	useEffect,
 	useImperativeHandle,
 	useRef,
+	useState,
 } from "react";
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
@@ -105,10 +106,10 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 	const coneRef = useRef<THREE.Mesh>(null);
 	const textRef = useRef<Text>(null);
 
-	const vector = v.clone();
-	const origin = o.clone();
-	const currentVector = v.clone();
-	const currentOrigin = o.clone();
+	const [vector] = useState(v.clone());
+	const [origin] = useState(o.clone());
+	const [currentVector] = useState(v.clone());
+	const [currentOrigin] = useState(o.clone());
 	const orientation = new THREE.Matrix4();
 
 	function setMeshes(ori: THREE.Vector3, vec: THREE.Vector3) {
