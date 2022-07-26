@@ -53,6 +53,12 @@ export interface SpaceProps {
 	 */
 	showAxisLabels?: boolean;
 	/**
+	 * Show a cube of lines that give reference to where the space is. The line
+	 * have a gradient of colors according to the RGB color space.
+	 * @default true
+	 */
+	showCube?: boolean;
+	/**
 	 * Scale of the axis labels, relative to their default size, so some
 	 * experimentation may be needed to get the correct size for your usecase.
 	 * @default 1
@@ -105,6 +111,7 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 		showZAxis = true,
 		showZPlanes = false,
 		showAxisLabels = true,
+		showCube = true,
 		axisLabelScale = 1,
 		xLabel = "x",
 		yLabel = "y",
@@ -152,6 +159,7 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 				showAxisLabels={showAxisLabels}
 				showZAxis={showZAxis}
 				showZPlanes={showZPlanes}
+				showCube={showCube}
 				axisLabelScale={axisLabelScale}
 				xLabel={xLabel}
 				yLabel={yLabel}
@@ -178,6 +186,7 @@ interface GridProps {
 	showAxisLabels: boolean;
 	showZAxis: boolean;
 	showZPlanes: boolean;
+	showCube: boolean;
 	axisLabelScale: number;
 	xLabel: string;
 	yLabel: string;
@@ -201,13 +210,16 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		showAxisLabels,
 		showZAxis,
 		showZPlanes,
+		showCube,
 		axisLabelScale,
 		xLabel,
 		yLabel,
 		zLabel,
 	} = props;
 
-	const center = Math.floor(size / 2);
+	const size2 = size / 2;
+	const size4 = size2 / 2;
+	const center = Math.floor(size2);
 
 	const xLabelVector = new THREE.Vector3(center + 0.4, 0, 0);
 	const yLabelVector = new THREE.Vector3(0, center + 0.4, 0);
@@ -219,18 +231,36 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const currentMy = new THREE.Vector3(0, 1, 0);
 	const Mz = new THREE.Vector3(0, 0, 1);
 	const currentMz = new THREE.Vector3(0, 0, 1);
-	const xLine1 = new THREE.Vector3(size / 2, 0, 0);
-	const currentXLine1 = new THREE.Vector3(size / 2, 0, 0);
-	const xLine2 = new THREE.Vector3(-size / 2, 0, 0);
-	const currentXLine2 = new THREE.Vector3(-size / 2, 0, 0);
-	const yLine1 = new THREE.Vector3(0, size / 2, 0);
-	const currentYLine1 = new THREE.Vector3(0, size / 2, 0);
-	const yLine2 = new THREE.Vector3(0, -size / 2, 0);
-	const currentYLine2 = new THREE.Vector3(0, -size / 2, 0);
-	const zLine1 = new THREE.Vector3(0, 0, size / 2);
-	const currentZLine1 = new THREE.Vector3(0, 0, size / 2);
-	const zLine2 = new THREE.Vector3(0, 0, -size / 2);
-	const currentZLine2 = new THREE.Vector3(0, 0, -size / 2);
+	const xLine1 = new THREE.Vector3(size2, 0, 0);
+	const currentXLine1 = new THREE.Vector3(size2, 0, 0);
+	const xLine2 = new THREE.Vector3(-size2, 0, 0);
+	const currentXLine2 = new THREE.Vector3(-size2, 0, 0);
+	const yLine1 = new THREE.Vector3(0, size2, 0);
+	const currentYLine1 = new THREE.Vector3(0, size2, 0);
+	const yLine2 = new THREE.Vector3(0, -size2, 0);
+	const currentYLine2 = new THREE.Vector3(0, -size2, 0);
+	const zLine1 = new THREE.Vector3(0, 0, size2);
+	const currentZLine1 = new THREE.Vector3(0, 0, size2);
+	const zLine2 = new THREE.Vector3(0, 0, -size2);
+	const currentZLine2 = new THREE.Vector3(0, 0, -size2);
+
+	const cubeBottom1 = new THREE.Vector3(size4, size4, -size4);
+	const currentCubeBottom1 = cubeBottom1.clone();
+	const cubeBottom2 = new THREE.Vector3(-size4, size4, -size4);
+	const currentCubeBottom2 = cubeBottom2.clone();
+	const cubeBottom3 = new THREE.Vector3(-size4, -size4, -size4);
+	const currentCubeBottom3 = cubeBottom3.clone();
+	const cubeBottom4 = new THREE.Vector3(size4, -size4, -size4);
+	const currentCubeBottom4 = cubeBottom4.clone();
+	const cubeTop1 = new THREE.Vector3(size4, size4, size4);
+	const currentCubeTop1 = cubeTop1.clone();
+	const cubeTop2 = new THREE.Vector3(-size4, size4, size4);
+	const currentCubeTop2 = cubeTop2.clone();
+	const cubeTop3 = new THREE.Vector3(-size4, -size4, size4);
+	const currentCubeTop3 = cubeTop3.clone();
+	const cubeTop4 = new THREE.Vector3(size4, -size4, size4);
+	const currentCubeTop4 = cubeTop4.clone();
+	const cubeBias = 0.1;
 
 	const xyLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
 	const yxLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
@@ -242,6 +272,19 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const yLabelRef = useRef<Text>(null);
 	const zLabelRef = useRef<Text>(null);
 
+	const refCubeLeg1 = useRef<THREE.BufferGeometry>(null);
+	const refCubeLeg2 = useRef<THREE.BufferGeometry>(null);
+	const refCubeLeg3 = useRef<THREE.BufferGeometry>(null);
+	const refCubeLeg4 = useRef<THREE.BufferGeometry>(null);
+	const refCubeBottom1 = useRef<THREE.BufferGeometry>(null);
+	const refCubeBottom2 = useRef<THREE.BufferGeometry>(null);
+	const refCubeBottom3 = useRef<THREE.BufferGeometry>(null);
+	const refCubeBottom4 = useRef<THREE.BufferGeometry>(null);
+	const refCubeTop1 = useRef<THREE.BufferGeometry>(null);
+	const refCubeTop2 = useRef<THREE.BufferGeometry>(null);
+	const refCubeTop3 = useRef<THREE.BufferGeometry>(null);
+	const refCubeTop4 = useRef<THREE.BufferGeometry>(null);
+
 	function setLines(
 		x: THREE.Vector3,
 		y: THREE.Vector3,
@@ -251,7 +294,15 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		yl1: THREE.Vector3,
 		yl2: THREE.Vector3,
 		zl1: THREE.Vector3,
-		zl2: THREE.Vector3
+		zl2: THREE.Vector3,
+		cb1: THREE.Vector3,
+		cb2: THREE.Vector3,
+		cb3: THREE.Vector3,
+		cb4: THREE.Vector3,
+		ct1: THREE.Vector3,
+		ct2: THREE.Vector3,
+		ct3: THREE.Vector3,
+		ct4: THREE.Vector3
 	) {
 		xyLineRefs.current?.forEach((line, index) => {
 			const multiple = y.clone().multiplyScalar(index - center);
@@ -268,6 +319,19 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 				yl2.clone().add(multiple),
 			]);
 		});
+
+		refCubeLeg1.current?.setFromPoints([cb1, ct1]);
+		refCubeLeg2.current?.setFromPoints([cb2, ct2]);
+		refCubeLeg3.current?.setFromPoints([cb3, ct3]);
+		refCubeLeg4.current?.setFromPoints([cb4, ct4]);
+		refCubeBottom1.current?.setFromPoints([cb1, cb2]);
+		refCubeBottom2.current?.setFromPoints([cb2, cb3]);
+		refCubeBottom3.current?.setFromPoints([cb3, cb4]);
+		refCubeBottom4.current?.setFromPoints([cb4, cb1]);
+		refCubeTop1.current?.setFromPoints([ct1, ct2]);
+		refCubeTop2.current?.setFromPoints([ct2, ct3]);
+		refCubeTop3.current?.setFromPoints([ct3, ct4]);
+		refCubeTop4.current?.setFromPoints([ct4, ct1]);
 
 		if (!showZPlanes && showZAxis) {
 			zxLineRefs.current[center]?.setFromPoints([zl1, zl2]);
@@ -347,6 +411,31 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					.clone()
 					.applyQuaternion(currentQuaternion);
 
+				const rotatedCubeBottom1 = cubeBottom1
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeBottom2 = cubeBottom2
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeBottom3 = cubeBottom3
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeBottom4 = cubeBottom4
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeTop1 = cubeTop1
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeTop2 = cubeTop2
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeTop3 = cubeTop3
+					.clone()
+					.applyQuaternion(currentQuaternion);
+				const rotatedCubeTop4 = cubeTop4
+					.clone()
+					.applyQuaternion(currentQuaternion);
+
 				setLines(
 					rotatedMx,
 					rotatedMy,
@@ -356,7 +445,15 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					rotatedYLine1,
 					rotatedYLine2,
 					rotatedZLine1,
-					rotatedZLine2
+					rotatedZLine2,
+					rotatedCubeBottom1,
+					rotatedCubeBottom2,
+					rotatedCubeBottom3,
+					rotatedCubeBottom4,
+					rotatedCubeTop1,
+					rotatedCubeTop2,
+					rotatedCubeTop3,
+					rotatedCubeTop4
 				);
 			})
 			.onComplete(() => {
@@ -369,7 +466,15 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					currentYLine1,
 					currentYLine2,
 					currentZLine1,
-					currentZLine2
+					currentZLine2,
+					currentCubeBottom1,
+					currentCubeBottom2,
+					currentCubeBottom3,
+					currentCubeBottom4,
+					currentCubeTop1,
+					currentCubeTop2,
+					currentCubeTop3,
+					currentCubeTop4
 				);
 			})
 			.start();
@@ -384,7 +489,15 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		yl1: THREE.Vector3,
 		yl2: THREE.Vector3,
 		zl1: THREE.Vector3,
-		zl2: THREE.Vector3
+		zl2: THREE.Vector3,
+		cb1: THREE.Vector3,
+		cb2: THREE.Vector3,
+		cb3: THREE.Vector3,
+		cb4: THREE.Vector3,
+		ct1: THREE.Vector3,
+		ct2: THREE.Vector3,
+		ct3: THREE.Vector3,
+		ct4: THREE.Vector3
 	) {
 		new TWEEN.Tween([
 			Mx,
@@ -396,8 +509,37 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			yLine2,
 			zLine1,
 			zLine2,
+			cubeBottom1,
+			cubeBottom2,
+			cubeBottom3,
+			cubeBottom4,
+			cubeTop1,
+			cubeTop2,
+			cubeTop3,
+			cubeTop4,
 		])
-			.to([x, y, z, xl1, xl2, yl1, yl2, zl1, zl2], DURATION)
+			.to(
+				[
+					x,
+					y,
+					z,
+					xl1,
+					xl2,
+					yl1,
+					yl2,
+					zl1,
+					zl2,
+					cb1,
+					cb2,
+					cb3,
+					cb4,
+					ct1,
+					ct2,
+					ct3,
+					ct4,
+				],
+				DURATION
+			)
 			.easing(TWEEN.Easing.Quadratic.Out)
 			.onUpdate(() => {
 				setLines(
@@ -409,23 +551,43 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					yLine1,
 					yLine2,
 					zLine1,
-					zLine2
+					zLine2,
+					cubeBottom1,
+					cubeBottom2,
+					cubeBottom3,
+					cubeBottom4,
+					cubeTop1,
+					cubeTop2,
+					cubeTop3,
+					cubeTop4
 				);
 			})
 			.start();
 	}
 
+	const initializeAnimation = () => {
+		Mx.copy(currentMx);
+		My.copy(currentMy);
+		Mz.copy(currentMz);
+		xLine1.copy(currentXLine1);
+		xLine2.copy(currentXLine2);
+		yLine1.copy(currentYLine1);
+		yLine2.copy(currentYLine2);
+		zLine1.copy(currentZLine1);
+		zLine2.copy(currentZLine2);
+		cubeBottom1.copy(currentCubeBottom1);
+		cubeBottom2.copy(currentCubeBottom2);
+		cubeBottom3.copy(currentCubeBottom3);
+		cubeBottom4.copy(currentCubeBottom4);
+		cubeTop1.copy(currentCubeTop1);
+		cubeTop2.copy(currentCubeTop2);
+		cubeTop3.copy(currentCubeTop3);
+		cubeTop4.copy(currentCubeTop4);
+	};
+
 	useImperativeHandle(ref, () => ({
 		transform: (mat) => {
-			Mx.copy(currentMx);
-			My.copy(currentMy);
-			Mz.copy(currentMz);
-			xLine1.copy(currentXLine1);
-			xLine2.copy(currentXLine2);
-			yLine1.copy(currentYLine1);
-			yLine2.copy(currentYLine2);
-			zLine1.copy(currentZLine1);
-			zLine2.copy(currentZLine2);
+			initializeAnimation();
 
 			currentMx.applyMatrix3(mat);
 			currentMy.applyMatrix3(mat);
@@ -436,6 +598,14 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			currentYLine2.applyMatrix3(mat);
 			currentZLine1.applyMatrix3(mat);
 			currentZLine2.applyMatrix3(mat);
+			currentCubeBottom1.applyMatrix3(mat);
+			currentCubeBottom2.applyMatrix3(mat);
+			currentCubeBottom3.applyMatrix3(mat);
+			currentCubeBottom4.applyMatrix3(mat);
+			currentCubeTop1.applyMatrix3(mat);
+			currentCubeTop2.applyMatrix3(mat);
+			currentCubeTop3.applyMatrix3(mat);
+			currentCubeTop4.applyMatrix3(mat);
 
 			xLabelRef.current?.transform(mat);
 			yLabelRef.current?.transform(mat);
@@ -453,30 +623,41 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					currentYLine1,
 					currentYLine2,
 					currentZLine1,
-					currentZLine2
+					currentZLine2,
+					currentCubeBottom1,
+					currentCubeBottom2,
+					currentCubeBottom3,
+					currentCubeBottom4,
+					currentCubeTop1,
+					currentCubeTop2,
+					currentCubeTop3,
+					currentCubeTop4
 				);
 			}
 		},
 		reset: () => {
-			Mx.copy(currentMx);
-			My.copy(currentMy);
-			Mz.copy(currentMz);
-			xLine1.copy(currentXLine1);
-			xLine2.copy(currentXLine2);
-			yLine1.copy(currentYLine1);
-			yLine2.copy(currentYLine2);
-			zLine1.copy(currentZLine1);
-			zLine2.copy(currentZLine2);
+			initializeAnimation();
+			const size2 = size / 2;
+			const size4 = size2 / 2;
 
 			currentMx.copy(new THREE.Vector3(1, 0, 0));
 			currentMy.copy(new THREE.Vector3(0, 1, 0));
 			currentMz.copy(new THREE.Vector3(0, 0, 1));
-			currentXLine1.copy(new THREE.Vector3(size / 2, 0, 0));
-			currentXLine2.copy(new THREE.Vector3(-size / 2, 0, 0));
-			currentYLine1.copy(new THREE.Vector3(0, size / 2, 0));
-			currentYLine2.copy(new THREE.Vector3(0, -size / 2, 0));
-			currentZLine1.copy(new THREE.Vector3(0, 0, size / 2));
-			currentZLine2.copy(new THREE.Vector3(0, 0, -size / 2));
+			currentXLine1.copy(new THREE.Vector3(size2, 0, 0));
+			currentXLine2.copy(new THREE.Vector3(-size2, 0, 0));
+			currentYLine1.copy(new THREE.Vector3(0, size2, 0));
+			currentYLine2.copy(new THREE.Vector3(0, -size2, 0));
+			currentZLine1.copy(new THREE.Vector3(0, 0, size2));
+			currentZLine2.copy(new THREE.Vector3(0, 0, -size2));
+
+			currentCubeBottom1.copy(new THREE.Vector3(size4, size4, -size4));
+			currentCubeBottom2.copy(new THREE.Vector3(size4, -size4, -size4));
+			currentCubeBottom3.copy(new THREE.Vector3(-size4, -size4, -size4));
+			currentCubeBottom4.copy(new THREE.Vector3(-size4, size4, -size4));
+			currentCubeTop1.copy(new THREE.Vector3(size4, size4, size4));
+			currentCubeTop2.copy(new THREE.Vector3(size4, -size4, size4));
+			currentCubeTop3.copy(new THREE.Vector3(-size4, -size4, size4));
+			currentCubeTop4.copy(new THREE.Vector3(-size4, size4, size4));
 
 			xLabelRef.current?.move(new THREE.Vector3(center + 0.4, 0, 0));
 			yLabelRef.current?.move(new THREE.Vector3(0, center + 0.4, 0));
@@ -491,12 +672,23 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 				currentYLine1,
 				currentYLine2,
 				currentZLine1,
-				currentZLine2
+				currentZLine2,
+				currentCubeBottom1,
+				currentCubeBottom2,
+				currentCubeBottom3,
+				currentCubeBottom4,
+				currentCubeTop1,
+				currentCubeTop2,
+				currentCubeTop3,
+				currentCubeTop4
 			);
 		},
 	}));
 
-	const gridRange = Array.from({ length: size + 1 }, (_, k) => k - center);
+	const gridRange: Array<number> = Array.from(
+		{ length: size + 1 },
+		(_, k) => k - center
+	);
 
 	return (
 		<>
@@ -513,7 +705,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 						color={
 							x === 0 ? "rgb(150, 150, 150)" : "rgb(80, 80, 80)"
 						}
-						lineWidth={1}
 					/>
 
 					<Line
@@ -526,7 +717,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 						color={
 							x === 0 ? "rgb(150, 150, 150)" : "rgb(80, 80, 80)"
 						}
-						lineWidth={1}
 					/>
 				</>
 			))}
@@ -558,7 +748,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 						ref={(line) => (zxLineRefs.current[center] = line)}
 						points={[zLine1, zLine2]}
 						color="rgb(80, 80, 80)"
-						lineWidth={1}
 					/>
 					<Text
 						ref={zLabelRef}
@@ -593,7 +782,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 										? "rgb(150, 150, 150)"
 										: "rgb(80, 80, 80)"
 								}
-								lineWidth={1}
 							/>
 
 							<Line
@@ -614,7 +802,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 										? "rgb(150, 150, 150)"
 										: "rgb(80, 80, 80)"
 								}
-								lineWidth={1}
 							/>
 						</>
 					))}
@@ -640,7 +827,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 										? "rgb(150, 150, 150)"
 										: "rgb(80, 80, 80)"
 								}
-								lineWidth={1}
 							/>
 
 							<Line
@@ -661,7 +847,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 										? "rgb(150, 150, 150)"
 										: "rgb(80, 80, 80)"
 								}
-								lineWidth={1}
 							/>
 
 							<Text
@@ -673,6 +858,88 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 							/>
 						</>
 					))}
+				</>
+			)}
+
+			{showCube && (
+				<>
+					<Line
+						ref={refCubeLeg1}
+						points={[cubeBottom1, cubeTop1]}
+						color={["blue", "cyan"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg2}
+						points={[cubeBottom2, cubeTop2]}
+						color={["purple", "white"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg3}
+						points={[cubeBottom3, cubeTop3]}
+						color={["red", "yellow"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg4}
+						points={[cubeBottom4, cubeTop4]}
+						color={["black", "green"]}
+						bias={cubeBias}
+					/>
+
+					<Line
+						ref={refCubeBottom1}
+						points={[cubeBottom1, cubeBottom2]}
+						color={["blue", "purple"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom2}
+						points={[cubeBottom2, cubeBottom3]}
+						color={["purple", "red"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom3}
+						points={[cubeBottom3, cubeBottom4]}
+						color={["red", "black"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom4}
+						points={[cubeBottom4, cubeBottom1]}
+						color={["black", "blue"]}
+						bias={cubeBias}
+					/>
+
+					<Line
+						ref={refCubeTop1}
+						points={[cubeTop1, cubeTop2]}
+						color={["white", "cyan"]}
+						bias={cubeBias}
+					/>
+
+					<Line
+						ref={refCubeTop2}
+						points={[cubeTop2, cubeTop3]}
+						color={["cyan", "yellow"]}
+						bias={cubeBias}
+					/>
+
+					<Line
+						ref={refCubeTop3}
+						points={[cubeTop3, cubeTop4]}
+						color={["yellow", "green"]}
+						bias={cubeBias}
+					/>
+
+					<Line
+						ref={refCubeTop4}
+						points={[cubeTop4, cubeTop1]}
+						color={["green", "cyan"]}
+						bias={cubeBias}
+					/>
 				</>
 			)}
 		</>

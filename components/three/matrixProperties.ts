@@ -44,7 +44,7 @@ export function norm(vector: Array<number>): number {
  * Check whether two numbers are close, since floating-point arithmetic is not
  * very accurate.
  */
-export const isClose = (a: number, b: number) => Math.abs(a - b) < 1e-3;
+export const isClose = (a: number, b: number) => Math.abs(a - b) < 1e-2;
 
 /**
  * Check whether two matrices are close, since floating-point arithmetic is not

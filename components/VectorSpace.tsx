@@ -7,7 +7,7 @@ import {
 	useRef,
 } from "react";
 import * as THREE from "three";
-import { ResetIcon } from "@radix-ui/react-icons";
+import { CubeIcon, ResetIcon } from "@radix-ui/react-icons";
 import {
 	Selection,
 	EffectComposer,
@@ -58,6 +58,10 @@ export const VectorSpace = observer(
 			editor.currentMatrixReset = true;
 		};
 
+		const showCube = () => {
+			editor.showCube = !editor.showCube;
+		};
+
 		// It untransforms every time the size of the vector window gets changed, so
 		// transform it again when that happens
 		useEffect(() => {
@@ -70,15 +74,31 @@ export const VectorSpace = observer(
 				<Space
 					ref={spaceRef}
 					width={window.innerWidth / editor.vectorSpaceSize}
+					showCube={editor.showCube}
 				>
 					<Vectors ref={groupRef} context={context} editor={editor} />
 				</Space>
-				<button
-					onClick={reset}
-					className="absolute flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 right-4 bottom-4 shadow-b1 shadow-zinc-400"
-				>
-					<ResetIcon />
-				</button>
+
+				<div className="absolute flex gap-4 right-4 bottom-4">
+					<button
+						onClick={showCube}
+						className={
+							"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
+							(editor.showCube
+								? "shadow-zinc-400 opacity-100"
+								: "shadow-zinc-700 opacity-60")
+						}
+					>
+						<CubeIcon />
+					</button>
+
+					<button
+						onClick={reset}
+						className="flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 shadow-zinc-400 focus:shadow-b2"
+					>
+						<ResetIcon />
+					</button>
+				</div>
 			</div>
 		);
 	})
@@ -285,7 +305,9 @@ export const TransformvectorWrapper = observer(
 
 					const { x: ox, y: oy, z: oz } = origin;
 					const matrix = node.inputPorts.matrix.value;
-					const mat = new THREE.Matrix3().fromArray(matrix).transpose();
+					const mat = new THREE.Matrix3()
+						.fromArray(matrix)
+						.transpose();
 					const originVector = new THREE.Vector3(
 						ox,
 						oy,

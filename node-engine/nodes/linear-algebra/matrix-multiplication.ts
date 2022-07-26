@@ -58,8 +58,8 @@ export class MatrixMultiplicationNode extends Node {
 	}
 
 	compute() {
-		const m1 = this.inputPorts.m1.value;
-		const m2 = this.inputPorts.m2.value;
+		const m2 = this.inputPorts.m1.value;
+		const m1 = this.inputPorts.m2.value;
 
 		this.outputPorts.result.value = [
 			m1[0] * m2[0] + m1[1] * m2[3] + m1[2] * m2[6],

@@ -57,6 +57,11 @@ export interface EditorContext {
 	 */
 	currentMatrix: THREE.Matrix3;
 	currentMatrixReset: boolean;
+
+	/**
+	 * Shows a colorful cube that gives a good reference for transformations.
+	 */
+	showCube: boolean;
 }
 
 /**
@@ -73,4 +78,5 @@ export const editorContext = observable<EditorContext>({
 	vectorSpaceSize: 3,
 	currentMatrix: new THREE.Matrix3(),
 	currentMatrixReset: false,
+	showCube: false,
 });
