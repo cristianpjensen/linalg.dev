@@ -152,7 +152,7 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 			camera={{
 				isPerspectiveCamera: true,
 				position: [0, 0, 10],
-				far: gridSize * 10,
+				far: gridSize * 20,
 				up: [0, 0, 1],
 				...camera,
 			}}
@@ -177,7 +177,7 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 				dampingFactor={0.08}
 				draggingDampingFactor={0.2}
 				minDistance={2}
-				maxDistance={2 * gridSize}
+				maxDistance={4 * gridSize}
 			/>
 
 			<RenderCycler />

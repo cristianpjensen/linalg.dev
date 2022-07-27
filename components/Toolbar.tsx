@@ -1,6 +1,8 @@
 import { cloneElement, useState } from "react";
 import {
 	ArrowTopRightIcon,
+	BoxIcon,
+	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
 	DotIcon,
@@ -11,7 +13,7 @@ import {
 	MoonIcon,
 	SliderIcon,
 	SunIcon,
-	TransparencyGridIcon,
+	ThickArrowUpIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as TWEEN from "@tweenjs/tween.js";
@@ -20,6 +22,16 @@ import { observer } from "mobx-react-lite";
 
 import { Tooltip } from "./Tooltip";
 import { EditorContext, setDarkMode, Tool as _Tool } from "../editor-state";
+import {
+	EigenvectorsIcon,
+	LinearAlgebraIcon,
+	MathIcon,
+	MatrixMultiplicationIcon,
+	NormIcon,
+	TransformationIcon,
+	TransposeIcon,
+	VectorScalingIcon,
+} from "./icons";
 
 export interface IToolbarProps {
 	editorContext: EditorContext;
@@ -57,7 +69,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 
 			<ToolDropdown
 				editorContext={editorContext}
-				icon={<TransparencyGridIcon />}
+				icon={<MathIcon />}
 				title="Math"
 				tools={[
 					{
@@ -73,7 +85,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 						hotkey: "s",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <BoxIcon />,
 						tool: _Tool.UNARY_OPERATOR,
 						description:
 							"Unary operator that takes a single argument",
@@ -89,48 +101,49 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 			/>
 			<ToolDropdown
 				editorContext={editorContext}
-				icon={<TransparencyGridIcon />}
+				icon={<LinearAlgebraIcon />}
 				title="Linear algebra"
 				tools={[
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <NormIcon />,
 						tool: _Tool.NORM,
 						description: "Computes the norm of a vector",
 						hotkey: "n",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <TransformationIcon />,
 						tool: _Tool.TRANSFORM,
-						description: "Transforms and shows — in blue — a vector",
+						description:
+							"Transforms and shows — in blue — a vector",
 						hotkey: "r",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <VectorScalingIcon />,
 						tool: _Tool.VECTORSCALING,
 						description: "Scales a vector by a scalar",
 						hotkey: "z",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <TransposeIcon />,
 						tool: _Tool.TRANSPOSE,
 						description: "Transposes a matrix",
 						hotkey: "t",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <BoxModelIcon />,
 						tool: _Tool.MATRIXMULT,
 						description:
 							"Computes the multiplication of two matrices",
 						hotkey: "a",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <ThickArrowUpIcon />,
 						tool: _Tool.EIGENVALUES,
 						description: "Computes the eigenvalues of a matrix",
 						hotkey: "e",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <EigenvectorsIcon />,
 						tool: _Tool.EIGENVECTORS,
 						description:
 							"Computes and shows — in purple — the eigenvectors of a matrix",
