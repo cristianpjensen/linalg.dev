@@ -414,8 +414,7 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 				<div
 					className="w-0 h-0"
 					style={{
-						translate: `${editor.position.x}px ${editor.position.y}px`,
-						transform: `scale(${editor.scale})`,
+						transform: `translate(${editor.position.x}px, ${editor.position.y}px) scale(${editor.scale})`,
 					}}
 				>
 					<div
@@ -432,7 +431,7 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 			<div
 				className="w-0 h-0"
 				style={{
-					transform: `scale(${editor.scale}) translate(${editor.position.x}px, ${editor.position.y}px)`,
+					transform: `translate(${editor.position.x}px, ${editor.position.y}px) scale(${editor.scale})`,
 				}}
 			>
 				<Connections
