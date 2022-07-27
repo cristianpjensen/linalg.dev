@@ -432,8 +432,7 @@ const Editor = observer(({ context, editorContext: editor }: IEditorProps) => {
 			<div
 				className="w-0 h-0"
 				style={{
-					translate: `${editor.position.x}px ${editor.position.y}px`,
-					transform: `scale(${editor.scale})`,
+					transform: `scale(${editor.scale}) translate(${editor.position.x}px, ${editor.position.y}px)`,
 				}}
 			>
 				<Connections

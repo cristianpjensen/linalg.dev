@@ -657,13 +657,13 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			currentZLine2.copy(new THREE.Vector3(0, 0, -size2));
 
 			currentCubeBottom1.copy(new THREE.Vector3(size4, size4, -size4));
-			currentCubeBottom2.copy(new THREE.Vector3(size4, -size4, -size4));
+			currentCubeBottom2.copy(new THREE.Vector3(-size4, size4, -size4));
 			currentCubeBottom3.copy(new THREE.Vector3(-size4, -size4, -size4));
-			currentCubeBottom4.copy(new THREE.Vector3(-size4, size4, -size4));
+			currentCubeBottom4.copy(new THREE.Vector3(size4, -size4, -size4));
 			currentCubeTop1.copy(new THREE.Vector3(size4, size4, size4));
-			currentCubeTop2.copy(new THREE.Vector3(size4, -size4, size4));
+			currentCubeTop2.copy(new THREE.Vector3(-size4, size4, size4));
 			currentCubeTop3.copy(new THREE.Vector3(-size4, -size4, size4));
-			currentCubeTop4.copy(new THREE.Vector3(-size4, size4, size4));
+			currentCubeTop4.copy(new THREE.Vector3(size4, -size4, size4));
 
 			xLabelRef.current?.move(new THREE.Vector3(center + 0.4, 0, 0));
 			yLabelRef.current?.move(new THREE.Vector3(0, center + 0.4, 0));
