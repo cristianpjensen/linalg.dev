@@ -1,25 +1,55 @@
-import React, { useCallback } from "react";
+import React, { memo, useCallback } from "react";
 import { NodeProps, Position } from "react-flow-renderer";
 
 import type { UnaryOperatorData } from "../types";
 import Handle from "../custom/Handle";
+import useStore from "../store";
+import useOutput from "../hooks/useOutput";
 
 const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
 
-const UnaryOperatorNode = ({
-	data,
-	...props
-}: NodeProps<UnaryOperatorData>) => {
-	const onChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-		data.value = parseInt(e.currentTarget.value);
-	}, []);
+const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
+	const setNodeData = useStore((state) => state.setNodeData);
+
+	const onConnect = useOutput<UnaryOperatorData>(
+		id,
+		["result-number"],
+		data,
+		(data) => {
+			let result = 0;
+			switch (data.operator) {
+				case "sqrt":
+					result = Math.sqrt(data.value);
+					break;
+
+				case "square":
+					result = data.value * data.value;
+					break;
+
+				case "cube":
+					result = data.value * data.value * data.value;
+					break;
+			}
+
+			return { result };
+		}
+	);
+
+	const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+		if (e.currentTarget.value === "") {
+			setNodeData(id, { ...data, value: 0 });
+		}
+
+		const value = parseInt(e.currentTarget.value);
+		value && setNodeData(id, { ...data, value });
+	};
 
 	return (
 		<>
 			<UnaryOperatorHandle
 				type="target"
-				position={Position.Left}
 				id="value-number"
+				position={Position.Left}
 			/>
 			<div>
 				<label htmlFor="value">Unary:</label>
@@ -28,17 +58,18 @@ const UnaryOperatorNode = ({
 					className="w-12"
 					name="value"
 					type="number"
-					defaultValue={data.value}
+					value={data.value}
 					onChange={onChange}
 				/>
 			</div>
 			<UnaryOperatorHandle
 				type="source"
+				id="result-number"
 				position={Position.Right}
-				id="output-number"
+				onConnect={onConnect}
 			/>
 		</>
 	);
-};
+});
 
 export default UnaryOperatorNode;

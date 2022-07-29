@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { memo } from "react";
 import { NodeProps, Position } from "react-flow-renderer";
 
 import type { BinaryOperatorData } from "../types";
@@ -8,99 +8,101 @@ import Handle from "../custom/Handle";
 
 const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 
-const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
-	const { setNodeData, edges } = useStore();
+const BinaryOperatorNode = memo(
+	({ id, data }: NodeProps<BinaryOperatorData>) => {
+		const setNodeData = useStore((state) => state.setNodeData);
 
-	const addOutput = useOutput<BinaryOperatorData>((data) => {
-		let val = 0;
-		switch (data.operator) {
-			case "add":
-				val = data.left + data.right;
-				break;
+		const onConnect = useOutput<BinaryOperatorData>(
+			id,
+			["result-number"],
+			data,
+			(data) => {
+				let result = 0;
+				switch (data.operator) {
+					case "add":
+						result = data.left + data.right;
+						break;
 
-			case "subtract":
-				val = data.left - data.right;
-				break;
+					case "subtract":
+						result = data.left - data.right;
+						break;
 
-			case "multiply":
-				val = data.left * data.right;
-				break;
+					case "multiply":
+						result = data.left * data.right;
+						break;
 
-			case "divide":
-				val = data.left / data.right;
-				break;
-		}
+					case "divide":
+						result = data.left / data.right;
+						break;
+				}
 
-		return { ...data, output: val };
-	});
+				return { result };
+			}
+		);
 
-	const onChangeLeft = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-		if (e.currentTarget.value === "") {
-			setNodeData(id, addOutput({ ...data, left: 0 }));
-		}
-
-		const value = parseInt(e.currentTarget.value);
-		value && setNodeData(id, addOutput({ ...data, left: value }));
-	}, []);
-
-	const onChangeRight = useCallback(
-		(e: React.FormEvent<HTMLInputElement>) => {
+		const onChangeLeft = (e: React.FormEvent<HTMLInputElement>) => {
 			if (e.currentTarget.value === "") {
-				setNodeData(id, addOutput({ ...data, right: 0 }));
+				setNodeData(id, { ...data, left: 0 });
 			}
 
 			const value = parseInt(e.currentTarget.value);
-			value && setNodeData(id, addOutput({ ...data, right: value }));
-		},
-		[]
-	);
+			value && setNodeData(id, { ...data, left: value });
+		};
 
-	return (
-		<>
-			<BinaryOperatorHandle
-				type="target"
-				id="left-vector"
-				position={Position.Left}
-				style={{ top: 10 }}
-			/>
-			<BinaryOperatorHandle
-				type="target"
-				id="right-number"
-				position={Position.Left}
-				style={{ bottom: 10, top: "auto" }}
-			/>
-			<div>
-				<label htmlFor="value">Left:</label>
-				<input
-					id="value"
-					className="w-12"
-					name="value"
-					type="number"
-					value={data.left}
-					onChange={onChangeLeft}
-				/>
-			</div>
-			<div>
-				<label htmlFor="value">Right:</label>
-				<input
-					id="value"
-					className="w-12"
-					name="value"
-					type="number"
-					value={data.right}
-					onChange={onChangeRight}
-				/>
-			</div>
-			<BinaryOperatorHandle
-				type="source"
-				position={Position.Right}
-				id="output-number"
-			/>
-		</>
-	);
-};
+		const onChangeRight = (e: React.FormEvent<HTMLInputElement>) => {
+			if (e.currentTarget.value === "") {
+				setNodeData(id, { ...data, right: 0 });
+			}
 
-type ObjectKey = keyof BinaryOperatorData;
-const s: ObjectKey = "left";
+			const value = parseInt(e.currentTarget.value);
+			value && setNodeData(id, { ...data, right: value });
+		};
+
+		return (
+			<>
+				<BinaryOperatorHandle
+					type="target"
+					id="left-number"
+					position={Position.Left}
+					style={{ top: 10 }}
+				/>
+				<BinaryOperatorHandle
+					type="target"
+					id="right-number"
+					position={Position.Left}
+					style={{ bottom: 10, top: "auto" }}
+				/>
+				<div>
+					<label htmlFor="value">Left:</label>
+					<input
+						id="value"
+						className="w-12"
+						name="value"
+						type="number"
+						value={data.left}
+						onChange={onChangeLeft}
+					/>
+				</div>
+				<div>
+					<label htmlFor="value">Right:</label>
+					<input
+						id="value"
+						className="w-12"
+						name="value"
+						type="number"
+						value={data.right}
+						onChange={onChangeRight}
+					/>
+				</div>
+				<BinaryOperatorHandle
+					type="source"
+					id="result-number"
+					position={Position.Right}
+					onConnect={onConnect}
+				/>
+			</>
+		);
+	}
+);
 
 export default BinaryOperatorNode;

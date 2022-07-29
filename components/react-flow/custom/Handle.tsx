@@ -4,10 +4,16 @@ import {
 	HandleProps as InternalHandleProps,
 	Connection,
 } from "react-flow-renderer";
-import useStore from "../store";
 
-interface HandleProps<N extends object> extends InternalHandleProps {
-	id: `${Extract<keyof N, string>}-${"number" | "vector" | "matrix"}`;
+import useStore from "../store";
+import { ValidInputOutput, ValidInputOutputString } from "../types";
+
+interface HandleProps<N extends { output: { [key: string]: ValidInputOutput } }>
+	extends InternalHandleProps {
+	id: `${Extract<
+		keyof Omit<N, "output"> | keyof N["output"],
+		string
+	>}-${ValidInputOutputString}`;
 }
 
 /**
@@ -30,7 +36,7 @@ interface HandleProps<N extends object> extends InternalHandleProps {
  * )
  * ```
  */
-const Handle = <N extends object>(
+const Handle = <N extends { output: { [key: string]: ValidInputOutput } }>(
 	props: HandleProps<N> &
 		Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
 		React.RefAttributes<HTMLDivElement>
