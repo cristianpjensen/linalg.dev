@@ -4,6 +4,7 @@ import {
 	HandleProps as InternalHandleProps,
 	Connection,
 } from "react-flow-renderer";
+import useStore from "../store";
 
 interface HandleProps<N extends object> extends InternalHandleProps {
 	id: `${Extract<keyof N, string>}-${"number" | "vector" | "matrix"}`;
@@ -34,12 +35,25 @@ const Handle = <N extends object>(
 		Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
 		React.RefAttributes<HTMLDivElement>
 ) => {
+	const edges = useStore((state) => state.edges);
+
 	// A connection is only valid if it is connected to a handle of the same type.
 	// The type is determined by the second part of the id, which is always
 	// present due to the type of the custom handle.
 	const isValidConnection = useCallback(
-		({ sourceHandle, targetHandle }: Connection) => {
-			if (sourceHandle && targetHandle) {
+		({ target, sourceHandle, targetHandle }: Connection) => {
+			if (sourceHandle && target && targetHandle) {
+				// Only one connection to the target is allowed.
+				if (
+					edges.some(
+						(edge) =>
+							edge.targetHandle === targetHandle &&
+							edge.target === target
+					)
+				) {
+					return false;
+				}
+
 				const sourceType = sourceHandle.split("-")[1];
 				const targetType = targetHandle.split("-")[1];
 				return sourceType === targetType;
@@ -47,10 +61,20 @@ const Handle = <N extends object>(
 
 			return false;
 		},
-		[]
+		[edges]
 	);
 
-	return <InternalHandle {...props} isValidConnection={isValidConnection} />;
+	const handleType = props.id.split("-")[1];
+
+	return (
+		<InternalHandle {...props} isValidConnection={isValidConnection}>
+			{handleType === "number"
+				? "N"
+				: handleType === "vector"
+				? "V"
+				: handleType === "matrix" && "M"}
+		</InternalHandle>
+	);
 };
 
 export default Handle;

@@ -4,6 +4,8 @@ import { NodeProps, Position } from "react-flow-renderer";
 import type { ConstantData } from "../types";
 import Handle from "../custom/Handle";
 
+const ConstantHandle = Handle<ConstantData>;
+
 const ConstantNode = ({ data }: NodeProps<ConstantData>) => {
 	const onChange = useCallback((e: React.FormEvent<HTMLInputElement>) => {
 		data.value = parseInt(e.currentTarget.value);
@@ -11,7 +13,11 @@ const ConstantNode = ({ data }: NodeProps<ConstantData>) => {
 
 	return (
 		<>
-			<Handle type="target" position={Position.Left} id="input-number" />
+			<ConstantHandle
+				type="target"
+				position={Position.Left}
+				id="value-number"
+			/>
 			<div>
 				<label htmlFor="value">Value:</label>
 				<input
@@ -23,7 +29,7 @@ const ConstantNode = ({ data }: NodeProps<ConstantData>) => {
 					onChange={onChange}
 				/>
 			</div>
-			<Handle
+			<ConstantHandle
 				type="source"
 				position={Position.Right}
 				id="output-number"

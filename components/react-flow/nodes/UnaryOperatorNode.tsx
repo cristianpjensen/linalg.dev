@@ -4,6 +4,8 @@ import { NodeProps, Position } from "react-flow-renderer";
 import type { UnaryOperatorData } from "../types";
 import Handle from "../custom/Handle";
 
+const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
+
 const UnaryOperatorNode = ({
 	data,
 	...props
@@ -14,7 +16,11 @@ const UnaryOperatorNode = ({
 
 	return (
 		<>
-			<Handle type="target" position={Position.Left} id="input-number" />
+			<UnaryOperatorHandle
+				type="target"
+				position={Position.Left}
+				id="value-number"
+			/>
 			<div>
 				<label htmlFor="value">Unary:</label>
 				<input
@@ -26,7 +32,7 @@ const UnaryOperatorNode = ({
 					onChange={onChange}
 				/>
 			</div>
-			<Handle
+			<UnaryOperatorHandle
 				type="source"
 				position={Position.Right}
 				id="output-number"

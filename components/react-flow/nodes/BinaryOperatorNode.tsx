@@ -9,7 +9,7 @@ import Handle from "../custom/Handle";
 const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 
 const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
-	const { setNodeData } = useStore();
+	const { setNodeData, edges } = useStore();
 
 	const addOutput = useOutput<BinaryOperatorData>((data) => {
 		let val = 0;
@@ -59,7 +59,7 @@ const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
 		<>
 			<BinaryOperatorHandle
 				type="target"
-				id="left-number"
+				id="left-vector"
 				position={Position.Left}
 				style={{ top: 10 }}
 			/>
