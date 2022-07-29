@@ -1,16 +1,12 @@
 import React, { useCallback } from "react";
-import {
-	Handle as InternalHandle,
-	HandleProps as InternalHandleProps,
-	NodeProps,
-	Position,
-	Connection,
-} from "react-flow-renderer";
+import { NodeProps, Position } from "react-flow-renderer";
 
 import type { BinaryOperatorData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import Handle from "../custom/Handle";
+
+const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 
 const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
 	const { setNodeData } = useStore();
@@ -61,13 +57,13 @@ const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
 
 	return (
 		<>
-			<Handle
+			<BinaryOperatorHandle
 				type="target"
 				id="left-number"
 				position={Position.Left}
 				style={{ top: 10 }}
 			/>
-			<Handle
+			<BinaryOperatorHandle
 				type="target"
 				id="right-number"
 				position={Position.Left}
@@ -95,7 +91,7 @@ const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
 					onChange={onChangeRight}
 				/>
 			</div>
-			<Handle
+			<BinaryOperatorHandle
 				type="source"
 				position={Position.Right}
 				id="output-number"
@@ -103,5 +99,8 @@ const BinaryOperatorNode = ({ id, data }: NodeProps<BinaryOperatorData>) => {
 		</>
 	);
 };
+
+type ObjectKey = keyof BinaryOperatorData;
+const s: ObjectKey = "left";
 
 export default BinaryOperatorNode;
