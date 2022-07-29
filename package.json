@@ -35,6 +35,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-draggable": "^4.4.5",
+    "react-flow-renderer": "^10.3.12",
     "react-hotkeys-hook": "^3.4.6",
     "react-lottie": "^1.2.3",
     "react-merge-refs": "^2.0.1",
@@ -43,7 +44,8 @@
     "three": "^0.141.0",
     "troika-three-text": "^0.46.4",
     "use-onclickoutside": "^0.4.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zustand": "^4.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",

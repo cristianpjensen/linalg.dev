@@ -7,6 +7,7 @@ import { EditorContext } from "../editor-state";
 import { VectorSpace } from "./VectorSpace";
 import Editor from "./Editor";
 import Toolbar from "./Toolbar";
+import Flow from "./react-flow/ReactFlow";
 
 export const TransformContext = React.createContext<(matrix: Matrix) => void>(
 	() => {}
@@ -31,6 +32,8 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 			}, 1000);
 		}
 	}, []);
+
+	return <Flow />;
 
 	const transform = (matrix: Matrix) => {
 		const mat = new THREE.Matrix3().fromArray(matrix).transpose();
