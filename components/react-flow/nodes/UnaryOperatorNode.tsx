@@ -10,6 +10,7 @@ const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
 
 const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
+	const isConnected = useStore((state) => state.isConnected);
 
 	const onConnect = useOutput<UnaryOperatorData>(
 		id,
@@ -60,6 +61,7 @@ const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
 					type="number"
 					value={data.value}
 					onChange={onChange}
+					disabled={isConnected(id, "value-number")}
 				/>
 			</div>
 			<UnaryOperatorHandle

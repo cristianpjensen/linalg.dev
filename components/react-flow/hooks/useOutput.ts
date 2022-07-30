@@ -1,26 +1,20 @@
 import { useCallback, useEffect } from "react";
 import useStore from "../store";
 
-import { ValidInputOutput, ValidInputOutputString } from "../types";
+import { PropertyTypeString, ValidInputOutput } from "../types";
 
-// TODO: Do some TS trickery to have the second part of the sourceHandles be the
-// type of the respective output type. So if the sourceHandle for "value" is a
-// number, then allow sourceHandles to contain "value-number" and not
-// "value-vector" or "value-matrix".
 function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 	id: string,
-	sourceHandles: `${Extract<
-		keyof N["output"],
-		string
-	>}-${ValidInputOutputString}`[],
+	sourceHandles: Array<PropertyTypeString<N["output"]>>,
 	data: N,
 	fn: (data: Omit<N, "output">) => N["output"]
 ) {
 	const updateChildren = useStore((state) => state.updateChildren);
 	const memoizedFn = useCallback(fn, []);
 
+	// Return this function, such that it can be called from outside the hook,
+	// for example when the node gets connected
 	const onDataChange = useCallback(() => {
-		console.log(1);
 		const output = memoizedFn(data);
 
 		sourceHandles.forEach((sourceHandle) => {

@@ -21,6 +21,7 @@ type NodeState = {
 	onConnect: OnConnect;
 	setNodeData: <T>(nodeId: string, data: T) => void;
 	updateChildren: (nodeId: string, sourceHandle: string, value: any) => void;
+	isConnected: (nodeId: string, targetHandle: string) => boolean;
 };
 
 const useStore = create<NodeState>((set, get) => ({
@@ -80,6 +81,11 @@ const useStore = create<NodeState>((set, get) => ({
 
 				return node;
 			}),
+		});
+	},
+	isConnected(nodeId, targetHandle) {
+		return get().edges.some((edge) => {
+			return edge.target === nodeId && edge.targetHandle === targetHandle;
 		});
 	},
 }));

@@ -11,6 +11,7 @@ const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 const BinaryOperatorNode = memo(
 	({ id, data }: NodeProps<BinaryOperatorData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
+		const isConnected = useStore((state) => state.isConnected);
 
 		const onConnect = useOutput<BinaryOperatorData>(
 			id,
@@ -73,25 +74,27 @@ const BinaryOperatorNode = memo(
 					style={{ bottom: 10, top: "auto" }}
 				/>
 				<div>
-					<label htmlFor="value">Left:</label>
+					<label htmlFor="left">Left:</label>
 					<input
-						id="value"
+						id="left"
 						className="w-12"
-						name="value"
+						name="left"
 						type="number"
 						value={data.left}
 						onChange={onChangeLeft}
+						disabled={isConnected(id, "left-number")}
 					/>
 				</div>
 				<div>
-					<label htmlFor="value">Right:</label>
+					<label htmlFor="right">Right:</label>
 					<input
-						id="value"
+						id="right"
 						className="w-12"
-						name="value"
+						name="right"
 						type="number"
 						value={data.right}
 						onChange={onChangeRight}
+						disabled={isConnected(id, "right-number")}
 					/>
 				</div>
 				<BinaryOperatorHandle

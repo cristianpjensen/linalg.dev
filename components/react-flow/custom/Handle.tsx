@@ -6,14 +6,21 @@ import {
 } from "react-flow-renderer";
 
 import useStore from "../store";
-import { ValidInputOutput, ValidInputOutputString } from "../types";
+import { PropertyTypeString, ValidInputOutput } from "../types";
+
+type SafelyMergedObject<T, U> = (
+	Omit<U, keyof T> & { [K in keyof T]:
+			K extends keyof U ? (
+					[U[K], T[K]] extends [object, object] ?
+					SafelyMergedObject<T[K], U[K]>
+					: T[K]
+			) : T[K] }
+) extends infer O ? { [K in keyof O]: O[K] } : never;
+
 
 interface HandleProps<N extends { output: { [key: string]: ValidInputOutput } }>
 	extends InternalHandleProps {
-	id: `${Extract<
-		keyof Omit<N, "output"> | keyof N["output"],
-		string
-	>}-${ValidInputOutputString}`;
+	id: PropertyTypeString<SafelyMergedObject<Omit<N, "output">, N["output"]>>;
 }
 
 /**

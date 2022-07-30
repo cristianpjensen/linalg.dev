@@ -10,13 +10,16 @@ const ConstantHandle = Handle<ConstantData>;
 
 const ConstantNode = ({ id, data }: NodeProps<ConstantData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
+	const isConnected = useStore((state) => state.isConnected);
 
 	const onConnect = useOutput<ConstantData>(
 		id,
 		["result-number"],
 		data,
 		(data) => {
-			return { result: data.value };
+			return {
+				result: data.value,
+			};
 		}
 	);
 
@@ -45,6 +48,7 @@ const ConstantNode = ({ id, data }: NodeProps<ConstantData>) => {
 					type="number"
 					value={data.value}
 					onChange={onChange}
+					disabled={isConnected(id, "value-number")}
 				/>
 			</div>
 			<ConstantHandle
