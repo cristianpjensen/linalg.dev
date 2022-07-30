@@ -8,7 +8,7 @@ import {
 	OnConnect,
 	applyNodeChanges,
 	applyEdgeChanges,
-} from "react-flow-renderer";
+} from "react-flow-renderer/nocss";
 
 import initialNodes from "./initial/nodes";
 import initialEdges from "./initial/edges";
@@ -20,6 +20,7 @@ type NodeState = {
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
 	onConnect: OnConnect;
+	// Only pass the data that is changed, not the whole object
 	setNodeData: <T>(nodeId: string, data: T) => void;
 	updateChildren: (nodeId: string, sourceHandle: string, value: any) => void;
 	isConnected: (nodeId: string, targetHandle: string) => boolean;

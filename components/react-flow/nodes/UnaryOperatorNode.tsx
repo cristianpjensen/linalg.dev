@@ -1,77 +1,100 @@
 import React, { memo, useCallback } from "react";
-import { NodeProps, Position } from "react-flow-renderer";
+import { NodeProps, Position } from "react-flow-renderer/nocss";
 
 import type { UnaryOperatorData } from "../types";
 import Handle from "../custom/Handle";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
+import * as Node from "./Node";
 
 const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
 
-const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
-	const setNodeData = useStore((state) => state.setNodeData);
-	const isConnected = useStore((state) => state.isConnected);
+const UnaryOperatorNode = memo(
+	({ id, data, selected }: NodeProps<UnaryOperatorData>) => {
+		const setNodeData = useStore((state) => state.setNodeData);
+		const isConnected = useStore((state) => state.isConnected);
 
-	const onDataChange = useOutput<UnaryOperatorData>(
-		id,
-		["result"],
-		data,
-		(data) => {
-			let result = 0;
-			switch (data.operator) {
-				case "sqrt":
-					result = Math.sqrt(data.value);
-					break;
+		const onDataChange = useOutput<UnaryOperatorData>(
+			id,
+			["result"],
+			data,
+			(data) => {
+				let result = 0;
+				switch (data.operator) {
+					case "square root":
+						result = Math.sqrt(data.value);
+						break;
 
-				case "square":
-					result = data.value * data.value;
-					break;
+					case "square":
+						result = data.value * data.value;
+						break;
 
-				case "cube":
-					result = data.value * data.value * data.value;
-					break;
+					case "cube":
+						result = data.value * data.value * data.value;
+						break;
+				}
+
+				return { result };
 			}
+		);
 
-			return { result };
-		}
-	);
+		const onChangeOperator = useCallback(
+			(operator: UnaryOperatorData["operator"]) => {
+				setNodeData(id, { operator });
+			},
+			[]
+		);
 
-	const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-		if (e.currentTarget.value === "") {
-			setNodeData(id, { ...data, value: 0 });
-		}
+		const onChangeValue = useCallback((value: number) => {
+			setNodeData(id, { left: value });
+		}, []);
 
-		const value = parseInt(e.currentTarget.value);
-		value && setNodeData(id, { ...data, value });
-	};
-
-	return (
-		<>
-			<UnaryOperatorHandle
-				type="target"
-				id="value"
-				position={Position.Left}
-			/>
-			<div>
-				<label htmlFor="value">Unary:</label>
-				<input
+		return (
+			<>
+				<UnaryOperatorHandle
+					type="target"
 					id="value"
-					className="w-12"
-					name="value"
-					type="number"
 					value={data.value}
-					onChange={onChange}
-					disabled={isConnected(id, "value")}
+					selected={selected}
+					position={Position.Left}
 				/>
-			</div>
-			<UnaryOperatorHandle
-				type="source"
-				id="result"
-				position={Position.Right}
-				onConnect={onDataChange}
-			/>
-		</>
-	);
-});
+
+				<Node.Root
+					selected={selected}
+					className="w-[144px] h-[168px] bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100"
+				>
+					<Node.Dragger
+						title="Binary operator"
+						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
+					/>
+
+					<Node.SelectInput
+						value={data.operator}
+						values={["square root", "cube", "square"]}
+						onChange={onChangeOperator}
+						className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+						triggerClassName="flex-1 shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200 mb-2"
+					/>
+
+					<Node.NumberInput
+						value={data.value}
+						onChange={onChangeValue}
+						isConnected={isConnected(id, "value")}
+						className="mb-2 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
+					/>
+				</Node.Root>
+
+				<UnaryOperatorHandle
+					type="source"
+					id="result"
+					value={data.output.result}
+					selected={selected}
+					position={Position.Right}
+					onConnect={onDataChange}
+				/>
+			</>
+		);
+	}
+);
 
 export default UnaryOperatorNode;

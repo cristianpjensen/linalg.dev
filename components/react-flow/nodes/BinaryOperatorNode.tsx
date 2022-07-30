@@ -1,15 +1,16 @@
-import React, { memo } from "react";
-import { NodeProps, Position } from "react-flow-renderer";
+import React, { memo, useCallback } from "react";
+import { NodeProps, Position } from "react-flow-renderer/nocss";
 
 import type { BinaryOperatorData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import Handle from "../custom/Handle";
+import * as Node from "./Node";
 
 const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 
 const BinaryOperatorNode = memo(
-	({ id, data }: NodeProps<BinaryOperatorData>) => {
+	({ id, data, selected }: NodeProps<BinaryOperatorData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 		const isConnected = useStore((state) => state.isConnected);
 
@@ -35,71 +36,93 @@ const BinaryOperatorNode = memo(
 					case "divide":
 						result = data.left / data.right;
 						break;
+
+					case "modulo":
+						result = data.left % data.right;
+						break;
 				}
 
 				return { result };
 			}
 		);
 
-		const onChangeLeft = (e: React.FormEvent<HTMLInputElement>) => {
-			if (e.currentTarget.value === "") {
-				setNodeData(id, { ...data, left: 0 });
-			}
+		const onChangeOperator = useCallback(
+			(operator: BinaryOperatorData["operator"]) => {
+				setNodeData(id, { operator });
+			},
+			[]
+		);
 
-			const value = parseInt(e.currentTarget.value);
-			value && setNodeData(id, { ...data, left: value });
-		};
+		const onChangeLeft = useCallback((value: number) => {
+			setNodeData(id, { left: value });
+		}, []);
 
-		const onChangeRight = (e: React.FormEvent<HTMLInputElement>) => {
-			if (e.currentTarget.value === "") {
-				setNodeData(id, { ...data, right: 0 });
-			}
-
-			const value = parseInt(e.currentTarget.value);
-			value && setNodeData(id, { ...data, right: value });
-		};
+		const onChangeRight = useCallback((value: number) => {
+			setNodeData(id, { right: value });
+		}, []);
 
 		return (
 			<>
 				<BinaryOperatorHandle
 					type="target"
 					id="left"
+					value={data.left}
+					selected={selected}
 					position={Position.Left}
-					style={{ top: 10 }}
+					style={{ top: 120 }}
 				/>
 				<BinaryOperatorHandle
 					type="target"
 					id="right"
+					value={data.right}
+					selected={selected}
 					position={Position.Left}
-					style={{ bottom: 10, top: "auto" }}
+					style={{ top: 175 }}
 				/>
-				<div>
-					<label htmlFor="left">Left:</label>
-					<input
-						id="left"
-						className="w-12"
-						name="left"
-						type="number"
+
+				<Node.Root
+					selected={selected}
+					className="w-[144px] h-[216px] bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100"
+				>
+					<Node.Dragger
+						title="Binary operator"
+						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
+					/>
+
+					<Node.SelectInput
+						value={data.operator}
+						values={[
+							"add",
+							"subtract",
+							"multiply",
+							"divide",
+							"modulo",
+						]}
+						onChange={onChangeOperator}
+						className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+						triggerClassName="flex-1 shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200 mb-2"
+					/>
+
+					<Node.NumberInput
 						value={data.left}
 						onChange={onChangeLeft}
-						disabled={isConnected(id, "left")}
+						isConnected={isConnected(id, "left")}
+						className="mb-2 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 					/>
-				</div>
-				<div>
-					<label htmlFor="right">Right:</label>
-					<input
-						id="right"
-						className="w-12"
-						name="right"
-						type="number"
+
+					<Node.NumberInput
 						value={data.right}
 						onChange={onChangeRight}
-						disabled={isConnected(id, "right")}
+						isConnected={isConnected(id, "right")}
+						className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 					/>
-				</div>
+				</Node.Root>
+
 				<BinaryOperatorHandle
 					type="source"
 					id="result"
+					value={data.output.result}
+					selected={selected}
 					position={Position.Right}
 					onConnect={onDataChange}
 				/>

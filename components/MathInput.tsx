@@ -76,7 +76,7 @@ const MathInput = ({
 		mathfield.className = className || "";
 	}, [className]);
 
-	return <div ref={ref} className="w-full h-full transition-shadow duration-200 cursor-text" />;
+	return <div ref={ref} className="w-full transition-shadow duration-200 cursor-text" />;
 };
 
 export default MathInput;

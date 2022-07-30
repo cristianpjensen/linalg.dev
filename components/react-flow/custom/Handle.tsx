@@ -1,16 +1,17 @@
-import { useCallback } from "react";
+import React from "react";
 import {
 	Handle as InternalHandle,
 	HandleProps as InternalHandleProps,
-	Connection,
-} from "react-flow-renderer";
+} from "react-flow-renderer/nocss";
+import { getHandleType } from "../helpers";
 
-import useStore from "../store";
-import { ValidInputOutput } from "../types";
+import type { ValidInputOutput } from "../types";
 
 interface HandleProps<N extends { output: { [key: string]: ValidInputOutput } }>
 	extends InternalHandleProps {
 	id: Extract<keyof Omit<N, "output"> | keyof N["output"], string>;
+	value: ValidInputOutput;
+	selected: boolean;
 }
 
 /**
@@ -38,18 +39,31 @@ const Handle = <N extends { output: { [key: string]: ValidInputOutput } }>(
 		Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
 		React.RefAttributes<HTMLDivElement>
 ) => {
+	const type = getHandleType(props.value);
+
 	return (
 		<InternalHandle
 			{...props}
 			style={{
-				backgroundColor: props.type === "target" ? "green" : "red",
-				width: 16,
-				height: 16,
-				left: props.type === "target" ? -8 : "unset",
-				right: props.type === "source" ? -8 : "unset",
+				// Default position for handle should be the middle of the node's body
+				top: "calc(50% + 12px)",
 				...props.style,
 			}}
-		/>
+			className={`flex items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 bg-offwhite dark:bg-zinc-900 ${
+				props.isConnectable === true ||
+				props.isConnectable === undefined
+					? "hover:border-zinc-400 cursor-crosshair"
+					: "opacity-40 cursor-default"
+			} ${props.selected ? "border-zinc-400 dark:border-zinc-400" : ""}`}
+		>
+			{type === "number"
+				? "N"
+				: type === "vector"
+				? "V"
+				: type === "matrix"
+				? "M"
+				: "?"}
+		</InternalHandle>
 	);
 };
 

@@ -27,7 +27,7 @@ export type ConstantData = {
 
 export type UnaryOperatorData = {
 	value: number;
-	operator: "sqrt" | "square" | "cube";
+	operator: "square root" | "square" | "cube";
 	output: {
 		result: number;
 	};
@@ -36,7 +36,7 @@ export type UnaryOperatorData = {
 export type BinaryOperatorData = {
 	left: number;
 	right: number;
-	operator: "add" | "subtract" | "multiply" | "divide";
+	operator: "add" | "subtract" | "multiply" | "divide" | "modulo";
 	output: {
 		result: number;
 	};
