@@ -33,7 +33,12 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 		}
 	}, []);
 
-	return <Flow />;
+	return (
+		<>
+			<Toolbar editorContext={editorContext} />
+			<Flow />
+		</>
+	);
 
 	const transform = (matrix: Matrix) => {
 		const mat = new THREE.Matrix3().fromArray(matrix).transpose();

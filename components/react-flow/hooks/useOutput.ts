@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from "react";
 import useStore from "../store";
 
-import { PropertyTypeString, ValidInputOutput } from "../types";
+import { ValidInputOutput } from "../types";
 
 function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 	id: string,
-	sourceHandles: Array<PropertyTypeString<N["output"]>>,
+	sourceHandles: Array<Extract<keyof N["output"], string>>,
 	data: N,
 	fn: (data: Omit<N, "output">) => N["output"]
 ) {
@@ -18,8 +18,7 @@ function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 		const output = memoizedFn(data);
 
 		sourceHandles.forEach((sourceHandle) => {
-			const outputProp = sourceHandle.split("-")[0];
-			updateChildren(id, sourceHandle, output[outputProp]);
+			updateChildren(id, sourceHandle, output[sourceHandle]);
 		});
 	}, [data]);
 

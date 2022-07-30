@@ -6,21 +6,11 @@ import {
 } from "react-flow-renderer";
 
 import useStore from "../store";
-import { PropertyTypeString, ValidInputOutput } from "../types";
-
-type SafelyMergedObject<T, U> = (
-	Omit<U, keyof T> & { [K in keyof T]:
-			K extends keyof U ? (
-					[U[K], T[K]] extends [object, object] ?
-					SafelyMergedObject<T[K], U[K]>
-					: T[K]
-			) : T[K] }
-) extends infer O ? { [K in keyof O]: O[K] } : never;
-
+import { ValidInputOutput } from "../types";
 
 interface HandleProps<N extends { output: { [key: string]: ValidInputOutput } }>
 	extends InternalHandleProps {
-	id: PropertyTypeString<SafelyMergedObject<Omit<N, "output">, N["output"]>>;
+	id: Extract<keyof Omit<N, "output"> | keyof N["output"], string>;
 }
 
 /**
@@ -48,45 +38,18 @@ const Handle = <N extends { output: { [key: string]: ValidInputOutput } }>(
 		Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
 		React.RefAttributes<HTMLDivElement>
 ) => {
-	const edges = useStore((state) => state.edges);
-
-	// A connection is only valid if it is connected to a handle of the same type.
-	// The type is determined by the second part of the id, which is always
-	// present due to the type of the custom handle.
-	const isValidConnection = useCallback(
-		({ target, sourceHandle, targetHandle }: Connection) => {
-			if (sourceHandle && target && targetHandle) {
-				// Only one connection to the target is allowed.
-				if (
-					edges.some(
-						(edge) =>
-							edge.targetHandle === targetHandle &&
-							edge.target === target
-					)
-				) {
-					return false;
-				}
-
-				const sourceType = sourceHandle.split("-")[1];
-				const targetType = targetHandle.split("-")[1];
-				return sourceType === targetType;
-			}
-
-			return false;
-		},
-		[edges]
-	);
-
-	const handleType = props.id.split("-")[1];
-
 	return (
-		<InternalHandle {...props} isValidConnection={isValidConnection}>
-			{handleType === "number"
-				? "N"
-				: handleType === "vector"
-				? "V"
-				: handleType === "matrix" && "M"}
-		</InternalHandle>
+		<InternalHandle
+			{...props}
+			style={{
+				backgroundColor: props.type === "target" ? "green" : "red",
+				width: 16,
+				height: 16,
+				left: props.type === "target" ? -8 : "unset",
+				right: props.type === "source" ? -8 : "unset",
+				...props.style,
+			}}
+		/>
 	);
 };
 

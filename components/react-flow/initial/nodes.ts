@@ -6,6 +6,9 @@ export default [
 		type: "constant",
 		data: {
 			value: 1,
+			output: {
+				result: 1,
+			},
 		},
 		position: { x: 0, y: 25 },
 	},
@@ -13,8 +16,11 @@ export default [
 		id: "2",
 		type: "unaryOperator",
 		data: {
-			value: 69,
+			value: 16,
 			operator: "sqrt",
+			output: {
+				result: 4,
+			},
 		},
 		position: { x: 250, y: 25 },
 	},
@@ -23,6 +29,9 @@ export default [
 		type: "constant",
 		data: {
 			value: 123,
+			output: {
+				result: 123,
+			},
 		},
 		position: { x: 250, y: 250 },
 	},
@@ -33,6 +42,9 @@ export default [
 			left: 1,
 			right: 2,
 			operator: "add",
+			output: {
+				result: 3,
+			},
 		},
 		position: { x: 0, y: 250 },
 	},

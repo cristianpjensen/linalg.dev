@@ -1,5 +1,5 @@
-import React from "react";
-import { NodeProps, Position } from "react-flow-renderer";
+import React, { memo } from "react";
+import { Connection, NodeProps, OnConnect, Position } from "react-flow-renderer";
 
 import type { ConstantData } from "../types";
 import Handle from "../custom/Handle";
@@ -8,13 +8,13 @@ import useOutput from "../hooks/useOutput";
 
 const ConstantHandle = Handle<ConstantData>;
 
-const ConstantNode = ({ id, data }: NodeProps<ConstantData>) => {
+const ConstantNode = memo(({ id, data }: NodeProps<ConstantData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
 	const isConnected = useStore((state) => state.isConnected);
 
-	const onConnect = useOutput<ConstantData>(
+	const onDataChange = useOutput<ConstantData>(
 		id,
-		["result-number"],
+		["result"],
 		data,
 		(data) => {
 			return {
@@ -34,11 +34,7 @@ const ConstantNode = ({ id, data }: NodeProps<ConstantData>) => {
 
 	return (
 		<>
-			<ConstantHandle
-				type="target"
-				id="value-number"
-				position={Position.Left}
-			/>
+			<ConstantHandle type="target" id="value" position={Position.Left} />
 			<div>
 				<label htmlFor="value">Value:</label>
 				<input
@@ -48,17 +44,17 @@ const ConstantNode = ({ id, data }: NodeProps<ConstantData>) => {
 					type="number"
 					value={data.value}
 					onChange={onChange}
-					disabled={isConnected(id, "value-number")}
+					disabled={isConnected(id, "value")}
 				/>
 			</div>
 			<ConstantHandle
 				type="source"
-				id="result-number"
+				id="result"
 				position={Position.Right}
-				onConnect={onConnect}
+				onConnect={onDataChange}
 			/>
 		</>
 	);
-};
+});
 
 export default ConstantNode;

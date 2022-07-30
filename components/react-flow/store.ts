@@ -12,6 +12,7 @@ import {
 
 import initialNodes from "./initial/nodes";
 import initialEdges from "./initial/edges";
+import { getHandleType } from "./helpers";
 
 type NodeState = {
 	nodes: Node[];
@@ -38,9 +39,37 @@ const useStore = create<NodeState>((set, get) => ({
 		});
 	},
 	onConnect: (connection) => {
-		set({
-			edges: addEdge(connection, get().edges),
-		});
+		const { source, sourceHandle, target, targetHandle } = connection;
+		const edges = get().edges;
+
+		// Only allow one connection per source handle
+		if (
+			edges.some(
+				(edge) =>
+					edge.targetHandle === targetHandle && edge.target === target
+			)
+		) {
+			return;
+		}
+
+		const sourceNode = get().nodes.find(
+			(node) => source && node.id === source
+		);
+		const targetNode = get().nodes.find(
+			(node) => target && node.id === target
+		);
+
+		if (sourceHandle && sourceNode && targetHandle && targetNode) {
+			// Only connect, if the handles are both of the same type
+			if (
+				getHandleType(sourceNode.data.output[sourceHandle]) ===
+				getHandleType(targetNode.data[targetHandle])
+			) {
+				set({
+					edges: addEdge(connection, get().edges),
+				});
+			}
+		}
 	},
 	setNodeData: (nodeId, data) => {
 		set({
@@ -60,6 +89,16 @@ const useStore = create<NodeState>((set, get) => ({
 		// Update the value of all children
 		set({
 			nodes: get().nodes.map((node) => {
+				// Update the node itself aswell
+				if (node.id === nodeId) {
+					// Do not update the reference to the node, because it will
+					// otherwise result in an infinite loop of useOutput
+					// reacting to data changing and then changing the data in
+					// here
+					node.data.output[sourceHandle] = value;
+					return node;
+				}
+
 				const edgeIndex = childrenEdges.findIndex(
 					(edge) => edge.target === node.id
 				);

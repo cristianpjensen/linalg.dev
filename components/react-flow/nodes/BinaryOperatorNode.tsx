@@ -13,9 +13,9 @@ const BinaryOperatorNode = memo(
 		const setNodeData = useStore((state) => state.setNodeData);
 		const isConnected = useStore((state) => state.isConnected);
 
-		const onConnect = useOutput<BinaryOperatorData>(
+		const onDataChange = useOutput<BinaryOperatorData>(
 			id,
-			["result-number"],
+			["result"],
 			data,
 			(data) => {
 				let result = 0;
@@ -63,13 +63,13 @@ const BinaryOperatorNode = memo(
 			<>
 				<BinaryOperatorHandle
 					type="target"
-					id="left-number"
+					id="left"
 					position={Position.Left}
 					style={{ top: 10 }}
 				/>
 				<BinaryOperatorHandle
 					type="target"
-					id="right-number"
+					id="right"
 					position={Position.Left}
 					style={{ bottom: 10, top: "auto" }}
 				/>
@@ -82,7 +82,7 @@ const BinaryOperatorNode = memo(
 						type="number"
 						value={data.left}
 						onChange={onChangeLeft}
-						disabled={isConnected(id, "left-number")}
+						disabled={isConnected(id, "left")}
 					/>
 				</div>
 				<div>
@@ -94,14 +94,14 @@ const BinaryOperatorNode = memo(
 						type="number"
 						value={data.right}
 						onChange={onChangeRight}
-						disabled={isConnected(id, "right-number")}
+						disabled={isConnected(id, "right")}
 					/>
 				</div>
 				<BinaryOperatorHandle
 					type="source"
-					id="result-number"
+					id="result"
 					position={Position.Right}
-					onConnect={onConnect}
+					onConnect={onDataChange}
 				/>
 			</>
 		);

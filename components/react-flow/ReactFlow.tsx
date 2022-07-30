@@ -8,6 +8,8 @@ const Flow = () => {
 	const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
 		useStore();
 
+	console.log(nodes);
+
 	return (
 		<ReactFlow
 			style={{

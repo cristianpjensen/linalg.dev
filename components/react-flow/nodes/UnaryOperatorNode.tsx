@@ -12,9 +12,9 @@ const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
 	const isConnected = useStore((state) => state.isConnected);
 
-	const onConnect = useOutput<UnaryOperatorData>(
+	const onDataChange = useOutput<UnaryOperatorData>(
 		id,
-		["result-number"],
+		["result"],
 		data,
 		(data) => {
 			let result = 0;
@@ -49,7 +49,7 @@ const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
 		<>
 			<UnaryOperatorHandle
 				type="target"
-				id="value-number"
+				id="value"
 				position={Position.Left}
 			/>
 			<div>
@@ -61,14 +61,14 @@ const UnaryOperatorNode = memo(({ id, data }: NodeProps<UnaryOperatorData>) => {
 					type="number"
 					value={data.value}
 					onChange={onChange}
-					disabled={isConnected(id, "value-number")}
+					disabled={isConnected(id, "value")}
 				/>
 			</div>
 			<UnaryOperatorHandle
 				type="source"
-				id="result-number"
+				id="result"
 				position={Position.Right}
-				onConnect={onConnect}
+				onConnect={onDataChange}
 			/>
 		</>
 	);
