@@ -1,19 +1,19 @@
 import React, { memo, useCallback } from "react";
 import { NodeProps, Position } from "react-flow-renderer/nocss";
 
-import type { UnaryOperatorData } from "../types";
+import type { UnaryOperationData } from "../types";
 import Handle from "../custom/Handle";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 
-const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
+const UnaryOperationHandle = Handle<Omit<UnaryOperationData, "operator">>;
 
-const UnaryOperatorNode = memo(
-	({ id, data, selected }: NodeProps<UnaryOperatorData>) => {
+const UnaryOperationNode = memo(
+	({ id, data, selected }: NodeProps<UnaryOperationData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 
-		useOutput<UnaryOperatorData>(id, ["result"], data, (data) => {
+		useOutput<UnaryOperationData>(id, ["result"], data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "square root":
@@ -34,7 +34,7 @@ const UnaryOperatorNode = memo(
 		});
 
 		const onChangeOperator = useCallback(
-			(operator: UnaryOperatorData["operator"]) => {
+			(operator: UnaryOperationData["operator"]) => {
 				setNodeData(id, { operator });
 			},
 			[]
@@ -47,7 +47,7 @@ const UnaryOperatorNode = memo(
 
 		return (
 			<>
-				<UnaryOperatorHandle
+				<UnaryOperationHandle
 					type="target"
 					id="value"
 					nodeId={id}
@@ -65,7 +65,7 @@ const UnaryOperatorNode = memo(
 					className="w-[144px] h-[168px] bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100"
 				>
 					<Node.Dragger
-						title="Binary operator"
+						title="Binary operation"
 						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
 					/>
 
@@ -87,7 +87,7 @@ const UnaryOperatorNode = memo(
 					</div>
 				</Node.Root>
 
-				<UnaryOperatorHandle
+				<UnaryOperationHandle
 					type="source"
 					id="result"
 					nodeId={id}
@@ -100,4 +100,4 @@ const UnaryOperatorNode = memo(
 	}
 );
 
-export default UnaryOperatorNode;
+export default UnaryOperationNode;

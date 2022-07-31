@@ -18,7 +18,7 @@ export default [
 	},
 	{
 		id: "2",
-		type: "unaryOperator",
+		type: "unaryOperation",
 		dragHandle: ".dragger",
 		data: {
 			value: {
@@ -49,7 +49,7 @@ export default [
 	},
 	{
 		id: "4",
-		type: "binaryOperator",
+		type: "binaryOperation",
 		dragHandle: ".dragger",
 		data: {
 			left: {

@@ -21,10 +21,10 @@ const nodeClassName = (node: Node<any>) => {
 		case "constant":
 			return "green";
 
-		case "unaryOperator":
+		case "unaryOperation":
 			return "yellow";
 
-		case "binaryOperator":
+		case "binaryOperation":
 			return "yellow";
 
 		case "vector":

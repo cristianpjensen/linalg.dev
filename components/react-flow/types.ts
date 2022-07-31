@@ -58,7 +58,7 @@ export type SliderData = {
 	};
 };
 
-export type UnaryOperatorData = {
+export type UnaryOperationData = {
 	value: Input<number>;
 	operator: "square root" | "square" | "cube";
 	output: {
@@ -66,7 +66,7 @@ export type UnaryOperatorData = {
 	};
 };
 
-export type BinaryOperatorData = {
+export type BinaryOperationData = {
 	left: Input<number>;
 	right: Input<number>;
 	operator: "add" | "subtract" | "multiply" | "divide" | "modulo";

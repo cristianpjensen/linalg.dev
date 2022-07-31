@@ -1,19 +1,19 @@
 import React, { memo, useCallback } from "react";
 import { NodeProps, Position } from "react-flow-renderer/nocss";
 
-import type { BinaryOperatorData } from "../types";
+import type { BinaryOperationData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import Handle from "../custom/Handle";
 import * as Node from "./Node";
 
-const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
+const BinaryOperationHandle = Handle<Omit<BinaryOperationData, "operator">>;
 
-const BinaryOperatorNode = memo(
-	({ id, data, selected }: NodeProps<BinaryOperatorData>) => {
+const BinaryOperationNode = memo(
+	({ id, data, selected }: NodeProps<BinaryOperationData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 
-		useOutput<BinaryOperatorData>(id, ["result"], data, (data) => {
+		useOutput<BinaryOperationData>(id, ["result"], data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "add":
@@ -41,7 +41,7 @@ const BinaryOperatorNode = memo(
 		});
 
 		const onChangeOperator = useCallback(
-			(operator: BinaryOperatorData["operator"]) => {
+			(operator: BinaryOperationData["operator"]) => {
 				setNodeData(id, { operator });
 			},
 			[]
@@ -59,7 +59,7 @@ const BinaryOperatorNode = memo(
 
 		return (
 			<>
-				<BinaryOperatorHandle
+				<BinaryOperationHandle
 					type="target"
 					id="left"
 					nodeId={id}
@@ -69,7 +69,7 @@ const BinaryOperatorNode = memo(
 					position={Position.Left}
 					style={{ top: 120 }}
 				/>
-				<BinaryOperatorHandle
+				<BinaryOperationHandle
 					type="target"
 					id="right"
 					nodeId={id}
@@ -85,7 +85,7 @@ const BinaryOperatorNode = memo(
 					className="w-[144px] h-[216px] bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100"
 				>
 					<Node.Dragger
-						title="Binary operator"
+						title="Binary operation"
 						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
 					/>
 
@@ -120,7 +120,7 @@ const BinaryOperatorNode = memo(
 					</div>
 				</Node.Root>
 
-				<BinaryOperatorHandle
+				<BinaryOperationHandle
 					type="source"
 					id="result"
 					nodeId={id}
@@ -133,4 +133,4 @@ const BinaryOperatorNode = memo(
 	}
 );
 
-export default BinaryOperatorNode;
+export default BinaryOperationNode;

@@ -1,12 +1,12 @@
-import BinaryOperatorNode from "./BinaryOperatorNode";
 import ConstantNode from "./ConstantNode";
-import UnaryOperatorNode from "./UnaryOperatorNode";
+import UnaryOperationNode from "./UnaryOperationNode";
+import BinaryOperationNode from "./BinaryOperationNode";
 import VectorNode from "./VectorNode";
 
 const nodeTypes = {
 	constant: ConstantNode,
-	unaryOperator: UnaryOperatorNode,
-	binaryOperator: BinaryOperatorNode,
+	unaryOperation: UnaryOperationNode,
+	binaryOperation: BinaryOperationNode,
 	vector: VectorNode,
 };
 
