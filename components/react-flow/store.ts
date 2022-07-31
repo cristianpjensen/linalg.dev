@@ -37,6 +37,31 @@ const useStore = create<NodeState>((set, get) => ({
 		});
 	},
 	onEdgesChange: (changes) => {
+		changes.forEach((change) => {
+			// If an edge gets removed, disconnect the target handle
+			if (change.type === "remove") {
+				const edge = get().edges.find((edge) => edge.id === change.id);
+
+				if (edge) {
+					const target = edge.target;
+					const targetHandle = edge.targetHandle;
+					const node = get().nodes.find((node) => node.id === target);
+
+					if (node && targetHandle) {
+						const value = node.data[targetHandle].value;
+
+						// Disconnect target handle
+						get().setNodeData(target, {
+							[targetHandle]: {
+								isConnected: false,
+								value,
+							},
+						});
+					}
+				}
+			}
+		});
+
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
@@ -145,7 +170,7 @@ const useStore = create<NodeState>((set, get) => ({
 					(edge) => edge.target === node.id
 				);
 
-				const newData = {...node.data};
+				const newData = { ...node.data };
 
 				edgeIndices.forEach((index) => {
 					const edge = childrenEdges[index];
@@ -153,8 +178,8 @@ const useStore = create<NodeState>((set, get) => ({
 					if (edge.targetHandle) {
 						newData[edge.targetHandle] = {
 							isConnected: true,
-							value
-						}
+							value,
+						};
 					}
 				});
 
