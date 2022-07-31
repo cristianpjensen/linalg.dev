@@ -4,6 +4,7 @@ import ReactFlow, {
 	BackgroundVariant,
 	MiniMap,
 	Node,
+	OnEdgeUpdateFunc,
 	useKeyPress,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
@@ -76,6 +77,7 @@ const Flow = () => {
 			minZoom={0.2}
 			maxZoom={2}
 			snapToGrid
+			elevateEdgesOnSelect
 		>
 			<Background
 				className="bg-offwhite dark:bg-offblack grandchild:stroke-zinc-300 dark:grandchild:stroke-zinc-800 grandchild:opacity-20"

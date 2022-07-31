@@ -13,16 +13,11 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
 	const isConnected = useStore((state) => state.isConnected);
 
-	const onDataChange = useOutput<ConstantData>(
-		id,
-		["result"],
-		data,
-		(data) => {
-			return {
-				result: data.value,
-			};
-		}
-	);
+	useOutput<ConstantData>(id, ["result"], data, (data) => {
+		return {
+			result: data.value,
+		};
+	});
 
 	const onChange = useCallback((value: number) => {
 		setNodeData(id, { value });
@@ -64,7 +59,6 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 				value={data.output.result}
 				selected={selected}
 				position={Position.Right}
-				onConnect={onDataChange}
 				style={{
 					top: 64,
 				}}

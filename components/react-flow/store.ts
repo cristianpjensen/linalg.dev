@@ -20,8 +20,10 @@ type NodeState = {
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
 	onConnect: OnConnect;
-	// Only pass the data that is changed, not the whole object
-	setNodeData: <T>(nodeId: string, data: T) => void;
+	setNodeData: <T extends object>(
+		nodeId: string,
+		changes: Partial<T>
+	) => void;
 	updateChildren: (nodeId: string, sourceHandle: string, value: any) => void;
 	isConnected: (nodeId: string, targetHandle: string) => boolean;
 };
@@ -43,6 +45,11 @@ const useStore = create<NodeState>((set, get) => ({
 		const { source, sourceHandle, target, targetHandle } = connection;
 		const edges = get().edges;
 
+		// Do not allow a node to connect with itself
+		if (source === target) {
+			return;
+		}
+
 		// Only allow one connection per source handle
 		if (
 			edges.some(
@@ -60,7 +67,13 @@ const useStore = create<NodeState>((set, get) => ({
 			(node) => target && node.id === target
 		);
 
-		if (sourceHandle && sourceNode && targetHandle && targetNode) {
+		if (
+			source &&
+			sourceHandle &&
+			sourceNode &&
+			targetHandle &&
+			targetNode
+		) {
 			// Only connect, if the handles are both of the same type
 			if (
 				getHandleType(sourceNode.data.output[sourceHandle]) ===
@@ -70,13 +83,19 @@ const useStore = create<NodeState>((set, get) => ({
 					edges: addEdge(connection, get().edges),
 				});
 			}
+
+			get().updateChildren(
+				source,
+				sourceHandle,
+				sourceNode.data.output[sourceHandle]
+			);
 		}
 	},
-	setNodeData: (nodeId, data) => {
+	setNodeData: (nodeId, changes) => {
 		set({
 			nodes: get().nodes.map((node) =>
 				node.id === nodeId
-					? { ...node, data: { ...node.data, ...data } }
+					? { ...node, data: { ...node.data, ...changes } }
 					: node
 			),
 		});

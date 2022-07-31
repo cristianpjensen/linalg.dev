@@ -11,7 +11,7 @@ export default [
 				result: 1,
 			},
 		},
-		position: { x: -12, y: 12 },
+		position: { x: 12, y: 12 },
 	},
 	{
 		id: "2",
@@ -50,6 +50,6 @@ export default [
 				result: 3,
 			},
 		},
-		position: { x: 0, y: 228 },
+		position: { x: 12, y: 228 },
 	},
 ] as Node[];

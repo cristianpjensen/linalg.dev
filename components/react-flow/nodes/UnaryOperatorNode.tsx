@@ -14,29 +14,24 @@ const UnaryOperatorNode = memo(
 		const setNodeData = useStore((state) => state.setNodeData);
 		const isConnected = useStore((state) => state.isConnected);
 
-		const onDataChange = useOutput<UnaryOperatorData>(
-			id,
-			["result"],
-			data,
-			(data) => {
-				let result = 0;
-				switch (data.operator) {
-					case "square root":
-						result = Math.sqrt(data.value);
-						break;
+		useOutput<UnaryOperatorData>(id, ["result"], data, (data) => {
+			let result = 0;
+			switch (data.operator) {
+				case "square root":
+					result = Math.sqrt(data.value);
+					break;
 
-					case "square":
-						result = data.value * data.value;
-						break;
+				case "square":
+					result = data.value * data.value;
+					break;
 
-					case "cube":
-						result = data.value * data.value * data.value;
-						break;
-				}
-
-				return { result };
+				case "cube":
+					result = data.value * data.value * data.value;
+					break;
 			}
-		);
+
+			return { result };
+		});
 
 		const onChangeOperator = useCallback(
 			(operator: UnaryOperatorData["operator"]) => {
@@ -90,7 +85,6 @@ const UnaryOperatorNode = memo(
 					value={data.output.result}
 					selected={selected}
 					position={Position.Right}
-					onConnect={onDataChange}
 				/>
 			</>
 		);

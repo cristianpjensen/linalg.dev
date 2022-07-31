@@ -14,37 +14,32 @@ const BinaryOperatorNode = memo(
 		const setNodeData = useStore((state) => state.setNodeData);
 		const isConnected = useStore((state) => state.isConnected);
 
-		const onDataChange = useOutput<BinaryOperatorData>(
-			id,
-			["result"],
-			data,
-			(data) => {
-				let result = 0;
-				switch (data.operator) {
-					case "add":
-						result = data.left + data.right;
-						break;
+		useOutput<BinaryOperatorData>(id, ["result"], data, (data) => {
+			let result = 0;
+			switch (data.operator) {
+				case "add":
+					result = data.left + data.right;
+					break;
 
-					case "subtract":
-						result = data.left - data.right;
-						break;
+				case "subtract":
+					result = data.left - data.right;
+					break;
 
-					case "multiply":
-						result = data.left * data.right;
-						break;
+				case "multiply":
+					result = data.left * data.right;
+					break;
 
-					case "divide":
-						result = data.left / data.right;
-						break;
+				case "divide":
+					result = data.left / data.right;
+					break;
 
-					case "modulo":
-						result = data.left % data.right;
-						break;
-				}
-
-				return { result };
+				case "modulo":
+					result = data.left % data.right;
+					break;
 			}
-		);
+
+			return { result };
+		});
 
 		const onChangeOperator = useCallback(
 			(operator: BinaryOperatorData["operator"]) => {
@@ -124,7 +119,6 @@ const BinaryOperatorNode = memo(
 					value={data.output.result}
 					selected={selected}
 					position={Position.Right}
-					onConnect={onDataChange}
 				/>
 			</>
 		);
