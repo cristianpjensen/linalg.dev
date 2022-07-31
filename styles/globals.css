@@ -68,20 +68,10 @@ project. */
 	cursor: default;
 }
 
-.selected > .react-flow__edge-path {
-	stroke-width: 2px;
-	stroke: #52525b; /* zinc-600 */
-}
-
 .dark .react-flow__edge-path,
 .dark .react-flow__connection-path {
 	stroke-width: 2px;
 	stroke: #3f3f46; /* zinc-700 */
-}
-
-.dark .selected > .react-flow__edge-path {
-	stroke-width: 2px;
-	stroke: #a1a1aa; /* zinc-400 */
 }
 
 /* The handles are larger than React Flow standard, so make the offset larger

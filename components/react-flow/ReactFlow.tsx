@@ -10,6 +10,11 @@ import "react-flow-renderer/dist/style.css";
 
 import useStore from "./store";
 import nodeTypes from "./nodes/nodeTypes";
+import Edge from "./custom/Edge";
+
+const edgeTypes = {
+	default: Edge,
+};
 
 const nodeClassName = (node: Node<any>) => {
 	switch (node.type) {
@@ -65,9 +70,10 @@ const Flow = () => {
 			onNodeDragStop={onDragEnd}
 			onPointerDown={onDragStart}
 			onPointerUp={onDragEnd}
-			nodeTypes={nodeTypes}
 			nodes={nodes}
 			edges={edges}
+			nodeTypes={nodeTypes}
+			edgeTypes={edgeTypes}
 			onNodesChange={onNodesChange}
 			onEdgesChange={onEdgesChange}
 			onConnect={onConnect}
