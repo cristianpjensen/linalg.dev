@@ -30,3 +30,29 @@ export const getHandleType = (
 
 	return "unknown";
 };
+
+export const displayRounded = (value: number): string => {
+	const rounded = Math.round(value * 100) / 100;
+	const roundedString = rounded.toString();
+
+	if (roundedString.length > 6) {
+		return value.toExponential(1);
+	}
+
+	return roundedString;
+};
+
+export const getAllIndices = <T>(
+	array: Array<T>,
+	isElement: (element: T) => boolean
+): Array<number> => {
+	const indices = [];
+
+	for (let i = 0; i < array.length; i++) {
+		if (isElement(array[i])) {
+			indices.push(i);
+		}
+	}
+
+	return indices;
+};

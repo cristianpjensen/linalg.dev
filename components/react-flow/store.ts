@@ -12,7 +12,7 @@ import {
 
 import initialNodes from "./initial/nodes";
 import initialEdges from "./initial/edges";
-import { getHandleType } from "./helpers";
+import { getAllIndices, getHandleType } from "./helpers";
 
 type NodeState = {
 	nodes: Node[];
@@ -140,26 +140,28 @@ const useStore = create<NodeState>((set, get) => ({
 					return node;
 				}
 
-				const edgeIndex = childrenEdges.findIndex(
+				const edgeIndices = getAllIndices(
+					childrenEdges,
 					(edge) => edge.target === node.id
 				);
-				if (edgeIndex !== -1) {
-					const edge = childrenEdges[edgeIndex];
+
+				const newData = {...node.data};
+
+				edgeIndices.forEach((index) => {
+					const edge = childrenEdges[index];
 
 					if (edge.targetHandle) {
-						const dataProperty = edge.targetHandle.split("-")[0];
-
-						return {
-							...node,
-							data: {
-								...node.data,
-								[dataProperty]: {
-									isConnected: true,
-									value,
-								},
-							},
-						};
+						newData[edge.targetHandle] = {
+							isConnected: true,
+							value
+						}
 					}
+				});
+
+				// Only update the reference to the node if the data was changed
+				// in some way
+				if (edgeIndices.length > 0) {
+					return { ...node, data: newData };
 				}
 
 				return node;

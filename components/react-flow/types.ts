@@ -21,7 +21,7 @@ export type ValidInputOutput = number | Vector | Matrix;
 type Input<T extends ValidInputOutput> = {
 	value: T;
 	isConnected: boolean;
-}
+};
 
 export type ConstantData = {
 	value: Input<number>;
@@ -44,5 +44,15 @@ export type BinaryOperatorData = {
 	operator: "add" | "subtract" | "multiply" | "divide" | "modulo";
 	output: {
 		result: number;
+	};
+};
+
+export type VectorNodeData = {
+	x: Input<number>;
+	y: Input<number>;
+	z: Input<number>;
+	origin: Input<Vector>;
+	output: {
+		result: Vector;
 	};
 };

@@ -27,6 +27,9 @@ const nodeClassName = (node: Node<any>) => {
 		case "binaryOperator":
 			return "yellow";
 
+		case "vector":
+			return "blue";
+
 		default:
 			return "basic";
 	}

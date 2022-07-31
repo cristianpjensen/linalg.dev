@@ -60,7 +60,7 @@ const Handle = <N extends { output: { [key: string]: ValidInputOutput } }>(
 						top: "calc(50% + 12px)",
 						...props.style,
 					}}
-					className="absolute z-50 flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-400 hover:opacity-100 text-offwhite"
+					className="absolute z-50 flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-600 hover:opacity-100 text-offwhite"
 					onClick={onDelete}
 				>
 					<Cross2Icon className="-left-1 -top-1" />

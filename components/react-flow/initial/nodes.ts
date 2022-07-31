@@ -67,4 +67,74 @@ export default [
 		},
 		position: { x: 12, y: 228 },
 	},
+	{
+		id: "5",
+		type: "vector",
+		dragHandle: ".dragger",
+		data: {
+			x: {
+				value: 0,
+				isConnected: false,
+			},
+			y: {
+				value: 0,
+				isConnected: false,
+			},
+			z: {
+				value: 0,
+				isConnected: false,
+			},
+			origin: {
+				value: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				isConnected: false,
+			},
+			output: {
+				result: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+			},
+		},
+		position: { x: 12, y: 468 },
+	},
+	{
+		id: "6",
+		type: "vector",
+		dragHandle: ".dragger",
+		data: {
+			x: {
+				value: 0,
+				isConnected: false,
+			},
+			y: {
+				value: 0,
+				isConnected: false,
+			},
+			z: {
+				value: 0,
+				isConnected: false,
+			},
+			origin: {
+				value: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+				isConnected: false,
+			},
+			output: {
+				result: {
+					x: 0,
+					y: 0,
+					z: 0,
+				},
+			},
+		},
+		position: { x: 228, y: 468 },
+	},
 ] as Node[];

@@ -42,10 +42,6 @@ canvas {
 		auto;
 }
 
-.katex-display {
-	margin: 0.5em 0;
-}
-
 math-field {
 	--highlight-inactive: #b4d5fe;
 	--highlight: #b4d5fe;
@@ -116,6 +112,14 @@ aswell. */
 
 .dark .react-flow__minimap-node.yellow {
 	fill: #584700; /* yellow-ext-800 */
+}
+
+.react-flow__minimap-node.blue {
+	fill: #E2E8F0; /* slate-200 */
+}
+
+.dark .react-flow__minimap-node.blue {
+	fill: #1E293B; /* slate-800 */
 }
 
 /* Multi-selection */

@@ -89,33 +89,35 @@ const BinaryOperatorNode = memo(
 						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
 					/>
 
-					<Node.SelectInput
-						value={data.operator}
-						values={[
-							"add",
-							"subtract",
-							"multiply",
-							"divide",
-							"modulo",
-						]}
-						onChange={onChangeOperator}
-						className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
-						triggerClassName="flex-1 shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200 mb-2"
-					/>
+					<div className="flex flex-col gap-2">
+						<Node.SelectInput
+							value={data.operator}
+							values={[
+								"add",
+								"subtract",
+								"multiply",
+								"divide",
+								"modulo",
+							]}
+							onChange={onChangeOperator}
+							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
+							triggerClassName="shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
 
-					<Node.NumberInput
-						value={data.left.value}
-						isConnected={data.left.isConnected}
-						onChange={onChangeLeft}
-						className="mb-2 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
-					/>
+						<Node.NumberInput
+							value={data.left.value}
+							isConnected={data.left.isConnected}
+							onChange={onChangeLeft}
+							className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
 
-					<Node.NumberInput
-						value={data.right.value}
-						isConnected={data.right.isConnected}
-						onChange={onChangeRight}
-						className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
-					/>
+						<Node.NumberInput
+							value={data.right.value}
+							isConnected={data.right.isConnected}
+							onChange={onChangeRight}
+							className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
+						/>
+					</div>
 				</Node.Root>
 
 				<BinaryOperatorHandle
