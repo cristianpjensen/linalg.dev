@@ -1,8 +1,27 @@
 const plugin = require("tailwindcss/plugin");
 
+// Potential colors for nodes should be listed here, since the colors are added
+// dynamically, which is only possible if these colors are present in the safe
+// list
+const colors = ["green-ext", "yellow-ext", "red-ext", "purple-ext", "slate"];
+const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+const properties = ["text", "bg", "shadow"];
+
+const colorSafeList = [];
+for (const property of properties) {
+	for (const color of colors) {
+		for (const shade of shades) {
+			colorSafeList.push(`${property}-${color}-${shade}`);
+		}
+	}
+}
+
+console.log(colorSafeList);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: "class",
+	safelist: colorSafeList,
 	content: [
 		"./pages/**/*.{js,ts,jsx,tsx}",
 		"./components/**/*.{js,ts,jsx,tsx}",

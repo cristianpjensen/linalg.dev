@@ -25,17 +25,14 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	});
 
 	const onChangeX = useCallback((value: number) => {
-		// Since we are able to change the value, the handle is not connected
 		setNodeData(id, { x: { value, isConnected: false } });
 	}, []);
 
 	const onChangeY = useCallback((value: number) => {
-		// Since we are able to change the value, the handle is not connected
 		setNodeData(id, { y: { value, isConnected: false } });
 	}, []);
 
 	const onChangeZ = useCallback((value: number) => {
-		// Since we are able to change the value, the handle is not connected
 		setNodeData(id, { z: { value, isConnected: false } });
 	}, []);
 
@@ -94,34 +91,31 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			/>
 
 			<Node.Root
+				title="Vector"
+				color="slate"
 				selected={selected}
-				className="w-[192px] h-[288px] bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+				width={192}
+				height={288}
 			>
-				<Node.Dragger
-					title="Vector"
-					className="bg-slate-700 dark:bg-slate-900 text-slate-200 dark:text-slate-100"
-				/>
+				<Node.Dragger />
 
 				<div className="flex flex-col gap-2">
 					<Node.NumberInput
 						value={data.x.value}
-						onChange={onChangeX}
 						isConnected={data.x.isConnected}
-						className="shadow-slate-500 dark:shadow-slate-700 focus:shadow-slate-700 dark:focus:shadow-slate-500 text-slate-900 dark:text-slate-200"
+						onChange={onChangeX}
 					/>
 
 					<Node.NumberInput
 						value={data.y.value}
-						onChange={onChangeY}
 						isConnected={data.y.isConnected}
-						className="shadow-slate-500 dark:shadow-slate-700 focus:shadow-slate-700 dark:focus:shadow-slate-500 text-slate-900 dark:text-slate-200"
+						onChange={onChangeY}
 					/>
 
 					<Node.NumberInput
 						value={data.z.value}
-						onChange={onChangeZ}
 						isConnected={data.z.isConnected}
-						className="shadow-slate-500 dark:shadow-slate-700 focus:shadow-slate-700 dark:focus:shadow-slate-500 text-slate-900 dark:text-slate-200"
+						onChange={onChangeZ}
 					/>
 
 					<TeX

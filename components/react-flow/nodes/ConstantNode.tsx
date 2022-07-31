@@ -39,19 +39,18 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 			/>
 
 			<Node.Root
+				title="Constant"
+				color="green-ext"
+				width={144}
+				height={120}
 				selected={selected}
-				className="w-[144px] h-[120px] bg-green-ext-200 dark:bg-green-ext-800 text-green-ext-900 dark:text-green-ext-100"
 			>
-				<Node.Dragger
-					title="Constant"
-					className="bg-green-ext-700 dark:bg-green-ext-900 text-green-ext-200 dark:text-green-ext-100"
-				/>
+				<Node.Dragger />
 
 				<Node.NumberInput
 					value={data.value.value}
-					onChange={onChange}
 					isConnected={data.value.isConnected}
-					className="shadow-green-ext-500 dark:shadow-green-ext-700 focus:shadow-green-ext-700 dark:focus:shadow-green-ext-500 text-green-ext-900 dark:text-green-ext-200"
+					onChange={onChange}
 				/>
 			</Node.Root>
 

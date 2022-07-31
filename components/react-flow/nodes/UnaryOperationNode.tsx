@@ -61,28 +61,25 @@ const UnaryOperationNode = memo(
 				/>
 
 				<Node.Root
+					title="Unary operation"
+					color="yellow-ext"
+					width={144}
+					height={168}
 					selected={selected}
-					className="w-[144px] h-[168px] bg-yellow-ext-200 dark:bg-yellow-ext-800 text-yellow-ext-900 dark:text-yellow-ext-100"
 				>
-					<Node.Dragger
-						title="Binary operation"
-						className="bg-yellow-ext-700 dark:bg-yellow-ext-900 text-yellow-ext-200 dark:text-yellow-ext-100"
-					/>
+					<Node.Dragger />
 
 					<div className="flex flex-col gap-2">
 						<Node.SelectInput
 							value={data.operator}
 							values={["square root", "cube", "square"]}
 							onChange={onChangeOperator}
-							className="bg-yellow-ext-300 text-yellow-ext-900 dark:bg-yellow-ext-900 dark:text-yellow-ext-100"
-							triggerClassName="shadow-b1 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 text-yellow-ext-900 dark:text-yellow-ext-200"
 						/>
 
 						<Node.NumberInput
 							value={data.value.value}
 							isConnected={data.value.isConnected}
 							onChange={onChangeValue}
-							className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 						/>
 					</div>
 				</Node.Root>
