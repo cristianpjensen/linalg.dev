@@ -144,15 +144,15 @@ will bug. */
 .react-flow__nodesselection-rect {
 	/* Make the selection larger than the rectangle that makes up the selected
 	nodes. */
-	box-shadow: 0 0 0 32px rgba(56, 189, 246, 0.15);
+	box-shadow: 0 0 0 24px rgba(56, 189, 246, 0.15);
 	outline: 1px solid rgba(2, 132, 199, 0.6);
-	outline-offset: 32px;
+	outline-offset: 24px;
 }
 
 .dark .react-flow__nodesselection-rect {
 	/* Make the selection larger than the rectangle that makes up the selected
 	nodes. */
-	box-shadow: 0 0 0 32px rgba(2, 132, 199, 0.15);
+	box-shadow: 0 0 0 24px rgba(2, 132, 199, 0.15);
 	outline: 1px solid rgba(2, 132, 199, 0.6);
-	outline-offset: 32px;
+	outline-offset: 24px;
 }
