@@ -4,7 +4,6 @@ import ReactFlow, {
 	BackgroundVariant,
 	MiniMap,
 	Node,
-	OnEdgeUpdateFunc,
 	useKeyPress,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
@@ -88,7 +87,7 @@ const Flow = () => {
 			<MiniMap
 				className="bg-zinc-300 dark:bg-zinc-900"
 				nodeClassName={nodeClassName}
-				nodeStrokeWidth={1}
+				nodeStrokeWidth={2}
 				maskColor="none"
 			/>
 		</ReactFlow>

@@ -19,13 +19,13 @@ type NodeState = {
 	edges: Edge[];
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
+	deleteEdge: (target: string, targetHandle: string) => void;
 	onConnect: OnConnect;
 	setNodeData: <T extends object>(
 		nodeId: string,
 		changes: Partial<T>
 	) => void;
 	updateChildren: (nodeId: string, sourceHandle: string, value: any) => void;
-	isConnected: (nodeId: string, targetHandle: string) => boolean;
 };
 
 const useStore = create<NodeState>((set, get) => ({
@@ -40,6 +40,27 @@ const useStore = create<NodeState>((set, get) => ({
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
+	},
+	deleteEdge: (target, targetHandle) => {
+		set({
+			edges: get().edges.filter(
+				(edge) =>
+					edge.target !== target || edge.targetHandle !== targetHandle
+			),
+		});
+
+		const node = get().nodes.find((node) => node.id === target);
+
+		if (node) {
+			const value = node.data[targetHandle].value;
+
+			get().setNodeData(target, {
+				[targetHandle]: {
+					isConnected: false,
+					value,
+				},
+			});
+		}
 	},
 	onConnect: (connection) => {
 		const { source, sourceHandle, target, targetHandle } = connection;
@@ -77,7 +98,7 @@ const useStore = create<NodeState>((set, get) => ({
 			// Only connect, if the handles are both of the same type
 			if (
 				getHandleType(sourceNode.data.output[sourceHandle]) ===
-				getHandleType(targetNode.data[targetHandle])
+				getHandleType(targetNode.data[targetHandle].value)
 			) {
 				set({
 					edges: addEdge(connection, get().edges),
@@ -132,7 +153,10 @@ const useStore = create<NodeState>((set, get) => ({
 							...node,
 							data: {
 								...node.data,
-								[dataProperty]: value,
+								[dataProperty]: {
+									isConnected: true,
+									value,
+								},
 							},
 						};
 					}
@@ -140,11 +164,6 @@ const useStore = create<NodeState>((set, get) => ({
 
 				return node;
 			}),
-		});
-	},
-	isConnected(nodeId, targetHandle) {
-		return get().edges.some((edge) => {
-			return edge.target === nodeId && edge.targetHandle === targetHandle;
 		});
 	},
 }));

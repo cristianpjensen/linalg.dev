@@ -12,29 +12,28 @@ const BinaryOperatorHandle = Handle<Omit<BinaryOperatorData, "operator">>;
 const BinaryOperatorNode = memo(
 	({ id, data, selected }: NodeProps<BinaryOperatorData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
-		const isConnected = useStore((state) => state.isConnected);
 
 		useOutput<BinaryOperatorData>(id, ["result"], data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "add":
-					result = data.left + data.right;
+					result = data.left.value + data.right.value;
 					break;
 
 				case "subtract":
-					result = data.left - data.right;
+					result = data.left.value - data.right.value;
 					break;
 
 				case "multiply":
-					result = data.left * data.right;
+					result = data.left.value * data.right.value;
 					break;
 
 				case "divide":
-					result = data.left / data.right;
+					result = data.left.value / data.right.value;
 					break;
 
 				case "modulo":
-					result = data.left % data.right;
+					result = data.left.value % data.right.value;
 					break;
 			}
 
@@ -49,11 +48,13 @@ const BinaryOperatorNode = memo(
 		);
 
 		const onChangeLeft = useCallback((value: number) => {
-			setNodeData(id, { left: value });
+			// Since we are able to change the value, the handle is not connected
+			setNodeData(id, { left: { value, isConnected: false } });
 		}, []);
 
 		const onChangeRight = useCallback((value: number) => {
-			setNodeData(id, { right: value });
+			// Since we are able to change the value, the handle is not connected
+			setNodeData(id, { right: { value, isConnected: false } });
 		}, []);
 
 		return (
@@ -61,7 +62,9 @@ const BinaryOperatorNode = memo(
 				<BinaryOperatorHandle
 					type="target"
 					id="left"
-					value={data.left}
+					nodeId={id}
+					value={data.left.value}
+					isConnected={data.left.isConnected}
 					selected={selected}
 					position={Position.Left}
 					style={{ top: 120 }}
@@ -69,7 +72,9 @@ const BinaryOperatorNode = memo(
 				<BinaryOperatorHandle
 					type="target"
 					id="right"
-					value={data.right}
+					nodeId={id}
+					value={data.right.value}
+					isConnected={data.right.isConnected}
 					selected={selected}
 					position={Position.Left}
 					style={{ top: 175 }}
@@ -99,16 +104,16 @@ const BinaryOperatorNode = memo(
 					/>
 
 					<Node.NumberInput
-						value={data.left}
+						value={data.left.value}
+						isConnected={data.left.isConnected}
 						onChange={onChangeLeft}
-						isConnected={isConnected(id, "left")}
 						className="mb-2 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 					/>
 
 					<Node.NumberInput
-						value={data.right}
+						value={data.right.value}
+						isConnected={data.right.isConnected}
 						onChange={onChangeRight}
-						isConnected={isConnected(id, "right")}
 						className="shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 					/>
 				</Node.Root>
@@ -116,6 +121,7 @@ const BinaryOperatorNode = memo(
 				<BinaryOperatorHandle
 					type="source"
 					id="result"
+					nodeId={id}
 					value={data.output.result}
 					selected={selected}
 					position={Position.Right}

@@ -6,7 +6,10 @@ export default [
 		type: "constant",
 		dragHandle: ".dragger",
 		data: {
-			value: 1,
+			value: {
+				value: 1,
+				isConnected: false,
+			},
 			output: {
 				result: 1,
 			},
@@ -18,7 +21,10 @@ export default [
 		type: "unaryOperator",
 		dragHandle: ".dragger",
 		data: {
-			value: 16,
+			value: {
+				value: 16,
+				isConnected: false,
+			},
 			operator: "square root",
 			output: {
 				result: 4,
@@ -31,7 +37,10 @@ export default [
 		type: "constant",
 		dragHandle: ".dragger",
 		data: {
-			value: 123,
+			value: {
+				value: 123,
+				isConnected: false,
+			},
 			output: {
 				result: 123,
 			},
@@ -43,8 +52,14 @@ export default [
 		type: "binaryOperator",
 		dragHandle: ".dragger",
 		data: {
-			left: 1,
-			right: 2,
+			left: {
+				value: 1,
+				isConnected: false,
+			},
+			right: {
+				value: 1,
+				isConnected: false,
+			},
 			operator: "add",
 			output: {
 				result: 3,

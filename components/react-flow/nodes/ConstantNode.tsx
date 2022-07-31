@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { NodeProps, Position } from "react-flow-renderer/nocss";
 
 import type { ConstantData } from "../types";
@@ -11,16 +11,16 @@ const ConstantHandle = Handle<ConstantData>;
 
 const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
-	const isConnected = useStore((state) => state.isConnected);
 
 	useOutput<ConstantData>(id, ["result"], data, (data) => {
 		return {
-			result: data.value,
+			result: data.value.value,
 		};
 	});
 
 	const onChange = useCallback((value: number) => {
-		setNodeData(id, { value });
+		// Since we are able to change the value, the handle is not connected
+		setNodeData(id, { value: { value, isConnected: false } });
 	}, []);
 
 	return (
@@ -28,7 +28,9 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 			<ConstantHandle
 				type="target"
 				id="value"
-				value={data.value}
+				nodeId={id}
+				value={data.value.value}
+				isConnected={data.value.isConnected}
 				selected={selected}
 				position={Position.Left}
 				style={{
@@ -46,9 +48,9 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 				/>
 
 				<Node.NumberInput
-					value={data.value}
+					value={data.value.value}
 					onChange={onChange}
-					isConnected={isConnected(id, "value")}
+					isConnected={data.value.isConnected}
 					className="shadow-green-ext-500 dark:shadow-green-ext-700 focus:shadow-green-ext-700 dark:focus:shadow-green-ext-500 text-green-ext-900 dark:text-green-ext-200"
 				/>
 			</Node.Root>
@@ -56,6 +58,7 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 			<ConstantHandle
 				type="source"
 				id="result"
+				nodeId={id}
 				value={data.output.result}
 				selected={selected}
 				position={Position.Right}

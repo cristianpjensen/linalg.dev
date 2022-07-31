@@ -12,21 +12,21 @@ const UnaryOperatorHandle = Handle<Omit<UnaryOperatorData, "operator">>;
 const UnaryOperatorNode = memo(
 	({ id, data, selected }: NodeProps<UnaryOperatorData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
-		const isConnected = useStore((state) => state.isConnected);
 
 		useOutput<UnaryOperatorData>(id, ["result"], data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "square root":
-					result = Math.sqrt(data.value);
+					result = Math.sqrt(data.value.value);
 					break;
 
 				case "square":
-					result = data.value * data.value;
+					result = data.value.value * data.value.value;
 					break;
 
 				case "cube":
-					result = data.value * data.value * data.value;
+					result =
+						data.value.value * data.value.value * data.value.value;
 					break;
 			}
 
@@ -41,7 +41,8 @@ const UnaryOperatorNode = memo(
 		);
 
 		const onChangeValue = useCallback((value: number) => {
-			setNodeData(id, { left: value });
+			// Since we are able to change the value, the handle is not connected
+			setNodeData(id, { value: { value, isConnected: false } });
 		}, []);
 
 		return (
@@ -49,9 +50,14 @@ const UnaryOperatorNode = memo(
 				<UnaryOperatorHandle
 					type="target"
 					id="value"
-					value={data.value}
+					nodeId={id}
+					value={data.value.value}
+					isConnected={data.value.isConnected}
 					selected={selected}
 					position={Position.Left}
+					style={{
+						top: 120,
+					}}
 				/>
 
 				<Node.Root
@@ -72,9 +78,9 @@ const UnaryOperatorNode = memo(
 					/>
 
 					<Node.NumberInput
-						value={data.value}
+						value={data.value.value}
+						isConnected={data.value.isConnected}
 						onChange={onChangeValue}
-						isConnected={isConnected(id, "value")}
 						className="mb-2 shadow-yellow-ext-500 dark:shadow-yellow-ext-700 focus:shadow-yellow-ext-700 dark:focus:shadow-yellow-ext-500 text-yellow-ext-900 dark:text-yellow-ext-200"
 					/>
 				</Node.Root>
@@ -82,6 +88,7 @@ const UnaryOperatorNode = memo(
 				<UnaryOperatorHandle
 					type="source"
 					id="result"
+					nodeId={id}
 					value={data.output.result}
 					selected={selected}
 					position={Position.Right}
