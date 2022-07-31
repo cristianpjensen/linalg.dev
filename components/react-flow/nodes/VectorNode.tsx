@@ -2,19 +2,19 @@ import React, { memo, useCallback } from "react";
 import { NodeProps, Position } from "react-flow-renderer/nocss";
 import TeX from "@matejmazur/react-katex";
 
-import type { VectorNodeData } from "../types";
+import type { VectorData } from "../types";
 import Handle from "../custom/Handle";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 import { displayRounded } from "../helpers";
 
-const VectorHandle = Handle<VectorNodeData>;
+const VectorHandle = Handle<VectorData>;
 
-const VectorNode = memo(({ id, data, selected }: NodeProps<VectorNodeData>) => {
+const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
 
-	useOutput<VectorNodeData>(id, ["result"], data, (data) => {
+	useOutput<VectorData>(id, ["result"], data, (data) => {
 		return {
 			result: {
 				x: data.x.value,

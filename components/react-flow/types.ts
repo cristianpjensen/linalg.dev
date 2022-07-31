@@ -23,8 +23,36 @@ type Input<T extends ValidInputOutput> = {
 	isConnected: boolean;
 };
 
+export type VectorData = {
+	x: Input<number>;
+	y: Input<number>;
+	z: Input<number>;
+	origin: Input<Vector>;
+	output: {
+		result: Vector;
+	};
+};
+
+export type MatrixData = {
+	m1: Input<Vector>;
+	m2: Input<Vector>;
+	m3: Input<Vector>;
+	output: {
+		result: Matrix;
+	};
+};
+
 export type ConstantData = {
 	value: Input<number>;
+	output: {
+		result: number;
+	};
+};
+
+export type SliderData = {
+	min: Input<number>;
+	max: Input<number>;
+	value: number;
 	output: {
 		result: number;
 	};
@@ -47,12 +75,58 @@ export type BinaryOperatorData = {
 	};
 };
 
-export type VectorNodeData = {
-	x: Input<number>;
-	y: Input<number>;
-	z: Input<number>;
-	origin: Input<Vector>;
+export type NormData = {
+	vector: Input<Vector>;
+	output: {
+		result: number;
+	};
+};
+
+export type TransformData = {
+	matrix: Input<Matrix>;
+	vector: Input<Vector>;
 	output: {
 		result: Vector;
+	};
+};
+
+export type VectorScalingData = {
+	vector: Input<Vector>;
+	scalar: Input<number>;
+	output: {
+		result: Vector;
+	};
+};
+
+export type TransposeData = {
+	matrix: Input<Matrix>;
+	output: {
+		result: Matrix;
+	};
+};
+
+export type MatrixMultiplicationData = {
+	left: Input<Matrix>;
+	right: Input<Matrix>;
+	output: {
+		result: Matrix;
+	};
+};
+
+export type EigenvaluesData = {
+	matrix: Input<Matrix>;
+	output: {
+		eigenvalue1: number;
+		eigenvalue2: number;
+		eigenvalue3: number;
+	};
+};
+
+export type EigenvectorsData = {
+	matrix: Input<Matrix>;
+	output: {
+		eigenvector1: Vector;
+		eigenvector2: Vector;
+		eigenvector3: Vector;
 	};
 };
