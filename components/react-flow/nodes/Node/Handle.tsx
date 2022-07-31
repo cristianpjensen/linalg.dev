@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import {
 	Handle as InternalHandle,
 	HandleProps as InternalHandleProps,
 } from "react-flow-renderer/nocss";
 
-import type { ValidInputOutput } from "../types";
-import { getHandleType } from "../helpers";
-import useStore from "../store";
+import type { ValidInputOutput } from "../../types";
+import { getHandleType } from "../../helpers";
+import useStore from "../../store";
+import NodeContext from "./context";
 
 interface HandleProps<N extends { output: { [key: string]: ValidInputOutput } }>
 	extends InternalHandleProps {
@@ -67,30 +68,36 @@ const Handle = <N extends { output: { [key: string]: ValidInputOutput } }>(
 				</button>
 			)}
 
-			<InternalHandle
-				{...props}
-				style={{
-					// Default position for handle should be the middle of the node's body
-					top: "calc(50% + 12px)",
-					...props.style,
-				}}
-				className={`flex items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 bg-offwhite dark:bg-zinc-900 ${
-					props.isConnectable === true ||
-					props.isConnectable === undefined
-						? "hover:border-zinc-400 cursor-crosshair"
-						: "opacity-40 cursor-default"
-				} ${
-					props.selected ? "border-zinc-400 dark:border-zinc-400" : ""
-				}`}
-			>
-				{type === "number"
-					? "N"
-					: type === "vector"
-					? "V"
-					: type === "matrix"
-					? "M"
-					: "?"}
-			</InternalHandle>
+			<NodeContext.Consumer>
+				{({ color }) => (
+					<InternalHandle
+						{...props}
+						style={{
+							// Default position for handle should be the middle of the node's body
+							top: "calc(50% + 12px)",
+							...props.style,
+						}}
+						className={`flex items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-${color}-400 dark:text-${color}-500 bg-${color}-50 dark:bg-${color}-900 ${
+							props.isConnectable === true ||
+							props.isConnectable === undefined
+								? "cursor-crosshair"
+								: "opacity-40 cursor-default"
+						} ${
+							props.selected
+								? `border-${color}-400 dark:border-${color}-400`
+								: `border-${color}-300 dark:border-${color}-700`
+						}`}
+					>
+						{type === "number"
+							? "N"
+							: type === "vector"
+							? "V"
+							: type === "matrix"
+							? "M"
+							: "?"}
+					</InternalHandle>
+				)}
+			</NodeContext.Consumer>
 		</>
 	);
 };

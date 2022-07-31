@@ -3,13 +3,12 @@ import { NodeProps, Position } from "react-flow-renderer/nocss";
 import TeX from "@matejmazur/react-katex";
 
 import type { VectorData } from "../types";
-import Handle from "../custom/Handle";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 import { displayRounded } from "../helpers";
 
-const VectorHandle = Handle<VectorData>;
+const VectorHandle = Node.Handle<VectorData>;
 
 const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
@@ -37,7 +36,13 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	}, []);
 
 	return (
-		<>
+		<Node.Root
+			title="Vector"
+			color="slate"
+			selected={selected}
+			width={192}
+			height={288}
+		>
 			<VectorHandle
 				type="target"
 				id="x"
@@ -90,44 +95,36 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 				}}
 			/>
 
-			<Node.Root
-				title="Vector"
-				color="slate"
-				selected={selected}
-				width={192}
-				height={288}
-			>
-				<Node.Dragger />
+			<Node.Dragger />
 
-				<div className="flex flex-col gap-2">
-					<Node.NumberInput
-						value={data.x.value}
-						isConnected={data.x.isConnected}
-						onChange={onChangeX}
-					/>
+			<div className="flex flex-col gap-2">
+				<Node.NumberInput
+					value={data.x.value}
+					isConnected={data.x.isConnected}
+					onChange={onChangeX}
+				/>
 
-					<Node.NumberInput
-						value={data.y.value}
-						isConnected={data.y.isConnected}
-						onChange={onChangeY}
-					/>
+				<Node.NumberInput
+					value={data.y.value}
+					isConnected={data.y.isConnected}
+					onChange={onChangeY}
+				/>
 
-					<Node.NumberInput
-						value={data.z.value}
-						isConnected={data.z.isConnected}
-						onChange={onChangeZ}
-					/>
+				<Node.NumberInput
+					value={data.z.value}
+					isConnected={data.z.isConnected}
+					onChange={onChangeZ}
+				/>
 
-					<TeX
-						math={`\\begin{bmatrix}
+				<TeX
+					math={`\\begin{bmatrix}
 						  ${displayRounded(data.origin.value.x)}
 						& ${displayRounded(data.origin.value.y)}
 						& ${displayRounded(data.origin.value.z)}
 						\\end{bmatrix}^\\top`}
-						block
-					/>
-				</div>
-			</Node.Root>
+					block
+				/>
+			</div>
 
 			<VectorHandle
 				type="source"
@@ -137,7 +134,7 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 				selected={selected}
 				position={Position.Right}
 			/>
-		</>
+		</Node.Root>
 	);
 });
 

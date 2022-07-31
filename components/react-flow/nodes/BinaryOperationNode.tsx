@@ -4,10 +4,11 @@ import { NodeProps, Position } from "react-flow-renderer/nocss";
 import type { BinaryOperationData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
-import Handle from "../custom/Handle";
 import * as Node from "./Node";
 
-const BinaryOperationHandle = Handle<Omit<BinaryOperationData, "operator">>;
+const BinaryOperationHandle = Node.Handle<
+	Omit<BinaryOperationData, "operator">
+>;
 
 const BinaryOperationNode = memo(
 	({ id, data, selected }: NodeProps<BinaryOperationData>) => {
@@ -56,7 +57,13 @@ const BinaryOperationNode = memo(
 		}, []);
 
 		return (
-			<>
+			<Node.Root
+				title="Binary operation"
+				color="yellow-ext"
+				width={144}
+				height={216}
+				selected={selected}
+			>
 				<BinaryOperationHandle
 					type="target"
 					id="left"
@@ -78,41 +85,33 @@ const BinaryOperationNode = memo(
 					style={{ top: 175 }}
 				/>
 
-				<Node.Root
-					title="Binary operation"
-					color="yellow-ext"
-					width={144}
-					height={216}
-					selected={selected}
-				>
-					<Node.Dragger />
+				<Node.Dragger />
 
-					<div className="flex flex-col gap-2">
-						<Node.SelectInput
-							value={data.operator}
-							values={[
-								"add",
-								"subtract",
-								"multiply",
-								"divide",
-								"modulo",
-							]}
-							onChange={onChangeOperator}
-						/>
+				<div className="flex flex-col gap-2">
+					<Node.SelectInput
+						value={data.operator}
+						values={[
+							"add",
+							"subtract",
+							"multiply",
+							"divide",
+							"modulo",
+						]}
+						onChange={onChangeOperator}
+					/>
 
-						<Node.NumberInput
-							value={data.left.value}
-							isConnected={data.left.isConnected}
-							onChange={onChangeLeft}
-						/>
+					<Node.NumberInput
+						value={data.left.value}
+						isConnected={data.left.isConnected}
+						onChange={onChangeLeft}
+					/>
 
-						<Node.NumberInput
-							value={data.right.value}
-							isConnected={data.right.isConnected}
-							onChange={onChangeRight}
-						/>
-					</div>
-				</Node.Root>
+					<Node.NumberInput
+						value={data.right.value}
+						isConnected={data.right.isConnected}
+						onChange={onChangeRight}
+					/>
+				</div>
 
 				<BinaryOperationHandle
 					type="source"
@@ -122,7 +121,7 @@ const BinaryOperationNode = memo(
 					selected={selected}
 					position={Position.Right}
 				/>
-			</>
+			</Node.Root>
 		);
 	}
 );

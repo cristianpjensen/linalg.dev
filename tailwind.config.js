@@ -5,18 +5,19 @@ const plugin = require("tailwindcss/plugin");
 // list
 const colors = ["green-ext", "yellow-ext", "red-ext", "purple-ext", "slate"];
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-const properties = ["text", "bg", "shadow"];
+const properties = ["text", "bg", "shadow", "border"];
+const prefixes = ["", "dark:"];
 
 const colorSafeList = [];
 for (const property of properties) {
 	for (const color of colors) {
 		for (const shade of shades) {
-			colorSafeList.push(`${property}-${color}-${shade}`);
+			for (const prefix of prefixes) {
+				colorSafeList.push(`${prefix}${property}-${color}-${shade}`);
+			}
 		}
 	}
 }
-
-console.log(colorSafeList);
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

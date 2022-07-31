@@ -2,12 +2,11 @@ import React, { memo, useCallback } from "react";
 import { NodeProps, Position } from "react-flow-renderer/nocss";
 
 import type { UnaryOperationData } from "../types";
-import Handle from "../custom/Handle";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 
-const UnaryOperationHandle = Handle<Omit<UnaryOperationData, "operator">>;
+const UnaryOperationHandle = Node.Handle<Omit<UnaryOperationData, "operator">>;
 
 const UnaryOperationNode = memo(
 	({ id, data, selected }: NodeProps<UnaryOperationData>) => {
@@ -46,7 +45,13 @@ const UnaryOperationNode = memo(
 		}, []);
 
 		return (
-			<>
+			<Node.Root
+				title="Unary operation"
+				color="yellow-ext"
+				width={144}
+				height={168}
+				selected={selected}
+			>
 				<UnaryOperationHandle
 					type="target"
 					id="value"
@@ -59,30 +64,21 @@ const UnaryOperationNode = memo(
 						top: 120,
 					}}
 				/>
+				<Node.Dragger />
 
-				<Node.Root
-					title="Unary operation"
-					color="yellow-ext"
-					width={144}
-					height={168}
-					selected={selected}
-				>
-					<Node.Dragger />
+				<div className="flex flex-col gap-2">
+					<Node.SelectInput
+						value={data.operator}
+						values={["square root", "cube", "square"]}
+						onChange={onChangeOperator}
+					/>
 
-					<div className="flex flex-col gap-2">
-						<Node.SelectInput
-							value={data.operator}
-							values={["square root", "cube", "square"]}
-							onChange={onChangeOperator}
-						/>
-
-						<Node.NumberInput
-							value={data.value.value}
-							isConnected={data.value.isConnected}
-							onChange={onChangeValue}
-						/>
-					</div>
-				</Node.Root>
+					<Node.NumberInput
+						value={data.value.value}
+						isConnected={data.value.isConnected}
+						onChange={onChangeValue}
+					/>
+				</div>
 
 				<UnaryOperationHandle
 					type="source"
@@ -92,7 +88,7 @@ const UnaryOperationNode = memo(
 					selected={selected}
 					position={Position.Right}
 				/>
-			</>
+			</Node.Root>
 		);
 	}
 );

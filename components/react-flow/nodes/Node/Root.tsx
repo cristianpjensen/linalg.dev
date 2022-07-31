@@ -24,8 +24,8 @@ const Root = ({
 	children,
 }: IRootProps) => {
 	const selectedStyling = selected
-		? `shadow-b2 shadow-zinc-400 dark:shadow-zinc-400`
-		: `shadow-b1 shadow-zinc-200 dark:shadow-zinc-700`;
+		? `shadow-b2 shadow-${color}-400 dark:shadow-${color}-400`
+		: `shadow-b1 shadow-${color}-300 dark:shadow-${color}-700`;
 
 	const colorStyling = `bg-${color}-200 dark:bg-${color}-800 text-${color}-900 dark:text-${color}-100`;
 
