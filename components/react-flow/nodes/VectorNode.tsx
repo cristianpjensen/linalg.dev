@@ -1,17 +1,14 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 import TeX from "@matejmazur/react-katex";
 
 import type { VectorData } from "../types";
-import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 import { displayRounded } from "../helpers";
 
 const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
-	const setNodeData = useStore((state) => state.setNodeData);
-
-	useOutput(id, ["result"], data, (data) => {
+	useOutput(id, data, (data) => {
 		return {
 			result: {
 				x: data.x.value,
@@ -20,18 +17,6 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			},
 		};
 	});
-
-	const onChangeX = useCallback((value: number) => {
-		setNodeData(id, { x: { value, isConnected: false } });
-	}, []);
-
-	const onChangeY = useCallback((value: number) => {
-		setNodeData(id, { y: { value, isConnected: false } });
-	}, []);
-
-	const onChangeZ = useCallback((value: number) => {
-		setNodeData(id, { z: { value, isConnected: false } });
-	}, []);
 
 	return (
 		<Node.Root
@@ -51,9 +36,9 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			<Node.Handle type="target" id="origin" top={235} />
 
 			<div className="flex flex-col gap-2">
-				<Node.NumberInput id="x" onChange={onChangeX} />
-				<Node.NumberInput id="y" onChange={onChangeY} />
-				<Node.NumberInput id="z" onChange={onChangeZ} />
+				<Node.NumberInput id="x" />
+				<Node.NumberInput id="y" />
+				<Node.NumberInput id="z" />
 
 				<TeX
 					math={`\\begin{bmatrix}

@@ -5,7 +5,6 @@ import useStore from "../store";
 
 function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 	id: string,
-	sourceHandles: Array<Extract<keyof N["output"], string>>,
 	data: N,
 	fn: (data: Omit<N, "output">) => N["output"]
 ) {
@@ -17,9 +16,9 @@ function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 	const onDataChange = useCallback(() => {
 		const output = memoizedFn(data);
 
-		sourceHandles.forEach((sourceHandle) => {
+		Object.keys(output).forEach((sourceHandle) => {
 			updateChildren(id, sourceHandle, output[sourceHandle]);
-		});
+		})
 	}, [data]);
 
 	// Whenever the data changes, update the output values and then the children

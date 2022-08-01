@@ -137,4 +137,18 @@ export default [
 		},
 		position: { x: 228, y: 468 },
 	},
+	{
+		id: "7",
+		type: "matrix",
+		dragHandle: ".dragger",
+		data: {
+			m1: { value: { x: 0, y: 0, z: 0 }, isConnected: false },
+			m2: { value: { x: 0, y: 0, z: 0 }, isConnected: false },
+			m3: { value: { x: 0, y: 0, z: 0 }, isConnected: false },
+			output: {
+				result: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+			},
+		},
+		position: { x: 468, y: 468 },
+	},
 ] as Node[];

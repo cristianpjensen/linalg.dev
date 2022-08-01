@@ -10,7 +10,7 @@ const BinaryOperationNode = memo(
 	({ id, data, selected }: NodeProps<BinaryOperationData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 
-		useOutput(id, ["result"], data, (data) => {
+		useOutput(id, data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "add":
@@ -44,14 +44,6 @@ const BinaryOperationNode = memo(
 			[]
 		);
 
-		const onChangeLeft = useCallback((value: number) => {
-			setNodeData(id, { left: { value, isConnected: false } });
-		}, []);
-
-		const onChangeRight = useCallback((value: number) => {
-			setNodeData(id, { right: { value, isConnected: false } });
-		}, []);
-
 		return (
 			<Node.Root
 				id={id}
@@ -79,8 +71,8 @@ const BinaryOperationNode = memo(
 						]}
 						onChange={onChangeOperator}
 					/>
-					<Node.NumberInput id="left" onChange={onChangeLeft} />
-					<Node.NumberInput id="right" onChange={onChangeRight} />
+					<Node.NumberInput id="left" />
+					<Node.NumberInput id="right" />
 				</div>
 
 				<Node.Handle type="source" id="result" />

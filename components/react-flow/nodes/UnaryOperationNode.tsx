@@ -10,7 +10,7 @@ const UnaryOperationNode = memo(
 	({ id, data, selected }: NodeProps<UnaryOperationData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 
-		useOutput(id, ["result"], data, (data) => {
+		useOutput(id, data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "square root":
@@ -37,10 +37,6 @@ const UnaryOperationNode = memo(
 			[]
 		);
 
-		const onChangeValue = useCallback((value: number) => {
-			setNodeData(id, { value: { value, isConnected: false } });
-		}, []);
-
 		return (
 			<Node.Root
 				id={id}
@@ -62,7 +58,7 @@ const UnaryOperationNode = memo(
 						onChange={onChangeOperator}
 					/>
 
-					<Node.NumberInput id="value" onChange={onChangeValue} />
+					<Node.NumberInput id="value" />
 				</div>
 
 				<Node.Handle type="source" id="result" />

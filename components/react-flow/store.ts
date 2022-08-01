@@ -139,11 +139,16 @@ const useStore = create<NodeState>((set, get) => ({
 	},
 	setNodeData: (nodeId, changes) => {
 		set({
-			nodes: get().nodes.map((node) =>
-				node.id === nodeId
-					? { ...node, data: { ...node.data, ...changes } }
-					: node
-			),
+			nodes: get().nodes.map((node) => {
+				if (node.id === nodeId) {
+					return {
+						...node,
+						data: { ...node.data, ...changes },
+					};
+				} else {
+					return node;
+				}
+			}),
 		});
 	},
 	updateChildren: (nodeId, sourceHandle, value) => {

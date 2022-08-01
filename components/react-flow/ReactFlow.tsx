@@ -16,23 +16,18 @@ const edgeTypes = {
 	default: Edge,
 };
 
+const nodeClassNames: { [key: string]: string } = {
+	constant: "green",
+	unaryOperation: "yellow",
+	binaryOperation: "yellow",
+	vector: "blue",
+	matrix: "blue",
+};
+
 const nodeClassName = (node: Node<any>) => {
-	switch (node.type) {
-		case "constant":
-			return "green";
-
-		case "unaryOperation":
-			return "yellow";
-
-		case "binaryOperation":
-			return "yellow";
-
-		case "vector":
-			return "blue";
-
-		default:
-			return "basic";
-	}
+	return node.type && nodeClassNames[node.type]
+		? nodeClassNames[node.type]
+		: "basic";
 };
 
 const Flow = () => {
