@@ -1,17 +1,15 @@
 import React, { memo, useCallback } from "react";
-import { NodeProps, Position } from "react-flow-renderer/nocss";
+import { NodeProps } from "react-flow-renderer/nocss";
 
 import type { ConstantData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 
-const ConstantHandle = Node.Handle<ConstantData>;
-
 const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 	const setNodeData = useStore((state) => state.setNodeData);
 
-	useOutput<ConstantData>(id, ["result"], data, (data) => {
+	useOutput(id, ["result"], data, (data) => {
 		return {
 			result: data.value.value,
 		};
@@ -24,44 +22,20 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 
 	return (
 		<Node.Root
+			id={id}
+			data={data}
+			selected={selected}
 			title="Constant"
 			color="green-ext"
 			width={144}
 			height={120}
-			selected={selected}
 		>
-			<ConstantHandle
-				type="target"
-				id="value"
-				nodeId={id}
-				value={data.value.value}
-				isConnected={data.value.isConnected}
-				selected={selected}
-				position={Position.Left}
-				style={{
-					top: 64,
-				}}
-			/>
-
 			<Node.Dragger />
 
-			<Node.NumberInput
-				value={data.value.value}
-				isConnected={data.value.isConnected}
-				onChange={onChange}
-			/>
+			<Node.Handle type="target" id="value" top={64} />
+			<Node.NumberInput id="value" onChange={onChange} />
 
-			<ConstantHandle
-				type="source"
-				id="result"
-				nodeId={id}
-				value={data.output.result}
-				selected={selected}
-				position={Position.Right}
-				style={{
-					top: 64,
-				}}
-			/>
+			<Node.Handle type="source" id="result" top={64} />
 		</Node.Root>
 	);
 });

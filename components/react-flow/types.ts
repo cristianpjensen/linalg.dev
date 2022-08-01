@@ -18,7 +18,7 @@ export type Matrix = [
 
 export type ValidInputOutput = number | Vector | Matrix;
 
-type Input<T extends ValidInputOutput> = {
+export type Input<T extends ValidInputOutput> = {
 	value: T;
 	isConnected: boolean;
 };

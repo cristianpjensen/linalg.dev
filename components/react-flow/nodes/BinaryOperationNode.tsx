@@ -1,20 +1,16 @@
 import React, { memo, useCallback } from "react";
-import { NodeProps, Position } from "react-flow-renderer/nocss";
+import { NodeProps } from "react-flow-renderer/nocss";
 
 import type { BinaryOperationData } from "../types";
 import useStore from "../store";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 
-const BinaryOperationHandle = Node.Handle<
-	Omit<BinaryOperationData, "operator">
->;
-
 const BinaryOperationNode = memo(
 	({ id, data, selected }: NodeProps<BinaryOperationData>) => {
 		const setNodeData = useStore((state) => state.setNodeData);
 
-		useOutput<BinaryOperationData>(id, ["result"], data, (data) => {
+		useOutput(id, ["result"], data, (data) => {
 			let result = 0;
 			switch (data.operator) {
 				case "add":
@@ -58,34 +54,18 @@ const BinaryOperationNode = memo(
 
 		return (
 			<Node.Root
+				id={id}
+				data={data}
+				selected={selected}
 				title="Binary operation"
 				color="yellow-ext"
 				width={144}
 				height={216}
-				selected={selected}
 			>
-				<BinaryOperationHandle
-					type="target"
-					id="left"
-					nodeId={id}
-					value={data.left.value}
-					isConnected={data.left.isConnected}
-					selected={selected}
-					position={Position.Left}
-					style={{ top: 120 }}
-				/>
-				<BinaryOperationHandle
-					type="target"
-					id="right"
-					nodeId={id}
-					value={data.right.value}
-					isConnected={data.right.isConnected}
-					selected={selected}
-					position={Position.Left}
-					style={{ top: 175 }}
-				/>
-
 				<Node.Dragger />
+
+				<Node.Handle type="target" id="left" top={120} />
+				<Node.Handle type="target" id="right" top={175} />
 
 				<div className="flex flex-col gap-2">
 					<Node.SelectInput
@@ -99,28 +79,11 @@ const BinaryOperationNode = memo(
 						]}
 						onChange={onChangeOperator}
 					/>
-
-					<Node.NumberInput
-						value={data.left.value}
-						isConnected={data.left.isConnected}
-						onChange={onChangeLeft}
-					/>
-
-					<Node.NumberInput
-						value={data.right.value}
-						isConnected={data.right.isConnected}
-						onChange={onChangeRight}
-					/>
+					<Node.NumberInput id="left" onChange={onChangeLeft} />
+					<Node.NumberInput id="right" onChange={onChangeRight} />
 				</div>
 
-				<BinaryOperationHandle
-					type="source"
-					id="result"
-					nodeId={id}
-					value={data.output.result}
-					selected={selected}
-					position={Position.Right}
-				/>
+				<Node.Handle type="source" id="result" />
 			</Node.Root>
 		);
 	}

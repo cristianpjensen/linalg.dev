@@ -3,7 +3,9 @@ import React from "react";
 import NodeContext from "./context";
 
 type IRootProps = {
+	id: string;
 	title: string;
+	data: { [key: string]: any };
 	selected: boolean;
 	width: number;
 	height: number;
@@ -14,7 +16,9 @@ type IRootProps = {
 };
 
 const Root = ({
+	id,
 	title,
+	data,
 	selected,
 	width,
 	height,
@@ -30,7 +34,7 @@ const Root = ({
 	const colorStyling = `bg-${color}-200 dark:bg-${color}-800 text-${color}-900 dark:text-${color}-100`;
 
 	return (
-		<NodeContext.Provider value={{ title, color }}>
+		<NodeContext.Provider value={{ id, title, data, color, selected }}>
 			<div
 				className={`nowheel rounded overflow-scroll p-4 pt-10 ${selectedStyling} ${colorStyling} ${className}`}
 				style={{
