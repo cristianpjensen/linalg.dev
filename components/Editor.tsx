@@ -4,13 +4,22 @@ import ReactFlow, {
 	BackgroundVariant,
 	MiniMap,
 	Node,
+	ReactFlowProvider,
 	useKeyPress,
+	useReactFlow,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
 import Edge from "./custom/Edge";
+import {
+	binaryOperationObject,
+	constantNodeObject,
+	matrixNodeObject,
+	unaryOperationObject,
+	vectorNodeObject,
+} from "./nodes/nodeObjects";
 
 const edgeTypes = {
 	default: Edge,
@@ -30,32 +39,66 @@ const nodeClassName = (node: Node<any>) => {
 		: "basic";
 };
 
-const Editor = () => {
+const Editor = () => (
+	<ReactFlowProvider>
+		<Flow />
+	</ReactFlowProvider>
+);
+
+const Flow = () => {
 	const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
 		useNodeStore();
 	const tool = useEditorStore((state) => state.tool);
+	const setTool = useEditorStore((state) => state.setTool);
 
+	const reactFlow = useReactFlow();
 	const isShiftPressed = useKeyPress("Shift");
 
 	const [isConnecting, setIsConnecting] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
 
-	const onConnectStart = useCallback(() => {
-		setIsConnecting(true);
-	}, []);
-	const onConnectEnd = useCallback(() => {
-		setIsConnecting(false);
-	}, []);
-
+	const onConnectStart = useCallback(() => setIsConnecting(true), []);
+	const onConnectEnd = useCallback(() => setIsConnecting(false), []);
 	const onDragStart = useCallback(() => setIsDragging(true), []);
 	const onDragEnd = useCallback(() => setIsDragging(false), []);
+
+	const onAddNode = useCallback(
+		(e: React.MouseEvent<HTMLElement>) => {
+			const position = reactFlow.project({ x: e.clientX, y: e.clientY });
+
+			switch (tool) {
+				case Tool.Vector:
+					reactFlow.addNodes(vectorNodeObject(position));
+					break;
+
+				case Tool.Matrix:
+					reactFlow.addNodes(matrixNodeObject(position));
+					break;
+
+				case Tool.Constant:
+					reactFlow.addNodes(constantNodeObject(position));
+					break;
+
+				case Tool.UnaryOperation:
+					reactFlow.addNodes(unaryOperationObject(position));
+					break;
+
+				case Tool.BinaryOperation:
+					reactFlow.addNodes(binaryOperationObject(position));
+					break;
+			}
+
+			setTool(Tool.Hand);
+		},
+		[tool]
+	);
 
 	return (
 		<ReactFlow
 			style={{
 				position: "absolute",
 				cursor:
-					isConnecting || tool !== Tool.HAND
+					isConnecting || tool !== Tool.Hand
 						? "crosshair"
 						: isShiftPressed
 						? "default"
@@ -77,10 +120,12 @@ const Editor = () => {
 			onNodesChange={onNodesChange}
 			onEdgesChange={onEdgesChange}
 			onConnect={onConnect}
+			onClick={onAddNode}
 			snapGrid={[24, 24]}
 			defaultZoom={1}
 			minZoom={0.2}
 			maxZoom={2}
+			panOnDrag={tool === Tool.Hand}
 			snapToGrid
 			elevateEdgesOnSelect
 		>

@@ -29,7 +29,7 @@ const Handle = ({
 }: HandleProps &
 	Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
 	React.RefAttributes<HTMLDivElement>) => {
-	const { color, data, ...context } = useContext(NodeContext);
+	const { data, ...context } = useContext(NodeContext);
 
 	if (data[id] === undefined && data.output[id] === undefined) {
 		throw new Error(
@@ -66,7 +66,7 @@ const Handle = ({
 							top,
 							...style,
 						}}
-						className="absolute z-50 flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-600 hover:opacity-100 text-offwhite"
+						className="absolute z-20 flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-600 hover:opacity-100 text-offwhite"
 						onClick={onDelete}
 					>
 						<Cross2Icon className="-left-1 -top-1" />
@@ -79,14 +79,14 @@ const Handle = ({
 					top,
 					...style,
 				}}
-				className={`flex items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-${color}-400 dark:text-${color}-500 bg-${color}-50 dark:bg-${color}-900 ${
+				className={`flex z-10 items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-zinc-400 dark:text-zinc-500 bg-zinc-50 dark:bg-zinc-900 ${
 					isConnectable === true || isConnectable === undefined
 						? "cursor-crosshair"
 						: "opacity-40 cursor-default"
 				} ${
 					context.selected
-						? `border-${color}-400 dark:border-${color}-400`
-						: `border-${color}-300 dark:border-${color}-700`
+						? `border-zinc-400 dark:border-zinc-400`
+						: `border-zinc-300 dark:border-zinc-700`
 				}`}
 				position={
 					position

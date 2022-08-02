@@ -10,8 +10,6 @@ import {
 	applyEdgeChanges,
 } from "react-flow-renderer/nocss";
 
-import initialNodes from "../components/initial/nodes";
-import initialEdges from "../components/initial/edges";
 import { getAllIndices, getHandleType } from "../components/helpers";
 
 type NodeState = {
@@ -29,8 +27,8 @@ type NodeState = {
 };
 
 const useStore = create<NodeState>((set, get) => ({
-	nodes: initialNodes,
-	edges: initialEdges,
+	nodes: [],
+	edges: [],
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges(changes, get().nodes),

@@ -1,4 +1,5 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext } from "react";
+
 import MathInput from "../../MathInput";
 import { displayRounded, getHandleType } from "../../helpers";
 import useStore from "../../../stores/nodes";

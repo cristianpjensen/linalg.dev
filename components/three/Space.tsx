@@ -266,7 +266,7 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const [currentCubeTop3] = useState(cubeTop3.clone());
 	const [cubeTop4] = useState(new THREE.Vector3(size4, -size4, size4));
 	const [currentCubeTop4] = useState(cubeTop4.clone());
-	const cubeBias = 0.1;
+	const cubeBias = 0.2;
 
 	const xyLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
 	const yxLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);

@@ -23,12 +23,12 @@ const SelectInput = <T extends string>({
 		<NodeContext.Consumer>
 			{({ color }) => {
 				const colorStyling = `bg-${color}-300 dark:bg-${color}-900 text-${color}-900 dark:text-${color}-100`;
-				const triggerColorStyling = `shadow-${color}-500 dark:shadow-${color}-700 text-${color}-900 dark:text-${color}-200`;
+				const triggerColorStyling = `shadow-${color}-500 dark:shadow-${color}-700 focus:shadow-${color}-700 dark:focus:shadow-${color}-500 text-${color}-900 dark:text-${color}-200`;
 
 				return (
 					<Select.Root value={value} onValueChange={onChange}>
 						<Select.Trigger
-							className={`flex items-center justify-center px-3 py-2 text-sm rounded outline-none h-12 w-full gap-2 shadow-b1 ${triggerColorStyling}`}
+							className={`flex items-center justify-center px-3 py-2 text-sm rounded outline-none h-12 w-full gap-2 shadow-b1 focus:shadow-b2 ${triggerColorStyling}`}
 						>
 							<Select.Value />
 							<Select.Icon>

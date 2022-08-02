@@ -2,20 +2,20 @@ import create from "zustand";
 import * as THREE from "three";
 
 export enum Tool {
-	HAND = "",
-	VECTOR = "Vector",
-	MATRIX = "Matrix",
-	CONSTANT = "Constant",
-	SLIDER = "Slider",
-	UNARY_OPERATION = "Unary operation",
-	BINARY_OPERATION = "Binary operator",
-	EIGENVALUES = "Eigenvalues",
-	EIGENVECTORS = "Eigenvectors",
-	TRANSPOSE = "Transpose",
-	MATRIXMULT = "Matrix multiplication",
-	NORM = "Norm",
-	VECTORSCALING = "Vector scaling",
-	TRANSFORM = "Transform",
+	Hand = "",
+	Vector = "Vector",
+	Matrix = "Matrix",
+	Constant = "Constant",
+	Slider = "Slider",
+	UnaryOperation = "Unary operation",
+	BinaryOperation = "Binary operation",
+	Eigenvalues = "Eigenvalues",
+	Eigenvectors = "Eigenvectors",
+	Transpose = "Transpose",
+	MatrixMultiplication = "Matrix multiplication",
+	Norm = "Norm",
+	VectorScaling = "Vector scaling",
+	Transformed = "Transform",
 }
 
 type EditorState = {
@@ -54,7 +54,7 @@ type EditorState = {
 };
 
 const useStore = create<EditorState>((set) => ({
-	tool: Tool.HAND,
+	tool: Tool.Hand,
 	setTool: (tool: Tool) => set({ tool }),
 	vectorSpaceSize: 3,
 	setVectorSpaceSize: (vectorSpaceSize) => set({ vectorSpaceSize }),
