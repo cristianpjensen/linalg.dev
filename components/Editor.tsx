@@ -20,6 +20,7 @@ import {
 	unaryOperationObject,
 	vectorNodeObject,
 } from "./nodes/nodeObjects";
+import { useWindowHeight } from "@react-hook/window-size";
 
 const edgeTypes = {
 	default: Edge,
@@ -93,6 +94,8 @@ const Flow = () => {
 		[tool]
 	);
 
+	const height = useWindowHeight();
+
 	return (
 		<ReactFlow
 			style={{
@@ -105,7 +108,7 @@ const Flow = () => {
 						: isDragging
 						? "grabbing"
 						: "grab",
-				height: window.innerHeight,
+				height,
 			}}
 			onConnectStart={onConnectStart}
 			onConnectEnd={onConnectEnd}

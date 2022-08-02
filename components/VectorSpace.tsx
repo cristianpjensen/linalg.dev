@@ -15,6 +15,7 @@ import {
 } from "@react-three/postprocessing";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
+import { useWindowSize } from "@react-hook/window-size";
 
 import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
@@ -48,11 +49,14 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 		resetMatrix();
 	};
 
+	const [width, height] = useWindowSize();
+
 	return (
 		<div className="absolute right-0 z-30 border-l-4 border-zinc-600">
 			<Space
 				ref={spaceRef}
-				width={window.innerWidth / vectorSpaceSize}
+				width={width / vectorSpaceSize}
+				height={height}
 				showCube={showCube}
 			>
 				<Vectors ref={groupRef} />
