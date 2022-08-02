@@ -25,8 +25,8 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			selected={selected}
 			title="Vector"
 			color="slate"
-			width={192}
-			height={288}
+			width={8}
+			height={12}
 		>
 			<Node.Dragger />
 

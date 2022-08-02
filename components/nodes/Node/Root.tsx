@@ -38,8 +38,8 @@ const Root = ({
 			<div
 				className={`nowheel rounded overflow-scroll p-4 pt-10 ${selectedStyling} ${colorStyling} ${className}`}
 				style={{
-					width,
-					height,
+					width: width * 24,
+					height: height * 24,
 					...style,
 				}}
 			>

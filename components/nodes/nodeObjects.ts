@@ -48,6 +48,7 @@ export const vectorNodeObject = (position: Position): Node<T.VectorData> => ({
 	type: "vector",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		x: numberInput(),
 		y: numberInput(),
@@ -67,6 +68,7 @@ export const matrixNodeObject = (position: Position): Node<T.MatrixData> => ({
 	type: "matrix",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		m1: vectorInput({ x: 1, y: 0, z: 0 }),
 		m2: vectorInput({ x: 0, y: 1, z: 0 }),
@@ -83,6 +85,7 @@ export const constantNodeObject = (
 	type: "constant",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		value: numberInput(),
 		output: {
@@ -95,9 +98,10 @@ export const sliderNodeObject = (position: Position): Node<T.SliderData> => ({
 	type: "slider",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		min: numberInput(),
-		max: numberInput(),
+		max: numberInput(1),
 		value: 0,
 		output: {
 			result: 0,
@@ -111,6 +115,7 @@ export const unaryOperationNodeObject = (
 	type: "unaryOperation",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		value: numberInput(),
 		operator: "square",
@@ -126,6 +131,7 @@ export const binaryOperationNodeObject = (
 	type: "binaryOperation",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		left: numberInput(),
 		right: numberInput(),
@@ -140,6 +146,7 @@ export const normNodeObject = (position: Position): Node<T.NormData> => ({
 	type: "norm",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		vector: vectorInput(),
 		output: {
@@ -152,6 +159,7 @@ export const transformNodeObject = (position: Position): Node<T.TransformData> =
 	type: "transform",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		vector: vectorInput(),
 		matrix: matrixInput(),
@@ -171,6 +179,7 @@ export const vectorScalingNodeObject = (
 	type: "vectorScaling",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		vector: vectorInput(),
 		scalar: numberInput(),
@@ -188,6 +197,7 @@ export const transposeNodeObject = (position: Position): Node<T.TransposeData> =
 	type: "transpose",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		matrix: matrixInput(),
 		output: {
@@ -202,6 +212,7 @@ export const matrixMultiplicationNodeObject = (
 	type: "matrixMultiplication",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		left: matrixInput(),
 		right: matrixInput(),
@@ -217,6 +228,7 @@ export const eigenvaluesNodeObject = (
 	type: "eigenvalues",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		matrix: matrixInput(),
 		output: {
@@ -233,6 +245,7 @@ export const eigenvectorsNodeObject = (
 	type: "eigenvectors",
 	id: getId(),
 	position: snapToGrid(position),
+	dragHandle: ".dragger",
 	data: {
 		matrix: matrixInput(),
 		output: {

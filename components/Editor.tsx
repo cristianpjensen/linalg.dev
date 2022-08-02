@@ -9,6 +9,7 @@ import ReactFlow, {
 	useReactFlow,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
+import { useWindowHeight } from "@react-hook/window-size";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
@@ -28,7 +29,6 @@ import {
 	vectorNodeObject,
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
-import { useWindowHeight } from "@react-hook/window-size";
 
 const edgeTypes = {
 	default: Edge,
@@ -117,7 +117,9 @@ const Flow = () => {
 					break;
 
 				case Tool.MatrixMultiplication:
-					reactFlow.addNodes(matrixMultiplicationNodeObject(position));
+					reactFlow.addNodes(
+						matrixMultiplicationNodeObject(position)
+					);
 					break;
 
 				case Tool.Eigenvalues:

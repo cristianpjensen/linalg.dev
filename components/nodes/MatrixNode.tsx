@@ -30,8 +30,8 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 			selected={selected}
 			title="Matrix"
 			color="slate"
-			width={264}
-			height={264}
+			width={11}
+			height={11}
 		>
 			<Node.Dragger />
 

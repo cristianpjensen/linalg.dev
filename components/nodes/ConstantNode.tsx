@@ -19,8 +19,8 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 			selected={selected}
 			title="Constant"
 			color="green-ext"
-			width={144}
-			height={120}
+			width={6}
+			height={5}
 		>
 			<Node.Dragger />
 

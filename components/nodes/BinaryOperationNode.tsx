@@ -51,8 +51,8 @@ const BinaryOperationNode = memo(
 				selected={selected}
 				title="Binary operation"
 				color="yellow-ext"
-				width={144}
-				height={216}
+				width={6}
+				height={9}
 			>
 				<Node.Dragger />
 

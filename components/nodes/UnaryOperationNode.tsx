@@ -44,8 +44,8 @@ const UnaryOperationNode = memo(
 				title="Unary operation"
 				selected={selected}
 				color="yellow-ext"
-				width={144}
-				height={168}
+				width={6}
+				height={7}
 			>
 				<Node.Dragger />
 
