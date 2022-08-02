@@ -20,7 +20,24 @@ const vectorInput = (
 	isConnected: false,
 });
 
-const centerPosition = ({ x, y }: Position): Position => {
+const matrixInput = (
+	value: [
+		number,
+		number,
+		number,
+		number,
+		number,
+		number,
+		number,
+		number,
+		number
+	] = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+) => ({
+	value,
+	isConnected: false,
+});
+
+const snapToGrid = ({ x, y }: Position): Position => {
 	return {
 		x: x - (x % 24) - 12,
 		y: y - (y % 24) - 12,
@@ -30,7 +47,7 @@ const centerPosition = ({ x, y }: Position): Position => {
 export const vectorNodeObject = (position: Position): Node<T.VectorData> => ({
 	type: "vector",
 	id: getId(),
-	position: centerPosition(position),
+	position: snapToGrid(position),
 	data: {
 		x: numberInput(),
 		y: numberInput(),
@@ -49,7 +66,7 @@ export const vectorNodeObject = (position: Position): Node<T.VectorData> => ({
 export const matrixNodeObject = (position: Position): Node<T.MatrixData> => ({
 	type: "matrix",
 	id: getId(),
-	position: centerPosition(position),
+	position: snapToGrid(position),
 	data: {
 		m1: vectorInput({ x: 1, y: 0, z: 0 }),
 		m2: vectorInput({ x: 0, y: 1, z: 0 }),
@@ -65,7 +82,7 @@ export const constantNodeObject = (
 ): Node<T.ConstantData> => ({
 	type: "constant",
 	id: getId(),
-	position: centerPosition(position),
+	position: snapToGrid(position),
 	data: {
 		value: numberInput(),
 		output: {
@@ -74,12 +91,26 @@ export const constantNodeObject = (
 	},
 });
 
-export const unaryOperationObject = (
+export const sliderNodeObject = (position: Position): Node<T.SliderData> => ({
+	type: "slider",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		min: numberInput(),
+		max: numberInput(),
+		value: 0,
+		output: {
+			result: 0,
+		},
+	},
+});
+
+export const unaryOperationNodeObject = (
 	position: Position
 ): Node<T.UnaryOperationData> => ({
 	type: "unaryOperation",
 	id: getId(),
-	position: centerPosition(position),
+	position: snapToGrid(position),
 	data: {
 		value: numberInput(),
 		operator: "square",
@@ -89,18 +120,137 @@ export const unaryOperationObject = (
 	},
 });
 
-export const binaryOperationObject = (
+export const binaryOperationNodeObject = (
 	position: Position
 ): Node<T.BinaryOperationData> => ({
 	type: "binaryOperation",
 	id: getId(),
-	position: centerPosition(position),
+	position: snapToGrid(position),
 	data: {
 		left: numberInput(),
 		right: numberInput(),
 		operator: "add",
 		output: {
 			result: 0,
+		},
+	},
+});
+
+export const normNodeObject = (position: Position): Node<T.NormData> => ({
+	type: "norm",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		vector: vectorInput(),
+		output: {
+			result: 0,
+		},
+	},
+});
+
+export const transformNodeObject = (position: Position): Node<T.TransformData> => ({
+	type: "transform",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		vector: vectorInput(),
+		matrix: matrixInput(),
+		output: {
+			result: {
+				x: 0,
+				y: 0,
+				z: 0,
+			},
+		},
+	},
+});
+
+export const vectorScalingNodeObject = (
+	position: Position
+): Node<T.VectorScalingData> => ({
+	type: "vectorScaling",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		vector: vectorInput(),
+		scalar: numberInput(),
+		output: {
+			result: {
+				x: 0,
+				y: 0,
+				z: 0,
+			},
+		},
+	},
+});
+
+export const transposeNodeObject = (position: Position): Node<T.TransposeData> => ({
+	type: "transpose",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		matrix: matrixInput(),
+		output: {
+			result: [1, 0, 0, 0, 1, 0, 0, 0, 1],
+		},
+	},
+});
+
+export const matrixMultiplicationNodeObject = (
+	position: Position
+): Node<T.MatrixMultiplicationData> => ({
+	type: "matrixMultiplication",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		left: matrixInput(),
+		right: matrixInput(),
+		output: {
+			result: [1, 0, 0, 0, 1, 0, 0, 0, 1],
+		},
+	},
+});
+
+export const eigenvaluesNodeObject = (
+	position: Position
+): Node<T.EigenvaluesData> => ({
+	type: "eigenvalues",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		matrix: matrixInput(),
+		output: {
+			eigenvalue1: 1,
+			eigenvalue2: 1,
+			eigenvalue3: 1,
+		},
+	},
+});
+
+export const eigenvectorsNodeObject = (
+	position: Position
+): Node<T.EigenvectorsData> => ({
+	type: "eigenvectors",
+	id: getId(),
+	position: snapToGrid(position),
+	data: {
+		matrix: matrixInput(),
+		output: {
+			eigenvector1: {
+				x: 1,
+				y: 0,
+				z: 0,
+			},
+			eigenvector2: {
+				x: 0,
+				y: 1,
+				z: 0,
+			},
+			eigenvector3: {
+				x: 0,
+				y: 0,
+				z: 1,
+			},
 		},
 	},
 });

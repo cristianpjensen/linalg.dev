@@ -14,11 +14,19 @@ import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
 import Edge from "./custom/Edge";
 import {
-	binaryOperationObject,
+	binaryOperationNodeObject,
 	constantNodeObject,
+	eigenvaluesNodeObject,
+	eigenvectorsNodeObject,
+	matrixMultiplicationNodeObject,
 	matrixNodeObject,
-	unaryOperationObject,
+	normNodeObject,
+	sliderNodeObject,
+	transformNodeObject,
+	transposeNodeObject,
+	unaryOperationNodeObject,
 	vectorNodeObject,
+	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
 import { useWindowHeight } from "@react-hook/window-size";
 
@@ -80,12 +88,44 @@ const Flow = () => {
 					reactFlow.addNodes(constantNodeObject(position));
 					break;
 
+				case Tool.Slider:
+					reactFlow.addNodes(sliderNodeObject(position));
+					break;
+
 				case Tool.UnaryOperation:
-					reactFlow.addNodes(unaryOperationObject(position));
+					reactFlow.addNodes(unaryOperationNodeObject(position));
 					break;
 
 				case Tool.BinaryOperation:
-					reactFlow.addNodes(binaryOperationObject(position));
+					reactFlow.addNodes(binaryOperationNodeObject(position));
+					break;
+
+				case Tool.Norm:
+					reactFlow.addNodes(normNodeObject(position));
+					break;
+
+				case Tool.Transformed:
+					reactFlow.addNodes(transformNodeObject(position));
+					break;
+
+				case Tool.VectorScaling:
+					reactFlow.addNodes(vectorScalingNodeObject(position));
+					break;
+
+				case Tool.Transpose:
+					reactFlow.addNodes(transposeNodeObject(position));
+					break;
+
+				case Tool.MatrixMultiplication:
+					reactFlow.addNodes(matrixMultiplicationNodeObject(position));
+					break;
+
+				case Tool.Eigenvalues:
+					reactFlow.addNodes(eigenvaluesNodeObject(position));
+					break;
+
+				case Tool.Eigenvectors:
+					reactFlow.addNodes(eigenvectorsNodeObject(position));
 					break;
 			}
 
