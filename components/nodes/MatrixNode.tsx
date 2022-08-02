@@ -1,9 +1,10 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 
 import type { MatrixData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
+import { TransformContext } from "../App";
 
 const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 	useOutput(id, data, (data) => {
@@ -15,6 +16,12 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 			result: [m1.x, m1.y, m1.z, m2.x, m2.y, m2.z, m3.x, m3.y, m3.z],
 		};
 	});
+
+	const { transform } = useContext(TransformContext);
+
+	const onClick = () => {
+		transform(data.output.result);
+	};
 
 	return (
 		<Node.Root
@@ -38,7 +45,9 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 				<Node.VectorInput id="m3" />
 			</div>
 
-			<Node.Button className="mt-3">Transform</Node.Button>
+			<Node.Button className="mt-3" onClick={onClick}>
+				Transform
+			</Node.Button>
 
 			<Node.Handle type="source" id="result" />
 		</Node.Root>

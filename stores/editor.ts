@@ -62,6 +62,7 @@ const useStore = create<EditorState>((set) => ({
 	transform: (matrix: THREE.Matrix3) =>
 		set((state) => ({
 			matrix: state.matrix.multiply(matrix),
+			isMatrixReset: false,
 		})),
 	isMatrixReset: false,
 	resetMatrix: () =>
