@@ -38,6 +38,8 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 				<Node.VectorInput id="m3" />
 			</div>
 
+			<Node.Button className="mt-3">Transform</Node.Button>
+
 			<Node.Handle type="source" id="result" />
 		</Node.Root>
 	);
