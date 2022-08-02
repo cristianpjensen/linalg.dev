@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Lottie from "lottie-react";

@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect } from "react";
-import MathInput from "../../../MathInput";
+import MathInput from "../../MathInput";
 import { displayRounded, getHandleType } from "../../helpers";
-import useStore from "../../store";
-import { Vector } from "../../types";
+import useStore from "../../../stores/nodes";
+import { Vector } from "../types";
 import NodeContext from "./context";
 
 type INumberInputProps = {

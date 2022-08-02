@@ -7,12 +7,7 @@ import React, {
 } from "react";
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
-import {
-	Selection,
-	Select,
-	EffectComposer,
-	Outline,
-} from "@react-three/postprocessing";
+import { Select } from "@react-three/postprocessing";
 
 import { isRotationMatrix } from "./matrixProperties";
 import { IDENTITYQUATERNION, ORIGIN, UP, DURATION } from "./constants";

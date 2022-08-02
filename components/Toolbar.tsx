@@ -9,6 +9,7 @@ import {
 	GitHubLogoIcon,
 	HandIcon,
 	InfoCircledIcon,
+	KeyboardIcon,
 	LayersIcon,
 	MoonIcon,
 	SliderIcon,
@@ -16,51 +17,41 @@ import {
 	ThickArrowUpIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
-import * as TWEEN from "@tweenjs/tween.js";
-import { useHotkeys } from "react-hotkeys-hook";
-import { observer } from "mobx-react-lite";
 
 import { Tooltip } from "./Tooltip";
-import { EditorContext, setDarkMode, Tool as _Tool } from "../editor-state";
 import {
 	EigenvectorsIcon,
 	LinearAlgebraIcon,
 	MathIcon,
-	MatrixMultiplicationIcon,
 	NormIcon,
 	TransformationIcon,
 	TransposeIcon,
 	VectorScalingIcon,
 } from "./icons";
+import useOnKeyPress from "./hooks/useOnKeyPress";
+import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
 
-export interface IToolbarProps {
-	editorContext: EditorContext;
-}
-
-const Toolbar = observer(({ editorContext }: IToolbarProps) => {
+const Toolbar = () => {
 	const darkMode =
 		localStorage.getItem("theme") === "dark" ||
 		(!("theme" in localStorage) &&
 			window.matchMedia("(prefers-color-scheme: dark)").matches);
 
 	return (
-		<div className="absolute top-0 left-0 z-10 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
+		<div className="absolute top-0 left-0 z-50 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
 			<Tool
-				editorContext={editorContext}
 				icon={<HandIcon />}
 				tool={_Tool.HAND}
 				description="Drag to pan the canvas"
 				hotkey="h"
 			/>
 			<Tool
-				editorContext={editorContext}
 				icon={<ArrowTopRightIcon />}
 				tool={_Tool.VECTOR}
 				description="Shows a vector in the space"
 				hotkey="v"
 			/>
 			<Tool
-				editorContext={editorContext}
 				icon={<LayersIcon />}
 				tool={_Tool.MATRIX}
 				description="Allows you to transform the space"
@@ -68,7 +59,6 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 			/>
 
 			<ToolDropdown
-				editorContext={editorContext}
 				icon={<MathIcon />}
 				title="Math"
 				tools={[
@@ -86,21 +76,20 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 					},
 					{
 						icon: <BoxIcon />,
-						tool: _Tool.UNARY_OPERATOR,
+						tool: _Tool.UNARY_OPERATION,
 						description:
 							"Unary operator that takes a single argument",
 						hotkey: "u",
 					},
 					{
 						icon: <DotIcon />,
-						tool: _Tool.BINARY_OPERATOR,
+						tool: _Tool.BINARY_OPERATION,
 						description: "Binary operator that takes two arguments",
 						hotkey: "b",
 					},
 				]}
 			/>
 			<ToolDropdown
-				editorContext={editorContext}
 				icon={<LinearAlgebraIcon />}
 				title="Linear algebra"
 				tools={[
@@ -156,8 +145,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				Linear algebra
 			</div>
 
-			<VectorSpaceSizeControl editorContext={editorContext} />
-			<ZoomControl editorContext={editorContext} />
+			<VectorSpaceSizeControl />
 
 			<Toggle
 				icon={<SunIcon />}
@@ -165,7 +153,7 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 				toggled={darkMode}
 				onClick={setDarkMode}
 			/>
-			<Toggle icon={<InfoCircledIcon />} />
+			<Toggle icon={<KeyboardIcon />} />
 			<a
 				className="h-12"
 				href="https://github.com/cristianpjensen/linalg.dev"
@@ -174,62 +162,33 @@ const Toolbar = observer(({ editorContext }: IToolbarProps) => {
 			</a>
 		</div>
 	);
-});
+};
 
-const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
+const VectorSpaceSizeControl = () => {
+	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
+	const setVectorSpaceSize = useEditorStore(
+		(state) => state.setVectorSpaceSize
+	);
+
 	const [isOpen, setIsOpen] = useState(false);
 
-	const tweenScale = (newScale: number) => {
-		const newScale_ = Math.max(Math.min(newScale, 2), 0.2);
-
-		const tween = new TWEEN.Tween({
-			x: editor.position.x,
-			y: editor.position.y,
-			scale: editor.scale,
-		})
-			.to(
-				{
-					x:
-						editor.position.x -
-						(newScale_ / editor.scale - 1) *
-							(window.innerWidth / 2 - editor.position.x + 12),
-					y:
-						editor.position.y -
-						(newScale_ / editor.scale - 1) *
-							(window.innerHeight / 2 - editor.position.y + 12),
-					scale: newScale_,
-				},
-				200
-			)
-			.easing(TWEEN.Easing.Cubic.Out)
-			.onUpdate((tween) => {
-				editor.position = { x: tween.x, y: tween.y };
-				editor.scale = tween.scale;
-			});
-
+	const setSize = (size: 1 | 2 | 3 | 4 | 1e99) => {
+		setVectorSpaceSize(size);
 		setIsOpen(false);
-		tween.start();
 	};
 
-	const onClick200 = () => tweenScale(2);
-	const onClick100 = () => tweenScale(1);
-	const onClick50 = () => tweenScale(0.5);
-	const onClick20 = () => tweenScale(0.2);
-	const onClickZoomIn = () => tweenScale(editor.scale * 1.2);
-	const onClickZoomOut = () => tweenScale(editor.scale * 0.8);
-
-	useHotkeys("shift+1", onClick200);
-	useHotkeys("shift+2", onClick100);
-	useHotkeys("shift+3", onClick50);
-	useHotkeys("shift+4", onClick20);
-	useHotkeys("shift+=", onClickZoomIn);
-	useHotkeys("shift+-", onClickZoomOut);
+	const onClick1 = () => setSize(1);
+	const onClick2 = () => setSize(2);
+	const onClick3 = () => setSize(3);
+	const onClick4 = () => setSize(4);
+	const onClickInf = () => setSize(1e99);
 
 	return (
 		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Popover.Trigger>
 				<div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
-					{Math.round(editor.scale * 100)}%
+					1&thinsp;/&thinsp;
+					{vectorSpaceSize === 1e99 ? "∞" : vectorSpaceSize}
 					<CaretDownIcon
 						className={`ml-05 hover:translate-y-0.5 transition-transform ${
 							isOpen ? "translate-y-0.5" : ""
@@ -238,96 +197,34 @@ const ZoomControl = observer(({ editorContext: editor }: IToolbarProps) => {
 				</div>
 			</Popover.Trigger>
 
-			<Popover.Content className="w-48 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-				<ZoomButton onClick={onClick200} hotkey="Shift 1">
-					200%
-				</ZoomButton>
-				<ZoomButton onClick={onClick100} hotkey="Shift 2">
-					100%
-				</ZoomButton>
-				<ZoomButton onClick={onClick50} hotkey="Shift 3">
-					50%
-				</ZoomButton>
-				<ZoomButton onClick={onClick20} hotkey="Shift 4">
-					20%
-				</ZoomButton>
-				<ZoomButton onClick={onClickZoomIn} hotkey="Shift +">
-					Zoom in
-				</ZoomButton>
-				<ZoomButton onClick={onClickZoomOut} hotkey="Shift -">
-					Zoom out
-				</ZoomButton>
+			<Popover.Content className="w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+				<DropdownButton onClick={onClick1}>
+					1&thinsp;/&thinsp;1
+				</DropdownButton>
+				<DropdownButton onClick={onClick2}>
+					1&thinsp;/&thinsp;2
+				</DropdownButton>
+				<DropdownButton onClick={onClick3}>
+					1&thinsp;/&thinsp;3
+				</DropdownButton>
+				<DropdownButton onClick={onClick4}>
+					1&thinsp;/&thinsp;4
+				</DropdownButton>
+				<DropdownButton onClick={onClickInf}>
+					1&thinsp;/&thinsp;∞
+				</DropdownButton>
 			</Popover.Content>
 		</Popover.Root>
 	);
-});
+};
 
-const VectorSpaceSizeControl = observer(
-	({ editorContext: editor }: IToolbarProps) => {
-		const [isOpen, setIsOpen] = useState(false);
-
-		const setSize = (newSize: 1 | 2 | 3 | 4 | 1e99) => {
-			editor.vectorSpaceSize = newSize;
-			setIsOpen(false);
-		};
-
-		const onClick1 = () => setSize(1);
-		const onClick2 = () => setSize(2);
-		const onClick3 = () => setSize(3);
-		const onClick4 = () => setSize(4);
-		const onClickInf = () => setSize(1e99);
-
-		useHotkeys("ctrl+1", onClick1);
-		useHotkeys("ctrl+2", onClick2);
-		useHotkeys("ctrl+3", onClick3);
-		useHotkeys("ctrl+4", onClick4);
-		useHotkeys("ctrl+5", onClickInf);
-
-		return (
-			<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-				<Popover.Trigger>
-					<div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
-						1&thinsp;/&thinsp;
-						{editor.vectorSpaceSize === 1e99
-							? "∞"
-							: editor.vectorSpaceSize}
-						<CaretDownIcon
-							className={`ml-05 hover:translate-y-0.5 transition-transform ${
-								isOpen ? "translate-y-0.5" : ""
-							}`}
-						/>
-					</div>
-				</Popover.Trigger>
-
-				<Popover.Content className="w-40 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-					<ZoomButton onClick={onClick1} hotkey="Ctrl 1">
-						1&thinsp;/&thinsp;1
-					</ZoomButton>
-					<ZoomButton onClick={onClick2} hotkey="Ctrl 2">
-						1&thinsp;/&thinsp;2
-					</ZoomButton>
-					<ZoomButton onClick={onClick3} hotkey="Ctrl 3">
-						1&thinsp;/&thinsp;3
-					</ZoomButton>
-					<ZoomButton onClick={onClick4} hotkey="Ctrl 4">
-						1&thinsp;/&thinsp;4
-					</ZoomButton>
-					<ZoomButton onClick={onClickInf} hotkey="Ctrl 5">
-						1&thinsp;/&thinsp;∞
-					</ZoomButton>
-				</Popover.Content>
-			</Popover.Root>
-		);
-	}
-);
-
-interface IZoomButtonProps {
+type IDropdownButtonProps = {
 	children: React.ReactNode;
 	onClick: () => void;
 	hotkey?: string;
-}
+};
 
-function ZoomButton({ children, onClick, hotkey }: IZoomButtonProps) {
+function DropdownButton({ children, onClick, hotkey }: IDropdownButtonProps) {
 	return (
 		<button
 			onClick={onClick}
@@ -351,123 +248,113 @@ interface IToolProps {
 	dropdown?: boolean;
 }
 
-const Tool = observer(
-	({
-		editorContext: editor,
-		icon,
-		tool,
-		description,
-		tooltipSide,
-		hotkey,
-		dropdown = false,
-	}: IToolProps & IToolbarProps) => {
-		const setTool = () => {
-			editor.tool = tool;
-		};
+const Tool = ({
+	icon,
+	tool,
+	description,
+	tooltipSide,
+	hotkey,
+	dropdown = false,
+}: IToolProps) => {
+	const currentTool = useEditorStore((state) => state.tool);
+	const setTool = useEditorStore((state) => state.setTool);
 
-		if (hotkey) {
-			useHotkeys(hotkey, setTool);
-		}
+	const onToolChange = () => {
+		setTool(tool);
+	};
 
-		const title = (tool.charAt(0).toUpperCase() + tool.slice(1)).replace(
-			"-",
-			" "
-		);
-
-		return (
-			<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
-				<div
-					className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
-						editor.tool === tool
-							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
-							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
-					} ${dropdown ? "w-40 pl-10" : ""}`}
-					onClick={setTool}
-				>
-					{dropdown ? (
-						<>
-							<div className="absolute flex items-center justify-center w-4 h-4 left-3">
-								{icon}
-							</div>
-							{title}
-						</>
-					) : (
-						<>
-							<div
-								className={`${
-									tool !== _Tool.HAND ? "mr-2" : ""
-								}`}
-							>
-								{icon}
-							</div>
-							{title}
-						</>
-					)}
-				</div>
-			</Tooltip>
-		);
+	if (hotkey) {
+		useOnKeyPress(hotkey, onToolChange);
 	}
-);
+
+	return (
+		<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
+			<div
+				className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
+					currentTool === tool
+						? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+						: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+				} ${dropdown ? "w-40 pl-10" : ""}`}
+				onClick={onToolChange}
+			>
+				{dropdown ? (
+					<>
+						<div className="absolute flex items-center justify-center w-4 h-4 left-3">
+							{icon}
+						</div>
+						{tool}
+					</>
+				) : (
+					<>
+						<div className={`${tool !== _Tool.HAND ? "mr-2" : ""}`}>
+							{icon}
+						</div>
+						{tool}
+					</>
+				)}
+			</div>
+		</Tooltip>
+	);
+};
 
 interface IToolDropdownProps {
-	editorContext: EditorContext;
 	title: string;
 	icon: React.ReactElement;
 	tools: Array<IToolProps>;
 }
 
-const ToolDropdown = observer(
-	({ editorContext: editor, icon, title, tools }: IToolDropdownProps) => {
-		const isSelected = tools.some((tool) => tool.tool === editor.tool);
-		const [isOpen, setIsOpen] = useState(false);
+const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
+	const currentTool = useEditorStore((state) => state.tool);
+	const setTool = useEditorStore((state) => state.setTool);
 
-		tools.forEach((tool) => {
-			// Set hotkey here, because otherwise it will only be usable when the
-			// dropdown is open
-			if (tool.hotkey) {
-				useHotkeys(tool.hotkey, () => {
-					editor.tool = tool.tool;
-				});
-			}
-		});
+	const isSelected = tools.some((tool) => tool.tool === currentTool);
+	const [isOpen, setIsOpen] = useState(false);
 
-		return (
-			<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-				<Popover.Trigger>
-					<div
-						className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
-							isSelected
-								? "bg-offblack dark:bg-offwhite text-white dark:text-black"
-								: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+	tools.forEach(({ tool, hotkey }) => {
+		// Set hotkey here, because otherwise it will only be usable when the
+		// dropdown is open
+		if (hotkey) {
+			useOnKeyPress(hotkey, () => {
+				setTool(tool);
+			});
+		}
+	});
+
+	return (
+		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+			<Popover.Trigger>
+				<div
+					className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
+						isSelected
+							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
+							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
+					}`}
+				>
+					{cloneElement(icon, {
+						className: title !== "" ? "mr-2" : "",
+					})}{" "}
+					{title}
+					<CaretDownIcon
+						className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
+							isOpen ? "translate-y-0.5" : ""
 						}`}
-					>
-						{cloneElement(icon, {
-							className: title !== "" ? "mr-2" : "",
-						})}{" "}
-						{title}
-						<CaretDownIcon
-							className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
-								isOpen ? "translate-y-0.5" : ""
-							}`}
-						/>
-					</div>
-				</Popover.Trigger>
+					/>
+				</div>
+			</Popover.Trigger>
 
-				<Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
-					{tools.map((tool) => (
-						<Tool
-							key={tool.tool}
-							editorContext={editor}
-							tooltipSide="right"
-							dropdown
-							{...tool}
-						/>
-					))}
-				</Popover.Content>
-			</Popover.Root>
-		);
-	}
-);
+			<Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+				{tools.map((tool) => (
+					<Tool
+						key={tool.tool}
+						tooltipSide="right"
+						dropdown
+						{...tool}
+					/>
+				))}
+			</Popover.Content>
+		</Popover.Root>
+	);
+};
 
 interface IToggleProps {
 	icon: React.ReactElement;

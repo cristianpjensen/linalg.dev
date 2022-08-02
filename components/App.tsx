@@ -1,24 +1,21 @@
-import { observer } from "mobx-react-lite";
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
-import { Context as NodeContext, Matrix } from "../node-engine";
-import { EditorContext } from "../editor-state";
 import { VectorSpace } from "./VectorSpace";
 import Editor from "./Editor";
 import Toolbar from "./Toolbar";
-import Flow from "./react-flow/ReactFlow";
+import { useEditorStore } from "../stores";
+import { Matrix } from "./nodes/types";
 
-export const TransformContext = React.createContext<(matrix: Matrix) => void>(
-	() => {}
-);
+export type TransformContext = {
+	transform: (matrix: Matrix) => void;
+};
 
-export interface IAppProps {
-	nodeContext: NodeContext;
-	editorContext: EditorContext;
-}
+export const TransformContext = React.createContext<TransformContext>({
+	transform: () => {},
+});
 
-const App = observer(({ nodeContext, editorContext }: IAppProps) => {
+const App = () => {
 	const ref = useRef<VectorSpace>(null);
 
 	useEffect(() => {
@@ -31,47 +28,23 @@ const App = observer(({ nodeContext, editorContext }: IAppProps) => {
 		}
 	}, []);
 
-	return (
-		<>
-			<Toolbar editorContext={editorContext} />
-			<Flow />
-		</>
-	);
+	const transform = useEditorStore((state) => state.transform);
 
-	const transform = (matrix: Matrix) => {
+	const transformSpace = (matrix: Matrix) => {
 		const mat = new THREE.Matrix3().fromArray(matrix).transpose();
 		ref.current?.transform(mat);
-		editorContext.currentMatrix = editorContext.currentMatrix.multiply(mat);
-		editorContext.currentMatrixReset = false;
+		transform(mat);
 	};
 
 	return (
 		<>
-			<TransformContext.Provider value={transform}>
-				<div
-					className="h-full"
-					style={{
-						width: `${(
-							(1 - 1 / editorContext.vectorSpaceSize) *
-							100
-						).toFixed(3)}%`,
-					}}
-				>
-					<Toolbar editorContext={editorContext} />
-					<Editor
-						context={nodeContext}
-						editorContext={editorContext}
-					/>
-				</div>
+			<TransformContext.Provider value={{ transform: transformSpace }}>
+				<Toolbar />
+				<Editor />
 			</TransformContext.Provider>
-
-			<VectorSpace
-				ref={ref}
-				context={nodeContext}
-				editor={editorContext}
-			/>
+			<VectorSpace ref={ref} />
 		</>
 	);
-});
+};
 
 export default App;

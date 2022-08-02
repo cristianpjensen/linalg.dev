@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 import TeX from "@matejmazur/react-katex";
 
-import type { VectorData } from "../types";
+import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 import { displayRounded } from "../helpers";

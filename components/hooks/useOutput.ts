@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 
-import type { ValidInputOutput } from "../types";
-import useStore from "../store";
+import type { ValidInputOutput } from "../nodes/types";
+import useStore from "../../stores/nodes";
 
 function useOutput<N extends { output: { [prop: string]: ValidInputOutput } }>(
 	id: string,

@@ -10,9 +10,9 @@ import {
 	applyEdgeChanges,
 } from "react-flow-renderer/nocss";
 
-import initialNodes from "./initial/nodes";
-import initialEdges from "./initial/edges";
-import { getAllIndices, getHandleType } from "./helpers";
+import initialNodes from "../components/initial/nodes";
+import initialEdges from "../components/initial/edges";
+import { getAllIndices, getHandleType } from "../components/helpers";
 
 type NodeState = {
 	nodes: Node[];

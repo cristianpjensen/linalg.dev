@@ -1,8 +1,8 @@
 import React, { memo, useCallback } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 
-import type { BinaryOperationData } from "../types";
-import useStore from "../store";
+import type { BinaryOperationData } from "./types";
+import useStore from "../../stores/nodes";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 

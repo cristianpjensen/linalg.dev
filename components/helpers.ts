@@ -1,4 +1,4 @@
-import type { Vector, Matrix } from "./types";
+import type { Vector, Matrix } from "./nodes/types";
 
 export const isNumber = (value: any): value is number =>
 	typeof value === "number";

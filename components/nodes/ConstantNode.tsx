@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 
-import type { ConstantData } from "../types";
+import type { ConstantData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 

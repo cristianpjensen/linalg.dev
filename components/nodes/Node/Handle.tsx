@@ -1,44 +1,114 @@
-import { useState } from "react";
+import React, { useCallback, useContext } from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import {
+	Handle as InternalHandle,
+	HandleProps as InternalHandleProps,
+	Position,
+} from "react-flow-renderer/nocss";
 
-export interface INodeHandleProps {
-	/**
-	 * Buttons in the top right corner of the node.
-	 */
-	children?: React.ReactNode;
+import { getHandleType } from "../../helpers";
+import { Input, ValidInputOutput } from "../types";
+import useStore from "../../../stores/nodes";
+import NodeContext from "./context";
 
-	/**
-	 * Title to display in the top left corner of the node.
-	 */
-	title?: string;
-
-	/**
-	 * Used for back- and foreground colors of the handle.
-	 */
-	className?: string;
+interface HandleProps extends Omit<InternalHandleProps, "position"> {
+	id: string;
+	top?: number | string;
+	position?: Position;
 }
 
-export const Handle = ({
-	children: buttons,
-	title,
-	className,
-}: INodeHandleProps) => {
-	const [pointerDown, setPointerDown] = useState(false);
+const Handle = ({
+	id,
+	type,
+	// Default position for handle should be the middle of the node's body
+	top = "calc(50% + 12px)",
+	style,
+	isConnectable,
+	position,
+	...props
+}: HandleProps &
+	Omit<React.HTMLAttributes<HTMLDivElement>, "id"> &
+	React.RefAttributes<HTMLDivElement>) => {
+	const { color, data, ...context } = useContext(NodeContext);
 
-	const onPointerDown = () => setPointerDown(true);
-	const onPointerUp = () => setPointerDown(false);
+	if (data[id] === undefined && data.output[id] === undefined) {
+		throw new Error(
+			`${id} is not defined in the data of node (${Object.keys(data)}). Is it spelled correctly, or is it maybe an output?`
+		);
+	}
+
+	let handle;
+	if (type === "source") {
+		handle = data.output[id] as ValidInputOutput;
+	} else {
+		handle = data[id] as Input<ValidInputOutput>;
+	}
+
+	const acceptedValue =
+		typeof handle === "object" && "value" in handle
+			? getHandleType(handle.value)
+			: getHandleType(handle);
+
+	const deleteEdge = useStore((state) => state.deleteEdge);
+	const onDelete = useCallback(() => {
+		deleteEdge(context.id, id);
+	}, []);
 
 	return (
-		<div
-			className={`handle absolute rounded-t w-full h-8 pl-2 flex flex-row flex-nowrap text-sm ${className}`}
-			style={{ cursor: pointerDown ? "grabbing" : "grab" }}
-			onPointerDown={onPointerDown}
-			onPointerUp={onPointerUp}
-		>
-			<div className="flex items-center select-none grow justify-left">
-				{title}
-			</div>
+		<>
+			{typeof handle === "object" &&
+				"isConnected" in handle &&
+				handle.isConnected && (
+					<button
+						style={{
+							left: -12,
+							marginTop: -12,
+							top,
+							...style,
+						}}
+						className="absolute z-50 flex items-center justify-center w-6 h-6 transition-opacity bg-red-400 border-2 border-red-500 rounded-full opacity-0 dark:bg-red-500 dark:border-red-600 hover:opacity-100 text-offwhite"
+						onClick={onDelete}
+					>
+						<Cross2Icon className="-left-1 -top-1" />
+					</button>
+				)}
 
-			{buttons}
-		</div>
+			<InternalHandle
+				id={id}
+				style={{
+					top,
+					...style,
+				}}
+				className={`flex items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-${color}-400 dark:text-${color}-500 bg-${color}-50 dark:bg-${color}-900 ${
+					isConnectable === true || isConnectable === undefined
+						? "cursor-crosshair"
+						: "opacity-40 cursor-default"
+				} ${
+					context.selected
+						? `border-${color}-400 dark:border-${color}-400`
+						: `border-${color}-300 dark:border-${color}-700`
+				}`}
+				position={
+					position
+						? position
+						: type === "source"
+						? Position.Right
+						: Position.Left
+				}
+				type={type}
+				isConnectable={isConnectable}
+				{...props}
+			>
+				{acceptedValue === "number"
+					? "N"
+					: acceptedValue === "vector"
+					? "V"
+					: acceptedValue === "matrix"
+					? "M"
+					: "?"}
+			</InternalHandle>
+		</>
 	);
 };
+
+export default Handle;
