@@ -10,7 +10,7 @@ import {
 	DownloadIcon,
 	GitHubLogoIcon,
 	HandIcon,
-	KeyboardIcon,
+	InfoCircledIcon,
 	LayersIcon,
 	MoonIcon,
 	SliderIcon,
@@ -56,8 +56,6 @@ const Toolbar = () => {
 			const width = node.width || 0;
 			const height = node.height || 0;
 
-			console.log(node.width, node.height);
-
 			if (x < bounds.x.min) bounds.x.min = x;
 			if (x + width > bounds.x.max) bounds.x.max = x + width;
 			if (y < bounds.y.min) bounds.y.min = y;
@@ -71,7 +69,7 @@ const Toolbar = () => {
 				width: bounds.x.max - bounds.x.min,
 				height: bounds.y.max - bounds.y.min,
 			},
-			{ duration: 500 }
+			{ duration: 400 }
 		);
 	};
 
@@ -259,7 +257,7 @@ const Toolbar = () => {
 				toggled={darkMode}
 				onClick={setDarkMode}
 			/>
-			<Toggle icon={<KeyboardIcon />} tip="Show keyboard shortcuts" />
+			<Toggle icon={<InfoCircledIcon />} tip="Show keyboard shortcuts" />
 			<a
 				className="h-12"
 				href="https://github.com/cristianpjensen/linalg.dev"

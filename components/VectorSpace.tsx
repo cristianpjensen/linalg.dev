@@ -8,18 +8,13 @@ import {
 } from "react";
 import * as THREE from "three";
 import { CubeIcon, ResetIcon } from "@radix-ui/react-icons";
-import {
-	Selection,
-	EffectComposer,
-	Outline,
-} from "@react-three/postprocessing";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
 import { useWindowSize } from "@react-hook/window-size";
 
 import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
-import { VectorData, Vector as _Vector } from "./nodes/types";
+import { VectorData, Vector as _Vector, EigenvectorsData, TransformData } from "./nodes/types";
 
 export type VectorSpace = {
 	/**
@@ -92,18 +87,20 @@ const Vectors = forwardRef<Group, {}>((props, ref) => {
 		(node) => node.type === "vector"
 	) as Node<VectorData>[];
 
-	return (
-		<Selection>
-			<EffectComposer autoClear={false}>
-				<Outline edgeStrength={2} visibleEdgeColor={0x999999} blur />
-			</EffectComposer>
+	const eigenvectors = nodes.filter(
+		(node) => node.type === "eigenvectors"
+	) as Node<EigenvectorsData>[];
 
-			<Group ref={ref}>
-				{vectors.map((node) => (
-					<VectorWrapper key={node.id} node={node} />
-				))}
-			</Group>
-		</Selection>
+	return (
+		<Group ref={ref}>
+			{vectors.map((node) => (
+				<VectorWrapper key={node.id} node={node} />
+			))}
+
+			{eigenvectors.map((node) => (
+				<EigenvectorsWrapper key={node.id} node={node} />
+			))}
+		</Group>
 	);
 });
 
@@ -111,7 +108,7 @@ type IVectorWrapperProps = {
 	node: Node<VectorData>;
 };
 
-export const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
+const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	({ node }, ref) => {
 		const matrix = useEditorStore((state) => state.matrix);
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
@@ -142,7 +139,7 @@ export const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 			moveOrigin(node.data.origin.value);
 		}, [node.data.origin.value]);
 
-		// If reseting, move the vector to its non-transformed position
+		// If reseting, move the vector to its untransformed position
 		useEffect(() => {
 			if (isMatrixReset) {
 				moveVector(node.data.output.result);
@@ -154,7 +151,7 @@ export const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		// re-rendered every time, which makes it not animate on move
 		const vectorComponent = useMemo(() => {
 			const onClick = () => {
-				// TODO: Select the vector.
+				// TODO: Select node.
 			};
 
 			return (
@@ -162,11 +159,109 @@ export const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					ref={mergeRefs([innerRef, ref])}
 					origin={new THREE.Vector3(ox, oy, oz)}
 					vector={new THREE.Vector3(x, y, z)}
-					outlined={node.selected}
 					onClick={onClick}
 				/>
 			);
-		}, [node.selected]);
+		}, []);
+
+		return vectorComponent;
+	}
+);
+
+type IEigenvectorsWrapperProps = {
+	node: Node<EigenvectorsData>;
+};
+
+const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
+	({ node }, ref) => {
+		const matrix = useEditorStore((state) => state.matrix);
+		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
+
+		const { x: x1, y: y1, z: z1 } = node.data.output.eigenvector1;
+		const { x: x2, y: y2, z: z2 } = node.data.output.eigenvector2;
+		const { x: x3, y: y3, z: z3 } = node.data.output.eigenvector3;
+		const innerRef1 = useRef<Vector>(null);
+		const innerRef2 = useRef<Vector>(null);
+		const innerRef3 = useRef<Vector>(null);
+
+		const moveVectors = useCallback(
+			(vector1: _Vector, vector2: _Vector, vector3: _Vector) => {
+				const { x: x1, y: y1, z: z1 } = vector1;
+				const { x: x2, y: y2, z: z2 } = vector2;
+				const { x: x3, y: y3, z: z3 } = vector3;
+
+				const vec1 = new THREE.Vector3(x1, y1, z1).applyMatrix3(matrix);
+				const vec2 = new THREE.Vector3(x2, y2, z2).applyMatrix3(matrix);
+				const vec3 = new THREE.Vector3(x3, y3, z3).applyMatrix3(matrix);
+
+				innerRef1.current?.move(vec1);
+				innerRef2.current?.move(vec2);
+				innerRef3.current?.move(vec3);
+			},
+			[]
+		);
+
+		useImperativeHandle(ref, () => ({
+			move: () => {},
+			moveOrigin: () => {},
+			transform: (matrix: THREE.Matrix3) => {
+				innerRef1.current?.transform(matrix);
+				innerRef2.current?.transform(matrix);
+				innerRef3.current?.transform(matrix);
+			},
+		}));
+
+		useEffect(() => {
+			moveVectors(
+				node.data.output.eigenvector1,
+				node.data.output.eigenvector2,
+				node.data.output.eigenvector3
+			);
+		}, [
+			node.data.output.eigenvector1,
+			node.data.output.eigenvector2,
+			node.data.output.eigenvector3,
+		]);
+
+		// If reseting, move the vectors to their untransformed position
+		useEffect(() => {
+			if (isMatrixReset) {
+				moveVectors(
+					node.data.output.eigenvector1,
+					node.data.output.eigenvector2,
+					node.data.output.eigenvector3
+				);
+			}
+		}, [isMatrixReset]);
+
+		const vectorComponent = useMemo(() => {
+			const onClick = () => {
+				// TODO: Select node.
+			};
+
+			return (
+				<>
+					<Vector
+						ref={innerRef1}
+						vector={new THREE.Vector3(x1, y1, z1)}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={innerRef2}
+						vector={new THREE.Vector3(x2, y2, z2)}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={innerRef3}
+						vector={new THREE.Vector3(x3, y3, z3)}
+						onClick={onClick}
+						color="#e16bf2"
+					/>
+				</>
+			);
+		}, []);
 
 		return vectorComponent;
 	}
