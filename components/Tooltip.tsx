@@ -15,7 +15,9 @@ export function Tooltip({
 }: ITooltipProps) {
 	return (
 		<TooltipPrimitive.Root>
-			<TooltipPrimitive.Trigger>{children}</TooltipPrimitive.Trigger>
+			<TooltipPrimitive.Trigger>
+				{children}
+			</TooltipPrimitive.Trigger>
 
 			<TooltipPrimitive.Content
 				side={side}

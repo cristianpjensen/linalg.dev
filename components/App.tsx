@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { ReactFlowProvider } from "react-flow-renderer/nocss";
 
 import { VectorSpace } from "./VectorSpace";
 import Editor from "./Editor";
-import Toolbar from "./Toolbar";
 import { useEditorStore } from "../stores";
 import { Matrix } from "./nodes/types";
 
@@ -39,8 +39,9 @@ const App = () => {
 	return (
 		<>
 			<TransformContext.Provider value={{ transform: transformSpace }}>
-				<Toolbar />
-				<Editor />
+				<ReactFlowProvider>
+					<Editor />
+				</ReactFlowProvider>
 			</TransformContext.Provider>
 			<VectorSpace ref={ref} />
 		</>

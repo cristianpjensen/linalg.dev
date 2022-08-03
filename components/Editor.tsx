@@ -9,7 +9,7 @@ import ReactFlow, {
 	useReactFlow,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
-import { useWindowHeight } from "@react-hook/window-size";
+import { useWindowHeight, useWindowSize } from "@react-hook/window-size";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
@@ -29,6 +29,7 @@ import {
 	vectorNodeObject,
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
+import Toolbar from "./Toolbar";
 
 const edgeTypes = {
 	default: Edge,
@@ -58,17 +59,14 @@ const nodeClassName = (node: Node<any>) => {
 		: "basic";
 };
 
-const Editor = () => (
-	<ReactFlowProvider>
-		<Flow />
-	</ReactFlowProvider>
-);
-
-const Flow = () => {
+const Editor = () => {
 	const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
 		useNodeStore();
 	const tool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
+	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
+
+	const [width, height] = useWindowSize();
 
 	const reactFlow = useReactFlow();
 	const isShiftPressed = useKeyPress("Shift");
@@ -146,57 +144,60 @@ const Flow = () => {
 		[tool]
 	);
 
-	const height = useWindowHeight();
-
 	return (
-		<ReactFlow
-			style={{
-				position: "absolute",
-				cursor:
-					isConnecting || tool !== Tool.Hand
-						? "crosshair"
-						: isShiftPressed
-						? "default"
-						: isDragging
-						? "grabbing"
-						: "grab",
-				height,
-			}}
-			onConnectStart={onConnectStart}
-			onConnectEnd={onConnectEnd}
-			onNodeDragStart={onDragStart}
-			onNodeDragStop={onDragEnd}
-			onPointerDown={onDragStart}
-			onPointerUp={onDragEnd}
-			nodes={nodes}
-			edges={edges}
-			nodeTypes={nodeTypes}
-			edgeTypes={edgeTypes}
-			onNodesChange={onNodesChange}
-			onEdgesChange={onEdgesChange}
-			onConnect={onConnect}
-			onClick={onAddNode}
-			snapGrid={[24, 24]}
-			defaultZoom={1}
-			minZoom={0.2}
-			maxZoom={2}
-			panOnDrag={tool === Tool.Hand}
-			snapToGrid
-			elevateEdgesOnSelect
-		>
-			<Background
-				className="bg-offwhite dark:bg-offblack grandchild:stroke-zinc-300 dark:grandchild:stroke-zinc-800 grandchild:opacity-20"
-				variant={BackgroundVariant.Lines}
-				gap={24}
-				size={1}
-			/>
-			<MiniMap
-				className="bg-zinc-300 dark:bg-zinc-900"
-				nodeClassName={nodeClassName}
-				nodeStrokeWidth={2}
-				maskColor="none"
-			/>
-		</ReactFlow>
+		<>
+			<Toolbar />
+			<ReactFlow
+				style={{
+					position: "absolute",
+					cursor:
+						isConnecting || tool !== Tool.Hand
+							? "crosshair"
+							: isShiftPressed
+							? "default"
+							: isDragging
+							? "grabbing"
+							: "grab",
+					width: (1 - 1 / vectorSpaceSize) * width,
+					height,
+				}}
+				onConnectStart={onConnectStart}
+				onConnectEnd={onConnectEnd}
+				onNodeDragStart={onDragStart}
+				onNodeDragStop={onDragEnd}
+				onPointerDown={onDragStart}
+				onPointerUp={onDragEnd}
+				nodes={nodes}
+				edges={edges}
+				nodeTypes={nodeTypes}
+				edgeTypes={edgeTypes}
+				onNodesChange={onNodesChange}
+				onEdgesChange={onEdgesChange}
+				onConnect={onConnect}
+				onClick={onAddNode}
+				snapGrid={[24, 24]}
+				defaultZoom={1}
+				minZoom={0.2}
+				maxZoom={2}
+				panOnDrag={tool === Tool.Hand}
+				snapToGrid
+				elevateEdgesOnSelect
+			>
+				<Background
+					className="bg-offwhite dark:bg-offblack grandchild:stroke-zinc-300 dark:grandchild:stroke-zinc-800 grandchild:opacity-20"
+					variant={BackgroundVariant.Lines}
+					gap={24}
+					size={1}
+				/>
+				<MiniMap
+					className="bg-zinc-300 dark:bg-zinc-900"
+					nodeClassName={nodeClassName}
+					nodeBorderRadius={4}
+					nodeStrokeWidth={2}
+					maskColor="none"
+				/>
+			</ReactFlow>
+		</>
 	);
 };
 

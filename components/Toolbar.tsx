@@ -1,11 +1,13 @@
-import { cloneElement, useState } from "react";
+import React, { cloneElement, useState } from "react";
 import {
 	ArrowTopRightIcon,
 	BoxIcon,
 	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
+	CropIcon,
 	DotIcon,
+	DownloadIcon,
 	GitHubLogoIcon,
 	HandIcon,
 	KeyboardIcon,
@@ -14,8 +16,10 @@ import {
 	SliderIcon,
 	SunIcon,
 	ThickArrowUpIcon,
+	UploadIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
+import { useReactFlow } from "react-flow-renderer/nocss";
 
 import { Tooltip } from "./Tooltip";
 import {
@@ -35,6 +39,93 @@ const Toolbar = () => {
 		localStorage.getItem("theme") === "dark" ||
 		(!("theme" in localStorage) &&
 			window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+	const reactFlow = useReactFlow();
+
+	const fitNodes = () => {
+		const nodes = reactFlow.getNodes();
+
+		// Get minimum and maximum x and y coordinates
+		const bounds = {
+			x: { min: Infinity, max: -Infinity },
+			y: { min: Infinity, max: -Infinity },
+		};
+
+		for (const node of nodes) {
+			const { x, y } = node.position;
+			const width = node.width || 0;
+			const height = node.height || 0;
+
+			console.log(node.width, node.height);
+
+			if (x < bounds.x.min) bounds.x.min = x;
+			if (x + width > bounds.x.max) bounds.x.max = x + width;
+			if (y < bounds.y.min) bounds.y.min = y;
+			if (y + height > bounds.y.max) bounds.y.max = y + height;
+		}
+
+		reactFlow.fitBounds(
+			{
+				x: bounds.x.min,
+				y: bounds.y.min,
+				width: bounds.x.max - bounds.x.min,
+				height: bounds.y.max - bounds.y.min,
+			},
+			{ duration: 500 }
+		);
+	};
+
+	const downloadEnvironment = () => {
+		const { nodes, edges } = reactFlow.toObject();
+		const json = JSON.stringify({ nodes, edges }, null, 2);
+
+		// Download as JSON file
+		const blob = new Blob([json], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "environment.json";
+		a.click();
+
+		// Clean up
+		URL.revokeObjectURL(url);
+		a.remove();
+	};
+
+	const uploadEnvironment = () => {
+		// Create a fake input element that gets artificially clicked to upload a
+		// file
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = "application/json";
+
+		input.onchange = (e) => {
+			const file = (e.target as HTMLInputElement).files?.[0];
+
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					// Read file
+
+					try {
+						const json = JSON.parse(
+							(e.target as FileReader).result as string
+						);
+
+						// Set environment
+						reactFlow.setNodes(json.nodes);
+						reactFlow.setEdges(json.edges);
+					} catch (e) {
+						console.error(e);
+					}
+				};
+				reader.readAsText(file);
+			}
+		};
+
+		input.click();
+		input.remove();
+	};
 
 	return (
 		<div className="absolute top-0 left-0 z-40 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
@@ -147,17 +238,33 @@ const Toolbar = () => {
 			<VectorSpaceSizeControl />
 
 			<Toggle
+				icon={<DownloadIcon />}
+				tip="Download file of nodes to share with others"
+				onClick={downloadEnvironment}
+			/>
+			<Toggle
+				icon={<UploadIcon />}
+				tip="Upload file of nodes to view its environment"
+				onClick={uploadEnvironment}
+			/>
+			<Toggle
+				icon={<CropIcon />}
+				tip="Fit nodes into view"
+				onClick={fitNodes}
+			/>
+			<Toggle
 				icon={<SunIcon />}
 				altIcon={<MoonIcon />}
+				tip="Enable/disable dark mode"
 				toggled={darkMode}
 				onClick={setDarkMode}
 			/>
-			<Toggle icon={<KeyboardIcon />} />
+			<Toggle icon={<KeyboardIcon />} tip="Show keyboard shortcuts" />
 			<a
 				className="h-12"
 				href="https://github.com/cristianpjensen/linalg.dev"
 			>
-				<Toggle icon={<GitHubLogoIcon />} />
+				<Toggle icon={<GitHubLogoIcon />} tip="Show source code" />
 			</a>
 		</div>
 	);
@@ -185,15 +292,17 @@ const VectorSpaceSizeControl = () => {
 	return (
 		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Popover.Trigger>
-				<div className="flex items-center justify-center w-20 h-full px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
-					1&thinsp;/&thinsp;
-					{vectorSpaceSize === 1e99 ? "∞" : vectorSpaceSize}
-					<CaretDownIcon
-						className={`ml-05 hover:translate-y-0.5 transition-transform ${
-							isOpen ? "translate-y-0.5" : ""
-						}`}
-					/>
-				</div>
+				<Tooltip tip="Change the size of the vector space">
+					<div className="flex items-center justify-center w-20 h-12 px-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
+						1&thinsp;/&thinsp;
+						{vectorSpaceSize === 1e99 ? "∞" : vectorSpaceSize}
+						<CaretDownIcon
+							className={`ml-05 hover:translate-y-0.5 transition-transform ${
+								isOpen ? "translate-y-0.5" : ""
+							}`}
+						/>
+					</div>
+				</Tooltip>
 			</Popover.Trigger>
 
 			<Popover.Content className="w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
@@ -357,12 +466,13 @@ const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
 
 interface IToggleProps {
 	icon: React.ReactElement;
+	tip: string;
 	altIcon?: React.ReactElement;
 	toggled?: boolean;
 	onClick?: (value: boolean) => void;
 }
 
-function Toggle({ icon, altIcon, toggled, onClick }: IToggleProps) {
+function Toggle({ icon, tip, altIcon, toggled, onClick }: IToggleProps) {
 	const [state, setState] = useState(toggled);
 
 	const onComponentClick = () => {
@@ -373,12 +483,14 @@ function Toggle({ icon, altIcon, toggled, onClick }: IToggleProps) {
 	};
 
 	return (
-		<div
-			onClick={onComponentClick}
-			className="flex items-center justify-center w-12 h-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
-		>
-			{state && altIcon ? altIcon : icon}
-		</div>
+		<Tooltip tip={tip}>
+			<div
+				onClick={onComponentClick}
+				className="flex items-center justify-center w-12 h-12 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700"
+			>
+				{state && altIcon ? altIcon : icon}
+			</div>
+		</Tooltip>
 	);
 }
 

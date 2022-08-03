@@ -88,10 +88,12 @@ aswell. */
 /* Position the minimap on the bottom left. */
 .react-flow__minimap {
 	left: 15px;
+	border-radius: 2px;
 }
 
 .react-flow__minimap-mask {
 	fill: rgb(255, 255, 255, 0.4);
+	border-radius: 2px;
 }
 
 .dark .react-flow__minimap-mask {
