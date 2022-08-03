@@ -34,12 +34,22 @@ const edgeTypes = {
 	default: Edge,
 };
 
-const nodeClassNames: { [key: string]: string } = {
-	constant: "green",
-	unaryOperation: "yellow",
-	binaryOperation: "yellow",
+const nodeClassNames: {
+	[key: string]: "green" | "yellow" | "blue" | "purple";
+} = {
 	vector: "blue",
 	matrix: "blue",
+	constant: "green",
+	slider: "green",
+	unaryOperation: "yellow",
+	binaryOperation: "yellow",
+	norm: "blue",
+	transform: "blue",
+	vectorScaling: "blue",
+	transpose: "blue",
+	matrixMultiplication: "blue",
+	eigenvalues: "purple",
+	eigenvectors: "purple",
 };
 
 const nodeClassName = (node: Node<any>) => {

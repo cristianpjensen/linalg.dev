@@ -1,11 +1,9 @@
 import React, { memo } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
-import TeX from "@matejmazur/react-katex";
 
 import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
-import { displayRounded } from "../helpers";
 
 const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	useOutput(id, data, (data) => {
@@ -40,14 +38,7 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 				<Node.NumberInput id="y" />
 				<Node.NumberInput id="z" />
 
-				<TeX
-					math={`\\begin{bmatrix}
-						  ${displayRounded(data.origin.value.x)}
-						& ${displayRounded(data.origin.value.y)}
-						& ${displayRounded(data.origin.value.z)}
-						\\end{bmatrix}^\\top`}
-					block
-				/>
+				<Node.DisplayVector vector={data.origin.value} />
 			</div>
 
 			<Node.Handle type="source" id="result" />

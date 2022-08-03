@@ -4,6 +4,8 @@ import BinaryOperationNode from "./BinaryOperationNode";
 import VectorNode from "./VectorNode";
 import MatrixNode from "./MatrixNode";
 import SliderNode from "./SliderNode";
+import NormNode from "./NormNode";
+import TransformNode from "./TransformNode";
 
 const nodeTypes = {
 	constant: ConstantNode,
@@ -12,6 +14,8 @@ const nodeTypes = {
 	vector: VectorNode,
 	matrix: MatrixNode,
 	slider: SliderNode,
+	norm: NormNode,
+	transform: TransformNode,
 };
 
 export default nodeTypes;
