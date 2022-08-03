@@ -115,11 +115,19 @@ aswell. */
 }
 
 .react-flow__minimap-node.blue {
-	fill: #E2E8F0; /* slate-200 */
+	fill: #e2e8f0; /* slate-200 */
 }
 
 .dark .react-flow__minimap-node.blue {
-	fill: #1E293B; /* slate-800 */
+	fill: #1e293b; /* slate-800 */
+}
+
+.react-flow__minimap-node.purple {
+	fill: #f6d5fb; /* purple-ext-200 */
+}
+
+.dark .react-flow__minimap-node.purple {
+	fill: #45074e; /* purple-ext-800 */
 }
 
 /* Multi-selection */

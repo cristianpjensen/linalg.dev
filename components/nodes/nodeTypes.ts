@@ -7,6 +7,10 @@ import SliderNode from "./SliderNode";
 import NormNode from "./NormNode";
 import TransformNode from "./TransformNode";
 import VectorScalingNode from "./VectorScalingNode";
+import TransposeNode from "./TransposeNode";
+import MatrixMultiplicationNode from "./MatrixMultiplicationNode";
+import EigenvaluesNode from "./EigenvaluesNode";
+import EigenvectorsNode from "./EigenvectorsNode";
 
 const nodeTypes = {
 	constant: ConstantNode,
@@ -18,6 +22,10 @@ const nodeTypes = {
 	norm: NormNode,
 	transform: TransformNode,
 	vectorScaling: VectorScalingNode,
+	transpose: TransposeNode,
+	matrixMultiplication: MatrixMultiplicationNode,
+	eigenvalues: EigenvaluesNode,
+	eigenvectors: EigenvectorsNode,
 };
 
 export default nodeTypes;

@@ -5,6 +5,7 @@ import SelectInput from "./SelectInput";
 import Handle from "./Handle";
 import Button from "./Button";
 import DisplayVector from "./DisplayVector";
+import DisplayMatrix from "./DisplayMatrix";
 
 export {
 	Root,
@@ -15,4 +16,5 @@ export {
 	Handle,
 	Button,
 	DisplayVector,
+	DisplayMatrix,
 };

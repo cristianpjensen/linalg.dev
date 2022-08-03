@@ -33,7 +33,11 @@ const Handle = ({
 
 	if (data[id] === undefined && data.output[id] === undefined) {
 		throw new Error(
-			`${id} is not defined in the data of node (${Object.keys(data)}). Is it spelled correctly, or is it maybe an output?`
+			`${id} is not defined in the data of node (${Object.keys(data)
+				.concat(Object.keys(data.output))
+				.filter(
+					(key) => key !== "output"
+				)}). Is it spelled correctly?`
 		);
 	}
 

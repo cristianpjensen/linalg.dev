@@ -27,7 +27,7 @@ import {
 	TransposeIcon,
 	VectorScalingIcon,
 } from "./icons";
-import useOnKeyPress from "./hooks/useOnKeyPress";
+import useHotkey from "./hooks/useHotkey";
 import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
 
 const Toolbar = () => {
@@ -263,7 +263,7 @@ const Tool = ({
 	};
 
 	if (hotkey) {
-		useOnKeyPress(hotkey, onToolChange);
+		useHotkey(hotkey, onToolChange);
 	}
 
 	return (
@@ -313,7 +313,7 @@ const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
 		// Set hotkey here, because otherwise it will only be usable when the
 		// dropdown is open
 		if (hotkey) {
-			useOnKeyPress(hotkey, () => {
+			useHotkey(hotkey, () => {
 				setTool(tool);
 			});
 		}
