@@ -6,6 +6,7 @@ import MatrixNode from "./MatrixNode";
 import SliderNode from "./SliderNode";
 import NormNode from "./NormNode";
 import TransformNode from "./TransformNode";
+import VectorScalingNode from "./VectorScalingNode";
 
 const nodeTypes = {
 	constant: ConstantNode,
@@ -16,6 +17,7 @@ const nodeTypes = {
 	slider: SliderNode,
 	norm: NormNode,
 	transform: TransformNode,
+	vectorScaling: VectorScalingNode,
 };
 
 export default nodeTypes;

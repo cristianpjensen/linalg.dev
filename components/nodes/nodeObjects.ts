@@ -182,7 +182,7 @@ export const vectorScalingNodeObject = (
 	dragHandle: ".dragger",
 	data: {
 		vector: vectorInput(),
-		scalar: numberInput(),
+		scalar: numberInput(1),
 		output: {
 			result: {
 				x: 0,
