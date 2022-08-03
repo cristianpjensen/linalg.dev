@@ -1,12 +1,10 @@
 import React, {
-	useEffect,
 	useMemo,
 	forwardRef,
 	useRef,
 	useImperativeHandle,
 } from "react";
 import * as THREE from "three";
-import { BufferGeometry } from "three";
 
 interface LineProps {
 	points: Array<THREE.Vector3>;
@@ -69,7 +67,7 @@ export const Line = forwardRef<THREE.BufferGeometry, LineProps>(
 		const innerRef = useRef<THREE.Line>();
 
 		useImperativeHandle(ref, () =>
-			innerRef.current ? innerRef.current.geometry : new BufferGeometry()
+			innerRef.current ? innerRef.current.geometry : new THREE.BufferGeometry()
 		);
 
 		return <primitive ref={innerRef} object={line}></primitive>;

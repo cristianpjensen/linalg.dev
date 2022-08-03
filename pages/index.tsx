@@ -1,47 +1,16 @@
-import { useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import * as TWEEN from "@tweenjs/tween.js";
-
-import { Context as NodeContext } from "../node-engine";
-import { editorContext } from "../editor-state";
 
 const App = dynamic(() => import("../components/App"), {
 	ssr: false,
 });
 
-export const nodeContext = NodeContext.load(
-	typeof localStorage !== "undefined"
-		? localStorage.getItem("node-context")
-		: null
-);
-// export const nodeContext = new NodeContext({});
-
 const Home: NextPage = () => {
-	useEffect(() => {
-		// Save the node context every 2 seconds
-		setInterval(() => {
-			localStorage.setItem("node-context", nodeContext.serialize());
-		}, 2000);
-
-		// Tween animation loop
-		const animate = () => {
-			TWEEN.update();
-			requestAnimationFrame(animate);
-		};
-
-		requestAnimationFrame(animate);
-
-		return () => {
-			TWEEN.removeAll();
-		};
-	}, []);
-
 	return (
 		<div>
 			<Head>
-				<title>WIP: linalg.dev</title>
+				<title>linalg.dev</title>
 				<meta
 					name="description"
 					content="Linear algebra node environment."
@@ -49,8 +18,8 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<div className="flex flex-row dark:text-white dark:bg-black">
-				<App nodeContext={nodeContext} editorContext={editorContext} />
+			<div className="flex flex-row text-offblack dark:text-offwhite bg-offwhite dark:bg-offblack">
+				<App />
 			</div>
 		</div>
 	);

@@ -1,8 +1,8 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Lottie from "react-lottie";
-
+import Lottie from "lottie-react";
 import "katex/dist/katex.min.css";
+
 import "../styles/globals.css";
 import * as vectorLoaderAnimation from "../animations/vector-loader.json";
 
@@ -29,17 +29,12 @@ const LoadingScreen = () => {
 		>
 			<div className="animate-fadein">
 				<Lottie
-					options={{
-						loop: true,
-						autoplay: true,
-						animationData: vectorLoaderAnimation,
-						rendererSettings: {
-							preserveAspectRatio: "xMidYMid slice",
-						},
+					animationData={vectorLoaderAnimation}
+					style={{
+						width: 60,
+						height: 60,
 					}}
-					height={80}
-					width={80}
-					ariaLabel="Loading screen"
+					loop
 				/>
 			</div>
 		</div>

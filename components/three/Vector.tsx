@@ -7,12 +7,6 @@ import React, {
 } from "react";
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
-import {
-	Selection,
-	Select,
-	EffectComposer,
-	Outline,
-} from "@react-three/postprocessing";
 
 import { isRotationMatrix } from "./matrixProperties";
 import { IDENTITYQUATERNION, ORIGIN, UP, DURATION } from "./constants";
@@ -43,11 +37,6 @@ export interface VectorProps {
 	 * Opacity of the object.
 	 */
 	opacity?: number;
-	/**
-	 * Outline effect.
-	 * @default false
-	 */
-	outlined?: boolean;
 	/**
 	 * On click event.
 	 */
@@ -98,7 +87,6 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		origin: o = ORIGIN,
 		color = "#E9E9E9",
 		opacity = 1,
-		outlined = false,
 		onClick,
 	} = props;
 
@@ -232,18 +220,12 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 
 	return (
 		<group onClick={onClick}>
-			<Select enabled={outlined}>
-				<mesh
-					ref={cylinderRef}
-					material={material}
-					geometry={cylinderGeometry}
-				/>
-				<mesh
-					ref={coneRef}
-					material={material}
-					geometry={coneGeometry}
-				/>
-			</Select>
+			<mesh
+				ref={cylinderRef}
+				material={material}
+				geometry={cylinderGeometry}
+			/>
+			<mesh ref={coneRef} material={material} geometry={coneGeometry} />
 
 			{text && (
 				<Text

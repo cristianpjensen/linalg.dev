@@ -22,7 +22,6 @@ export interface IMathInputProps {
 	 */
 	disabled?: boolean;
 
-	style?: string;
 	className?: string;
 }
 
@@ -30,7 +29,6 @@ const MathInput = ({
 	value,
 	onChange,
 	disabled = false,
-	style,
 	className,
 }: IMathInputProps) => {
 	const ref = useRef<HTMLDivElement>(null);
@@ -39,23 +37,9 @@ const MathInput = ({
 	useLayoutEffect(() => {
 		mathfield.value = value.toString();
 
-		// @ts-ignore
-		mathfield.style = style || "";
-		mathfield.className = className || "";
-
 		// The output should be able to be evaluated, so we only want to accept
 		// numbers and functions
 		mathfield.virtualKeyboards = "numeric functions";
-
-		mathfield.onchange = () => {
-			// Evaluate expression and update if it is a value (so no variables)
-			const expr = ce.parse(mathfield.value);
-			const val = expr.N().asFloat;
-
-			if (typeof val === "number" && onChange) {
-				onChange(val);
-			}
-		};
 
 		ref.current?.appendChild(mathfield);
 
@@ -73,10 +57,27 @@ const MathInput = ({
 	}, [disabled]);
 
 	useEffect(() => {
+		mathfield.onchange = () => {
+			// Evaluate expression and update if it is a value (so no variables)
+			const expr = ce.parse(mathfield.value);
+			const val = expr.N().asFloat;
+
+			if (typeof val === "number" && onChange) {
+				onChange(val);
+			}
+		};
+	}, [onChange]);
+
+	useEffect(() => {
 		mathfield.className = className || "";
 	}, [className]);
 
-	return <div ref={ref} className="w-full h-full transition-shadow duration-200 cursor-text" />;
+	return (
+		<div
+			ref={ref}
+			className="w-full transition-shadow duration-200 cursor-text"
+		/>
+	);
 };
 
 export default MathInput;

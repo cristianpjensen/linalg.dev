@@ -37,15 +37,132 @@ input[type="number"] {
 }
 
 canvas {
-	cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=") 16 16, auto;
-}
-
-.katex-display {
-	margin: 0.5em 0;
+	cursor: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxMCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=")
+			16 16,
+		auto;
 }
 
 math-field {
-	--highlight-inactive: #B4D5FE;
-	--highlight: #B4D5FE;
+	--highlight-inactive: #b4d5fe;
+	--highlight: #b4d5fe;
 	--caret: rgb(122, 122, 122);
+}
+
+/* REACT FLOW STYLING */
+
+/* Remove their branding. I think this is fair, because this is an open source
+project. */
+.react-flow__attribution {
+	display: none !important;
+}
+
+/* Edges */
+.react-flow__edge-path,
+.react-flow__connection-path {
+	stroke-width: 2px;
+	stroke: #d4d4d8; /* zinc-300 */
+	cursor: default;
+}
+
+.dark .react-flow__edge-path,
+.dark .react-flow__connection-path {
+	stroke-width: 2px;
+	stroke: #3f3f46; /* zinc-700 */
+}
+
+/* The handles are larger than React Flow standard, so make the offset larger
+aswell. */
+.react-flow__handle-left {
+	left: -12px !important;
+}
+
+.react-flow__handle-right {
+	right: -12px !important;
+}
+
+/* Do not give the background cursor to the nodes. */
+.react-flow__node {
+	cursor: default;
+}
+
+/* Position the minimap on the bottom left. */
+.react-flow__minimap {
+	left: 15px;
+	border-radius: 2px;
+}
+
+.react-flow__minimap-mask {
+	fill: rgb(255, 255, 255, 0.4);
+	border-radius: 2px;
+}
+
+.dark .react-flow__minimap-mask {
+	fill: rgb(0, 0, 0, 0.4);
+}
+
+.react-flow__minimap-node.green {
+	fill: #e2f5e5; /* green-ext-200 */
+}
+
+.dark .react-flow__minimap-node.green {
+	fill: #1e5725; /* green-ext-800 */
+}
+
+.react-flow__minimap-node.yellow {
+	fill: #fff6ce; /* yellow-ext-200 */
+}
+
+.dark .react-flow__minimap-node.yellow {
+	fill: #584700; /* yellow-ext-800 */
+}
+
+.react-flow__minimap-node.blue {
+	fill: #e2e8f0; /* slate-200 */
+}
+
+.dark .react-flow__minimap-node.blue {
+	fill: #1e293b; /* slate-800 */
+}
+
+.react-flow__minimap-node.purple {
+	fill: #f6d5fb; /* purple-ext-200 */
+}
+
+.dark .react-flow__minimap-node.purple {
+	fill: #45074e; /* purple-ext-800 */
+}
+
+/* Multi-selection */
+.react-flow__nodesselection-rect,
+.react-flow__selection {
+	background: rgba(56, 189, 246, 0.15);
+	outline: 1px solid rgba(2, 132, 199, 0.6);
+}
+
+.dark .react-flow__nodesselection-rect,
+.dark .react-flow__selection {
+	background: rgba(2, 132, 199, 0.15);
+	outline: 1px solid rgba(2, 132, 199, 0.6);
+}
+
+/* Fix for selection being user selected when making selections fast and then it
+will bug. */
+.react-flow__selectionpane {
+	user-select: none;
+}
+
+.react-flow__nodesselection-rect {
+	/* Make the selection larger than the rectangle that makes up the selected
+	nodes. */
+	box-shadow: 0 0 0 24px rgba(56, 189, 246, 0.15);
+	outline: 1px solid rgba(2, 132, 199, 0.6);
+	outline-offset: 24px;
+}
+
+.dark .react-flow__nodesselection-rect {
+	/* Make the selection larger than the rectangle that makes up the selected
+	nodes. */
+	box-shadow: 0 0 0 24px rgba(2, 132, 199, 0.15);
+	outline: 1px solid rgba(2, 132, 199, 0.6);
+	outline-offset: 24px;
 }

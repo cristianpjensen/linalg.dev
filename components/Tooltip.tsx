@@ -15,11 +15,13 @@ export function Tooltip({
 }: ITooltipProps) {
 	return (
 		<TooltipPrimitive.Root>
-			<TooltipPrimitive.Trigger>{children}</TooltipPrimitive.Trigger>
+			<TooltipPrimitive.Trigger>
+				{children}
+			</TooltipPrimitive.Trigger>
 
 			<TooltipPrimitive.Content
 				side={side}
-				className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm max-w-[172px]"
+				className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm text-center max-w-[172px]"
 			>
 				{tip}
 				{hotkey && (

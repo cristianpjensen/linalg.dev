@@ -1,15 +1,20 @@
-export * from "./Handle";
-export * from "./Root";
-export * from "./Body";
-export * from "./Ports";
-export * from "./PortNumberInput";
-export * from "./PortSelectInput";
-export * from "./Switch";
+import Root from "./Root";
+import Dragger from "./Dragger";
+import NumberInput, { VectorInput } from "./NumberInput";
+import SelectInput from "./SelectInput";
+import Handle from "./Handle";
+import Button from "./Button";
+import DisplayVector from "./DisplayVector";
+import DisplayMatrix from "./DisplayMatrix";
 
-export interface INodeProps<T> {
-	/**
-	 * Internal representation of the node. The entire node datastructure has to
-	 * be passed, according to the MobX documentation.
-	 */
-	node: T;
-}
+export {
+	Root,
+	Dragger,
+	NumberInput,
+	VectorInput,
+	SelectInput,
+	Handle,
+	Button,
+	DisplayVector,
+	DisplayMatrix,
+};
