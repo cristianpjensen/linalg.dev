@@ -1,4 +1,4 @@
-import { getBezierPath, EdgeProps } from "react-flow-renderer/nocss";
+import { getSmoothStepPath, EdgeProps } from "react-flow-renderer/nocss";
 
 const Edge = ({
 	id,
@@ -12,7 +12,7 @@ const Edge = ({
 	markerEnd,
 	selected,
 }: EdgeProps) => {
-	const edgePath = getBezierPath({
+	const edgePath = getSmoothStepPath({
 		sourceX,
 		sourceY,
 		sourcePosition,

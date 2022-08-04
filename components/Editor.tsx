@@ -5,12 +5,11 @@ import ReactFlow, {
 	MiniMap,
 	Node,
 	OnSelectionChangeFunc,
-	ReactFlowProvider,
 	useKeyPress,
 	useReactFlow,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
-import { useWindowHeight, useWindowSize } from "@react-hook/window-size";
+import { useWindowSize } from "@react-hook/window-size";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
@@ -123,6 +122,10 @@ const Editor = () => {
 
 	const onAddNode = useCallback(
 		(e: React.MouseEvent<HTMLElement>) => {
+			if (tool === Tool.Hand) {
+				return;
+			}
+
 			const position = reactFlow.project({ x: e.clientX, y: e.clientY });
 
 			switch (tool) {
@@ -201,7 +204,8 @@ const Editor = () => {
 							? "grabbing"
 							: "grab",
 					width: (1 - 1 / vectorSpaceSize) * width,
-					height,
+					height: height - 48,
+					bottom: 0,
 				}}
 				nodes={nodes}
 				edges={edges}
@@ -224,7 +228,6 @@ const Editor = () => {
 				defaultZoom={1}
 				minZoom={0.2}
 				maxZoom={2}
-				selectNodesOnDrag={tool === Tool.Select}
 				panOnDrag={tool === Tool.Hand}
 				snapToGrid
 				elevateEdgesOnSelect

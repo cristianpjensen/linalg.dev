@@ -24,6 +24,7 @@ export type VectorSpace = {
 };
 
 export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
+	const matrix = useEditorStore((state) => state.matrix);
 	const showCube = useEditorStore((state) => state.showCube);
 	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const resetMatrix = useEditorStore((state) => state.resetMatrix);
@@ -53,19 +54,19 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	useEffect(() => {
 		if (selectedVectorNode && selectedVectorFrom === "editor") {
 			const { x, y, z } = selectedVectorNode.data as VectorData;
-			const vector = { x: x.value, y: y.value, z: z.value };
+			const vector = new THREE.Vector3(x.value, y.value, z.value);
+			vector.applyMatrix3(matrix);
 
 			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
 				return;
 			}
 
-			const norm = Math.sqrt(
-				vector.x * vector.x + vector.y * vector.y + vector.z * vector.z
-			);
+			const norm = vector.length();
+			vector.normalize();
 			const multipliedVector = {
-				x: (vector.x / norm) * (norm + 2),
-				y: (vector.y / norm) * (norm + 2),
-				z: (vector.z / norm) * (norm + 2),
+				x: vector.x * (norm + 2),
+				y: vector.y * (norm + 2),
+				z: vector.z * (norm + 2),
 			};
 
 			spaceRef.current?.moveCamera(

@@ -1,9 +1,4 @@
-import React, {
-	useMemo,
-	forwardRef,
-	useRef,
-	useImperativeHandle,
-} from "react";
+import React, { useMemo, forwardRef, useRef, useImperativeHandle } from "react";
 import * as THREE from "three";
 
 interface LineProps {
@@ -21,11 +16,19 @@ interface LineProps {
 	 * @default 0
 	 */
 	bias?: number;
+
+	opacity?: number;
 }
 
 export const Line = forwardRef<THREE.BufferGeometry, LineProps>(
 	(props, ref) => {
-		const { points, color = "white", lineWidth = 1, bias = 0 } = props;
+		const {
+			points,
+			color = "white",
+			lineWidth = 1,
+			bias = 0,
+			opacity = 1,
+		} = props;
 
 		const line = useMemo(() => {
 			const isColorSolid = typeof color === "string";
@@ -56,6 +59,8 @@ export const Line = forwardRef<THREE.BufferGeometry, LineProps>(
 				color: isColorSolid ? color : undefined,
 				vertexColors: !isColorSolid,
 				linewidth: lineWidth,
+				opacity,
+				transparent: true,
 			});
 
 			const line = new THREE.Line(geometry, material);
@@ -67,7 +72,9 @@ export const Line = forwardRef<THREE.BufferGeometry, LineProps>(
 		const innerRef = useRef<THREE.Line>();
 
 		useImperativeHandle(ref, () =>
-			innerRef.current ? innerRef.current.geometry : new THREE.BufferGeometry()
+			innerRef.current
+				? innerRef.current.geometry
+				: new THREE.BufferGeometry()
 		);
 
 		return <primitive ref={innerRef} object={line}></primitive>;

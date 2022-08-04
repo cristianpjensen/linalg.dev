@@ -77,12 +77,20 @@ const Toolbar = () => {
 		const { nodes, edges } = reactFlow.toObject();
 		const json = JSON.stringify({ nodes, edges }, null, 2);
 
+		const date = new Date();
+
 		// Download as JSON file
 		const blob = new Blob([json], { type: "application/json" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = "environment.json";
+		a.download = `linalg_${date.getFullYear()}_${(
+			date.getMonth() + 1
+		).toLocaleString("en-GB", {
+			minimumIntegerDigits: 2,
+		})}_${date
+			.getDate()
+			.toLocaleString("en-GB", { minimumIntegerDigits: 2 })}.json`;
 		a.click();
 
 		// Clean up
@@ -136,7 +144,7 @@ const Toolbar = () => {
 			<Tool
 				icon={<ArrowTopRightIcon />}
 				tool={_Tool.Vector}
-				description="Shows a vector in the space"
+				description="Shows a vector in the vector space"
 				hotkey="v"
 			/>
 			<Tool
@@ -160,7 +168,7 @@ const Toolbar = () => {
 						icon: <SliderIcon />,
 						tool: _Tool.Slider,
 						description: "Allows for animations between two values",
-						hotkey: "s",
+						hotkey: "l",
 					},
 					{
 						icon: <BoxIcon />,
@@ -190,8 +198,7 @@ const Toolbar = () => {
 					{
 						icon: <TransformationIcon />,
 						tool: _Tool.Transformed,
-						description:
-							"Transforms and shows — in blue — a vector",
+						description: "Transforms a vector with a matrix",
 						hotkey: "r",
 					},
 					{
@@ -395,7 +402,7 @@ const Tool = ({
 						<div className={`${tool !== _Tool.Hand ? "mr-2" : ""}`}>
 							{icon}
 						</div>
-						{tool}
+						{tool === _Tool.Hand ? null : tool}
 					</>
 				)}
 			</div>

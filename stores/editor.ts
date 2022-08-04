@@ -4,7 +4,6 @@ import * as THREE from "three";
 import { Node } from "react-flow-renderer/nocss";
 
 export enum Tool {
-	Select = "Select",
 	Hand = "Hand",
 	Vector = "Vector",
 	Matrix = "Matrix",
