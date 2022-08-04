@@ -14,7 +14,7 @@ import { useWindowSize } from "@react-hook/window-size";
 
 import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
-import { VectorData, Vector as _Vector, EigenvectorsData, TransformData } from "./nodes/types";
+import { VectorData, Vector as _Vector, EigenvectorsData } from "./nodes/types";
 
 export type VectorSpace = {
 	/**
@@ -28,6 +28,12 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const resetMatrix = useEditorStore((state) => state.resetMatrix);
 	const toggleShowCube = useEditorStore((state) => state.toggleShowCube);
+	const selectedVectorNode = useEditorStore(
+		(state) => state.selectedVectorNode
+	);
+	const selectedVectorFrom = useEditorStore(
+		(state) => state.selectedVectorFrom
+	);
 
 	const spaceRef = useRef<Space>(null);
 	const groupRef = useRef<Group>(null);
@@ -43,6 +49,32 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 		spaceRef.current?.reset();
 		resetMatrix();
 	};
+
+	useEffect(() => {
+		if (selectedVectorNode && selectedVectorFrom === "editor") {
+			const { x, y, z } = selectedVectorNode.data as VectorData;
+			const vector = { x: x.value, y: y.value, z: z.value };
+
+			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
+				return;
+			}
+
+			const norm = Math.sqrt(
+				vector.x * vector.x + vector.y * vector.y + vector.z * vector.z
+			);
+			const multipliedVector = {
+				x: (vector.x / norm) * (norm + 2),
+				y: (vector.y / norm) * (norm + 2),
+				z: (vector.z / norm) * (norm + 2),
+			};
+
+			spaceRef.current?.moveCamera(
+				multipliedVector.x,
+				multipliedVector.y,
+				multipliedVector.z
+			);
+		}
+	}, [selectedVectorNode, selectedVectorFrom]);
 
 	const [width, height] = useWindowSize();
 
@@ -112,6 +144,9 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	({ node }, ref) => {
 		const matrix = useEditorStore((state) => state.matrix);
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
+		const setSelectedVectorNode = useEditorStore(
+			(state) => state.setSelectedVectorNode
+		);
 
 		const { x, y, z } = node.data.output.result;
 		const { x: ox, y: oy, z: oz } = node.data.origin.value;
@@ -151,7 +186,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		// re-rendered every time, which makes it not animate on move
 		const vectorComponent = useMemo(() => {
 			const onClick = () => {
-				// TODO: Select node.
+				setSelectedVectorNode(node, "space");
 			};
 
 			return (
@@ -235,28 +270,21 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 		}, [isMatrixReset]);
 
 		const vectorComponent = useMemo(() => {
-			const onClick = () => {
-				// TODO: Select node.
-			};
-
 			return (
 				<>
 					<Vector
 						ref={innerRef1}
 						vector={new THREE.Vector3(x1, y1, z1)}
-						onClick={onClick}
 						color="#e16bf2"
 					/>
 					<Vector
 						ref={innerRef2}
 						vector={new THREE.Vector3(x2, y2, z2)}
-						onClick={onClick}
 						color="#e16bf2"
 					/>
 					<Vector
 						ref={innerRef3}
 						vector={new THREE.Vector3(x3, y3, z3)}
-						onClick={onClick}
 						color="#e16bf2"
 					/>
 				</>

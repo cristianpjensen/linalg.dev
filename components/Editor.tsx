@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
 	MiniMap,
 	Node,
+	OnSelectionChangeFunc,
 	ReactFlowProvider,
 	useKeyPress,
 	useReactFlow,
@@ -65,6 +66,35 @@ const Editor = () => {
 	const tool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
 	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
+	const selectedVectorNode = useEditorStore(
+		(state) => state.selectedVectorNode
+	);
+	const selectedVectorFrom = useEditorStore(
+		(state) => state.selectedVectorFrom
+	);
+	const setSelectedVectorNode = useEditorStore(
+		(state) => state.setSelectedVectorNode
+	);
+
+	useEffect(() => {
+		if (
+			selectedVectorNode &&
+			selectedVectorNode.width &&
+			selectedVectorNode.height &&
+			selectedVectorFrom === "space"
+		) {
+			const x =
+				selectedVectorNode.position.x + selectedVectorNode.width / 2;
+			const y =
+				selectedVectorNode.position.y + selectedVectorNode.height / 2;
+			const zoom = 1.85;
+
+			reactFlow.setCenter(x, y, { zoom, duration: 400 });
+
+			// Reset selection after moving toward the node
+			setSelectedVectorNode(null, null);
+		}
+	}, [selectedVectorNode, selectedVectorFrom]);
 
 	const [width, height] = useWindowSize();
 
@@ -78,6 +108,18 @@ const Editor = () => {
 	const onConnectEnd = useCallback(() => setIsConnecting(false), []);
 	const onDragStart = useCallback(() => setIsDragging(true), []);
 	const onDragEnd = useCallback(() => setIsDragging(false), []);
+
+	const onSelectionChange: OnSelectionChangeFunc = useCallback(
+		({ nodes }) => {
+			if (nodes.length !== 1 || nodes[0].type !== "vector") {
+				setSelectedVectorNode(null, null);
+				return;
+			}
+
+			setSelectedVectorNode(nodes[0], "editor");
+		},
+		[]
+	);
 
 	const onAddNode = useCallback(
 		(e: React.MouseEvent<HTMLElement>) => {
@@ -161,12 +203,6 @@ const Editor = () => {
 					width: (1 - 1 / vectorSpaceSize) * width,
 					height,
 				}}
-				onConnectStart={onConnectStart}
-				onConnectEnd={onConnectEnd}
-				onNodeDragStart={onDragStart}
-				onNodeDragStop={onDragEnd}
-				onPointerDown={onDragStart}
-				onPointerUp={onDragEnd}
 				nodes={nodes}
 				edges={edges}
 				nodeTypes={nodeTypes}
@@ -174,11 +210,21 @@ const Editor = () => {
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
+				onConnectStart={onConnectStart}
+				onConnectEnd={onConnectEnd}
+				onNodeDragStart={onDragStart}
+				onNodeDragStop={onDragEnd}
+				onSelectionDragStart={onDragStart}
+				onSelectionDragStop={onDragEnd}
+				onPointerDown={onDragStart}
+				onPointerUp={onDragEnd}
 				onClick={onAddNode}
+				onSelectionChange={onSelectionChange}
 				snapGrid={[24, 24]}
 				defaultZoom={1}
 				minZoom={0.2}
 				maxZoom={2}
+				selectNodesOnDrag={tool === Tool.Select}
 				panOnDrag={tool === Tool.Hand}
 				snapToGrid
 				elevateEdgesOnSelect

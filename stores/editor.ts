@@ -1,8 +1,11 @@
 import create from "zustand";
 import * as THREE from "three";
 
+import { Node } from "react-flow-renderer/nocss";
+
 export enum Tool {
-	Hand = "",
+	Select = "Select",
+	Hand = "Hand",
 	Vector = "Vector",
 	Matrix = "Matrix",
 	Constant = "Constant",
@@ -51,6 +54,27 @@ type EditorState = {
 	 */
 	showCube: boolean;
 	toggleShowCube: () => void;
+
+	/**
+	 * React flow does have a selected property on all nodes, but in this
+	 * application we only want to move the camera to a vector if it is the only
+	 * node selected. This is impossible to do with the selected property, so
+	 * this variable will be used for it.
+	 */
+	selectedVectorNode: Node | null;
+
+	/**
+	 * This variable is used for determining where the selection took place. If
+	 * the selection took place in the vector space, we want to move the editor
+	 * viewport to the node of the vector. If the selection took place in the
+	 * node editor, we want to move the camera toward the vector in the vector
+	 * space.
+	 */
+	selectedVectorFrom: "space" | "editor" | null;
+	setSelectedVectorNode: (
+		node: Node | null,
+		selectedVectorFrom: "space" | "editor" | null
+	) => void;
 };
 
 const useStore = create<EditorState>((set) => ({
@@ -72,6 +96,10 @@ const useStore = create<EditorState>((set) => ({
 		})),
 	showCube: false,
 	toggleShowCube: () => set((state) => ({ showCube: !state.showCube })),
+	selectedVectorNode: null,
+	selectedVectorFrom: null,
+	setSelectedVectorNode: (node, from) =>
+		set({ selectedVectorNode: node, selectedVectorFrom: from }),
 }));
 
 export default useStore;

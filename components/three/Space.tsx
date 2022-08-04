@@ -104,6 +104,10 @@ export type Space = {
 	 * Reset the space to its initial position.
 	 */
 	reset: () => void;
+	/**
+	 * Move camera around the origin.
+	 */
+	moveCamera: (x: number, y: number, z: number) => void;
 };
 
 export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
@@ -143,6 +147,9 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 		reset: () => {
 			gridRef.current?.reset();
 		},
+		moveCamera: (x, y, z) => {
+			cameraRef.current?.setLookAt(x, y, z, 0, 0, 0, true);
+		}
 	}));
 
 	return (
