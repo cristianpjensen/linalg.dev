@@ -5,6 +5,7 @@ interface ITooltipProps {
 	tip: string;
 	side?: "left" | "right" | "top" | "bottom";
 	hotkey?: string;
+	delay?: number;
 }
 
 export function Tooltip({
@@ -12,16 +13,15 @@ export function Tooltip({
 	tip,
 	side = "bottom",
 	hotkey,
+	delay,
 }: ITooltipProps) {
 	return (
-		<TooltipPrimitive.Root>
-			<TooltipPrimitive.Trigger>
-				{children}
-			</TooltipPrimitive.Trigger>
+		<TooltipPrimitive.Root delayDuration={delay}>
+			<TooltipPrimitive.Trigger>{children}</TooltipPrimitive.Trigger>
 
 			<TooltipPrimitive.Content
 				side={side}
-				className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow-sm text-center max-w-[172px]"
+				className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow text-center max-w-[172px]"
 			>
 				{tip}
 				{hotkey && (

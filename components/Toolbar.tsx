@@ -1,10 +1,12 @@
 import React, { cloneElement, useState } from "react";
+import { useReactFlow } from "react-flow-renderer/nocss";
 import {
 	ArrowTopRightIcon,
 	BoxIcon,
 	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
+	CrossCircledIcon,
 	DividerVerticalIcon,
 	DotIcon,
 	DownloadIcon,
@@ -19,7 +21,7 @@ import {
 	UploadIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
-import { useReactFlow } from "react-flow-renderer/nocss";
+import * as Dialog from "@radix-ui/react-dialog";
 
 import { Tooltip } from "./Tooltip";
 import {
@@ -99,8 +101,6 @@ const Toolbar = () => {
 		a.remove();
 	};
 
-	useHotkey("Meta+s", downloadEnvironment);
-
 	const uploadEnvironment = () => {
 		// Create a fake input element that gets artificially clicked to upload a
 		// file
@@ -136,6 +136,9 @@ const Toolbar = () => {
 		input.remove();
 	};
 
+	useHotkey("Meta+s", downloadEnvironment);
+	useHotkey("Shift+F", fitNodes);
+
 	return (
 		<div className="absolute top-0 left-0 z-40 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
 			<Tool
@@ -170,7 +173,7 @@ const Toolbar = () => {
 					{
 						icon: <SliderIcon />,
 						tool: _Tool.Slider,
-						description: "Allows for animations between two values",
+						description: "A slider between two values",
 						hotkey: "l",
 					},
 					{
@@ -240,7 +243,7 @@ const Toolbar = () => {
 			/>
 
 			<div className="flex items-center justify-center text-sm grow">
-				Linear algebra
+				linalg.dev
 			</div>
 
 			<VectorSpaceSizeControl />
@@ -255,16 +258,16 @@ const Toolbar = () => {
 
 			<Toggle
 				icon={<DownloadIcon />}
-				tip="Download file of nodes to share with others"
+				tip="Download environment to share with others"
 				onClick={downloadEnvironment}
 			/>
 			<Toggle
 				icon={<UploadIcon />}
-				tip="Upload file of nodes to view its environment"
+				tip="Upload environment to view and edit"
 				onClick={uploadEnvironment}
 			/>
 
-			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
+			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-400 dark:text-zinc-700" />
 
 			<Toggle
 				icon={<SunIcon />}
@@ -273,13 +276,135 @@ const Toolbar = () => {
 				toggled={darkMode}
 				onClick={setDarkMode}
 			/>
-			<Toggle icon={<InfoCircledIcon />} tip="Show keyboard shortcuts" />
+
+			<Dialog.Root>
+				<Dialog.Trigger>
+					<Toggle
+						icon={<InfoCircledIcon />}
+						tip="Show information about the project"
+					/>
+				</Dialog.Trigger>
+
+				<Dialog.Portal>
+					<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-fast bg-offblack/40 dark:bg-offwhite/10" />
+					<Dialog.Content
+						className="fixed z-50 w-[90vw] max-w-[560px] h-[60vh] max-h-[640px] py-10 px-4 top-[50%] left-[50%] animate-fadein bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite rounded shadow-lg"
+						style={{ transform: "translate(-50%, -50%)" }}
+					>
+						<div className="w-full h-full px-6 overflow-scroll">
+							<Dialog.Title className="pt-4 pb-2 text-2xl">
+								About the project
+							</Dialog.Title>
+
+							<p className="pb-2">
+								This is a web application for visualising and
+								editing linear algebra problems in three
+								dimensions with a node environment. Its purpose
+								is to be a tool for students studying linear
+								algebra to get an intuition of the underlying
+								mathematics behind the concepts in linear
+								algebra.
+							</p>
+
+							<p>
+								Nodes can be added to the environment by
+								selecting one of the node types in the toolbar
+								and clicking anywhere in the environment. The
+								nodes can be connected by dragging from one
+								handle to another. Vectors will be shown in the
+								vector space on the right. You can click on a
+								vector there to show its node in the
+								environment. Matrices can be used to transform
+								the vector space.
+							</p>
+
+							<h2 className="pt-4 pb-2 text-xl">
+								Example environments
+							</h2>
+
+							<div className="flex flex-col gap-4 my-4">
+								<ExampleDownload file="svd.json" />
+								<ExampleDownload file="pca.json" />
+							</div>
+
+							<h2 className="pt-4 pb-4 text-xl">
+								Keyboard shortcuts
+							</h2>
+
+							<Shortcut
+								description="Save environment"
+								hotkey="Meta S"
+							/>
+							<Shortcut
+								description="Upload environment"
+								hotkey="Meta U"
+							/>
+							<Shortcut
+								description="Fit nodes in frame"
+								hotkey="Shift F"
+							/>
+							<Shortcut
+								description="Multi-select nodes"
+								hotkey="Hold shift"
+							/>
+
+							<p className="mt-4 mb-2 text-xs text-zinc-500">
+								Every node type has its own keyboard shortcut
+								that can be discovered when hovering over its
+								button.
+							</p>
+						</div>
+					</Dialog.Content>
+				</Dialog.Portal>
+			</Dialog.Root>
+
 			<a
 				className="h-12"
 				href="https://github.com/cristianpjensen/linalg.dev"
 			>
 				<Toggle icon={<GitHubLogoIcon />} tip="Show source code" />
 			</a>
+		</div>
+	);
+};
+
+type IExampleDownloadProps = {
+	file: string;
+};
+
+const ExampleDownload = ({ file }: IExampleDownloadProps) => {
+	return (
+		<a
+			className="flex items-center justify-between w-full h-12 p-4 border rounded-md cursor-pointer border-zinc-300 dark:border-zinc-700 hover:bg-offblack/10 dark:hover:bg-offwhite/10"
+			download={file}
+			href={`/examples/${file}`}
+		>
+			<div className="font-mono text-sm grow">{file}</div>
+			<DownloadIcon />
+		</a>
+	);
+};
+
+type IShortcutProps = {
+	description: string;
+	hotkey: string;
+};
+
+const Shortcut = ({ description, hotkey }: IShortcutProps) => {
+	let hk = hotkey;
+	if (navigator.userAgent.includes("Mac")) {
+		hk = hotkey
+			.replace("Meta", "⌘")
+			.replace("Alt", "⌥")
+			.replace("Ctrl", "⌃");
+	} else {
+		hk = hotkey.replace("Meta", "Ctrl");
+	}
+
+	return (
+		<div className="flex items-center justify-between w-full h-10 p-2">
+			<div className="text-sm text-left grow">{description}</div>
+			<div className="text-xs text-zinc-500">{hk}</div>
 		</div>
 	);
 };

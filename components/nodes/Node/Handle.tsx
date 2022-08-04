@@ -10,6 +10,7 @@ import { getHandleType } from "../../helpers";
 import { Input, ValidInputOutput } from "../types";
 import useStore from "../../../stores/nodes";
 import NodeContext from "./context";
+import { Tooltip } from "../../Tooltip";
 
 interface HandleProps extends Omit<InternalHandleProps, "position"> {
 	id: string;
@@ -35,9 +36,7 @@ const Handle = ({
 		throw new Error(
 			`${id} is not defined in the data of node (${Object.keys(data)
 				.concat(Object.keys(data.output))
-				.filter(
-					(key) => key !== "output"
-				)}). Is it spelled correctly?`
+				.filter((key) => key !== "output")}). Is it spelled correctly?`
 		);
 	}
 

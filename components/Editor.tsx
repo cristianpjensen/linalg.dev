@@ -211,7 +211,7 @@ const Editor = () => {
 							: "grab",
 					width: (1 - 1 / vectorSpaceSize) * width,
 					height: height - 48,
-					bottom: 0,
+					marginTop: 48
 				}}
 				nodes={nodes}
 				edges={edges}

@@ -55,7 +55,8 @@ module.exports = {
 				},
 			},
 			animation: {
-				fadein: "fadein 0.5s ease-out",
+				fadein: "fadein 0.4s ease-out",
+				"fadein-fast": "fadein 0.1s ease-out",
 				fadeout: "fadeout 0.8s ease-out",
 			},
 			colors: {
