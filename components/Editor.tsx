@@ -30,6 +30,7 @@ import {
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
 import Toolbar from "./Toolbar";
+import { VectorData } from "./nodes/types";
 
 const edgeTypes = {
 	default: Edge,
@@ -115,7 +116,12 @@ const Editor = () => {
 				return;
 			}
 
-			setSelectedVectorNode(nodes[0], "editor");
+			const node = nodes[0] as Node<VectorData>;
+			node.data.x.value += node.data.origin.value.x;
+			node.data.y.value += node.data.origin.value.y;
+			node.data.z.value += node.data.origin.value.z;
+
+			setSelectedVectorNode(node, "editor");
 		},
 		[]
 	);

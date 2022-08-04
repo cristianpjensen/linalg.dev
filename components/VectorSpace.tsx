@@ -54,8 +54,7 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	useEffect(() => {
 		if (selectedVectorNode && selectedVectorFrom === "editor") {
 			const { x, y, z } = selectedVectorNode.data as VectorData;
-			const vector = new THREE.Vector3(x.value, y.value, z.value);
-			vector.applyMatrix3(matrix);
+			const vector = new THREE.Vector3(x.value, y.value, z.value).applyMatrix3(matrix);
 
 			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
 				return;
