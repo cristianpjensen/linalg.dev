@@ -15,7 +15,8 @@ const Home: NextPage = () => {
 					name="description"
 					content="Linear algebra node environment."
 				/>
-				<link rel="icon" href="/favicon.ico" />
+				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+				<link rel="icon" type="image/png" href="/favicon.png" />
 			</Head>
 
 			<div className="flex flex-row text-offblack dark:text-offwhite bg-offwhite dark:bg-offblack">
