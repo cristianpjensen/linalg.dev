@@ -5,7 +5,7 @@ import {
 	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
-	CropIcon,
+	DividerVerticalIcon,
 	DotIcon,
 	DownloadIcon,
 	GitHubLogoIcon,
@@ -24,6 +24,7 @@ import { useReactFlow } from "react-flow-renderer/nocss";
 import { Tooltip } from "./Tooltip";
 import {
 	EigenvectorsIcon,
+	FitFrameIcon,
 	LinearAlgebraIcon,
 	MathIcon,
 	NormIcon,
@@ -97,6 +98,8 @@ const Toolbar = () => {
 		URL.revokeObjectURL(url);
 		a.remove();
 	};
+
+	useHotkey("Meta+s", downloadEnvironment);
 
 	const uploadEnvironment = () => {
 		// Create a fake input element that gets artificially clicked to upload a
@@ -243,6 +246,14 @@ const Toolbar = () => {
 			<VectorSpaceSizeControl />
 
 			<Toggle
+				icon={<FitFrameIcon />}
+				tip="Fit nodes into view"
+				onClick={fitNodes}
+			/>
+
+			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
+
+			<Toggle
 				icon={<DownloadIcon />}
 				tip="Download file of nodes to share with others"
 				onClick={downloadEnvironment}
@@ -252,11 +263,9 @@ const Toolbar = () => {
 				tip="Upload file of nodes to view its environment"
 				onClick={uploadEnvironment}
 			/>
-			<Toggle
-				icon={<CropIcon />}
-				tip="Fit nodes into view"
-				onClick={fitNodes}
-			/>
+
+			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
+
 			<Toggle
 				icon={<SunIcon />}
 				altIcon={<MoonIcon />}

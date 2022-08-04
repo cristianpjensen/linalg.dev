@@ -6,3 +6,4 @@ export { default as NormIcon } from "./NormIcon";
 export { default as TransformationIcon } from "./TransformationIcon";
 export { default as TransposeIcon } from "./TransposeIcon";
 export { default as VectorScalingIcon } from "./VectorScalingIcon";
+export { default as FitFrameIcon } from "./FitFrameIcon";
