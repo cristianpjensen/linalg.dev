@@ -83,14 +83,28 @@ const useStore = create(
 				const node = get().nodes.find((node) => node.id === target);
 
 				if (node) {
-					const value = node.data[targetHandle].value;
+					// Reset origin on disconnect
+					if (targetHandle === "origin") {
+						get().setNodeData(target, {
+							origin: {
+								isConnected: false,
+								value: {
+									x: 0,
+									y: 0,
+									z: 0,
+								},
+							},
+						});
+					} else {
+						const value = node.data[targetHandle].value;
 
-					get().setNodeData(target, {
-						[targetHandle]: {
-							isConnected: false,
-							value,
-						},
-					});
+						get().setNodeData(target, {
+							[targetHandle]: {
+								isConnected: false,
+								value,
+							},
+						});
+					}
 				}
 			},
 			onConnect: (connection) => {
