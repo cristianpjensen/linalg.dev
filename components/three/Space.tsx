@@ -389,6 +389,26 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		const mat4 = new THREE.Matrix4().setFromMatrix3(mat);
 		const quaternion = new THREE.Quaternion().setFromRotationMatrix(mat4);
 
+		const initialMx = Mx.clone();
+		const initialMy = My.clone();
+		const initialMz = Mz.clone();
+
+		const initialXLine1 = xLine1.clone();
+		const initialXLine2 = xLine2.clone();
+		const initialYLine1 = yLine1.clone();
+		const initialYLine2 = yLine2.clone();
+		const initialZLine1 = zLine1.clone();
+		const initialZLine2 = zLine2.clone();
+
+		const initialCubeBottom1 = cubeBottom1.clone();
+		const initialCubeBottom2 = cubeBottom2.clone();
+		const initialCubeBottom3 = cubeBottom3.clone();
+		const initialCubeBottom4 = cubeBottom4.clone();
+		const initialCubeTop1 = cubeTop1.clone();
+		const initialCubeTop2 = cubeTop2.clone();
+		const initialCubeTop3 = cubeTop3.clone();
+		const initialCubeTop4 = cubeTop4.clone();
+
 		const currentQuaternion = new THREE.Quaternion();
 		const t = { value: 0 };
 		new TWEEN.Tween(t)
@@ -401,93 +421,80 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 					t.value
 				);
 
-				const rotatedMx = Mx.clone().applyQuaternion(currentQuaternion);
-				const rotatedMy = My.clone().applyQuaternion(currentQuaternion);
-				const rotatedMz = Mz.clone().applyQuaternion(currentQuaternion);
+				Mx.copy(initialMx.clone().applyQuaternion(currentQuaternion));
+				My.copy(initialMy.clone().applyQuaternion(currentQuaternion));
+				Mz.copy(initialMz.clone().applyQuaternion(currentQuaternion));
 
-				const rotatedXLine1 = xLine1
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedXLine2 = xLine2
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedYLine1 = yLine1
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedYLine2 = yLine2
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedZLine1 = zLine1
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedZLine2 = zLine2
-					.clone()
-					.applyQuaternion(currentQuaternion);
-
-				const rotatedCubeBottom1 = cubeBottom1
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeBottom2 = cubeBottom2
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeBottom3 = cubeBottom3
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeBottom4 = cubeBottom4
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeTop1 = cubeTop1
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeTop2 = cubeTop2
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeTop3 = cubeTop3
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedCubeTop4 = cubeTop4
-					.clone()
-					.applyQuaternion(currentQuaternion);
-
-				setLines(
-					rotatedMx,
-					rotatedMy,
-					rotatedMz,
-					rotatedXLine1,
-					rotatedXLine2,
-					rotatedYLine1,
-					rotatedYLine2,
-					rotatedZLine1,
-					rotatedZLine2,
-					rotatedCubeBottom1,
-					rotatedCubeBottom2,
-					rotatedCubeBottom3,
-					rotatedCubeBottom4,
-					rotatedCubeTop1,
-					rotatedCubeTop2,
-					rotatedCubeTop3,
-					rotatedCubeTop4
+				xLine1.copy(
+					initialXLine1.clone().applyQuaternion(currentQuaternion)
 				);
-			})
-			.onComplete(() => {
+				xLine2.copy(
+					initialXLine2.clone().applyQuaternion(currentQuaternion)
+				);
+				yLine1.copy(
+					initialYLine1.clone().applyQuaternion(currentQuaternion)
+				);
+				yLine2.copy(
+					initialYLine2.clone().applyQuaternion(currentQuaternion)
+				);
+				zLine1.copy(
+					initialZLine1.clone().applyQuaternion(currentQuaternion)
+				);
+				zLine2.copy(
+					initialZLine2.clone().applyQuaternion(currentQuaternion)
+				);
+
+				cubeBottom1.copy(
+					initialCubeBottom1
+						.clone()
+						.applyQuaternion(currentQuaternion)
+				);
+				cubeBottom2.copy(
+					initialCubeBottom2
+						.clone()
+						.applyQuaternion(currentQuaternion)
+				);
+				cubeBottom3.copy(
+					initialCubeBottom3
+						.clone()
+						.applyQuaternion(currentQuaternion)
+				);
+				cubeBottom4.copy(
+					initialCubeBottom4
+						.clone()
+						.applyQuaternion(currentQuaternion)
+				);
+				cubeTop1.copy(
+					initialCubeTop1.clone().applyQuaternion(currentQuaternion)
+				);
+				cubeTop2.copy(
+					initialCubeTop2.clone().applyQuaternion(currentQuaternion)
+				);
+				cubeTop3.copy(
+					initialCubeTop3.clone().applyQuaternion(currentQuaternion)
+				);
+				cubeTop4.copy(
+					initialCubeTop4.clone().applyQuaternion(currentQuaternion)
+				);
+
 				setLines(
-					currentMx,
-					currentMy,
-					currentMz,
-					currentXLine1,
-					currentXLine2,
-					currentYLine1,
-					currentYLine2,
-					currentZLine1,
-					currentZLine2,
-					currentCubeBottom1,
-					currentCubeBottom2,
-					currentCubeBottom3,
-					currentCubeBottom4,
-					currentCubeTop1,
-					currentCubeTop2,
-					currentCubeTop3,
-					currentCubeTop4
+					Mx,
+					My,
+					Mz,
+					xLine1,
+					xLine2,
+					yLine1,
+					yLine2,
+					zLine1,
+					zLine2,
+					cubeBottom1,
+					cubeBottom2,
+					cubeBottom3,
+					cubeBottom4,
+					cubeTop1,
+					cubeTop2,
+					cubeTop3,
+					cubeTop4
 				);
 			})
 			.start();
