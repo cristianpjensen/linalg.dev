@@ -102,28 +102,32 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 
 	function setMeshes(ori: THREE.Vector3, vec: THREE.Vector3) {
 		const length = vec.length();
-		const adjVector = vec
+		const cylinderVector = vec
 			.clone()
 			.normalize()
 			.multiplyScalar(length - coneHeight);
-		const cylinderPos = adjVector.clone().divideScalar(2).add(ori);
-		const conePos = vec
+
+		const cylinderPosition = cylinderVector
+			.clone()
+			.divideScalar(2)
+			.add(ori);
+		const conePosition = vec
 			.clone()
 			.normalize()
 			.multiplyScalar(length - coneHeight / 2)
 			.add(ori);
 
-		orientation.lookAt(ORIGIN, adjVector, UP);
+		orientation.lookAt(ORIGIN, vec.clone().multiplyScalar(2), UP);
 		const cylinderOrientation = orientation.clone().multiply(X_ROTATION);
-		const coneOrientation = orientation.multiply(X_NEG_ROTATION);
+		const coneOrientation = orientation.clone().multiply(X_NEG_ROTATION);
 
 		if (cylinderRef.current && coneRef.current) {
 			cylinderRef.current.scale.set(1, length - coneHeight, 1);
 			cylinderRef.current.setRotationFromMatrix(cylinderOrientation);
-			cylinderRef.current.position.copy(cylinderPos);
+			cylinderRef.current.position.copy(cylinderPosition);
 
 			coneRef.current.setRotationFromMatrix(coneOrientation);
-			coneRef.current.position.copy(conePos);
+			coneRef.current.position.copy(conePosition);
 		}
 	}
 
