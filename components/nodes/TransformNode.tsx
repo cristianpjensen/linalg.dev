@@ -27,7 +27,7 @@ const TransformNode = memo(
 				selected={selected}
 				title="Transform"
 				color="slate"
-				width={8}
+				width={10}
 				height={5}
 			>
 				<Node.Dragger />

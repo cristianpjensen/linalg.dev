@@ -27,7 +27,7 @@ const VectorScalingNode = memo(
 				selected={selected}
 				title="Vector scaling"
 				color="slate"
-				width={8}
+				width={10}
 				height={8}
 			>
 				<Node.Dragger />

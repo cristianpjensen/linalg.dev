@@ -37,7 +37,7 @@ const MatrixMultiplicationNode = memo(
 				selected={selected}
 				title="Matrix multiplication"
 				color="slate"
-				width={8}
+				width={10}
 				height={8}
 			>
 				<Node.Dragger />
