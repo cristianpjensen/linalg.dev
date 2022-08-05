@@ -83,7 +83,7 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 					</Popover.Trigger>
 
 					<Popover.Content side="top" sideOffset={2}>
-						<div className="p-4 rounded shadow-b2 bg-offwhite dark:bg-offblack shadow-zinc-400 dark:shadow-zinc-400">
+						<div className="w-[232px] p-4 rounded shadow-b2 bg-offwhite dark:bg-offblack shadow-zinc-400 dark:shadow-zinc-400">
 							<HexColorPicker
 								color={data.color}
 								onChange={onColorChange}
@@ -92,6 +92,7 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 
 							<input
 								type="text"
+								className="w-full px-4 py-2 mt-2 rounded outline-none shadow-b1 focus:shadow-b2 shadow-zinc-400 focus:shadow-zinc-600 dark:shadow-zinc-600 dark:focus:shadow-zinc-400 bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite"
 								value={colorString}
 								onChange={onColorInputChange}
 							/>
