@@ -81,7 +81,7 @@ const TransformNode = memo(
 				<Node.Dragger>
 					<Popover.Root>
 						<Popover.Trigger>
-							<Node.DraggerButton tooltip="Customize vector colour">
+							<Node.DraggerButton tooltip="Customise vector colour">
 								<ColorWheelIcon />
 							</Node.DraggerButton>
 						</Popover.Trigger>

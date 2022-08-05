@@ -881,95 +881,87 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 				</>
 			)}
 
-			<Line
-				ref={refCubeLeg1}
-				points={[cubeBottom1, cubeTop1]}
-				color={["blue", "cyan"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeLeg2}
-				points={[cubeBottom2, cubeTop2]}
-				color={["purple", "white"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeLeg3}
-				points={[cubeBottom3, cubeTop3]}
-				color={["red", "yellow"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeLeg4}
-				points={[cubeBottom4, cubeTop4]}
-				color={["black", "green"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+			{showCube && (
+				<>
+					<Line
+						ref={refCubeLeg1}
+						points={[cubeBottom1, cubeTop1]}
+						color={["blue", "cyan"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg2}
+						points={[cubeBottom2, cubeTop2]}
+						color={["purple", "white"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg3}
+						points={[cubeBottom3, cubeTop3]}
+						color={["red", "yellow"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeLeg4}
+						points={[cubeBottom4, cubeTop4]}
+						color={["black", "green"]}
+						bias={cubeBias}
+					/>
 
-			<Line
-				ref={refCubeBottom1}
-				points={[cubeBottom1, cubeBottom2]}
-				color={["blue", "purple"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeBottom2}
-				points={[cubeBottom2, cubeBottom3]}
-				color={["purple", "red"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeBottom3}
-				points={[cubeBottom3, cubeBottom4]}
-				color={["red", "black"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
-			<Line
-				ref={refCubeBottom4}
-				points={[cubeBottom4, cubeBottom1]}
-				color={["black", "blue"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+					<Line
+						ref={refCubeBottom1}
+						points={[cubeBottom1, cubeBottom2]}
+						color={["blue", "purple"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom2}
+						points={[cubeBottom2, cubeBottom3]}
+						color={["purple", "red"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom3}
+						points={[cubeBottom3, cubeBottom4]}
+						color={["red", "black"]}
+						bias={cubeBias}
+					/>
+					<Line
+						ref={refCubeBottom4}
+						points={[cubeBottom4, cubeBottom1]}
+						color={["black", "blue"]}
+						bias={cubeBias}
+					/>
 
-			<Line
-				ref={refCubeTop1}
-				points={[cubeTop1, cubeTop2]}
-				color={["white", "cyan"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+					<Line
+						ref={refCubeTop1}
+						points={[cubeTop1, cubeTop2]}
+						color={["white", "cyan"]}
+						bias={cubeBias}
+					/>
 
-			<Line
-				ref={refCubeTop2}
-				points={[cubeTop2, cubeTop3]}
-				color={["cyan", "yellow"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+					<Line
+						ref={refCubeTop2}
+						points={[cubeTop2, cubeTop3]}
+						color={["cyan", "yellow"]}
+						bias={cubeBias}
+					/>
 
-			<Line
-				ref={refCubeTop3}
-				points={[cubeTop3, cubeTop4]}
-				color={["yellow", "green"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+					<Line
+						ref={refCubeTop3}
+						points={[cubeTop3, cubeTop4]}
+						color={["yellow", "green"]}
+						bias={cubeBias}
+					/>
 
-			<Line
-				ref={refCubeTop4}
-				points={[cubeTop4, cubeTop1]}
-				color={["green", "cyan"]}
-				bias={cubeBias}
-				opacity={showCube ? 1 : 0}
-			/>
+					<Line
+						ref={refCubeTop4}
+						points={[cubeTop4, cubeTop1]}
+						color={["green", "cyan"]}
+						bias={cubeBias}
+					/>
+				</>
+			)}
 		</>
 	);
 });
