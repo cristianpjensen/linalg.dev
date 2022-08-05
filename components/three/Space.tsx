@@ -1,20 +1,19 @@
 import React, {
 	forwardRef,
+	Suspense,
 	useImperativeHandle,
-	useMemo,
 	useRef,
 	useState,
 } from "react";
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 
 import CameraControls from "./helpers/CameraControls";
 import type { CameraControls as CameraControlsType } from "./helpers/CameraControls";
 import RenderCycler from "./helpers/RenderCycler";
 import { Line } from "./helpers/Line";
 import { isRotationMatrix } from "./matrixProperties";
-import { Text } from "./Text";
 import { IDENTITYQUATERNION, DURATION } from "./constants";
 
 export interface SpaceProps {
@@ -627,10 +626,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			currentCubeTop3.applyMatrix3(mat);
 			currentCubeTop4.applyMatrix3(mat);
 
-			xLabelRef.current?.transform(mat);
-			yLabelRef.current?.transform(mat);
-			zLabelRef.current?.transform(mat);
-
 			if (isRotationMatrix(mat)) {
 				rotate(mat);
 			} else {
@@ -678,10 +673,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			currentCubeTop2.copy(new THREE.Vector3(-size4, size4, size4));
 			currentCubeTop3.copy(new THREE.Vector3(-size4, -size4, size4));
 			currentCubeTop4.copy(new THREE.Vector3(size4, -size4, size4));
-
-			xLabelRef.current?.move(new THREE.Vector3(center + 0.4, 0, 0));
-			yLabelRef.current?.move(new THREE.Vector3(0, center + 0.4, 0));
-			zLabelRef.current?.move(new THREE.Vector3(0, 0, center + 0.4));
 
 			move(
 				currentMx,
@@ -744,24 +735,12 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			{/* Axis labels */}
 			{showAxisLabels && (
 				<>
-					<Text
-						ref={xLabelRef}
-						text={xLabel}
-						position={xLabelVector}
-						scale={axisLabelScale}
-						sizeAttenuation={false}
-					/>
-					<Text
-						ref={yLabelRef}
-						text={yLabel}
-						position={yLabelVector}
-						scale={axisLabelScale}
-						sizeAttenuation={false}
-					/>
+					<AxisLabel position={xLabelVector} label="x" />
+					<AxisLabel position={yLabelVector} label="y" />
 				</>
 			)}
 
-			{/* Y axis */}
+			{/* Z axis */}
 			{showZAxis && !showZPlanes && (
 				<>
 					<Line
@@ -769,13 +748,7 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 						points={[zLine1, zLine2]}
 						color="rgb(80, 80, 80)"
 					/>
-					<Text
-						ref={zLabelRef}
-						text={zLabel}
-						position={zLabelVector}
-						scale={axisLabelScale}
-						sizeAttenuation={false}
-					/>
+					<AxisLabel position={zLabelVector} label="z" />
 				</>
 			)}
 
@@ -869,13 +842,7 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 								}
 							/>
 
-							<Text
-								ref={zLabelRef}
-								text={zLabel}
-								position={zLabelVector}
-								scale={axisLabelScale}
-								sizeAttenuation={false}
-							/>
+							<AxisLabel position={zLabelVector} label="z" />
 						</>
 					))}
 				</>
@@ -965,3 +932,35 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		</>
 	);
 });
+
+type IAxisLabelProps = {
+	position: THREE.Vector3;
+	label: "x" | "y" | "z";
+};
+
+const AxisLabel = ({ position, label }: IAxisLabelProps) => {
+	const texture = useLoader(THREE.TextureLoader, `/assets/${label}.png`);
+	const { gl } = useThree();
+	texture.anisotropy = gl.capabilities.getMaxAnisotropy();
+	texture.needsUpdate = true;
+
+	useFrame(() => {
+		texture.needsUpdate = true;
+	});
+
+	const yScale = label === "x" ? 0.79 : label === "y" ? 1.321 : 0.973;
+
+	return (
+		<sprite scale={[0.04, yScale * 0.04, 1]} position={position}>
+			<Suspense fallback={null}>
+				<spriteMaterial
+					sizeAttenuation={false}
+					opacity={0.5}
+					transparent
+					map={texture}
+					attach="material"
+				/>
+			</Suspense>
+		</sprite>
+	);
+};
