@@ -7,12 +7,7 @@ import {
 	useRef,
 } from "react";
 import * as THREE from "three";
-import {
-	CubeIcon,
-	GroupIcon,
-	ResetIcon,
-	ShadowInnerIcon,
-} from "@radix-ui/react-icons";
+import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
 import { useWindowSize } from "@react-hook/window-size";
@@ -21,6 +16,7 @@ import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
 import { Vector as _Vector, EigenvectorsData } from "./nodes/types";
 import { Tooltip } from "./Tooltip";
+import { VectorSpaceIcon } from "./icons";
 
 type MinimalVectorData = {
 	origin?: {
@@ -168,7 +164,7 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 					onClick={toggleShowSpaceTransformations}
 					active={showSpaceTransformations}
 				>
-					<GroupIcon />
+					<VectorSpaceIcon />
 				</ToggleButton>
 
 				<ToggleButton
