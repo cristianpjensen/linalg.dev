@@ -1,0 +1,5201 @@
+{
+  "nodes": [
+    {
+      "width": 264,
+      "height": 264,
+      "type": "matrix",
+      "id": "1659662592121-57",
+      "position": {
+        "x": 7452,
+        "y": 2436
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "m1": {
+          "isConnected": true,
+          "value": {
+            "x": 4.300000000000001,
+            "y": -1.9,
+            "z": 2.2
+          }
+        },
+        "m2": {
+          "isConnected": true,
+          "value": {
+            "x": -1.9,
+            "y": 2.7,
+            "z": -2.1
+          }
+        },
+        "m3": {
+          "isConnected": true,
+          "value": {
+            "x": 2.2,
+            "y": -2.1,
+            "z": 2.8000000000000003
+          }
+        },
+        "output": {
+          "result": [
+            4.300000000000001,
+            -1.9,
+            2.2,
+            -1.9,
+            2.7,
+            -2.1,
+            2.2,
+            -2.1,
+            2.8000000000000003
+          ]
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 7452,
+        "y": 2436
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659662505682-4",
+      "position": {
+        "x": 7020,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "y": {
+          "isConnected": true,
+          "value": -2.1
+        },
+        "z": {
+          "isConnected": true,
+          "value": 2.8000000000000003
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": 2.2,
+            "y": -2.1,
+            "z": 2.8000000000000003
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 7020,
+        "y": 900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662434309-33",
+      "position": {
+        "x": 6780,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 11.200000000000001
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": 2.8000000000000003
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 6780,
+        "y": 2148
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662432620-6",
+      "position": {
+        "x": 6588,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 11.040000000000001
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.15999999999999992
+        },
+        "operator": "add",
+        "output": {
+          "result": 11.200000000000001
+        }
+      },
+      "positionAbsolute": {
+        "x": 6588,
+        "y": 2148
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662429941-94",
+      "position": {
+        "x": 6396,
+        "y": 1908
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 5.280000000000001
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5.76
+        },
+        "operator": "add",
+        "output": {
+          "result": 11.040000000000001
+        }
+      },
+      "positionAbsolute": {
+        "x": 6396,
+        "y": 1908
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662426977-2",
+      "position": {
+        "x": 6204,
+        "y": 1668
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2.7200000000000006
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.5600000000000005
+        },
+        "operator": "add",
+        "output": {
+          "result": 5.280000000000001
+        }
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 6204,
+        "y": 1668
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662424778-84",
+      "position": {
+        "x": 6012,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2.5600000000000005
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.15999999999999992
+        },
+        "operator": "add",
+        "output": {
+          "result": 2.7200000000000006
+        }
+      },
+      "positionAbsolute": {
+        "x": 6012,
+        "y": 1428
+      }
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662410214-75",
+      "position": {
+        "x": 5820,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "square",
+        "output": {
+          "result": 2.5600000000000005
+        }
+      },
+      "positionAbsolute": {
+        "x": 5820,
+        "y": 1428
+      }
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662408435-12",
+      "position": {
+        "x": 5820,
+        "y": 1620
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "square",
+        "output": {
+          "result": 0.15999999999999992
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 5820,
+        "y": 1620
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662405906-58",
+      "position": {
+        "x": 5820,
+        "y": 1812
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "square",
+        "output": {
+          "result": 2.5600000000000005
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 5820,
+        "y": 1812
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662404680-51",
+      "position": {
+        "x": 5820,
+        "y": 2004
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -2.4
+        },
+        "operator": "square",
+        "output": {
+          "result": 5.76
+        }
+      },
+      "positionAbsolute": {
+        "x": 5820,
+        "y": 2004
+      }
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662359514-78",
+      "position": {
+        "x": 5820,
+        "y": 2196
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "square",
+        "output": {
+          "result": 0.15999999999999992
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 5820,
+        "y": 2196
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659662308954-32",
+      "position": {
+        "x": 5484,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": -1.9
+        },
+        "y": {
+          "isConnected": true,
+          "value": 2.7
+        },
+        "z": {
+          "isConnected": true,
+          "value": -2.1
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": -1.9,
+            "y": 2.7,
+            "z": -2.1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 5484,
+        "y": 900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662179592-78",
+      "position": {
+        "x": 5244,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -8.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": -2.1
+        }
+      },
+      "positionAbsolute": {
+        "x": 5244,
+        "y": 2148
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662178293-60",
+      "position": {
+        "x": 5052,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -8.88
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.48
+        },
+        "operator": "add",
+        "output": {
+          "result": -8.4
+        }
+      },
+      "positionAbsolute": {
+        "x": 5052,
+        "y": 2148
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662176559-16",
+      "position": {
+        "x": 4860,
+        "y": 1908
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -2.1600000000000006
+        },
+        "right": {
+          "isConnected": true,
+          "value": -6.72
+        },
+        "operator": "add",
+        "output": {
+          "result": -8.88
+        }
+      },
+      "positionAbsolute": {
+        "x": 4860,
+        "y": 1908
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662172421-42",
+      "position": {
+        "x": 4668,
+        "y": 1668
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.2400000000000002
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1.9200000000000004
+        },
+        "operator": "add",
+        "output": {
+          "result": -2.1600000000000006
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4668,
+        "y": 1668
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662170778-58",
+      "position": {
+        "x": 4476,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.3200000000000003
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.08000000000000006
+        },
+        "operator": "add",
+        "output": {
+          "result": -0.2400000000000002
+        }
+      },
+      "positionAbsolute": {
+        "x": 4476,
+        "y": 1428
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662164694-71",
+      "position": {
+        "x": 4284,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 0.48
+        }
+      },
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 2148
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662163261-1",
+      "position": {
+        "x": 4284,
+        "y": 1908
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2.8
+        },
+        "right": {
+          "isConnected": true,
+          "value": -2.4
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -6.72
+        }
+      },
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 1908
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662161924-9",
+      "position": {
+        "x": 4284,
+        "y": 1668
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -1.9200000000000004
+        }
+      },
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 1668
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662160633-7",
+      "position": {
+        "x": 4284,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 0.08000000000000006
+        }
+      },
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 1428
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662156943-78",
+      "position": {
+        "x": 4284,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -0.3200000000000003
+        }
+      },
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 1188
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662092890-37",
+      "position": {
+        "x": 5244,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 10.8
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": 2.7
+        }
+      },
+      "positionAbsolute": {
+        "x": 5244,
+        "y": 900
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662089234-83",
+      "position": {
+        "x": 5052,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 9.36
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4400000000000004
+        },
+        "operator": "add",
+        "output": {
+          "result": 10.8
+        }
+      },
+      "positionAbsolute": {
+        "x": 5052,
+        "y": 900
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662087517-8",
+      "position": {
+        "x": 4860,
+        "y": 660
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1.5200000000000005
+        },
+        "right": {
+          "isConnected": true,
+          "value": 7.839999999999999
+        },
+        "operator": "add",
+        "output": {
+          "result": 9.36
+        }
+      },
+      "positionAbsolute": {
+        "x": 4860,
+        "y": 660
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662078288-77",
+      "position": {
+        "x": 4668,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.08000000000000014
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4400000000000004
+        },
+        "operator": "add",
+        "output": {
+          "result": 1.5200000000000005
+        }
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 4668,
+        "y": 420
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659662072063-28",
+      "position": {
+        "x": 4476,
+        "y": 180
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.04000000000000007
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.04000000000000007
+        },
+        "operator": "add",
+        "output": {
+          "result": 0.08000000000000014
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4476,
+        "y": 180
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662064279-68",
+      "position": {
+        "x": 4284,
+        "y": 180
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "operator": "square",
+        "output": {
+          "result": 0.04000000000000007
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 180
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662062410-59",
+      "position": {
+        "x": 4284,
+        "y": 372
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "operator": "square",
+        "output": {
+          "result": 0.04000000000000007
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 372
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662060133-71",
+      "position": {
+        "x": 4284,
+        "y": 564
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "operator": "square",
+        "output": {
+          "result": 1.4400000000000004
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 564
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662057433-35",
+      "position": {
+        "x": 4284,
+        "y": 756
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 2.8
+        },
+        "operator": "square",
+        "output": {
+          "result": 7.839999999999999
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 756
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659662049959-93",
+      "position": {
+        "x": 4284,
+        "y": 948
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "operator": "square",
+        "output": {
+          "result": 1.4400000000000004
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 4284,
+        "y": 948
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659661889654-45",
+      "position": {
+        "x": 3948,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 4.300000000000001
+        },
+        "y": {
+          "isConnected": true,
+          "value": -1.9
+        },
+        "z": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": 4.300000000000001,
+            "y": -1.9,
+            "z": 2.2
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3948,
+        "y": 900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661736696-19",
+      "position": {
+        "x": 3708,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 8.8
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": 2.2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3708,
+        "y": 2148
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661731150-23",
+      "position": {
+        "x": 3516,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 8.16
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6399999999999999
+        },
+        "operator": "add",
+        "output": {
+          "result": 8.8
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3516,
+        "y": 2148
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661729109-49",
+      "position": {
+        "x": 3324,
+        "y": 1908
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1.9200000000000002
+        },
+        "right": {
+          "isConnected": true,
+          "value": 6.24
+        },
+        "operator": "add",
+        "output": {
+          "result": 8.16
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3324,
+        "y": 1908
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661726608-73",
+      "position": {
+        "x": 3132,
+        "y": 1668
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.3199999999999996
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2399999999999998
+        },
+        "operator": "add",
+        "output": {
+          "result": 1.9200000000000002
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3132,
+        "y": 1668
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661724791-29",
+      "position": {
+        "x": 2940,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.6400000000000001
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.9599999999999997
+        },
+        "operator": "add",
+        "output": {
+          "result": -0.3199999999999996
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2940,
+        "y": 1428
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661720998-63",
+      "position": {
+        "x": 2748,
+        "y": 2148
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1.6
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 0.6399999999999999
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 2148
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661719720-37",
+      "position": {
+        "x": 2748,
+        "y": 1908
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -2.6
+        },
+        "right": {
+          "isConnected": true,
+          "value": -2.4
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 6.24
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 1908
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661717747-10",
+      "position": {
+        "x": 2748,
+        "y": 1668
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 2.2399999999999998
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 1668
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661716695-61",
+      "position": {
+        "x": 2748,
+        "y": 1428
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -0.9599999999999997
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 1428
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661715037-75",
+      "position": {
+        "x": 2748,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 0.6400000000000001
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 1188
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661511474-93",
+      "position": {
+        "x": 3708,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -7.6
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": -1.9
+        }
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 3708,
+        "y": 900
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661506312-29",
+      "position": {
+        "x": 3516,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -9.52
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.9200000000000004
+        },
+        "operator": "add",
+        "output": {
+          "result": -7.6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3516,
+        "y": 900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661503436-21",
+      "position": {
+        "x": 3324,
+        "y": 660
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -2.2400000000000007
+        },
+        "right": {
+          "isConnected": true,
+          "value": -7.279999999999999
+        },
+        "operator": "add",
+        "output": {
+          "result": -9.52
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3324,
+        "y": 660
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661500149-45",
+      "position": {
+        "x": 3132,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.5600000000000005
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1.6800000000000002
+        },
+        "operator": "add",
+        "output": {
+          "result": -2.2400000000000007
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3132,
+        "y": 420
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661496083-66",
+      "position": {
+        "x": 2940,
+        "y": 180
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -0.08000000000000007
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.4800000000000004
+        },
+        "operator": "add",
+        "output": {
+          "result": -0.5600000000000005
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2940,
+        "y": 180
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661368932-78",
+      "position": {
+        "x": 1260,
+        "y": -516
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 5
+        },
+        "right": {
+          "value": 1,
+          "isConnected": false
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1260,
+        "y": -516
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661269968-65",
+      "position": {
+        "x": 2748,
+        "y": 900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1.6
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "operator": "multiply",
+        "output": {
+          "result": 1.9200000000000004
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661268364-31",
+      "position": {
+        "x": 2748,
+        "y": 660
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -2.6
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.8
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -7.279999999999999
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 660
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661265302-37",
+      "position": {
+        "x": 2748,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -1.6800000000000002
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 420
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661263011-55",
+      "position": {
+        "x": 2748,
+        "y": 180
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -0.4800000000000004
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 180
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661261841-66",
+      "position": {
+        "x": 2748,
+        "y": -60
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.4
+        },
+        "right": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "operator": "multiply",
+        "output": {
+          "result": -0.08000000000000007
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -60
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661146656-6",
+      "position": {
+        "x": 3708,
+        "y": -372
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 17.200000000000003
+        },
+        "right": {
+          "isConnected": true,
+          "value": 4
+        },
+        "operator": "divide",
+        "output": {
+          "result": 4.300000000000001
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3708,
+        "y": -372
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661119659-25",
+      "position": {
+        "x": 3516,
+        "y": -372
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 14.64
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.5600000000000005
+        },
+        "operator": "add",
+        "output": {
+          "result": 17.200000000000003
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3516,
+        "y": -372
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661117123-42",
+      "position": {
+        "x": 3324,
+        "y": -612
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 7.88
+        },
+        "right": {
+          "isConnected": true,
+          "value": 6.760000000000001
+        },
+        "operator": "add",
+        "output": {
+          "result": 14.64
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3324,
+        "y": -612
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661102030-27",
+      "position": {
+        "x": 3132,
+        "y": -852
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 5.92
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.9599999999999997
+        },
+        "operator": "add",
+        "output": {
+          "result": 7.88
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 3132,
+        "y": -852
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659661069071-89",
+      "position": {
+        "x": 2940,
+        "y": -1092
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 0.16000000000000003
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5.76
+        },
+        "operator": "add",
+        "output": {
+          "result": 5.92
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2940,
+        "y": -1092
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659660999633-22",
+      "position": {
+        "x": 2748,
+        "y": -324
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -1.6
+        },
+        "operator": "square",
+        "output": {
+          "result": 2.5600000000000005
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -324
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659660997926-64",
+      "position": {
+        "x": 2748,
+        "y": -516
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": -2.6
+        },
+        "operator": "square",
+        "output": {
+          "result": 6.760000000000001
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -516
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659660996461-20",
+      "position": {
+        "x": 2748,
+        "y": -708
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "square",
+        "output": {
+          "result": 1.9599999999999997
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -708
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659660994952-96",
+      "position": {
+        "x": 2748,
+        "y": -900
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 2.4
+        },
+        "operator": "square",
+        "output": {
+          "result": 5.76
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -900
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 168,
+      "type": "unaryOperation",
+      "id": "1659660993582-81",
+      "position": {
+        "x": 2748,
+        "y": -1092
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "isConnected": true,
+          "value": 0.4
+        },
+        "operator": "square",
+        "output": {
+          "result": 0.16000000000000003
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": -1092
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660764920-0",
+      "position": {
+        "x": 2412,
+        "y": 804
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -0.3999999999999999
+        }
+      },
+      "positionAbsolute": {
+        "x": 2412,
+        "y": 804
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660762545-54",
+      "position": {
+        "x": 2196,
+        "y": 804
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -2.4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2196,
+        "y": 804
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660760848-36",
+      "position": {
+        "x": 1980,
+        "y": 804
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 3
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 1.6
+        }
+      },
+      "positionAbsolute": {
+        "x": 1980,
+        "y": 804
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660759907-27",
+      "position": {
+        "x": 1764,
+        "y": 804
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -0.3999999999999999
+        }
+      },
+      "positionAbsolute": {
+        "x": 1764,
+        "y": 804
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660752993-78",
+      "position": {
+        "x": 1548,
+        "y": 804
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 3
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 1.6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1548,
+        "y": 804
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660714745-6",
+      "position": {
+        "x": 2412,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -1.2000000000000002
+        }
+      },
+      "positionAbsolute": {
+        "x": 2412,
+        "y": 420
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660713281-23",
+      "position": {
+        "x": 2196,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 5
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 2.8
+        }
+      },
+      "positionAbsolute": {
+        "x": 2196,
+        "y": 420
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660711569-86",
+      "position": {
+        "x": 1980,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -1.2000000000000002
+        }
+      },
+      "positionAbsolute": {
+        "x": 1980,
+        "y": 420
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660708819-62",
+      "position": {
+        "x": 1764,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -0.20000000000000018
+        }
+      },
+      "positionAbsolute": {
+        "x": 1764,
+        "y": 420
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660639784-87",
+      "position": {
+        "x": 1548,
+        "y": 420
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2.2
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -0.20000000000000018
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1548,
+        "y": 420
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660402825-0",
+      "position": {
+        "x": 2412,
+        "y": 36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -1.6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2412,
+        "y": 36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660401523-6",
+      "position": {
+        "x": 2196,
+        "y": 36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": -2
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6
+        },
+        "operator": "subtract",
+        "output": {
+          "result": -2.6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2196,
+        "y": 36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660398572-42",
+      "position": {
+        "x": 1980,
+        "y": 36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 1.4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1980,
+        "y": 36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660393126-46",
+      "position": {
+        "x": 1764,
+        "y": 36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 3
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 2.4
+        }
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1764,
+        "y": 36
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660369744-63",
+      "position": {
+        "x": 1548,
+        "y": 36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 0.6
+        },
+        "operator": "subtract",
+        "output": {
+          "result": 0.4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1548,
+        "y": 36
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659660278536-99",
+      "position": {
+        "x": 1068,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": -1
+        },
+        "y": {
+          "isConnected": true,
+          "value": 1
+        },
+        "z": {
+          "isConnected": true,
+          "value": 1
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": -1,
+            "y": 1,
+            "z": 1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1068,
+        "y": 1188
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659660238072-5",
+      "position": {
+        "x": 828,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": -2
+        },
+        "y": {
+          "isConnected": true,
+          "value": 5
+        },
+        "z": {
+          "isConnected": true,
+          "value": -1
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": -2,
+            "y": 5,
+            "z": -1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 1188
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659660236640-89",
+      "position": {
+        "x": 588,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 2
+        },
+        "y": {
+          "isConnected": true,
+          "value": 1
+        },
+        "z": {
+          "isConnected": true,
+          "value": 3
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": 2,
+            "y": 1,
+            "z": 3
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 1188
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659660201415-24",
+      "position": {
+        "x": 348,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 3
+        },
+        "y": {
+          "isConnected": true,
+          "value": 2
+        },
+        "z": {
+          "isConnected": true,
+          "value": 1
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": 3,
+            "y": 2,
+            "z": 1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 1188
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659660186300-23",
+      "position": {
+        "x": 108,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 1
+        },
+        "y": {
+          "isConnected": true,
+          "value": 2
+        },
+        "z": {
+          "isConnected": true,
+          "value": 3
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": {
+            "x": 1,
+            "y": 2,
+            "z": 3
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": 1188
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660138513-88",
+      "position": {
+        "x": 1308,
+        "y": -84
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 3
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5
+        },
+        "operator": "divide",
+        "output": {
+          "result": 0.6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1308,
+        "y": -84
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660135054-67",
+      "position": {
+        "x": 1308,
+        "y": 300
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 11
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5
+        },
+        "operator": "divide",
+        "output": {
+          "result": 2.2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1308,
+        "y": 300
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660133785-0",
+      "position": {
+        "x": 1308,
+        "y": 684
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 7
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5
+        },
+        "operator": "divide",
+        "output": {
+          "result": 1.4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1308,
+        "y": 684
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660124403-18",
+      "position": {
+        "x": 1068,
+        "y": 732
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 6
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1
+        },
+        "operator": "add",
+        "output": {
+          "result": 7
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1068,
+        "y": 732
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660117406-24",
+      "position": {
+        "x": 1068,
+        "y": 348
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 10
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1
+        },
+        "operator": "add",
+        "output": {
+          "result": 11
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1068,
+        "y": 348
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660112204-10",
+      "position": {
+        "x": 1068,
+        "y": -36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 4
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1
+        },
+        "operator": "add",
+        "output": {
+          "result": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1068,
+        "y": -36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660083479-0",
+      "position": {
+        "x": 828,
+        "y": 732
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 7
+        },
+        "right": {
+          "isConnected": true,
+          "value": -1
+        },
+        "operator": "add",
+        "output": {
+          "result": 6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 732
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660082410-21",
+      "position": {
+        "x": 588,
+        "y": 732
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 3
+        },
+        "operator": "add",
+        "output": {
+          "result": 7
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 732
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660081612-44",
+      "position": {
+        "x": 348,
+        "y": 732
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 3
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1
+        },
+        "operator": "add",
+        "output": {
+          "result": 4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 732
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659660080696-2",
+      "position": {
+        "x": 108,
+        "y": 732
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "value": 0,
+          "isConnected": false
+        },
+        "right": {
+          "isConnected": true,
+          "value": 3
+        },
+        "operator": "add",
+        "output": {
+          "result": 3
+        }
+      },
+      "positionAbsolute": {
+        "x": 108,
+        "y": 732
+      }
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659660036627-50",
+      "position": {
+        "x": 1068,
+        "y": -252
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 5,
+          "isConnected": false
+        },
+        "output": {
+          "result": 5
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1068,
+        "y": -252
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659998493-10",
+      "position": {
+        "x": 828,
+        "y": 348
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 5
+        },
+        "right": {
+          "isConnected": true,
+          "value": 5
+        },
+        "operator": "add",
+        "output": {
+          "result": 10
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 348
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659997442-62",
+      "position": {
+        "x": 588,
+        "y": 348
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1
+        },
+        "operator": "add",
+        "output": {
+          "result": 5
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 348
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659995152-88",
+      "position": {
+        "x": 348,
+        "y": 348
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 2
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2
+        },
+        "operator": "add",
+        "output": {
+          "result": 4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 348
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659994161-25",
+      "position": {
+        "x": 108,
+        "y": 348
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "value": 0,
+          "isConnected": false
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2
+        },
+        "operator": "add",
+        "output": {
+          "result": 2
+        }
+      },
+      "positionAbsolute": {
+        "x": 108,
+        "y": 348
+      }
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659930333-63",
+      "position": {
+        "x": 828,
+        "y": -36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 6
+        },
+        "right": {
+          "isConnected": true,
+          "value": -2
+        },
+        "operator": "add",
+        "output": {
+          "result": 4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": -36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659927636-79",
+      "position": {
+        "x": 588,
+        "y": -36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 4
+        },
+        "right": {
+          "isConnected": true,
+          "value": 2
+        },
+        "operator": "add",
+        "output": {
+          "result": 6
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": -36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659924059-60",
+      "position": {
+        "x": 348,
+        "y": -36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": 1
+        },
+        "right": {
+          "isConnected": true,
+          "value": 3
+        },
+        "operator": "add",
+        "output": {
+          "result": 4
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": -36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 216,
+      "type": "binaryOperation",
+      "id": "1659659916349-99",
+      "position": {
+        "x": 108,
+        "y": -36
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "value": 0,
+          "isConnected": false
+        },
+        "right": {
+          "isConnected": true,
+          "value": 1
+        },
+        "operator": "add",
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": -36
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659894657-70",
+      "position": {
+        "x": 828,
+        "y": 972
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 1,
+          "isConnected": false
+        },
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 972
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659893276-25",
+      "position": {
+        "x": 828,
+        "y": 588
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 1,
+          "isConnected": false
+        },
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 588
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659891304-74",
+      "position": {
+        "x": 828,
+        "y": 204
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": -1,
+          "isConnected": false
+        },
+        "output": {
+          "result": -1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 828,
+        "y": 204
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659878706-63",
+      "position": {
+        "x": 588,
+        "y": 972
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": -1,
+          "isConnected": false
+        },
+        "output": {
+          "result": -1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 972
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659877456-32",
+      "position": {
+        "x": 588,
+        "y": 588
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 5,
+          "isConnected": false
+        },
+        "output": {
+          "result": 5
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 588
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659875342-30",
+      "position": {
+        "x": 588,
+        "y": 204
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": -2,
+          "isConnected": false
+        },
+        "output": {
+          "result": -2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 588,
+        "y": 204
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659850320-88",
+      "position": {
+        "x": -108,
+        "y": 972
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 3,
+          "isConnected": false
+        },
+        "output": {
+          "result": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -108,
+        "y": 972
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659849909-41",
+      "position": {
+        "x": -108,
+        "y": 588
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 2,
+          "isConnected": false
+        },
+        "output": {
+          "result": 2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -108,
+        "y": 588
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659849430-61",
+      "position": {
+        "x": -108,
+        "y": 204
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 1,
+          "isConnected": false
+        },
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -108,
+        "y": 204
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659840583-23",
+      "position": {
+        "x": 348,
+        "y": 972
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 3,
+          "isConnected": false
+        },
+        "output": {
+          "result": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 972
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659838202-80",
+      "position": {
+        "x": 348,
+        "y": 588
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 1,
+          "isConnected": false
+        },
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 588
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659835635-69",
+      "position": {
+        "x": 348,
+        "y": 204
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 2,
+          "isConnected": false
+        },
+        "output": {
+          "result": 2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 348,
+        "y": 204
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659770701-83",
+      "position": {
+        "x": 108,
+        "y": 972
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 1,
+          "isConnected": false
+        },
+        "output": {
+          "result": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": 972
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659769094-3",
+      "position": {
+        "x": 108,
+        "y": 588
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 2,
+          "isConnected": false
+        },
+        "output": {
+          "result": 2
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": 588
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 120,
+      "type": "constant",
+      "id": "1659659762695-58",
+      "position": {
+        "x": 108,
+        "y": 204
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "value": {
+          "value": 3,
+          "isConnected": false
+        },
+        "output": {
+          "result": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": 204
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1659659150256-24",
+      "sourceHandle": "result",
+      "target": "1659659163344-78",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659659150256-24result-1659659163344-78m1"
+    },
+    {
+      "source": "1659659150256-24",
+      "sourceHandle": "result",
+      "target": "1659659694574-88",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659659150256-24result-1659659694574-88m1"
+    },
+    {
+      "source": "1659659849430-61",
+      "sourceHandle": "result",
+      "target": "1659659916349-99",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659849430-61result-1659659916349-99right"
+    },
+    {
+      "source": "1659659762695-58",
+      "sourceHandle": "result",
+      "target": "1659659924059-60",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659762695-58result-1659659924059-60right",
+      "selected": false
+    },
+    {
+      "source": "1659659835635-69",
+      "sourceHandle": "result",
+      "target": "1659659927636-79",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659835635-69result-1659659927636-79right",
+      "selected": false
+    },
+    {
+      "source": "1659659875342-30",
+      "sourceHandle": "result",
+      "target": "1659659930333-63",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659875342-30result-1659659930333-63right",
+      "selected": false
+    },
+    {
+      "source": "1659659916349-99",
+      "sourceHandle": "result",
+      "target": "1659659924059-60",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659916349-99result-1659659924059-60left",
+      "selected": false
+    },
+    {
+      "source": "1659659924059-60",
+      "sourceHandle": "result",
+      "target": "1659659927636-79",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659924059-60result-1659659927636-79left",
+      "selected": false
+    },
+    {
+      "source": "1659659927636-79",
+      "sourceHandle": "result",
+      "target": "1659659930333-63",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659927636-79result-1659659930333-63left",
+      "selected": false
+    },
+    {
+      "source": "1659659930333-63",
+      "sourceHandle": "result",
+      "target": "1659659952680-84",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659659930333-63result-1659659952680-84value",
+      "selected": false
+    },
+    {
+      "source": "1659659849909-41",
+      "sourceHandle": "result",
+      "target": "1659659994161-25",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659849909-41result-1659659994161-25right"
+    },
+    {
+      "source": "1659659769094-3",
+      "sourceHandle": "result",
+      "target": "1659659995152-88",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659769094-3result-1659659995152-88right",
+      "selected": false
+    },
+    {
+      "source": "1659659838202-80",
+      "sourceHandle": "result",
+      "target": "1659659997442-62",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659838202-80result-1659659997442-62right",
+      "selected": false
+    },
+    {
+      "source": "1659659877456-32",
+      "sourceHandle": "result",
+      "target": "1659659998493-10",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659877456-32result-1659659998493-10right",
+      "selected": false
+    },
+    {
+      "source": "1659659997442-62",
+      "sourceHandle": "result",
+      "target": "1659659998493-10",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659997442-62result-1659659998493-10left",
+      "selected": false
+    },
+    {
+      "source": "1659659995152-88",
+      "sourceHandle": "result",
+      "target": "1659659997442-62",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659995152-88result-1659659997442-62left",
+      "selected": false
+    },
+    {
+      "source": "1659659994161-25",
+      "sourceHandle": "result",
+      "target": "1659659995152-88",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659994161-25result-1659659995152-88left",
+      "selected": false
+    },
+    {
+      "source": "1659659930333-63",
+      "sourceHandle": "result",
+      "target": "1659660028873-86",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659930333-63result-1659660028873-86left",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659660028873-86",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660036627-50result-1659660028873-86right",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659660057610-20",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660036627-50result-1659660057610-20right",
+      "selected": false
+    },
+    {
+      "source": "1659659998493-10",
+      "sourceHandle": "result",
+      "target": "1659660057610-20",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659998493-10result-1659660057610-20left",
+      "selected": false
+    },
+    {
+      "source": "1659659850320-88",
+      "sourceHandle": "result",
+      "target": "1659660080696-2",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659850320-88result-1659660080696-2right"
+    },
+    {
+      "source": "1659659770701-83",
+      "sourceHandle": "result",
+      "target": "1659660081612-44",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659770701-83result-1659660081612-44right",
+      "selected": false
+    },
+    {
+      "source": "1659660080696-2",
+      "sourceHandle": "result",
+      "target": "1659660081612-44",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660080696-2result-1659660081612-44left",
+      "selected": false
+    },
+    {
+      "source": "1659660081612-44",
+      "sourceHandle": "result",
+      "target": "1659660082410-21",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660081612-44result-1659660082410-21left",
+      "selected": false
+    },
+    {
+      "source": "1659660082410-21",
+      "sourceHandle": "result",
+      "target": "1659660083479-0",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660082410-21result-1659660083479-0left",
+      "selected": false
+    },
+    {
+      "source": "1659659878706-63",
+      "sourceHandle": "result",
+      "target": "1659660083479-0",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659878706-63result-1659660083479-0right",
+      "selected": false
+    },
+    {
+      "source": "1659659840583-23",
+      "sourceHandle": "result",
+      "target": "1659660082410-21",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659840583-23result-1659660082410-21right",
+      "selected": false
+    },
+    {
+      "source": "1659659930333-63",
+      "sourceHandle": "result",
+      "target": "1659660112204-10",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659930333-63result-1659660112204-10left",
+      "selected": false
+    },
+    {
+      "source": "1659659891304-74",
+      "sourceHandle": "result",
+      "target": "1659660112204-10",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659891304-74result-1659660112204-10right",
+      "selected": false
+    },
+    {
+      "source": "1659659893276-25",
+      "sourceHandle": "result",
+      "target": "1659660117406-24",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659893276-25result-1659660117406-24right",
+      "selected": false
+    },
+    {
+      "source": "1659659998493-10",
+      "sourceHandle": "result",
+      "target": "1659660117406-24",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659998493-10result-1659660117406-24left",
+      "selected": false
+    },
+    {
+      "source": "1659659894657-70",
+      "sourceHandle": "result",
+      "target": "1659660124403-18",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659659894657-70result-1659660124403-18right",
+      "selected": false
+    },
+    {
+      "source": "1659660083479-0",
+      "sourceHandle": "result",
+      "target": "1659660124403-18",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660083479-0result-1659660124403-18left",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659660138513-88",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660036627-50result-1659660138513-88right",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659660135054-67",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660036627-50result-1659660135054-67right",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659660133785-0",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660036627-50result-1659660133785-0right",
+      "selected": false
+    },
+    {
+      "source": "1659660124403-18",
+      "sourceHandle": "result",
+      "target": "1659660133785-0",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660124403-18result-1659660133785-0left",
+      "selected": false
+    },
+    {
+      "source": "1659660117406-24",
+      "sourceHandle": "result",
+      "target": "1659660135054-67",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660117406-24result-1659660135054-67left",
+      "selected": false
+    },
+    {
+      "source": "1659660112204-10",
+      "sourceHandle": "result",
+      "target": "1659660138513-88",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660112204-10result-1659660138513-88left",
+      "selected": false
+    },
+    {
+      "source": "1659659849430-61",
+      "sourceHandle": "result",
+      "target": "1659660186300-23",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659659849430-61result-1659660186300-23x"
+    },
+    {
+      "source": "1659659849909-41",
+      "sourceHandle": "result",
+      "target": "1659660186300-23",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659659849909-41result-1659660186300-23y"
+    },
+    {
+      "source": "1659659850320-88",
+      "sourceHandle": "result",
+      "target": "1659660186300-23",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659659850320-88result-1659660186300-23z"
+    },
+    {
+      "source": "1659659762695-58",
+      "sourceHandle": "result",
+      "target": "1659660201415-24",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659659762695-58result-1659660201415-24x"
+    },
+    {
+      "source": "1659659769094-3",
+      "sourceHandle": "result",
+      "target": "1659660201415-24",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659659769094-3result-1659660201415-24y"
+    },
+    {
+      "source": "1659659770701-83",
+      "sourceHandle": "result",
+      "target": "1659660201415-24",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659659770701-83result-1659660201415-24z"
+    },
+    {
+      "source": "1659659835635-69",
+      "sourceHandle": "result",
+      "target": "1659660236640-89",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659659835635-69result-1659660236640-89x"
+    },
+    {
+      "source": "1659659838202-80",
+      "sourceHandle": "result",
+      "target": "1659660236640-89",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659659838202-80result-1659660236640-89y"
+    },
+    {
+      "source": "1659659840583-23",
+      "sourceHandle": "result",
+      "target": "1659660236640-89",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659659840583-23result-1659660236640-89z"
+    },
+    {
+      "source": "1659659875342-30",
+      "sourceHandle": "result",
+      "target": "1659660238072-5",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659659875342-30result-1659660238072-5x"
+    },
+    {
+      "source": "1659659877456-32",
+      "sourceHandle": "result",
+      "target": "1659660238072-5",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659659877456-32result-1659660238072-5y"
+    },
+    {
+      "source": "1659659878706-63",
+      "sourceHandle": "result",
+      "target": "1659660238072-5",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659659878706-63result-1659660238072-5z"
+    },
+    {
+      "source": "1659659891304-74",
+      "sourceHandle": "result",
+      "target": "1659660278536-99",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659659891304-74result-1659660278536-99x"
+    },
+    {
+      "source": "1659659893276-25",
+      "sourceHandle": "result",
+      "target": "1659660278536-99",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659659893276-25result-1659660278536-99y"
+    },
+    {
+      "source": "1659659894657-70",
+      "sourceHandle": "result",
+      "target": "1659660278536-99",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659659894657-70result-1659660278536-99z"
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659660369744-63",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660138513-88result-1659660369744-63right",
+      "selected": false
+    },
+    {
+      "source": "1659659891304-74",
+      "sourceHandle": "result",
+      "target": "1659660402825-0",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659891304-74result-1659660402825-0left",
+      "selected": false
+    },
+    {
+      "source": "1659659849430-61",
+      "sourceHandle": "result",
+      "target": "1659660369744-63",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659849430-61result-1659660369744-63left",
+      "selected": false
+    },
+    {
+      "source": "1659659762695-58",
+      "sourceHandle": "result",
+      "target": "1659660393126-46",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659762695-58result-1659660393126-46left",
+      "selected": false
+    },
+    {
+      "source": "1659659835635-69",
+      "sourceHandle": "result",
+      "target": "1659660398572-42",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659835635-69result-1659660398572-42left",
+      "selected": false
+    },
+    {
+      "source": "1659659875342-30",
+      "sourceHandle": "result",
+      "target": "1659660401523-6",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659875342-30result-1659660401523-6left",
+      "selected": false
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659660393126-46",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660138513-88result-1659660393126-46right",
+      "selected": false
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659660398572-42",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660138513-88result-1659660398572-42right",
+      "selected": false
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659660401523-6",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660138513-88result-1659660401523-6right",
+      "selected": false
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659660402825-0",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660138513-88result-1659660402825-0right",
+      "selected": false
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659660639784-87",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660135054-67result-1659660639784-87right"
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659660708819-62",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660135054-67result-1659660708819-62right"
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659660711569-86",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660135054-67result-1659660711569-86right"
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659660713281-23",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660135054-67result-1659660713281-23right"
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659660714745-6",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660135054-67result-1659660714745-6right"
+    },
+    {
+      "source": "1659659849909-41",
+      "sourceHandle": "result",
+      "target": "1659660639784-87",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659849909-41result-1659660639784-87left"
+    },
+    {
+      "source": "1659659769094-3",
+      "sourceHandle": "result",
+      "target": "1659660708819-62",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659769094-3result-1659660708819-62left"
+    },
+    {
+      "source": "1659659838202-80",
+      "sourceHandle": "result",
+      "target": "1659660711569-86",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659838202-80result-1659660711569-86left"
+    },
+    {
+      "source": "1659659877456-32",
+      "sourceHandle": "result",
+      "target": "1659660713281-23",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659877456-32result-1659660713281-23left"
+    },
+    {
+      "source": "1659659893276-25",
+      "sourceHandle": "result",
+      "target": "1659660714745-6",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659893276-25result-1659660714745-6left"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659660752993-78",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660133785-0result-1659660752993-78right"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659660759907-27",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660133785-0result-1659660759907-27right"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659660760848-36",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660133785-0result-1659660760848-36right"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659660762545-54",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660133785-0result-1659660762545-54right"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659660764920-0",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660133785-0result-1659660764920-0right"
+    },
+    {
+      "source": "1659659850320-88",
+      "sourceHandle": "result",
+      "target": "1659660752993-78",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659850320-88result-1659660752993-78left"
+    },
+    {
+      "source": "1659659770701-83",
+      "sourceHandle": "result",
+      "target": "1659660759907-27",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659770701-83result-1659660759907-27left"
+    },
+    {
+      "source": "1659659840583-23",
+      "sourceHandle": "result",
+      "target": "1659660760848-36",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659840583-23result-1659660760848-36left"
+    },
+    {
+      "source": "1659659878706-63",
+      "sourceHandle": "result",
+      "target": "1659660762545-54",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659878706-63result-1659660762545-54left"
+    },
+    {
+      "source": "1659659894657-70",
+      "sourceHandle": "result",
+      "target": "1659660764920-0",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659659894657-70result-1659660764920-0left"
+    },
+    {
+      "source": "1659660369744-63",
+      "sourceHandle": "result",
+      "target": "1659660993582-81",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660369744-63result-1659660993582-81value",
+      "selected": false
+    },
+    {
+      "source": "1659660393126-46",
+      "sourceHandle": "result",
+      "target": "1659660994952-96",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660393126-46result-1659660994952-96value",
+      "selected": false
+    },
+    {
+      "source": "1659660398572-42",
+      "sourceHandle": "result",
+      "target": "1659660996461-20",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660398572-42result-1659660996461-20value",
+      "selected": false
+    },
+    {
+      "source": "1659660401523-6",
+      "sourceHandle": "result",
+      "target": "1659660997926-64",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660401523-6result-1659660997926-64value",
+      "selected": false
+    },
+    {
+      "source": "1659660402825-0",
+      "sourceHandle": "result",
+      "target": "1659660999633-22",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660402825-0result-1659660999633-22value",
+      "selected": false
+    },
+    {
+      "source": "1659660993582-81",
+      "sourceHandle": "result",
+      "target": "1659661069071-89",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660993582-81result-1659661069071-89left",
+      "selected": false
+    },
+    {
+      "source": "1659660994952-96",
+      "sourceHandle": "result",
+      "target": "1659661069071-89",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660994952-96result-1659661069071-89right",
+      "selected": false
+    },
+    {
+      "source": "1659660996461-20",
+      "sourceHandle": "result",
+      "target": "1659661102030-27",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660996461-20result-1659661102030-27right",
+      "selected": false
+    },
+    {
+      "source": "1659661069071-89",
+      "sourceHandle": "result",
+      "target": "1659661102030-27",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661069071-89result-1659661102030-27left",
+      "selected": false
+    },
+    {
+      "source": "1659661102030-27",
+      "sourceHandle": "result",
+      "target": "1659661117123-42",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661102030-27result-1659661117123-42left",
+      "selected": false
+    },
+    {
+      "source": "1659661117123-42",
+      "sourceHandle": "result",
+      "target": "1659661119659-25",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661117123-42result-1659661119659-25left",
+      "selected": false
+    },
+    {
+      "source": "1659660997926-64",
+      "sourceHandle": "result",
+      "target": "1659661117123-42",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660997926-64result-1659661117123-42right",
+      "selected": false
+    },
+    {
+      "source": "1659661119659-25",
+      "sourceHandle": "result",
+      "target": "1659661146656-6",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661119659-25result-1659661146656-6left",
+      "selected": false
+    },
+    {
+      "source": "1659661146656-6",
+      "sourceHandle": "result",
+      "target": "1659661165226-37",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659661146656-6result-1659661165226-37value",
+      "selected": false
+    },
+    {
+      "source": "1659660036627-50",
+      "sourceHandle": "result",
+      "target": "1659661368932-78",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660036627-50result-1659661368932-78left"
+    },
+    {
+      "source": "1659660999633-22",
+      "sourceHandle": "result",
+      "target": "1659661119659-25",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660999633-22result-1659661119659-25right",
+      "selected": false
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659661146656-6",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659661146656-6right",
+      "selected": false
+    },
+    {
+      "source": "1659660369744-63",
+      "sourceHandle": "result",
+      "target": "1659661261841-66",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660369744-63result-1659661261841-66left",
+      "selected": false
+    },
+    {
+      "source": "1659660639784-87",
+      "sourceHandle": "result",
+      "target": "1659661261841-66",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660639784-87result-1659661261841-66right",
+      "selected": false
+    },
+    {
+      "source": "1659660393126-46",
+      "sourceHandle": "result",
+      "target": "1659661263011-55",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660393126-46result-1659661263011-55left",
+      "selected": false
+    },
+    {
+      "source": "1659660398572-42",
+      "sourceHandle": "result",
+      "target": "1659661265302-37",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660398572-42result-1659661265302-37left",
+      "selected": false
+    },
+    {
+      "source": "1659660401523-6",
+      "sourceHandle": "result",
+      "target": "1659661268364-31",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660401523-6result-1659661268364-31left",
+      "selected": false
+    },
+    {
+      "source": "1659660402825-0",
+      "sourceHandle": "result",
+      "target": "1659661269968-65",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660402825-0result-1659661269968-65left",
+      "selected": false
+    },
+    {
+      "source": "1659660708819-62",
+      "sourceHandle": "result",
+      "target": "1659661263011-55",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660708819-62result-1659661263011-55right",
+      "selected": false
+    },
+    {
+      "source": "1659660711569-86",
+      "sourceHandle": "result",
+      "target": "1659661265302-37",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660711569-86result-1659661265302-37right",
+      "selected": false
+    },
+    {
+      "source": "1659660713281-23",
+      "sourceHandle": "result",
+      "target": "1659661268364-31",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660713281-23result-1659661268364-31right",
+      "selected": false
+    },
+    {
+      "source": "1659660714745-6",
+      "sourceHandle": "result",
+      "target": "1659661269968-65",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660714745-6result-1659661269968-65right",
+      "selected": false
+    },
+    {
+      "source": "1659661261841-66",
+      "sourceHandle": "result",
+      "target": "1659661496083-66",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661261841-66result-1659661496083-66left",
+      "selected": false
+    },
+    {
+      "source": "1659661496083-66",
+      "sourceHandle": "result",
+      "target": "1659661500149-45",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661496083-66result-1659661500149-45left",
+      "selected": false
+    },
+    {
+      "source": "1659661265302-37",
+      "sourceHandle": "result",
+      "target": "1659661500149-45",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661265302-37result-1659661500149-45right",
+      "selected": false
+    },
+    {
+      "source": "1659661500149-45",
+      "sourceHandle": "result",
+      "target": "1659661503436-21",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661500149-45result-1659661503436-21left",
+      "selected": false
+    },
+    {
+      "source": "1659661268364-31",
+      "sourceHandle": "result",
+      "target": "1659661503436-21",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661268364-31result-1659661503436-21right",
+      "selected": false
+    },
+    {
+      "source": "1659661503436-21",
+      "sourceHandle": "result",
+      "target": "1659661506312-29",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661503436-21result-1659661506312-29left",
+      "selected": false
+    },
+    {
+      "source": "1659661269968-65",
+      "sourceHandle": "result",
+      "target": "1659661506312-29",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661269968-65result-1659661506312-29right",
+      "selected": false
+    },
+    {
+      "source": "1659661506312-29",
+      "sourceHandle": "result",
+      "target": "1659661511474-93",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661506312-29result-1659661511474-93left",
+      "selected": false
+    },
+    {
+      "source": "1659661263011-55",
+      "sourceHandle": "result",
+      "target": "1659661496083-66",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661263011-55result-1659661496083-66right",
+      "selected": false
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659661511474-93",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659661511474-93right",
+      "selected": false
+    },
+    {
+      "source": "1659661511474-93",
+      "sourceHandle": "result",
+      "target": "1659661643539-11",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659661511474-93result-1659661643539-11value",
+      "selected": false
+    },
+    {
+      "source": "1659661715037-75",
+      "sourceHandle": "result",
+      "target": "1659661724791-29",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661715037-75result-1659661724791-29left",
+      "selected": false
+    },
+    {
+      "source": "1659661716695-61",
+      "sourceHandle": "result",
+      "target": "1659661724791-29",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661716695-61result-1659661724791-29right",
+      "selected": false
+    },
+    {
+      "source": "1659661724791-29",
+      "sourceHandle": "result",
+      "target": "1659661726608-73",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661724791-29result-1659661726608-73left",
+      "selected": false
+    },
+    {
+      "source": "1659661717747-10",
+      "sourceHandle": "result",
+      "target": "1659661726608-73",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661717747-10result-1659661726608-73right",
+      "selected": false
+    },
+    {
+      "source": "1659661726608-73",
+      "sourceHandle": "result",
+      "target": "1659661729109-49",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661726608-73result-1659661729109-49left",
+      "selected": false
+    },
+    {
+      "source": "1659661719720-37",
+      "sourceHandle": "result",
+      "target": "1659661729109-49",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661719720-37result-1659661729109-49right",
+      "selected": false
+    },
+    {
+      "source": "1659661729109-49",
+      "sourceHandle": "result",
+      "target": "1659661731150-23",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661729109-49result-1659661731150-23left",
+      "selected": false
+    },
+    {
+      "source": "1659661720998-63",
+      "sourceHandle": "result",
+      "target": "1659661731150-23",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661720998-63result-1659661731150-23right",
+      "selected": false
+    },
+    {
+      "source": "1659661731150-23",
+      "sourceHandle": "result",
+      "target": "1659661736696-19",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659661731150-23result-1659661736696-19left",
+      "selected": false
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659661736696-19",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659661736696-19right",
+      "selected": false
+    },
+    {
+      "source": "1659660369744-63",
+      "sourceHandle": "result",
+      "target": "1659661715037-75",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660369744-63result-1659661715037-75left",
+      "selected": false
+    },
+    {
+      "source": "1659660393126-46",
+      "sourceHandle": "result",
+      "target": "1659661716695-61",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660393126-46result-1659661716695-61left",
+      "selected": false
+    },
+    {
+      "source": "1659660398572-42",
+      "sourceHandle": "result",
+      "target": "1659661717747-10",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660398572-42result-1659661717747-10left",
+      "selected": false
+    },
+    {
+      "source": "1659660401523-6",
+      "sourceHandle": "result",
+      "target": "1659661719720-37",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660401523-6result-1659661719720-37left",
+      "selected": false
+    },
+    {
+      "source": "1659660402825-0",
+      "sourceHandle": "result",
+      "target": "1659661720998-63",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660402825-0result-1659661720998-63left",
+      "selected": false
+    },
+    {
+      "source": "1659660752993-78",
+      "sourceHandle": "result",
+      "target": "1659661715037-75",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660752993-78result-1659661715037-75right",
+      "selected": false
+    },
+    {
+      "source": "1659660759907-27",
+      "sourceHandle": "result",
+      "target": "1659661716695-61",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660759907-27result-1659661716695-61right",
+      "selected": false
+    },
+    {
+      "source": "1659660762545-54",
+      "sourceHandle": "result",
+      "target": "1659661719720-37",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660762545-54result-1659661719720-37right",
+      "selected": false
+    },
+    {
+      "source": "1659660760848-36",
+      "sourceHandle": "result",
+      "target": "1659661717747-10",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660760848-36result-1659661717747-10right",
+      "selected": false
+    },
+    {
+      "source": "1659660764920-0",
+      "sourceHandle": "result",
+      "target": "1659661720998-63",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660764920-0result-1659661720998-63right",
+      "selected": false
+    },
+    {
+      "source": "1659661736696-19",
+      "sourceHandle": "result",
+      "target": "1659661865451-95",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659661736696-19result-1659661865451-95value",
+      "selected": false
+    },
+    {
+      "source": "1659661146656-6",
+      "sourceHandle": "result",
+      "target": "1659661889654-45",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659661146656-6result-1659661889654-45x",
+      "selected": false
+    },
+    {
+      "source": "1659661511474-93",
+      "sourceHandle": "result",
+      "target": "1659661889654-45",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659661511474-93result-1659661889654-45y",
+      "selected": false
+    },
+    {
+      "source": "1659661736696-19",
+      "sourceHandle": "result",
+      "target": "1659661889654-45",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659661736696-19result-1659661889654-45z",
+      "selected": false
+    },
+    {
+      "source": "1659662064279-68",
+      "sourceHandle": "result",
+      "target": "1659662072063-28",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662064279-68result-1659662072063-28left"
+    },
+    {
+      "source": "1659662062410-59",
+      "sourceHandle": "result",
+      "target": "1659662072063-28",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662062410-59result-1659662072063-28right"
+    },
+    {
+      "source": "1659662072063-28",
+      "sourceHandle": "result",
+      "target": "1659662078288-77",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662072063-28result-1659662078288-77left"
+    },
+    {
+      "source": "1659662060133-71",
+      "sourceHandle": "result",
+      "target": "1659662078288-77",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662060133-71result-1659662078288-77right"
+    },
+    {
+      "source": "1659662078288-77",
+      "sourceHandle": "result",
+      "target": "1659662087517-8",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662078288-77result-1659662087517-8left"
+    },
+    {
+      "source": "1659662087517-8",
+      "sourceHandle": "result",
+      "target": "1659662089234-83",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662087517-8result-1659662089234-83left"
+    },
+    {
+      "source": "1659662089234-83",
+      "sourceHandle": "result",
+      "target": "1659662092890-37",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662089234-83result-1659662092890-37left"
+    },
+    {
+      "source": "1659662057433-35",
+      "sourceHandle": "result",
+      "target": "1659662087517-8",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662057433-35result-1659662087517-8right"
+    },
+    {
+      "source": "1659662049959-93",
+      "sourceHandle": "result",
+      "target": "1659662089234-83",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662049959-93result-1659662089234-83right"
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659662092890-37",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659662092890-37right"
+    },
+    {
+      "source": "1659660639784-87",
+      "sourceHandle": "result",
+      "target": "1659662064279-68",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660639784-87result-1659662064279-68value"
+    },
+    {
+      "source": "1659660708819-62",
+      "sourceHandle": "result",
+      "target": "1659662062410-59",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660708819-62result-1659662062410-59value"
+    },
+    {
+      "source": "1659660711569-86",
+      "sourceHandle": "result",
+      "target": "1659662060133-71",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660711569-86result-1659662060133-71value"
+    },
+    {
+      "source": "1659660713281-23",
+      "sourceHandle": "result",
+      "target": "1659662057433-35",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660713281-23result-1659662057433-35value"
+    },
+    {
+      "source": "1659660714745-6",
+      "sourceHandle": "result",
+      "target": "1659662049959-93",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660714745-6result-1659662049959-93value"
+    },
+    {
+      "source": "1659662170778-58",
+      "sourceHandle": "result",
+      "target": "1659662172421-42",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662170778-58result-1659662172421-42left"
+    },
+    {
+      "source": "1659662172421-42",
+      "sourceHandle": "result",
+      "target": "1659662176559-16",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662172421-42result-1659662176559-16left"
+    },
+    {
+      "source": "1659662176559-16",
+      "sourceHandle": "result",
+      "target": "1659662178293-60",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662176559-16result-1659662178293-60left"
+    },
+    {
+      "source": "1659662178293-60",
+      "sourceHandle": "result",
+      "target": "1659662179592-78",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662178293-60result-1659662179592-78left"
+    },
+    {
+      "source": "1659662156943-78",
+      "sourceHandle": "result",
+      "target": "1659662170778-58",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662156943-78result-1659662170778-58left"
+    },
+    {
+      "source": "1659662160633-7",
+      "sourceHandle": "result",
+      "target": "1659662170778-58",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662160633-7result-1659662170778-58right"
+    },
+    {
+      "source": "1659662161924-9",
+      "sourceHandle": "result",
+      "target": "1659662172421-42",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662161924-9result-1659662172421-42right"
+    },
+    {
+      "source": "1659662163261-1",
+      "sourceHandle": "result",
+      "target": "1659662176559-16",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662163261-1result-1659662176559-16right"
+    },
+    {
+      "source": "1659662164694-71",
+      "sourceHandle": "result",
+      "target": "1659662178293-60",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662164694-71result-1659662178293-60right"
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659662179592-78",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659662179592-78right"
+    },
+    {
+      "source": "1659660639784-87",
+      "sourceHandle": "result",
+      "target": "1659662156943-78",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660639784-87result-1659662156943-78left"
+    },
+    {
+      "source": "1659660708819-62",
+      "sourceHandle": "result",
+      "target": "1659662160633-7",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660708819-62result-1659662160633-7left"
+    },
+    {
+      "source": "1659660711569-86",
+      "sourceHandle": "result",
+      "target": "1659662161924-9",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660711569-86result-1659662161924-9left"
+    },
+    {
+      "source": "1659660713281-23",
+      "sourceHandle": "result",
+      "target": "1659662163261-1",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660713281-23result-1659662163261-1left"
+    },
+    {
+      "source": "1659660714745-6",
+      "sourceHandle": "result",
+      "target": "1659662164694-71",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659660714745-6result-1659662164694-71left"
+    },
+    {
+      "source": "1659660752993-78",
+      "sourceHandle": "result",
+      "target": "1659662156943-78",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660752993-78result-1659662156943-78right"
+    },
+    {
+      "source": "1659660759907-27",
+      "sourceHandle": "result",
+      "target": "1659662160633-7",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660759907-27result-1659662160633-7right"
+    },
+    {
+      "source": "1659660760848-36",
+      "sourceHandle": "result",
+      "target": "1659662161924-9",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660760848-36result-1659662161924-9right"
+    },
+    {
+      "source": "1659660762545-54",
+      "sourceHandle": "result",
+      "target": "1659662163261-1",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660762545-54result-1659662163261-1right"
+    },
+    {
+      "source": "1659660764920-0",
+      "sourceHandle": "result",
+      "target": "1659662164694-71",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659660764920-0result-1659662164694-71right"
+    },
+    {
+      "source": "1659662092890-37",
+      "sourceHandle": "result",
+      "target": "1659662308954-32",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659662092890-37result-1659662308954-32y"
+    },
+    {
+      "source": "1659662179592-78",
+      "sourceHandle": "result",
+      "target": "1659662308954-32",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659662179592-78result-1659662308954-32z"
+    },
+    {
+      "source": "1659661511474-93",
+      "sourceHandle": "result",
+      "target": "1659662308954-32",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659661511474-93result-1659662308954-32x"
+    },
+    {
+      "source": "1659662432620-6",
+      "sourceHandle": "result",
+      "target": "1659662434309-33",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662432620-6result-1659662434309-33left"
+    },
+    {
+      "source": "1659662429941-94",
+      "sourceHandle": "result",
+      "target": "1659662432620-6",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662429941-94result-1659662432620-6left"
+    },
+    {
+      "source": "1659662426977-2",
+      "sourceHandle": "result",
+      "target": "1659662429941-94",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662426977-2result-1659662429941-94left"
+    },
+    {
+      "source": "1659662424778-84",
+      "sourceHandle": "result",
+      "target": "1659662426977-2",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662424778-84result-1659662426977-2left"
+    },
+    {
+      "source": "1659662410214-75",
+      "sourceHandle": "result",
+      "target": "1659662424778-84",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659662410214-75result-1659662424778-84left"
+    },
+    {
+      "source": "1659662408435-12",
+      "sourceHandle": "result",
+      "target": "1659662424778-84",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662408435-12result-1659662424778-84right"
+    },
+    {
+      "source": "1659662405906-58",
+      "sourceHandle": "result",
+      "target": "1659662426977-2",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662405906-58result-1659662426977-2right"
+    },
+    {
+      "source": "1659662404680-51",
+      "sourceHandle": "result",
+      "target": "1659662429941-94",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662404680-51result-1659662429941-94right"
+    },
+    {
+      "source": "1659662359514-78",
+      "sourceHandle": "result",
+      "target": "1659662432620-6",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659662359514-78result-1659662432620-6right"
+    },
+    {
+      "source": "1659661368932-78",
+      "sourceHandle": "result",
+      "target": "1659662434309-33",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659661368932-78result-1659662434309-33right"
+    },
+    {
+      "source": "1659660752993-78",
+      "sourceHandle": "result",
+      "target": "1659662410214-75",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660752993-78result-1659662410214-75value"
+    },
+    {
+      "source": "1659660759907-27",
+      "sourceHandle": "result",
+      "target": "1659662408435-12",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660759907-27result-1659662408435-12value"
+    },
+    {
+      "source": "1659660760848-36",
+      "sourceHandle": "result",
+      "target": "1659662405906-58",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660760848-36result-1659662405906-58value"
+    },
+    {
+      "source": "1659660762545-54",
+      "sourceHandle": "result",
+      "target": "1659662404680-51",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660762545-54result-1659662404680-51value"
+    },
+    {
+      "source": "1659660764920-0",
+      "sourceHandle": "result",
+      "target": "1659662359514-78",
+      "targetHandle": "value",
+      "id": "reactflow__edge-1659660764920-0result-1659662359514-78value"
+    },
+    {
+      "source": "1659662434309-33",
+      "sourceHandle": "result",
+      "target": "1659662505682-4",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659662434309-33result-1659662505682-4z"
+    },
+    {
+      "source": "1659662179592-78",
+      "sourceHandle": "result",
+      "target": "1659662505682-4",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659662179592-78result-1659662505682-4y"
+    },
+    {
+      "source": "1659661736696-19",
+      "sourceHandle": "result",
+      "target": "1659662505682-4",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659661736696-19result-1659662505682-4x"
+    },
+    {
+      "source": "1659661889654-45",
+      "sourceHandle": "result",
+      "target": "1659662592121-57",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659661889654-45result-1659662592121-57m1",
+      "selected": false
+    },
+    {
+      "source": "1659662308954-32",
+      "sourceHandle": "result",
+      "target": "1659662592121-57",
+      "targetHandle": "m2",
+      "id": "reactflow__edge-1659662308954-32result-1659662592121-57m2"
+    },
+    {
+      "source": "1659662505682-4",
+      "sourceHandle": "result",
+      "target": "1659662592121-57",
+      "targetHandle": "m3",
+      "id": "reactflow__edge-1659662505682-4result-1659662592121-57m3"
+    },
+    {
+      "source": "1659662592121-57",
+      "sourceHandle": "result",
+      "target": "1659662678136-40",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659662592121-57result-1659662678136-40matrix"
+    }
+  ]
+}

@@ -6,7 +6,6 @@ import {
 	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
-	CrossCircledIcon,
 	DividerVerticalIcon,
 	DotIcon,
 	DownloadIcon,
@@ -323,8 +322,8 @@ const Toolbar = () => {
 							</h2>
 
 							<div className="flex flex-col gap-4 my-4">
-								<ExampleDownload file="svd.json" />
-								<ExampleDownload file="pca.json" />
+								<ExampleDownload file="singular_value_decomposition.json" />
+								<ExampleDownload file="covariance_matrix.json" />
 							</div>
 
 							<h2 className="pt-4 pb-4 text-xl">

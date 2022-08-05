@@ -132,7 +132,7 @@ const Editor = () => {
 				return;
 			}
 
-			const position = reactFlow.project({ x: e.clientX, y: e.clientY });
+			const position = reactFlow.project({ x: e.clientX, y: e.clientY - 48 });
 
 			switch (tool) {
 				case Tool.Vector:
@@ -211,7 +211,7 @@ const Editor = () => {
 							: "grab",
 					width: (1 - 1 / vectorSpaceSize) * width,
 					height: height - 48,
-					marginTop: 48
+					marginTop: 48,
 				}}
 				nodes={nodes}
 				edges={edges}
