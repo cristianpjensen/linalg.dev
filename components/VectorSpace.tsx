@@ -16,6 +16,25 @@ import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
 import { VectorData, Vector as _Vector, EigenvectorsData } from "./nodes/types";
 
+type MinimalVectorData = {
+	origin?: {
+		value: {
+			x: number;
+			y: number;
+			z: number;
+		};
+		isConnected: boolean;
+	};
+	hidden: boolean;
+	output: {
+		result: {
+			x: number;
+			y: number;
+			z: number;
+		};
+	};
+};
+
 export type VectorSpace = {
 	/**
 	 * Transform the entire space.
@@ -138,8 +157,11 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 const Vectors = forwardRef<Group, {}>((props, ref) => {
 	const nodes = useNodeStore((state) => state.nodes);
 	const vectors = nodes.filter(
-		(node) => node.type === "vector"
-	) as Node<VectorData>[];
+		(node) =>
+			node.type === "vector" ||
+			node.type === "vectorScaling" ||
+			node.type === "transform"
+	) as Node<MinimalVectorData>[];
 
 	const eigenvectors = nodes.filter(
 		(node) => node.type === "eigenvectors"
@@ -159,7 +181,7 @@ const Vectors = forwardRef<Group, {}>((props, ref) => {
 });
 
 type IVectorWrapperProps = {
-	node: Node<VectorData>;
+	node: Node<MinimalVectorData>;
 };
 
 const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
@@ -174,7 +196,14 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		);
 
 		const { x, y, z } = node.data.output.result;
-		const { x: ox, y: oy, z: oz } = node.data.origin.value;
+
+		const origin = { x: 0, y: 0, z: 0 };
+		if (node.data.origin) {
+			origin.x = node.data.origin.value.x;
+			origin.y = node.data.origin.value.y;
+			origin.z = node.data.origin.value.z;
+		}
+
 		const innerRef = useRef<Vector>(null);
 
 		const moveVector = useCallback((vector: _Vector) => {
@@ -196,14 +225,14 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 
 		// Move origin when it changes in the editor
 		useEffect(() => {
-			moveOrigin(node.data.origin.value);
-		}, [node.data.origin.value]);
+			moveOrigin(origin);
+		}, [origin]);
 
 		// If reseting, move the vector to its untransformed position
 		useEffect(() => {
 			if (isMatrixReset) {
 				moveVector(node.data.output.result);
-				moveOrigin(node.data.origin.value);
+				moveOrigin(origin);
 			}
 		}, [isMatrixReset]);
 
@@ -214,16 +243,23 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 				setSelectedVectorNode(node, "space");
 			};
 
+			if (node.data.hidden) {
+				return null;
+			}
+
 			return (
 				<Vector
 					ref={mergeRefs([innerRef, ref])}
-					origin={new THREE.Vector3(ox, oy, oz)}
+					color={
+						node.type === "vector" ? "#E9E9E9" : "cornflowerblue"
+					}
+					origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
 					vector={new THREE.Vector3(x, y, z)}
 					sphere={showVectorsAsSpheres}
 					onClick={onClick}
 				/>
 			);
-		}, [showVectorsAsSpheres]);
+		}, [showVectorsAsSpheres, node.data.hidden]);
 
 		return vectorComponent;
 	}
@@ -296,6 +332,10 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 		}, [isMatrixReset]);
 
 		const vectorComponent = useMemo(() => {
+			if (node.data.hidden) {
+				return null;
+			}
+
 			return (
 				<>
 					<Vector
@@ -315,7 +355,7 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 					/>
 				</>
 			);
-		}, []);
+		}, [node.data.hidden]);
 
 		return vectorComponent;
 	}

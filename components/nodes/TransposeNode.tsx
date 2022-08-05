@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
-import TeX from "@matejmazur/react-katex";
 
 import type { TransposeData } from "./types";
 import useOutput from "../hooks/useOutput";

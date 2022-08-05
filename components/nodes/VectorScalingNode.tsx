@@ -1,9 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 import type { VectorScalingData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
+import { useNodeStore } from "../../stores";
 
 const VectorScalingNode = memo(
 	({ id, data, selected }: NodeProps<VectorScalingData>) => {
@@ -20,6 +22,11 @@ const VectorScalingNode = memo(
 			};
 		});
 
+		const setNodeData = useNodeStore((state) => state.setNodeData);
+		const onHide = useCallback(() => {
+			setNodeData(id, { hidden: !data.hidden });
+		}, [data.hidden]);
+
 		return (
 			<Node.Root
 				id={id}
@@ -30,7 +37,14 @@ const VectorScalingNode = memo(
 				width={10}
 				height={8}
 			>
-				<Node.Dragger />
+				<Node.Dragger>
+					<Node.DraggerButton
+						tooltip="Show/hide scaled vector"
+						onClick={onHide}
+					>
+						{data.hidden ? <EyeClosedIcon /> : <EyeOpenIcon />}
+					</Node.DraggerButton>
+				</Node.Dragger>
 
 				<Node.Handle type="target" id="vector" top={71} />
 				<Node.Handle type="target" id="scalar" top={131} />

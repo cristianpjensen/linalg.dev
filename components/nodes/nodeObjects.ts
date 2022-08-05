@@ -54,6 +54,7 @@ export const vectorNodeObject = (position: Position): Node<T.VectorData> => ({
 		y: numberInput(),
 		z: numberInput(),
 		origin: vectorInput(),
+		hidden: false,
 		output: {
 			result: {
 				x: 0,
@@ -155,7 +156,9 @@ export const normNodeObject = (position: Position): Node<T.NormData> => ({
 	},
 });
 
-export const transformNodeObject = (position: Position): Node<T.TransformData> => ({
+export const transformNodeObject = (
+	position: Position
+): Node<T.TransformData> => ({
 	type: "transform",
 	id: getId(),
 	position: snapToGrid(position),
@@ -163,6 +166,7 @@ export const transformNodeObject = (position: Position): Node<T.TransformData> =
 	data: {
 		vector: vectorInput(),
 		matrix: matrixInput(),
+		hidden: true,
 		output: {
 			result: {
 				x: 0,
@@ -183,6 +187,7 @@ export const vectorScalingNodeObject = (
 	data: {
 		vector: vectorInput(),
 		scalar: numberInput(1),
+		hidden: true,
 		output: {
 			result: {
 				x: 0,
@@ -193,7 +198,9 @@ export const vectorScalingNodeObject = (
 	},
 });
 
-export const transposeNodeObject = (position: Position): Node<T.TransposeData> => ({
+export const transposeNodeObject = (
+	position: Position
+): Node<T.TransposeData> => ({
 	type: "transpose",
 	id: getId(),
 	position: snapToGrid(position),
@@ -248,6 +255,7 @@ export const eigenvectorsNodeObject = (
 	dragHandle: ".dragger",
 	data: {
 		matrix: matrixInput(),
+		hidden: true,
 		output: {
 			eigenvector1: {
 				x: 1,

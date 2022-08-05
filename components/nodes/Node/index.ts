@@ -1,5 +1,5 @@
 import Root from "./Root";
-import Dragger from "./Dragger";
+import Dragger, { DraggerButton } from "./Dragger";
 import NumberInput, { VectorInput } from "./NumberInput";
 import SelectInput from "./SelectInput";
 import Handle from "./Handle";
@@ -10,6 +10,7 @@ import DisplayMatrix from "./DisplayMatrix";
 export {
 	Root,
 	Dragger,
+	DraggerButton,
 	NumberInput,
 	VectorInput,
 	SelectInput,

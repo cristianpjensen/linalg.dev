@@ -28,6 +28,7 @@ export type VectorData = {
 	y: Input<number>;
 	z: Input<number>;
 	origin: Input<Vector>;
+	hidden: boolean;
 	output: {
 		result: Vector;
 	};
@@ -85,6 +86,7 @@ export type NormData = {
 export type TransformData = {
 	matrix: Input<Matrix>;
 	vector: Input<Vector>;
+	hidden: boolean;
 	output: {
 		result: Vector;
 	};
@@ -93,6 +95,7 @@ export type TransformData = {
 export type VectorScalingData = {
 	vector: Input<Vector>;
 	scalar: Input<number>;
+	hidden: boolean;
 	output: {
 		result: Vector;
 	};
@@ -124,6 +127,7 @@ export type EigenvaluesData = {
 
 export type EigenvectorsData = {
 	matrix: Input<Matrix>;
+	hidden: boolean;
 	output: {
 		eigenvector1: Vector;
 		eigenvector2: Vector;

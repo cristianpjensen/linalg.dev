@@ -1,9 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
+import { useNodeStore } from "../../stores";
 
 const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	useOutput(id, data, (data) => {
@@ -16,6 +18,11 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 		};
 	});
 
+	const setNodeData = useNodeStore((state) => state.setNodeData);
+	const onHide = useCallback(() => {
+		setNodeData(id, { hidden: !data.hidden });
+	}, [data.hidden]);
+
 	return (
 		<Node.Root
 			id={id}
@@ -26,7 +33,11 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			width={8}
 			height={12}
 		>
-			<Node.Dragger />
+			<Node.Dragger>
+				<Node.DraggerButton tooltip="Show/hide vector" onClick={onHide}>
+					{data.hidden ? <EyeClosedIcon /> : <EyeOpenIcon />}
+				</Node.DraggerButton>
+			</Node.Dragger>
 
 			<Node.Handle type="target" id="x" top={64} />
 			<Node.Handle type="target" id="y" top={119} />
