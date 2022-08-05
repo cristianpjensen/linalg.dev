@@ -7,14 +7,20 @@ import {
 	useRef,
 } from "react";
 import * as THREE from "three";
-import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
+import {
+	CubeIcon,
+	GroupIcon,
+	ResetIcon,
+	ShadowInnerIcon,
+} from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
 import { useWindowSize } from "@react-hook/window-size";
 
 import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
-import { VectorData, Vector as _Vector, EigenvectorsData } from "./nodes/types";
+import { Vector as _Vector, EigenvectorsData } from "./nodes/types";
+import { Tooltip } from "./Tooltip";
 
 type MinimalVectorData = {
 	origin?: {
@@ -55,6 +61,12 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	const toggleShowVectorsAsSpheres = useEditorStore(
 		(state) => state.toggleShowVectorsAsSpheres
 	);
+	const showSpaceTransformations = useEditorStore(
+		(state) => state.showSpaceTransformations
+	);
+	const toggleShowSpaceTransformations = useEditorStore(
+		(state) => state.toggleShowSpaceTransformations
+	);
 	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const selectedVectorNode = useEditorStore(
 		(state) => state.selectedVectorNode
@@ -67,8 +79,11 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	const groupRef = useRef<Group>(null);
 
 	useImperativeHandle(ref, () => ({
-		transform: (matrix: THREE.Matrix3) => {
-			spaceRef.current?.transform(matrix);
+		transform: (matrix) => {
+			if (showSpaceTransformations) {
+				spaceRef.current?.transform(matrix);
+			}
+
 			groupRef.current?.transform(matrix);
 		},
 	}));
@@ -80,7 +95,7 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 
 	useEffect(() => {
 		if (selectedVectorNode && selectedVectorFrom === "editor") {
-			const data = selectedVectorNode.data as VectorData;
+			const data = selectedVectorNode.data as MinimalVectorData;
 
 			// Do not show the vector if it is hidden
 			if (data.hidden) {
@@ -89,6 +104,14 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 
 			const { x, y, z } = data.output.result;
 			const vector = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
+
+			if (data.origin) {
+				const { x: ox, y: oy, z: oz } = data.origin.value;
+				const origin = new THREE.Vector3(ox, oy, oz).applyMatrix3(
+					matrix
+				);
+				vector.add(origin);
+			}
 
 			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
 				return;
@@ -124,40 +147,70 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 			</Space>
 
 			<div className="absolute flex gap-4 right-4 bottom-4">
-				<button
+				<ToggleButton
+					tooltip="Show vectors as spheres"
 					onClick={toggleShowVectorsAsSpheres}
-					className={
-						"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
-						(showVectorsAsSpheres
-							? "shadow-zinc-400 opacity-100"
-							: "shadow-zinc-700 opacity-60")
-					}
+					active={showVectorsAsSpheres}
 				>
 					<ShadowInnerIcon />
-				</button>
+				</ToggleButton>
 
-				<button
+				<ToggleButton
+					tooltip="Show a cube for better overview of transformations"
 					onClick={toggleShowCube}
-					className={
-						"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
-						(showCube
-							? "shadow-zinc-400 opacity-100"
-							: "shadow-zinc-700 opacity-60")
-					}
+					active={showCube}
 				>
 					<CubeIcon />
-				</button>
+				</ToggleButton>
 
-				<button
+				<ToggleButton
+					tooltip="Also transform the grid"
+					onClick={toggleShowSpaceTransformations}
+					active={showSpaceTransformations}
+				>
+					<GroupIcon />
+				</ToggleButton>
+
+				<ToggleButton
+					tooltip="Reset space transformations"
 					onClick={reset}
-					className="flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 shadow-zinc-400 focus:shadow-b2"
 				>
 					<ResetIcon />
-				</button>
+				</ToggleButton>
 			</div>
 		</div>
 	);
 });
+
+type IToggleButtonProps = {
+	tooltip: string;
+	children?: React.ReactNode;
+	active?: boolean;
+	onClick?: () => void;
+};
+
+const ToggleButton = ({
+	tooltip,
+	children,
+	active = true,
+	onClick,
+}: IToggleButtonProps) => {
+	return (
+		<Tooltip tip={tooltip} side="top" dark>
+			<button
+				onClick={onClick}
+				className={
+					"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
+					(active
+						? "shadow-zinc-400 opacity-100"
+						: "shadow-zinc-700 opacity-60")
+				}
+			>
+				{children}
+			</button>
+		</Tooltip>
+	);
+};
 
 const Vectors = forwardRef<Group, {}>((props, ref) => {
 	const nodes = useNodeStore((state) => state.nodes);
@@ -201,13 +254,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		);
 
 		const { x, y, z } = node.data.output.result;
-
-		const origin = { x: 0, y: 0, z: 0 };
-		if (node.data.origin) {
-			origin.x = node.data.origin.value.x;
-			origin.y = node.data.origin.value.y;
-			origin.z = node.data.origin.value.z;
-		}
+		const origin = node.data.origin ? node.data.origin.value : undefined;
 
 		const innerRef = useRef<Vector>(null);
 
@@ -230,14 +277,14 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 
 		// Move origin when it changes in the editor
 		useEffect(() => {
-			moveOrigin(origin);
+			origin && moveOrigin(origin);
 		}, [origin]);
 
 		// If reseting, move the vector to its untransformed position
 		useEffect(() => {
 			if (isMatrixReset) {
 				moveVector(node.data.output.result);
-				moveOrigin(origin);
+				origin && moveOrigin(origin);
 			}
 		}, [isMatrixReset]);
 
@@ -256,8 +303,15 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 				<Vector
 					ref={mergeRefs([innerRef, ref])}
 					color={node.data.color ? node.data.color : "#E9E9E9"}
-					origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
-					vector={new THREE.Vector3(x, y, z)}
+					origin={
+						origin &&
+						new THREE.Vector3(
+							origin.x,
+							origin.y,
+							origin.z
+						).applyMatrix3(matrix)
+					}
+					vector={new THREE.Vector3(x, y, z).applyMatrix3(matrix)}
 					sphere={
 						node.data.representation === "sphere"
 							? true

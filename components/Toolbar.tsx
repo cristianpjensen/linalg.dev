@@ -294,7 +294,7 @@ const Toolbar = () => {
 							About the project
 						</Dialog.Title>
 
-						<p className="pb-2">
+						<p className="pb-2 text-sm">
 							This is a web application for visualising and
 							editing linear algebra problems in three dimensions
 							with a node environment. Its purpose is to be a tool
@@ -303,7 +303,7 @@ const Toolbar = () => {
 							concepts in linear algebra.
 						</p>
 
-						<p>
+						<p className="text-sm">
 							Nodes can be added to the environment by selecting
 							one of the node types in the toolbar and clicking
 							anywhere in the environment. The nodes can be
@@ -319,8 +319,8 @@ const Toolbar = () => {
 						</h2>
 
 						<div className="flex flex-col gap-4 my-4">
-							<ExampleDownload file="singular_value_decomposition.json" />
-							<ExampleDownload file="covariance_matrix.json" />
+							<ExampleDownload file="svd.json" />
+							<ExampleDownload file="pca.json" />
 						</div>
 
 						<h2 className="pt-4 pb-4 text-xl">

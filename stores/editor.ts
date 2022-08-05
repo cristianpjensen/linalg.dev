@@ -81,6 +81,13 @@ type EditorState = {
 	 */
 	showVectorsAsSpheres: boolean;
 	toggleShowVectorsAsSpheres: () => void;
+
+	/**
+	 * For some transformations it gives a better overview if not the entire
+	 * space is transformed, but only the vectors.
+	 */
+	showSpaceTransformations: boolean;
+	toggleShowSpaceTransformations: () => void;
 };
 
 const useStore = create<EditorState>((set) => ({
@@ -109,6 +116,11 @@ const useStore = create<EditorState>((set) => ({
 	showVectorsAsSpheres: false,
 	toggleShowVectorsAsSpheres: () =>
 		set((state) => ({ showVectorsAsSpheres: !state.showVectorsAsSpheres })),
+	showSpaceTransformations: true,
+	toggleShowSpaceTransformations: () =>
+		set((state) => ({
+			showSpaceTransformations: !state.showSpaceTransformations,
+		})),
 }));
 
 export default useStore;

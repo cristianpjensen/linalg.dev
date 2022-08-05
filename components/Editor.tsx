@@ -121,16 +121,7 @@ const Editor = () => {
 				return;
 			}
 
-			const node = { ...nodes[0] };
-
-			// Add origin to camera position
-			if (node.data.origin) {
-				node.data.output.x += node.data.origin.value.x;
-				node.data.output.y += node.data.origin.value.y;
-				node.data.output.z += node.data.origin.value.z;
-			}
-
-			setSelectedVectorNode(node, "editor");
+			setSelectedVectorNode(nodes[0], "editor");
 		},
 		[]
 	);

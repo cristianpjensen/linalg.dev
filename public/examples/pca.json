@@ -1,13 +1,653 @@
 {
   "nodes": [
     {
+      "width": 240,
+      "height": 192,
+      "type": "matrixMultiplication",
+      "id": "1659710905753-90",
+      "position": {
+        "x": 8844,
+        "y": 444
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "left": {
+          "isConnected": true,
+          "value": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "right": {
+          "isConnected": true,
+          "value": [
+            0.6730709574460335,
+            -0.5040549107133221,
+            0.5412061836568994,
+            -0.7320581416108198,
+            -0.558150519677295,
+            0.3905878578313442,
+            0.10519678485577823,
+            -0.6590877364734923,
+            -0.7446724058848001
+          ]
+        },
+        "output": {
+          "result": [
+            0.6730709574460335,
+            -0.5040549107133221,
+            0.5412061836568994,
+            -0.7320581416108198,
+            -0.558150519677295,
+            0.3905878578313442,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "selected": true,
+      "positionAbsolute": {
+        "x": 8844,
+        "y": 444
+      },
+      "dragging": false
+    },
+    {
+      "width": 264,
+      "height": 264,
+      "type": "matrix",
+      "id": "1659710881203-80",
+      "position": {
+        "x": 8532,
+        "y": 612
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "m1": {
+          "value": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "m2": {
+          "value": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "m3": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 8532,
+        "y": 612
+      },
+      "dragging": false
+    },
+    {
+      "width": 264,
+      "height": 264,
+      "type": "matrix",
+      "id": "1659699744246-18",
+      "position": {
+        "x": 8244,
+        "y": 396
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "m1": {
+          "isConnected": true,
+          "value": {
+            "x": 0.6730709574460335,
+            "y": -0.5040549107133221,
+            "z": 0.5412061836568994
+          }
+        },
+        "m2": {
+          "isConnected": true,
+          "value": {
+            "x": -0.7320581416108198,
+            "y": -0.558150519677295,
+            "z": 0.3905878578313442
+          }
+        },
+        "m3": {
+          "isConnected": true,
+          "value": {
+            "x": 0.10519678485577823,
+            "y": -0.6590877364734923,
+            "z": -0.7446724058848001
+          }
+        },
+        "output": {
+          "result": [
+            0.6730709574460335,
+            -0.5040549107133221,
+            0.5412061836568994,
+            -0.7320581416108198,
+            -0.558150519677295,
+            0.3905878578313442,
+            0.10519678485577823,
+            -0.6590877364734923,
+            -0.7446724058848001
+          ]
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 8244,
+        "y": 396
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659698673830-91",
+      "position": {
+        "x": 2748,
+        "y": 1140
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": -1.6
+        },
+        "y": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "z": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "output": {
+          "result": {
+            "x": -1.6,
+            "y": -1.2000000000000002,
+            "z": -0.3999999999999999
+          },
+          "x": null,
+          "y": null,
+          "z": null
+        },
+        "representation": "sphere",
+        "color": "#EDFF96"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2748,
+        "y": 1140
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659698649810-60",
+      "position": {
+        "x": 2508,
+        "y": 1140
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": -2.6
+        },
+        "y": {
+          "isConnected": true,
+          "value": 2.8
+        },
+        "z": {
+          "isConnected": true,
+          "value": -2.4
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "output": {
+          "result": {
+            "x": -2.6,
+            "y": 2.8,
+            "z": -2.4
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "representation": "sphere",
+        "color": "#EDFF96"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2508,
+        "y": 1140
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659698647906-76",
+      "position": {
+        "x": 2268,
+        "y": 1140
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 1.4
+        },
+        "y": {
+          "isConnected": true,
+          "value": -1.2000000000000002
+        },
+        "z": {
+          "isConnected": true,
+          "value": 1.6
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "output": {
+          "result": {
+            "x": 1.4,
+            "y": -1.2000000000000002,
+            "z": 1.6
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "representation": "sphere",
+        "color": "#EDFF96"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2268,
+        "y": 1140
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659698646728-95",
+      "position": {
+        "x": 2028,
+        "y": 1140
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 2.4
+        },
+        "y": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "z": {
+          "isConnected": true,
+          "value": -0.3999999999999999
+        },
+        "origin": {
+          "isConnected": false,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "hidden": false,
+        "output": {
+          "result": {
+            "x": 2.4,
+            "y": -0.20000000000000018,
+            "z": -0.3999999999999999
+          },
+          "x": 0.4,
+          "y": -0.20000000000000018,
+          "z": -0.20000000000000018
+        },
+        "representation": "sphere",
+        "color": "#EDFF96"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 2028,
+        "y": 1140
+      }
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659698541229-62",
+      "position": {
+        "x": 1788,
+        "y": 1140
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "isConnected": true,
+          "value": 0.4
+        },
+        "y": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "z": {
+          "isConnected": true,
+          "value": -0.20000000000000018
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "output": {
+          "result": {
+            "x": 0.4,
+            "y": -0.20000000000000018,
+            "z": -0.20000000000000018
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "representation": "sphere",
+        "color": "#EDFF96"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1788,
+        "y": 1140
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 192,
+      "type": "vectorScaling",
+      "id": "1659697239946-18",
+      "position": {
+        "x": 8244,
+        "y": 1188
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 0.10519678485577823,
+            "y": -0.6590877364734923,
+            "z": -0.7446724058848001
+          }
+        },
+        "scalar": {
+          "isConnected": true,
+          "value": 0.6305666216307151
+        },
+        "output": {
+          "result": {
+            "x": 0.06633358123292125,
+            "y": -0.4155987273463251,
+            "z": -0.46956556320039505
+          }
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#6495ED"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 8244,
+        "y": 1188
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 192,
+      "type": "vectorScaling",
+      "id": "1659697239228-27",
+      "position": {
+        "x": 8244,
+        "y": 948
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": -0.7320581416108198,
+            "y": -0.558150519677295,
+            "z": 0.3905878578313442
+          }
+        },
+        "scalar": {
+          "isConnected": true,
+          "value": 1.6775590141084464
+        },
+        "output": {
+          "result": {
+            "x": -1.2280707343107085,
+            "y": -0.93633043551396,
+            "z": 0.6552341817062798
+          }
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#6495ED"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 8244,
+        "y": 948
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 192,
+      "type": "vectorScaling",
+      "id": "1659697228816-53",
+      "position": {
+        "x": 8244,
+        "y": 708
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 0.6730709574460335,
+            "y": -0.5040549107133221,
+            "z": 0.5412061836568994
+          }
+        },
+        "scalar": {
+          "isConnected": true,
+          "value": 7.491874364260839
+        },
+        "output": {
+          "result": {
+            "x": 5.042563051418437,
+            "y": -3.7763160637529243,
+            "z": 4.054648733118569
+          }
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#6495ED"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 8244,
+        "y": 708
+      },
+      "dragging": false
+    },
+    {
+      "width": 144,
+      "height": 192,
+      "type": "eigenvalues",
+      "id": "1659697034158-40",
+      "position": {
+        "x": 7980,
+        "y": 1092
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "matrix": {
+          "isConnected": true,
+          "value": [
+            4.300000000000001,
+            -1.9,
+            2.2,
+            -1.9,
+            2.7,
+            -2.1,
+            2.2,
+            -2.1,
+            2.8000000000000003
+          ]
+        },
+        "output": {
+          "eigenvalue1": 7.491874364260839,
+          "eigenvalue2": 1.6775590141084464,
+          "eigenvalue3": 0.6305666216307151
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 7980,
+        "y": 1092
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 216,
+      "type": "eigenvectors",
+      "id": "1659697018221-23",
+      "position": {
+        "x": 7884,
+        "y": 828
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "matrix": {
+          "isConnected": true,
+          "value": [
+            4.300000000000001,
+            -1.9,
+            2.2,
+            -1.9,
+            2.7,
+            -2.1,
+            2.2,
+            -2.1,
+            2.8000000000000003
+          ]
+        },
+        "output": {
+          "eigenvector1": {
+            "x": 0.6730709574460335,
+            "y": -0.5040549107133221,
+            "z": 0.5412061836568994
+          },
+          "eigenvector2": {
+            "x": -0.7320581416108198,
+            "y": -0.558150519677295,
+            "z": 0.3905878578313442
+          },
+          "eigenvector3": {
+            "x": 0.10519678485577823,
+            "y": -0.6590877364734923,
+            "z": -0.7446724058848001
+          }
+        },
+        "hidden": true
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 7884,
+        "y": 828
+      },
+      "dragging": false
+    },
+    {
       "width": 264,
       "height": 264,
       "type": "matrix",
       "id": "1659662592121-57",
       "position": {
-        "x": 7452,
-        "y": 2436
+        "x": 7524,
+        "y": 924
       },
       "dragHandle": ".dragger",
       "data": {
@@ -51,8 +691,8 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 7452,
-        "y": 2436
+        "x": 7524,
+        "y": 924
       },
       "dragging": false
     },
@@ -62,7 +702,7 @@
       "type": "vector",
       "id": "1659662505682-4",
       "position": {
-        "x": 7020,
+        "x": 7260,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -92,12 +732,17 @@
             "x": 2.2,
             "y": -2.1,
             "z": 2.8000000000000003
-          }
-        }
+          },
+          "x": null,
+          "y": null,
+          "z": null
+        },
+        "hidden": true,
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 7020,
+        "x": 7260,
         "y": 900
       },
       "dragging": false
@@ -108,7 +753,7 @@
       "type": "binaryOperation",
       "id": "1659662434309-33",
       "position": {
-        "x": 6780,
+        "x": 7020,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -128,9 +773,10 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 6780,
+        "x": 7020,
         "y": 2148
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -138,7 +784,7 @@
       "type": "binaryOperation",
       "id": "1659662432620-6",
       "position": {
-        "x": 6588,
+        "x": 6828,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -156,10 +802,12 @@
           "result": 11.200000000000001
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 6588,
+        "x": 6828,
         "y": 2148
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -167,7 +815,7 @@
       "type": "binaryOperation",
       "id": "1659662429941-94",
       "position": {
-        "x": 6396,
+        "x": 6636,
         "y": 1908
       },
       "dragHandle": ".dragger",
@@ -185,10 +833,12 @@
           "result": 11.040000000000001
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 6396,
+        "x": 6636,
         "y": 1908
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -196,7 +846,7 @@
       "type": "binaryOperation",
       "id": "1659662426977-2",
       "position": {
-        "x": 6204,
+        "x": 6444,
         "y": 1668
       },
       "dragHandle": ".dragger",
@@ -217,7 +867,7 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 6204,
+        "x": 6444,
         "y": 1668
       }
     },
@@ -227,7 +877,7 @@
       "type": "binaryOperation",
       "id": "1659662424778-84",
       "position": {
-        "x": 6012,
+        "x": 6252,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -245,10 +895,12 @@
           "result": 2.7200000000000006
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 6012,
+        "x": 6252,
         "y": 1428
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -256,7 +908,7 @@
       "type": "unaryOperation",
       "id": "1659662410214-75",
       "position": {
-        "x": 5820,
+        "x": 6060,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -270,10 +922,12 @@
           "result": 2.5600000000000005
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5820,
+        "x": 6060,
         "y": 1428
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -281,7 +935,7 @@
       "type": "unaryOperation",
       "id": "1659662408435-12",
       "position": {
-        "x": 5820,
+        "x": 6060,
         "y": 1620
       },
       "dragHandle": ".dragger",
@@ -297,7 +951,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 5820,
+        "x": 6060,
         "y": 1620
       },
       "dragging": false
@@ -308,7 +962,7 @@
       "type": "unaryOperation",
       "id": "1659662405906-58",
       "position": {
-        "x": 5820,
+        "x": 6060,
         "y": 1812
       },
       "dragHandle": ".dragger",
@@ -324,7 +978,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 5820,
+        "x": 6060,
         "y": 1812
       },
       "dragging": false
@@ -335,7 +989,7 @@
       "type": "unaryOperation",
       "id": "1659662404680-51",
       "position": {
-        "x": 5820,
+        "x": 6060,
         "y": 2004
       },
       "dragHandle": ".dragger",
@@ -349,10 +1003,12 @@
           "result": 5.76
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5820,
+        "x": 6060,
         "y": 2004
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -360,7 +1016,7 @@
       "type": "unaryOperation",
       "id": "1659662359514-78",
       "position": {
-        "x": 5820,
+        "x": 6060,
         "y": 2196
       },
       "dragHandle": ".dragger",
@@ -376,7 +1032,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 5820,
+        "x": 6060,
         "y": 2196
       },
       "dragging": false
@@ -387,7 +1043,7 @@
       "type": "vector",
       "id": "1659662308954-32",
       "position": {
-        "x": 5484,
+        "x": 5724,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -417,12 +1073,18 @@
             "x": -1.9,
             "y": 2.7,
             "z": -2.1
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "global",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 5484,
+        "x": 5724,
         "y": 900
       },
       "dragging": false
@@ -433,7 +1095,7 @@
       "type": "binaryOperation",
       "id": "1659662179592-78",
       "position": {
-        "x": 5244,
+        "x": 5484,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -451,10 +1113,12 @@
           "result": -2.1
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5244,
+        "x": 5484,
         "y": 2148
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -462,7 +1126,7 @@
       "type": "binaryOperation",
       "id": "1659662178293-60",
       "position": {
-        "x": 5052,
+        "x": 5292,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -480,10 +1144,12 @@
           "result": -8.4
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5052,
+        "x": 5292,
         "y": 2148
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -491,7 +1157,7 @@
       "type": "binaryOperation",
       "id": "1659662176559-16",
       "position": {
-        "x": 4860,
+        "x": 5100,
         "y": 1908
       },
       "dragHandle": ".dragger",
@@ -509,10 +1175,12 @@
           "result": -8.88
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4860,
+        "x": 5100,
         "y": 1908
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -520,7 +1188,7 @@
       "type": "binaryOperation",
       "id": "1659662172421-42",
       "position": {
-        "x": 4668,
+        "x": 4908,
         "y": 1668
       },
       "dragHandle": ".dragger",
@@ -540,7 +1208,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4668,
+        "x": 4908,
         "y": 1668
       },
       "dragging": false
@@ -551,7 +1219,7 @@
       "type": "binaryOperation",
       "id": "1659662170778-58",
       "position": {
-        "x": 4476,
+        "x": 4716,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -569,10 +1237,12 @@
           "result": -0.2400000000000002
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4476,
+        "x": 4716,
         "y": 1428
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -580,7 +1250,7 @@
       "type": "binaryOperation",
       "id": "1659662164694-71",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -598,10 +1268,12 @@
           "result": 0.48
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 2148
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -609,7 +1281,7 @@
       "type": "binaryOperation",
       "id": "1659662163261-1",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 1908
       },
       "dragHandle": ".dragger",
@@ -627,10 +1299,12 @@
           "result": -6.72
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 1908
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -638,7 +1312,7 @@
       "type": "binaryOperation",
       "id": "1659662161924-9",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 1668
       },
       "dragHandle": ".dragger",
@@ -656,10 +1330,12 @@
           "result": -1.9200000000000004
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 1668
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -667,7 +1343,7 @@
       "type": "binaryOperation",
       "id": "1659662160633-7",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -685,10 +1361,12 @@
           "result": 0.08000000000000006
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 1428
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -696,7 +1374,7 @@
       "type": "binaryOperation",
       "id": "1659662156943-78",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 1188
       },
       "dragHandle": ".dragger",
@@ -714,10 +1392,12 @@
           "result": -0.3200000000000003
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 1188
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -725,7 +1405,7 @@
       "type": "binaryOperation",
       "id": "1659662092890-37",
       "position": {
-        "x": 5244,
+        "x": 5484,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -743,10 +1423,12 @@
           "result": 2.7
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5244,
+        "x": 5484,
         "y": 900
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -754,7 +1436,7 @@
       "type": "binaryOperation",
       "id": "1659662089234-83",
       "position": {
-        "x": 5052,
+        "x": 5292,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -772,10 +1454,12 @@
           "result": 10.8
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 5052,
+        "x": 5292,
         "y": 900
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -783,7 +1467,7 @@
       "type": "binaryOperation",
       "id": "1659662087517-8",
       "position": {
-        "x": 4860,
+        "x": 5100,
         "y": 660
       },
       "dragHandle": ".dragger",
@@ -801,10 +1485,12 @@
           "result": 9.36
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 4860,
+        "x": 5100,
         "y": 660
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -812,7 +1498,7 @@
       "type": "binaryOperation",
       "id": "1659662078288-77",
       "position": {
-        "x": 4668,
+        "x": 4908,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -833,7 +1519,7 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 4668,
+        "x": 4908,
         "y": 420
       }
     },
@@ -843,7 +1529,7 @@
       "type": "binaryOperation",
       "id": "1659662072063-28",
       "position": {
-        "x": 4476,
+        "x": 4716,
         "y": 180
       },
       "dragHandle": ".dragger",
@@ -863,7 +1549,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4476,
+        "x": 4716,
         "y": 180
       },
       "dragging": false
@@ -874,7 +1560,7 @@
       "type": "unaryOperation",
       "id": "1659662064279-68",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 180
       },
       "dragHandle": ".dragger",
@@ -890,7 +1576,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 180
       },
       "dragging": false
@@ -901,7 +1587,7 @@
       "type": "unaryOperation",
       "id": "1659662062410-59",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 372
       },
       "dragHandle": ".dragger",
@@ -917,7 +1603,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 372
       },
       "dragging": false
@@ -928,7 +1614,7 @@
       "type": "unaryOperation",
       "id": "1659662060133-71",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 564
       },
       "dragHandle": ".dragger",
@@ -944,7 +1630,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 564
       },
       "dragging": false
@@ -955,7 +1641,7 @@
       "type": "unaryOperation",
       "id": "1659662057433-35",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 756
       },
       "dragHandle": ".dragger",
@@ -971,7 +1657,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 756
       },
       "dragging": false
@@ -982,7 +1668,7 @@
       "type": "unaryOperation",
       "id": "1659662049959-93",
       "position": {
-        "x": 4284,
+        "x": 4524,
         "y": 948
       },
       "dragHandle": ".dragger",
@@ -998,7 +1684,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 4284,
+        "x": 4524,
         "y": 948
       },
       "dragging": false
@@ -1009,7 +1695,7 @@
       "type": "vector",
       "id": "1659661889654-45",
       "position": {
-        "x": 3948,
+        "x": 4188,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -1039,12 +1725,17 @@
             "x": 4.300000000000001,
             "y": -1.9,
             "z": 2.2
-          }
-        }
+          },
+          "x": null,
+          "y": null,
+          "z": null
+        },
+        "hidden": true,
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3948,
+        "x": 4188,
         "y": 900
       },
       "dragging": false
@@ -1055,7 +1746,7 @@
       "type": "binaryOperation",
       "id": "1659661736696-19",
       "position": {
-        "x": 3708,
+        "x": 3948,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -1075,7 +1766,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3708,
+        "x": 3948,
         "y": 2148
       },
       "dragging": false
@@ -1086,7 +1777,7 @@
       "type": "binaryOperation",
       "id": "1659661731150-23",
       "position": {
-        "x": 3516,
+        "x": 3756,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -1106,7 +1797,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3516,
+        "x": 3756,
         "y": 2148
       },
       "dragging": false
@@ -1117,7 +1808,7 @@
       "type": "binaryOperation",
       "id": "1659661729109-49",
       "position": {
-        "x": 3324,
+        "x": 3564,
         "y": 1908
       },
       "dragHandle": ".dragger",
@@ -1137,7 +1828,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3324,
+        "x": 3564,
         "y": 1908
       },
       "dragging": false
@@ -1148,7 +1839,7 @@
       "type": "binaryOperation",
       "id": "1659661726608-73",
       "position": {
-        "x": 3132,
+        "x": 3372,
         "y": 1668
       },
       "dragHandle": ".dragger",
@@ -1168,7 +1859,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3132,
+        "x": 3372,
         "y": 1668
       },
       "dragging": false
@@ -1179,7 +1870,7 @@
       "type": "binaryOperation",
       "id": "1659661724791-29",
       "position": {
-        "x": 2940,
+        "x": 3180,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -1199,7 +1890,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2940,
+        "x": 3180,
         "y": 1428
       },
       "dragging": false
@@ -1210,7 +1901,7 @@
       "type": "binaryOperation",
       "id": "1659661720998-63",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 2148
       },
       "dragHandle": ".dragger",
@@ -1230,7 +1921,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 2148
       },
       "dragging": false
@@ -1241,7 +1932,7 @@
       "type": "binaryOperation",
       "id": "1659661719720-37",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 1908
       },
       "dragHandle": ".dragger",
@@ -1261,7 +1952,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 1908
       },
       "dragging": false
@@ -1272,7 +1963,7 @@
       "type": "binaryOperation",
       "id": "1659661717747-10",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 1668
       },
       "dragHandle": ".dragger",
@@ -1292,7 +1983,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 1668
       },
       "dragging": false
@@ -1303,7 +1994,7 @@
       "type": "binaryOperation",
       "id": "1659661716695-61",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 1428
       },
       "dragHandle": ".dragger",
@@ -1323,7 +2014,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 1428
       },
       "dragging": false
@@ -1334,7 +2025,7 @@
       "type": "binaryOperation",
       "id": "1659661715037-75",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 1188
       },
       "dragHandle": ".dragger",
@@ -1354,7 +2045,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 1188
       },
       "dragging": false
@@ -1365,7 +2056,7 @@
       "type": "binaryOperation",
       "id": "1659661511474-93",
       "position": {
-        "x": 3708,
+        "x": 3948,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -1386,7 +2077,7 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 3708,
+        "x": 3948,
         "y": 900
       }
     },
@@ -1396,7 +2087,7 @@
       "type": "binaryOperation",
       "id": "1659661506312-29",
       "position": {
-        "x": 3516,
+        "x": 3756,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -1416,7 +2107,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3516,
+        "x": 3756,
         "y": 900
       },
       "dragging": false
@@ -1427,7 +2118,7 @@
       "type": "binaryOperation",
       "id": "1659661503436-21",
       "position": {
-        "x": 3324,
+        "x": 3564,
         "y": 660
       },
       "dragHandle": ".dragger",
@@ -1447,7 +2138,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3324,
+        "x": 3564,
         "y": 660
       },
       "dragging": false
@@ -1458,7 +2149,7 @@
       "type": "binaryOperation",
       "id": "1659661500149-45",
       "position": {
-        "x": 3132,
+        "x": 3372,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -1478,7 +2169,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3132,
+        "x": 3372,
         "y": 420
       },
       "dragging": false
@@ -1489,7 +2180,7 @@
       "type": "binaryOperation",
       "id": "1659661496083-66",
       "position": {
-        "x": 2940,
+        "x": 3180,
         "y": 180
       },
       "dragHandle": ".dragger",
@@ -1509,7 +2200,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2940,
+        "x": 3180,
         "y": 180
       },
       "dragging": false
@@ -1551,7 +2242,7 @@
       "type": "binaryOperation",
       "id": "1659661269968-65",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 900
       },
       "dragHandle": ".dragger",
@@ -1571,7 +2262,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 900
       },
       "dragging": false
@@ -1582,7 +2273,7 @@
       "type": "binaryOperation",
       "id": "1659661268364-31",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 660
       },
       "dragHandle": ".dragger",
@@ -1602,7 +2293,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 660
       },
       "dragging": false
@@ -1613,7 +2304,7 @@
       "type": "binaryOperation",
       "id": "1659661265302-37",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -1633,7 +2324,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 420
       },
       "dragging": false
@@ -1644,7 +2335,7 @@
       "type": "binaryOperation",
       "id": "1659661263011-55",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": 180
       },
       "dragHandle": ".dragger",
@@ -1664,7 +2355,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": 180
       },
       "dragging": false
@@ -1675,7 +2366,7 @@
       "type": "binaryOperation",
       "id": "1659661261841-66",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -60
       },
       "dragHandle": ".dragger",
@@ -1695,7 +2386,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -60
       },
       "dragging": false
@@ -1706,7 +2397,7 @@
       "type": "binaryOperation",
       "id": "1659661146656-6",
       "position": {
-        "x": 3708,
+        "x": 3948,
         "y": -372
       },
       "dragHandle": ".dragger",
@@ -1726,7 +2417,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3708,
+        "x": 3948,
         "y": -372
       },
       "dragging": false
@@ -1737,7 +2428,7 @@
       "type": "binaryOperation",
       "id": "1659661119659-25",
       "position": {
-        "x": 3516,
+        "x": 3756,
         "y": -372
       },
       "dragHandle": ".dragger",
@@ -1757,7 +2448,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3516,
+        "x": 3756,
         "y": -372
       },
       "dragging": false
@@ -1768,7 +2459,7 @@
       "type": "binaryOperation",
       "id": "1659661117123-42",
       "position": {
-        "x": 3324,
+        "x": 3564,
         "y": -612
       },
       "dragHandle": ".dragger",
@@ -1788,7 +2479,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3324,
+        "x": 3564,
         "y": -612
       },
       "dragging": false
@@ -1799,7 +2490,7 @@
       "type": "binaryOperation",
       "id": "1659661102030-27",
       "position": {
-        "x": 3132,
+        "x": 3372,
         "y": -852
       },
       "dragHandle": ".dragger",
@@ -1819,7 +2510,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 3132,
+        "x": 3372,
         "y": -852
       },
       "dragging": false
@@ -1830,7 +2521,7 @@
       "type": "binaryOperation",
       "id": "1659661069071-89",
       "position": {
-        "x": 2940,
+        "x": 3180,
         "y": -1092
       },
       "dragHandle": ".dragger",
@@ -1850,7 +2541,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2940,
+        "x": 3180,
         "y": -1092
       },
       "dragging": false
@@ -1861,7 +2552,7 @@
       "type": "unaryOperation",
       "id": "1659660999633-22",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -324
       },
       "dragHandle": ".dragger",
@@ -1877,7 +2568,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -324
       },
       "dragging": false
@@ -1888,7 +2579,7 @@
       "type": "unaryOperation",
       "id": "1659660997926-64",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -516
       },
       "dragHandle": ".dragger",
@@ -1904,7 +2595,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -516
       },
       "dragging": false
@@ -1915,7 +2606,7 @@
       "type": "unaryOperation",
       "id": "1659660996461-20",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -708
       },
       "dragHandle": ".dragger",
@@ -1931,7 +2622,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -708
       },
       "dragging": false
@@ -1942,7 +2633,7 @@
       "type": "unaryOperation",
       "id": "1659660994952-96",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -900
       },
       "dragHandle": ".dragger",
@@ -1958,7 +2649,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -900
       },
       "dragging": false
@@ -1969,7 +2660,7 @@
       "type": "unaryOperation",
       "id": "1659660993582-81",
       "position": {
-        "x": 2748,
+        "x": 2988,
         "y": -1092
       },
       "dragHandle": ".dragger",
@@ -1985,7 +2676,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2748,
+        "x": 2988,
         "y": -1092
       },
       "dragging": false
@@ -1996,7 +2687,7 @@
       "type": "binaryOperation",
       "id": "1659660764920-0",
       "position": {
-        "x": 2412,
+        "x": 2508,
         "y": 804
       },
       "dragHandle": ".dragger",
@@ -2014,10 +2705,12 @@
           "result": -0.3999999999999999
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 2412,
+        "x": 2508,
         "y": 804
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2025,7 +2718,7 @@
       "type": "binaryOperation",
       "id": "1659660762545-54",
       "position": {
-        "x": 2196,
+        "x": 2268,
         "y": 804
       },
       "dragHandle": ".dragger",
@@ -2045,7 +2738,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2196,
+        "x": 2268,
         "y": 804
       },
       "dragging": false
@@ -2056,7 +2749,7 @@
       "type": "binaryOperation",
       "id": "1659660760848-36",
       "position": {
-        "x": 1980,
+        "x": 2028,
         "y": 804
       },
       "dragHandle": ".dragger",
@@ -2074,10 +2767,12 @@
           "result": 1.6
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 1980,
+        "x": 2028,
         "y": 804
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2085,7 +2780,7 @@
       "type": "binaryOperation",
       "id": "1659660759907-27",
       "position": {
-        "x": 1764,
+        "x": 1788,
         "y": 804
       },
       "dragHandle": ".dragger",
@@ -2103,10 +2798,12 @@
           "result": -0.3999999999999999
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 1764,
+        "x": 1788,
         "y": 804
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2145,7 +2842,7 @@
       "type": "binaryOperation",
       "id": "1659660714745-6",
       "position": {
-        "x": 2412,
+        "x": 2508,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -2163,10 +2860,12 @@
           "result": -1.2000000000000002
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 2412,
+        "x": 2508,
         "y": 420
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2174,7 +2873,7 @@
       "type": "binaryOperation",
       "id": "1659660713281-23",
       "position": {
-        "x": 2196,
+        "x": 2268,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -2192,10 +2891,12 @@
           "result": 2.8
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 2196,
+        "x": 2268,
         "y": 420
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2203,7 +2904,7 @@
       "type": "binaryOperation",
       "id": "1659660711569-86",
       "position": {
-        "x": 1980,
+        "x": 2028,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -2221,10 +2922,12 @@
           "result": -1.2000000000000002
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 1980,
+        "x": 2028,
         "y": 420
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2232,7 +2935,7 @@
       "type": "binaryOperation",
       "id": "1659660708819-62",
       "position": {
-        "x": 1764,
+        "x": 1788,
         "y": 420
       },
       "dragHandle": ".dragger",
@@ -2250,10 +2953,12 @@
           "result": -0.20000000000000018
         }
       },
+      "selected": false,
       "positionAbsolute": {
-        "x": 1764,
+        "x": 1788,
         "y": 420
-      }
+      },
+      "dragging": false
     },
     {
       "width": 144,
@@ -2292,7 +2997,7 @@
       "type": "binaryOperation",
       "id": "1659660402825-0",
       "position": {
-        "x": 2412,
+        "x": 2508,
         "y": 36
       },
       "dragHandle": ".dragger",
@@ -2312,7 +3017,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2412,
+        "x": 2508,
         "y": 36
       },
       "dragging": false
@@ -2323,7 +3028,7 @@
       "type": "binaryOperation",
       "id": "1659660401523-6",
       "position": {
-        "x": 2196,
+        "x": 2268,
         "y": 36
       },
       "dragHandle": ".dragger",
@@ -2343,7 +3048,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2196,
+        "x": 2268,
         "y": 36
       },
       "dragging": false
@@ -2354,7 +3059,7 @@
       "type": "binaryOperation",
       "id": "1659660398572-42",
       "position": {
-        "x": 1980,
+        "x": 2028,
         "y": 36
       },
       "dragHandle": ".dragger",
@@ -2374,7 +3079,7 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 1980,
+        "x": 2028,
         "y": 36
       },
       "dragging": false
@@ -2385,7 +3090,7 @@
       "type": "binaryOperation",
       "id": "1659660393126-46",
       "position": {
-        "x": 1764,
+        "x": 1788,
         "y": 36
       },
       "dragHandle": ".dragger",
@@ -2406,7 +3111,7 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1764,
+        "x": 1788,
         "y": 36
       }
     },
@@ -2448,7 +3153,7 @@
       "id": "1659660278536-99",
       "position": {
         "x": 1068,
-        "y": 1188
+        "y": 1140
       },
       "dragHandle": ".dragger",
       "data": {
@@ -2477,13 +3182,19 @@
             "x": -1,
             "y": 1,
             "z": 1
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "sphere",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
         "x": 1068,
-        "y": 1188
+        "y": 1140
       },
       "dragging": false
     },
@@ -2494,7 +3205,7 @@
       "id": "1659660238072-5",
       "position": {
         "x": 828,
-        "y": 1188
+        "y": 1140
       },
       "dragHandle": ".dragger",
       "data": {
@@ -2523,14 +3234,21 @@
             "x": -2,
             "y": 5,
             "z": -1
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "sphere",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
         "x": 828,
-        "y": 1188
-      }
+        "y": 1140
+      },
+      "dragging": false
     },
     {
       "width": 192,
@@ -2539,7 +3257,7 @@
       "id": "1659660236640-89",
       "position": {
         "x": 588,
-        "y": 1188
+        "y": 1140
       },
       "dragHandle": ".dragger",
       "data": {
@@ -2568,14 +3286,21 @@
             "x": 2,
             "y": 1,
             "z": 3
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "sphere",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
         "x": 588,
-        "y": 1188
-      }
+        "y": 1140
+      },
+      "dragging": false
     },
     {
       "width": 192,
@@ -2584,7 +3309,7 @@
       "id": "1659660201415-24",
       "position": {
         "x": 348,
-        "y": 1188
+        "y": 1140
       },
       "dragHandle": ".dragger",
       "data": {
@@ -2613,13 +3338,19 @@
             "x": 3,
             "y": 2,
             "z": 1
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "sphere",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
         "x": 348,
-        "y": 1188
+        "y": 1140
       },
       "dragging": false
     },
@@ -2630,7 +3361,7 @@
       "id": "1659660186300-23",
       "position": {
         "x": 108,
-        "y": 1188
+        "y": 1140
       },
       "dragHandle": ".dragger",
       "data": {
@@ -2659,13 +3390,19 @@
             "x": 1,
             "y": 2,
             "z": 3
-          }
-        }
+          },
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hidden": true,
+        "representation": "sphere",
+        "color": "#E9E9E9"
       },
       "selected": false,
       "positionAbsolute": {
         "x": 108,
-        "y": 1188
+        "y": 1140
       },
       "dragging": false
     },
@@ -3961,105 +4698,120 @@
       "sourceHandle": "result",
       "target": "1659660186300-23",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659659849430-61result-1659660186300-23x"
+      "id": "reactflow__edge-1659659849430-61result-1659660186300-23x",
+      "selected": false
     },
     {
       "source": "1659659849909-41",
       "sourceHandle": "result",
       "target": "1659660186300-23",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659659849909-41result-1659660186300-23y"
+      "id": "reactflow__edge-1659659849909-41result-1659660186300-23y",
+      "selected": false
     },
     {
       "source": "1659659850320-88",
       "sourceHandle": "result",
       "target": "1659660186300-23",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659659850320-88result-1659660186300-23z"
+      "id": "reactflow__edge-1659659850320-88result-1659660186300-23z",
+      "selected": false
     },
     {
       "source": "1659659762695-58",
       "sourceHandle": "result",
       "target": "1659660201415-24",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659659762695-58result-1659660201415-24x"
+      "id": "reactflow__edge-1659659762695-58result-1659660201415-24x",
+      "selected": false
     },
     {
       "source": "1659659769094-3",
       "sourceHandle": "result",
       "target": "1659660201415-24",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659659769094-3result-1659660201415-24y"
+      "id": "reactflow__edge-1659659769094-3result-1659660201415-24y",
+      "selected": false
     },
     {
       "source": "1659659770701-83",
       "sourceHandle": "result",
       "target": "1659660201415-24",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659659770701-83result-1659660201415-24z"
+      "id": "reactflow__edge-1659659770701-83result-1659660201415-24z",
+      "selected": false
     },
     {
       "source": "1659659835635-69",
       "sourceHandle": "result",
       "target": "1659660236640-89",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659659835635-69result-1659660236640-89x"
+      "id": "reactflow__edge-1659659835635-69result-1659660236640-89x",
+      "selected": false
     },
     {
       "source": "1659659838202-80",
       "sourceHandle": "result",
       "target": "1659660236640-89",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659659838202-80result-1659660236640-89y"
+      "id": "reactflow__edge-1659659838202-80result-1659660236640-89y",
+      "selected": false
     },
     {
       "source": "1659659840583-23",
       "sourceHandle": "result",
       "target": "1659660236640-89",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659659840583-23result-1659660236640-89z"
+      "id": "reactflow__edge-1659659840583-23result-1659660236640-89z",
+      "selected": false
     },
     {
       "source": "1659659875342-30",
       "sourceHandle": "result",
       "target": "1659660238072-5",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659659875342-30result-1659660238072-5x"
+      "id": "reactflow__edge-1659659875342-30result-1659660238072-5x",
+      "selected": false
     },
     {
       "source": "1659659877456-32",
       "sourceHandle": "result",
       "target": "1659660238072-5",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659659877456-32result-1659660238072-5y"
+      "id": "reactflow__edge-1659659877456-32result-1659660238072-5y",
+      "selected": false
     },
     {
       "source": "1659659878706-63",
       "sourceHandle": "result",
       "target": "1659660238072-5",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659659878706-63result-1659660238072-5z"
+      "id": "reactflow__edge-1659659878706-63result-1659660238072-5z",
+      "selected": false
     },
     {
       "source": "1659659891304-74",
       "sourceHandle": "result",
       "target": "1659660278536-99",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659659891304-74result-1659660278536-99x"
+      "id": "reactflow__edge-1659659891304-74result-1659660278536-99x",
+      "selected": false
     },
     {
       "source": "1659659893276-25",
       "sourceHandle": "result",
       "target": "1659660278536-99",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659659893276-25result-1659660278536-99y"
+      "id": "reactflow__edge-1659659893276-25result-1659660278536-99y",
+      "selected": false
     },
     {
       "source": "1659659894657-70",
       "sourceHandle": "result",
       "target": "1659660278536-99",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659659894657-70result-1659660278536-99z"
+      "id": "reactflow__edge-1659659894657-70result-1659660278536-99z",
+      "selected": false
     },
     {
       "source": "1659660138513-88",
@@ -4153,28 +4905,32 @@
       "sourceHandle": "result",
       "target": "1659660708819-62",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660135054-67result-1659660708819-62right"
+      "id": "reactflow__edge-1659660135054-67result-1659660708819-62right",
+      "selected": false
     },
     {
       "source": "1659660135054-67",
       "sourceHandle": "result",
       "target": "1659660711569-86",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660135054-67result-1659660711569-86right"
+      "id": "reactflow__edge-1659660135054-67result-1659660711569-86right",
+      "selected": false
     },
     {
       "source": "1659660135054-67",
       "sourceHandle": "result",
       "target": "1659660713281-23",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660135054-67result-1659660713281-23right"
+      "id": "reactflow__edge-1659660135054-67result-1659660713281-23right",
+      "selected": false
     },
     {
       "source": "1659660135054-67",
       "sourceHandle": "result",
       "target": "1659660714745-6",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660135054-67result-1659660714745-6right"
+      "id": "reactflow__edge-1659660135054-67result-1659660714745-6right",
+      "selected": false
     },
     {
       "source": "1659659849909-41",
@@ -4188,28 +4944,32 @@
       "sourceHandle": "result",
       "target": "1659660708819-62",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659769094-3result-1659660708819-62left"
+      "id": "reactflow__edge-1659659769094-3result-1659660708819-62left",
+      "selected": false
     },
     {
       "source": "1659659838202-80",
       "sourceHandle": "result",
       "target": "1659660711569-86",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659838202-80result-1659660711569-86left"
+      "id": "reactflow__edge-1659659838202-80result-1659660711569-86left",
+      "selected": false
     },
     {
       "source": "1659659877456-32",
       "sourceHandle": "result",
       "target": "1659660713281-23",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659877456-32result-1659660713281-23left"
+      "id": "reactflow__edge-1659659877456-32result-1659660713281-23left",
+      "selected": false
     },
     {
       "source": "1659659893276-25",
       "sourceHandle": "result",
       "target": "1659660714745-6",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659893276-25result-1659660714745-6left"
+      "id": "reactflow__edge-1659659893276-25result-1659660714745-6left",
+      "selected": false
     },
     {
       "source": "1659660133785-0",
@@ -4223,28 +4983,32 @@
       "sourceHandle": "result",
       "target": "1659660759907-27",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660133785-0result-1659660759907-27right"
+      "id": "reactflow__edge-1659660133785-0result-1659660759907-27right",
+      "selected": false
     },
     {
       "source": "1659660133785-0",
       "sourceHandle": "result",
       "target": "1659660760848-36",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660133785-0result-1659660760848-36right"
+      "id": "reactflow__edge-1659660133785-0result-1659660760848-36right",
+      "selected": false
     },
     {
       "source": "1659660133785-0",
       "sourceHandle": "result",
       "target": "1659660762545-54",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660133785-0result-1659660762545-54right"
+      "id": "reactflow__edge-1659660133785-0result-1659660762545-54right",
+      "selected": false
     },
     {
       "source": "1659660133785-0",
       "sourceHandle": "result",
       "target": "1659660764920-0",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660133785-0result-1659660764920-0right"
+      "id": "reactflow__edge-1659660133785-0result-1659660764920-0right",
+      "selected": false
     },
     {
       "source": "1659659850320-88",
@@ -4258,28 +5022,32 @@
       "sourceHandle": "result",
       "target": "1659660759907-27",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659770701-83result-1659660759907-27left"
+      "id": "reactflow__edge-1659659770701-83result-1659660759907-27left",
+      "selected": false
     },
     {
       "source": "1659659840583-23",
       "sourceHandle": "result",
       "target": "1659660760848-36",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659840583-23result-1659660760848-36left"
+      "id": "reactflow__edge-1659659840583-23result-1659660760848-36left",
+      "selected": false
     },
     {
       "source": "1659659878706-63",
       "sourceHandle": "result",
       "target": "1659660762545-54",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659878706-63result-1659660762545-54left"
+      "id": "reactflow__edge-1659659878706-63result-1659660762545-54left",
+      "selected": false
     },
     {
       "source": "1659659894657-70",
       "sourceHandle": "result",
       "target": "1659660764920-0",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659659894657-70result-1659660764920-0left"
+      "id": "reactflow__edge-1659659894657-70result-1659660764920-0left",
+      "selected": false
     },
     {
       "source": "1659660369744-63",
@@ -4781,392 +5549,448 @@
       "sourceHandle": "result",
       "target": "1659662072063-28",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662064279-68result-1659662072063-28left"
+      "id": "reactflow__edge-1659662064279-68result-1659662072063-28left",
+      "selected": false
     },
     {
       "source": "1659662062410-59",
       "sourceHandle": "result",
       "target": "1659662072063-28",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662062410-59result-1659662072063-28right"
+      "id": "reactflow__edge-1659662062410-59result-1659662072063-28right",
+      "selected": false
     },
     {
       "source": "1659662072063-28",
       "sourceHandle": "result",
       "target": "1659662078288-77",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662072063-28result-1659662078288-77left"
+      "id": "reactflow__edge-1659662072063-28result-1659662078288-77left",
+      "selected": false
     },
     {
       "source": "1659662060133-71",
       "sourceHandle": "result",
       "target": "1659662078288-77",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662060133-71result-1659662078288-77right"
+      "id": "reactflow__edge-1659662060133-71result-1659662078288-77right",
+      "selected": false
     },
     {
       "source": "1659662078288-77",
       "sourceHandle": "result",
       "target": "1659662087517-8",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662078288-77result-1659662087517-8left"
+      "id": "reactflow__edge-1659662078288-77result-1659662087517-8left",
+      "selected": false
     },
     {
       "source": "1659662087517-8",
       "sourceHandle": "result",
       "target": "1659662089234-83",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662087517-8result-1659662089234-83left"
+      "id": "reactflow__edge-1659662087517-8result-1659662089234-83left",
+      "selected": false
     },
     {
       "source": "1659662089234-83",
       "sourceHandle": "result",
       "target": "1659662092890-37",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662089234-83result-1659662092890-37left"
+      "id": "reactflow__edge-1659662089234-83result-1659662092890-37left",
+      "selected": false
     },
     {
       "source": "1659662057433-35",
       "sourceHandle": "result",
       "target": "1659662087517-8",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662057433-35result-1659662087517-8right"
+      "id": "reactflow__edge-1659662057433-35result-1659662087517-8right",
+      "selected": false
     },
     {
       "source": "1659662049959-93",
       "sourceHandle": "result",
       "target": "1659662089234-83",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662049959-93result-1659662089234-83right"
+      "id": "reactflow__edge-1659662049959-93result-1659662089234-83right",
+      "selected": false
     },
     {
       "source": "1659661368932-78",
       "sourceHandle": "result",
       "target": "1659662092890-37",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659661368932-78result-1659662092890-37right"
+      "id": "reactflow__edge-1659661368932-78result-1659662092890-37right",
+      "selected": false
     },
     {
       "source": "1659660639784-87",
       "sourceHandle": "result",
       "target": "1659662064279-68",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660639784-87result-1659662064279-68value"
+      "id": "reactflow__edge-1659660639784-87result-1659662064279-68value",
+      "selected": false
     },
     {
       "source": "1659660708819-62",
       "sourceHandle": "result",
       "target": "1659662062410-59",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660708819-62result-1659662062410-59value"
+      "id": "reactflow__edge-1659660708819-62result-1659662062410-59value",
+      "selected": false
     },
     {
       "source": "1659660711569-86",
       "sourceHandle": "result",
       "target": "1659662060133-71",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660711569-86result-1659662060133-71value"
+      "id": "reactflow__edge-1659660711569-86result-1659662060133-71value",
+      "selected": false
     },
     {
       "source": "1659660713281-23",
       "sourceHandle": "result",
       "target": "1659662057433-35",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660713281-23result-1659662057433-35value"
+      "id": "reactflow__edge-1659660713281-23result-1659662057433-35value",
+      "selected": false
     },
     {
       "source": "1659660714745-6",
       "sourceHandle": "result",
       "target": "1659662049959-93",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660714745-6result-1659662049959-93value"
+      "id": "reactflow__edge-1659660714745-6result-1659662049959-93value",
+      "selected": false
     },
     {
       "source": "1659662170778-58",
       "sourceHandle": "result",
       "target": "1659662172421-42",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662170778-58result-1659662172421-42left"
+      "id": "reactflow__edge-1659662170778-58result-1659662172421-42left",
+      "selected": false
     },
     {
       "source": "1659662172421-42",
       "sourceHandle": "result",
       "target": "1659662176559-16",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662172421-42result-1659662176559-16left"
+      "id": "reactflow__edge-1659662172421-42result-1659662176559-16left",
+      "selected": false
     },
     {
       "source": "1659662176559-16",
       "sourceHandle": "result",
       "target": "1659662178293-60",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662176559-16result-1659662178293-60left"
+      "id": "reactflow__edge-1659662176559-16result-1659662178293-60left",
+      "selected": false
     },
     {
       "source": "1659662178293-60",
       "sourceHandle": "result",
       "target": "1659662179592-78",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662178293-60result-1659662179592-78left"
+      "id": "reactflow__edge-1659662178293-60result-1659662179592-78left",
+      "selected": false
     },
     {
       "source": "1659662156943-78",
       "sourceHandle": "result",
       "target": "1659662170778-58",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662156943-78result-1659662170778-58left"
+      "id": "reactflow__edge-1659662156943-78result-1659662170778-58left",
+      "selected": false
     },
     {
       "source": "1659662160633-7",
       "sourceHandle": "result",
       "target": "1659662170778-58",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662160633-7result-1659662170778-58right"
+      "id": "reactflow__edge-1659662160633-7result-1659662170778-58right",
+      "selected": false
     },
     {
       "source": "1659662161924-9",
       "sourceHandle": "result",
       "target": "1659662172421-42",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662161924-9result-1659662172421-42right"
+      "id": "reactflow__edge-1659662161924-9result-1659662172421-42right",
+      "selected": false
     },
     {
       "source": "1659662163261-1",
       "sourceHandle": "result",
       "target": "1659662176559-16",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662163261-1result-1659662176559-16right"
+      "id": "reactflow__edge-1659662163261-1result-1659662176559-16right",
+      "selected": false
     },
     {
       "source": "1659662164694-71",
       "sourceHandle": "result",
       "target": "1659662178293-60",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662164694-71result-1659662178293-60right"
+      "id": "reactflow__edge-1659662164694-71result-1659662178293-60right",
+      "selected": false
     },
     {
       "source": "1659661368932-78",
       "sourceHandle": "result",
       "target": "1659662179592-78",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659661368932-78result-1659662179592-78right"
+      "id": "reactflow__edge-1659661368932-78result-1659662179592-78right",
+      "selected": false
     },
     {
       "source": "1659660639784-87",
       "sourceHandle": "result",
       "target": "1659662156943-78",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659660639784-87result-1659662156943-78left"
+      "id": "reactflow__edge-1659660639784-87result-1659662156943-78left",
+      "selected": false
     },
     {
       "source": "1659660708819-62",
       "sourceHandle": "result",
       "target": "1659662160633-7",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659660708819-62result-1659662160633-7left"
+      "id": "reactflow__edge-1659660708819-62result-1659662160633-7left",
+      "selected": false
     },
     {
       "source": "1659660711569-86",
       "sourceHandle": "result",
       "target": "1659662161924-9",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659660711569-86result-1659662161924-9left"
+      "id": "reactflow__edge-1659660711569-86result-1659662161924-9left",
+      "selected": false
     },
     {
       "source": "1659660713281-23",
       "sourceHandle": "result",
       "target": "1659662163261-1",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659660713281-23result-1659662163261-1left"
+      "id": "reactflow__edge-1659660713281-23result-1659662163261-1left",
+      "selected": false
     },
     {
       "source": "1659660714745-6",
       "sourceHandle": "result",
       "target": "1659662164694-71",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659660714745-6result-1659662164694-71left"
+      "id": "reactflow__edge-1659660714745-6result-1659662164694-71left",
+      "selected": false
     },
     {
       "source": "1659660752993-78",
       "sourceHandle": "result",
       "target": "1659662156943-78",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660752993-78result-1659662156943-78right"
+      "id": "reactflow__edge-1659660752993-78result-1659662156943-78right",
+      "selected": false
     },
     {
       "source": "1659660759907-27",
       "sourceHandle": "result",
       "target": "1659662160633-7",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660759907-27result-1659662160633-7right"
+      "id": "reactflow__edge-1659660759907-27result-1659662160633-7right",
+      "selected": false
     },
     {
       "source": "1659660760848-36",
       "sourceHandle": "result",
       "target": "1659662161924-9",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660760848-36result-1659662161924-9right"
+      "id": "reactflow__edge-1659660760848-36result-1659662161924-9right",
+      "selected": false
     },
     {
       "source": "1659660762545-54",
       "sourceHandle": "result",
       "target": "1659662163261-1",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660762545-54result-1659662163261-1right"
+      "id": "reactflow__edge-1659660762545-54result-1659662163261-1right",
+      "selected": false
     },
     {
       "source": "1659660764920-0",
       "sourceHandle": "result",
       "target": "1659662164694-71",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659660764920-0result-1659662164694-71right"
+      "id": "reactflow__edge-1659660764920-0result-1659662164694-71right",
+      "selected": false
     },
     {
       "source": "1659662092890-37",
       "sourceHandle": "result",
       "target": "1659662308954-32",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659662092890-37result-1659662308954-32y"
+      "id": "reactflow__edge-1659662092890-37result-1659662308954-32y",
+      "selected": false
     },
     {
       "source": "1659662179592-78",
       "sourceHandle": "result",
       "target": "1659662308954-32",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659662179592-78result-1659662308954-32z"
+      "id": "reactflow__edge-1659662179592-78result-1659662308954-32z",
+      "selected": false
     },
     {
       "source": "1659661511474-93",
       "sourceHandle": "result",
       "target": "1659662308954-32",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659661511474-93result-1659662308954-32x"
+      "id": "reactflow__edge-1659661511474-93result-1659662308954-32x",
+      "selected": false
     },
     {
       "source": "1659662432620-6",
       "sourceHandle": "result",
       "target": "1659662434309-33",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662432620-6result-1659662434309-33left"
+      "id": "reactflow__edge-1659662432620-6result-1659662434309-33left",
+      "selected": false
     },
     {
       "source": "1659662429941-94",
       "sourceHandle": "result",
       "target": "1659662432620-6",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662429941-94result-1659662432620-6left"
+      "id": "reactflow__edge-1659662429941-94result-1659662432620-6left",
+      "selected": false
     },
     {
       "source": "1659662426977-2",
       "sourceHandle": "result",
       "target": "1659662429941-94",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662426977-2result-1659662429941-94left"
+      "id": "reactflow__edge-1659662426977-2result-1659662429941-94left",
+      "selected": false
     },
     {
       "source": "1659662424778-84",
       "sourceHandle": "result",
       "target": "1659662426977-2",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662424778-84result-1659662426977-2left"
+      "id": "reactflow__edge-1659662424778-84result-1659662426977-2left",
+      "selected": false
     },
     {
       "source": "1659662410214-75",
       "sourceHandle": "result",
       "target": "1659662424778-84",
       "targetHandle": "left",
-      "id": "reactflow__edge-1659662410214-75result-1659662424778-84left"
+      "id": "reactflow__edge-1659662410214-75result-1659662424778-84left",
+      "selected": false
     },
     {
       "source": "1659662408435-12",
       "sourceHandle": "result",
       "target": "1659662424778-84",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662408435-12result-1659662424778-84right"
+      "id": "reactflow__edge-1659662408435-12result-1659662424778-84right",
+      "selected": false
     },
     {
       "source": "1659662405906-58",
       "sourceHandle": "result",
       "target": "1659662426977-2",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662405906-58result-1659662426977-2right"
+      "id": "reactflow__edge-1659662405906-58result-1659662426977-2right",
+      "selected": false
     },
     {
       "source": "1659662404680-51",
       "sourceHandle": "result",
       "target": "1659662429941-94",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662404680-51result-1659662429941-94right"
+      "id": "reactflow__edge-1659662404680-51result-1659662429941-94right",
+      "selected": false
     },
     {
       "source": "1659662359514-78",
       "sourceHandle": "result",
       "target": "1659662432620-6",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659662359514-78result-1659662432620-6right"
+      "id": "reactflow__edge-1659662359514-78result-1659662432620-6right",
+      "selected": false
     },
     {
       "source": "1659661368932-78",
       "sourceHandle": "result",
       "target": "1659662434309-33",
       "targetHandle": "right",
-      "id": "reactflow__edge-1659661368932-78result-1659662434309-33right"
+      "id": "reactflow__edge-1659661368932-78result-1659662434309-33right",
+      "selected": false
     },
     {
       "source": "1659660752993-78",
       "sourceHandle": "result",
       "target": "1659662410214-75",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660752993-78result-1659662410214-75value"
+      "id": "reactflow__edge-1659660752993-78result-1659662410214-75value",
+      "selected": false
     },
     {
       "source": "1659660759907-27",
       "sourceHandle": "result",
       "target": "1659662408435-12",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660759907-27result-1659662408435-12value"
+      "id": "reactflow__edge-1659660759907-27result-1659662408435-12value",
+      "selected": false
     },
     {
       "source": "1659660760848-36",
       "sourceHandle": "result",
       "target": "1659662405906-58",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660760848-36result-1659662405906-58value"
+      "id": "reactflow__edge-1659660760848-36result-1659662405906-58value",
+      "selected": false
     },
     {
       "source": "1659660762545-54",
       "sourceHandle": "result",
       "target": "1659662404680-51",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660762545-54result-1659662404680-51value"
+      "id": "reactflow__edge-1659660762545-54result-1659662404680-51value",
+      "selected": false
     },
     {
       "source": "1659660764920-0",
       "sourceHandle": "result",
       "target": "1659662359514-78",
       "targetHandle": "value",
-      "id": "reactflow__edge-1659660764920-0result-1659662359514-78value"
+      "id": "reactflow__edge-1659660764920-0result-1659662359514-78value",
+      "selected": false
     },
     {
       "source": "1659662434309-33",
       "sourceHandle": "result",
       "target": "1659662505682-4",
       "targetHandle": "z",
-      "id": "reactflow__edge-1659662434309-33result-1659662505682-4z"
+      "id": "reactflow__edge-1659662434309-33result-1659662505682-4z",
+      "selected": false
     },
     {
       "source": "1659662179592-78",
       "sourceHandle": "result",
       "target": "1659662505682-4",
       "targetHandle": "y",
-      "id": "reactflow__edge-1659662179592-78result-1659662505682-4y"
+      "id": "reactflow__edge-1659662179592-78result-1659662505682-4y",
+      "selected": false
     },
     {
       "source": "1659661736696-19",
       "sourceHandle": "result",
       "target": "1659662505682-4",
       "targetHandle": "x",
-      "id": "reactflow__edge-1659661736696-19result-1659662505682-4x"
+      "id": "reactflow__edge-1659661736696-19result-1659662505682-4x",
+      "selected": false
     },
     {
       "source": "1659661889654-45",
@@ -5181,21 +6005,304 @@
       "sourceHandle": "result",
       "target": "1659662592121-57",
       "targetHandle": "m2",
-      "id": "reactflow__edge-1659662308954-32result-1659662592121-57m2"
+      "id": "reactflow__edge-1659662308954-32result-1659662592121-57m2",
+      "selected": false
     },
     {
       "source": "1659662505682-4",
       "sourceHandle": "result",
       "target": "1659662592121-57",
       "targetHandle": "m3",
-      "id": "reactflow__edge-1659662505682-4result-1659662592121-57m3"
+      "id": "reactflow__edge-1659662505682-4result-1659662592121-57m3",
+      "selected": false
     },
     {
       "source": "1659662592121-57",
       "sourceHandle": "result",
       "target": "1659662678136-40",
       "targetHandle": "matrix",
-      "id": "reactflow__edge-1659662592121-57result-1659662678136-40matrix"
+      "id": "reactflow__edge-1659662592121-57result-1659662678136-40matrix",
+      "selected": false
+    },
+    {
+      "source": "1659662592121-57",
+      "sourceHandle": "result",
+      "target": "1659697018221-23",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659662592121-57result-1659697018221-23matrix",
+      "selected": false
+    },
+    {
+      "source": "1659662592121-57",
+      "sourceHandle": "result",
+      "target": "1659697034158-40",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659662592121-57result-1659697034158-40matrix",
+      "selected": false
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector1",
+      "target": "1659697075354-41",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659697018221-23eigenvector1-1659697075354-41m1",
+      "selected": false
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector2",
+      "target": "1659697075354-41",
+      "targetHandle": "m2",
+      "id": "reactflow__edge-1659697018221-23eigenvector2-1659697075354-41m2",
+      "selected": false
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector3",
+      "target": "1659697075354-41",
+      "targetHandle": "m3",
+      "id": "reactflow__edge-1659697018221-23eigenvector3-1659697075354-41m3",
+      "selected": false
+    },
+    {
+      "source": "1659697075354-41",
+      "sourceHandle": "result",
+      "target": "1659697132992-85",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659697075354-41result-1659697132992-85matrix"
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector1",
+      "target": "1659697228816-53",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659697018221-23eigenvector1-1659697228816-53vector",
+      "selected": false
+    },
+    {
+      "source": "1659697034158-40",
+      "sourceHandle": "eigenvalue1",
+      "target": "1659697228816-53",
+      "targetHandle": "scalar",
+      "id": "reactflow__edge-1659697034158-40eigenvalue1-1659697228816-53scalar",
+      "selected": false
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector2",
+      "target": "1659697239228-27",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659697018221-23eigenvector2-1659697239228-27vector",
+      "selected": false
+    },
+    {
+      "source": "1659697034158-40",
+      "sourceHandle": "eigenvalue2",
+      "target": "1659697239228-27",
+      "targetHandle": "scalar",
+      "id": "reactflow__edge-1659697034158-40eigenvalue2-1659697239228-27scalar",
+      "selected": false
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector3",
+      "target": "1659697239946-18",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659697018221-23eigenvector3-1659697239946-18vector",
+      "selected": false
+    },
+    {
+      "source": "1659697034158-40",
+      "sourceHandle": "eigenvalue3",
+      "target": "1659697239946-18",
+      "targetHandle": "scalar",
+      "id": "reactflow__edge-1659697034158-40eigenvalue3-1659697239946-18scalar",
+      "selected": false
+    },
+    {
+      "source": "1659660138513-88",
+      "sourceHandle": "result",
+      "target": "1659697367776-77",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660138513-88result-1659697367776-77x"
+    },
+    {
+      "source": "1659660135054-67",
+      "sourceHandle": "result",
+      "target": "1659697367776-77",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660135054-67result-1659697367776-77y"
+    },
+    {
+      "source": "1659660133785-0",
+      "sourceHandle": "result",
+      "target": "1659697367776-77",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660133785-0result-1659697367776-77z"
+    },
+    {
+      "source": "1659660369744-63",
+      "sourceHandle": "result",
+      "target": "1659698541229-62",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660369744-63result-1659698541229-62x",
+      "selected": false
+    },
+    {
+      "source": "1659660639784-87",
+      "sourceHandle": "result",
+      "target": "1659698541229-62",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660639784-87result-1659698541229-62y",
+      "selected": false
+    },
+    {
+      "source": "1659660639784-87",
+      "sourceHandle": "result",
+      "target": "1659698541229-62",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660639784-87result-1659698541229-62z",
+      "selected": false
+    },
+    {
+      "source": "1659660393126-46",
+      "sourceHandle": "result",
+      "target": "1659698646728-95",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660393126-46result-1659698646728-95x"
+    },
+    {
+      "source": "1659660708819-62",
+      "sourceHandle": "result",
+      "target": "1659698646728-95",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660708819-62result-1659698646728-95y"
+    },
+    {
+      "source": "1659660759907-27",
+      "sourceHandle": "result",
+      "target": "1659698646728-95",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660759907-27result-1659698646728-95z"
+    },
+    {
+      "source": "1659660398572-42",
+      "sourceHandle": "result",
+      "target": "1659698647906-76",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660398572-42result-1659698647906-76x"
+    },
+    {
+      "source": "1659660711569-86",
+      "sourceHandle": "result",
+      "target": "1659698647906-76",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660711569-86result-1659698647906-76y"
+    },
+    {
+      "source": "1659660760848-36",
+      "sourceHandle": "result",
+      "target": "1659698647906-76",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660760848-36result-1659698647906-76z"
+    },
+    {
+      "source": "1659660401523-6",
+      "sourceHandle": "result",
+      "target": "1659698649810-60",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660401523-6result-1659698649810-60x"
+    },
+    {
+      "source": "1659660713281-23",
+      "sourceHandle": "result",
+      "target": "1659698649810-60",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660713281-23result-1659698649810-60y"
+    },
+    {
+      "source": "1659660762545-54",
+      "sourceHandle": "result",
+      "target": "1659698649810-60",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660762545-54result-1659698649810-60z"
+    },
+    {
+      "source": "1659660402825-0",
+      "sourceHandle": "result",
+      "target": "1659698673830-91",
+      "targetHandle": "x",
+      "id": "reactflow__edge-1659660402825-0result-1659698673830-91x"
+    },
+    {
+      "source": "1659660714745-6",
+      "sourceHandle": "result",
+      "target": "1659698673830-91",
+      "targetHandle": "y",
+      "id": "reactflow__edge-1659660714745-6result-1659698673830-91y"
+    },
+    {
+      "source": "1659660764920-0",
+      "sourceHandle": "result",
+      "target": "1659698673830-91",
+      "targetHandle": "z",
+      "id": "reactflow__edge-1659660764920-0result-1659698673830-91z"
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector1",
+      "target": "1659699744246-18",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659697018221-23eigenvector1-1659699744246-18m1"
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector2",
+      "target": "1659699744246-18",
+      "targetHandle": "m2",
+      "id": "reactflow__edge-1659697018221-23eigenvector2-1659699744246-18m2"
+    },
+    {
+      "source": "1659697018221-23",
+      "sourceHandle": "eigenvector3",
+      "target": "1659699744246-18",
+      "targetHandle": "m3",
+      "id": "reactflow__edge-1659697018221-23eigenvector3-1659699744246-18m3"
+    },
+    {
+      "source": "1659699744246-18",
+      "sourceHandle": "result",
+      "target": "1659699764241-4",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659699744246-18result-1659699764241-4matrix"
+    },
+    {
+      "source": "1659662592121-57",
+      "sourceHandle": "result",
+      "target": "1659705015369-36",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659662592121-57result-1659705015369-36matrix"
+    },
+    {
+      "source": "1659662505682-4",
+      "sourceHandle": "result",
+      "target": "1659705015369-36",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659662505682-4result-1659705015369-36vector"
+    },
+    {
+      "source": "1659699744246-18",
+      "sourceHandle": "result",
+      "target": "1659710905753-90",
+      "targetHandle": "right",
+      "id": "reactflow__edge-1659699744246-18result-1659710905753-90right"
+    },
+    {
+      "source": "1659710881203-80",
+      "sourceHandle": "result",
+      "target": "1659710905753-90",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659710881203-80result-1659710905753-90left"
     }
   ]
 }

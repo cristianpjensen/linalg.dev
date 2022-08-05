@@ -10,7 +10,6 @@ import * as TWEEN from "@tweenjs/tween.js";
 
 import { isRotationMatrix } from "./matrixProperties";
 import { IDENTITYQUATERNION, ORIGIN, UP, DURATION } from "./constants";
-import { Text } from "./Text";
 
 export interface VectorProps {
 	/**
@@ -133,7 +132,7 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		coneRef.current?.setRotationFromMatrix(coneOrientation);
 		coneRef.current?.position.copy(conePosition);
 
-		sphereRef.current?.position.copy(vec.add(ori));
+		sphereRef.current?.position.copy(vec.clone().add(ori));
 	}
 
 	function rotate(mat: THREE.Matrix3) {
@@ -182,7 +181,6 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 			vector.copy(currentVector);
 			currentVector.copy(vec);
 
-			sphereRef.current?.position.copy(vec);
 			moveVector(currentOrigin, vec);
 		},
 		transform: (mat) => {
@@ -191,7 +189,7 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 			currentVector.applyMatrix3(mat);
 			currentOrigin.applyMatrix3(mat);
 
-			if (isRotationMatrix(mat) && origin.equals(ORIGIN)) {
+			if (isRotationMatrix(mat)) {
 				rotate(mat);
 			} else {
 				moveVector(currentOrigin, currentVector);

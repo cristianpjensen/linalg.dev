@@ -6,6 +6,7 @@ interface ITooltipProps {
 	side?: "left" | "right" | "top" | "bottom";
 	hotkey?: string;
 	delay?: number;
+	dark?: boolean;
 }
 
 export function Tooltip({
@@ -14,6 +15,7 @@ export function Tooltip({
 	side = "bottom",
 	hotkey,
 	delay,
+	dark = false,
 }: ITooltipProps) {
 	return (
 		<TooltipPrimitive.Root delayDuration={delay}>
@@ -21,7 +23,11 @@ export function Tooltip({
 
 			<TooltipPrimitive.Content
 				side={side}
-				className="bg-white dark:bg-black text-black dark:text-white p-2 rounded text-xs shadow text-center max-w-[172px]"
+				className={`p-2 rounded text-xs shadow text-center max-w-[172px] ${
+					dark
+						? "bg-black text-white"
+						: "bg-white dark:bg-black text-black dark:text-white"
+				}`}
 			>
 				{tip}
 				{hotkey && (
