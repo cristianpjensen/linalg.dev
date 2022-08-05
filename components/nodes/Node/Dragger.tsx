@@ -50,7 +50,7 @@ const Dragger = ({ children, className, style }: IDraggerProps) => {
 
 type IDraggerButtonProps = {
 	tooltip: string;
-	onClick: () => void;
+	onClick?: () => void;
 	children?: React.ReactNode;
 	className?: string;
 	style?: React.CSSProperties;

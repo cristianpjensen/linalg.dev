@@ -1,12 +1,15 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
 import {
 	ArrowTopRightIcon,
+	ColorWheelIcon,
 	EyeClosedIcon,
 	EyeOpenIcon,
 	GlobeIcon,
 	ShadowInnerIcon,
 } from "@radix-ui/react-icons";
+import * as Popover from "@radix-ui/react-popover";
+import { HexColorPicker } from "react-colorful";
 
 import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
@@ -41,6 +44,26 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 		});
 	}, [data.representation]);
 
+	const [colorString, setColorString] = useState(data.color);
+
+	const onColorChange = useCallback((color: string) => {
+		setNodeData(id, { color: color.toUpperCase() });
+		setColorString(color.toUpperCase());
+	}, []);
+
+	const onColorInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const color = e.target.value;
+			setColorString(color);
+
+			// Check whether it is a valid hex color
+			if (color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+				setNodeData(id, { color });
+			}
+		},
+		[]
+	);
+
 	return (
 		<Node.Root
 			id={id}
@@ -52,6 +75,30 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			height={12}
 		>
 			<Node.Dragger>
+				<Popover.Root>
+					<Popover.Trigger>
+						<Node.DraggerButton tooltip="Customize vector colour">
+							<ColorWheelIcon />
+						</Node.DraggerButton>
+					</Popover.Trigger>
+
+					<Popover.Content side="top" sideOffset={2}>
+						<div className="p-4 rounded shadow-b2 bg-offwhite dark:bg-offblack shadow-zinc-400 dark:shadow-zinc-400">
+							<HexColorPicker
+								color={data.color}
+								onChange={onColorChange}
+								className="colorpicker"
+							/>
+
+							<input
+								type="text"
+								value={colorString}
+								onChange={onColorInputChange}
+							/>
+						</div>
+					</Popover.Content>
+				</Popover.Root>
+
 				<Node.DraggerButton
 					onClick={onRepresentationChange}
 					tooltip={

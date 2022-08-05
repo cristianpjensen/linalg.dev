@@ -56,6 +56,7 @@ export const vectorNodeObject = (position: Position): Node<T.VectorData> => ({
 		origin: vectorInput(),
 		hidden: false,
 		representation: "global",
+		color: "#E9E9E9",
 		output: {
 			result: {
 				x: 0,
@@ -169,6 +170,7 @@ export const transformNodeObject = (
 		matrix: matrixInput(),
 		hidden: true,
 		representation: "global",
+		color: "#6495ED",
 		output: {
 			result: {
 				x: 0,
@@ -191,6 +193,7 @@ export const vectorScalingNodeObject = (
 		scalar: numberInput(1),
 		hidden: true,
 		representation: "global",
+		color: "#6495ED",
 		output: {
 			result: {
 				x: 0,

@@ -166,3 +166,33 @@ will bug. */
 	outline: 1px solid rgba(2, 132, 199, 0.6);
 	outline-offset: 24px;
 }
+
+/* COLORPICKER STYLING */
+
+/* Container */
+.colorpicker .react-colorful {
+	padding: 16px;
+	border-radius: 4px;
+	background: #33333a;
+}
+
+/* Color handle */
+.colorpicker .react-colorful__pointer {
+	width: 24px;
+	height: 24px;
+}
+
+.colorpicker .react-colorful__saturation {
+	margin-bottom: 8px;
+	border-radius: 4px;
+}
+
+.colorpicker .react-colorful__hue {
+	height: 14px;
+	border-radius: 4px;
+}
+
+.colorpicker .react-colorful__hue-pointer {
+	width: 16px;
+	height: 16px;
+}

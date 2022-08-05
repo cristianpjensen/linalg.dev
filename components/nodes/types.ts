@@ -32,6 +32,7 @@ export type VectorData = {
 	origin: Input<Vector>;
 	hidden: boolean;
 	representation: VectorRepresentation;
+	color: string;
 	output: {
 		result: Vector;
 	};
@@ -90,6 +91,7 @@ export type TransformData = {
 	matrix: Input<Matrix>;
 	vector: Input<Vector>;
 	hidden: boolean;
+	color: string;
 	representation: VectorRepresentation;
 	output: {
 		result: Vector;
@@ -100,6 +102,7 @@ export type VectorScalingData = {
 	vector: Input<Vector>;
 	scalar: Input<number>;
 	hidden: boolean;
+	color: string;
 	representation: VectorRepresentation;
 	output: {
 		result: Vector;

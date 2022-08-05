@@ -284,77 +284,72 @@ const Toolbar = () => {
 					/>
 				</Dialog.Trigger>
 
-				<Dialog.Portal>
-					<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-fast bg-offblack/40 dark:bg-offwhite/10" />
-					<Dialog.Content
-						className="fixed z-50 w-[90vw] max-w-[560px] h-[60vh] max-h-[640px] py-10 px-4 top-[50%] left-[50%] animate-fadein bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite rounded shadow-lg"
-						style={{ transform: "translate(-50%, -50%)" }}
-					>
-						<div className="w-full h-full px-6 overflow-scroll">
-							<Dialog.Title className="pt-4 pb-2 text-2xl">
-								About the project
-							</Dialog.Title>
+				<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-fast bg-offblack/40 dark:bg-offwhite/10" />
+				<Dialog.Content
+					className="fixed z-50 w-[90vw] max-w-[560px] h-[60vh] max-h-[640px] py-10 px-4 top-[50%] left-[50%] animate-fadein bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite rounded shadow-lg"
+					style={{ transform: "translate(-50%, -50%)" }}
+				>
+					<div className="w-full h-full px-6 overflow-scroll">
+						<Dialog.Title className="pt-4 pb-2 text-2xl">
+							About the project
+						</Dialog.Title>
 
-							<p className="pb-2">
-								This is a web application for visualising and
-								editing linear algebra problems in three
-								dimensions with a node environment. Its purpose
-								is to be a tool for students studying linear
-								algebra to get an intuition of the underlying
-								mathematics behind the concepts in linear
-								algebra.
-							</p>
+						<p className="pb-2">
+							This is a web application for visualising and
+							editing linear algebra problems in three dimensions
+							with a node environment. Its purpose is to be a tool
+							for students studying linear algebra to get an
+							intuition of the underlying mathematics behind the
+							concepts in linear algebra.
+						</p>
 
-							<p>
-								Nodes can be added to the environment by
-								selecting one of the node types in the toolbar
-								and clicking anywhere in the environment. The
-								nodes can be connected by dragging from one
-								handle to another. Vectors will be shown in the
-								vector space on the right. You can click on a
-								vector there to show its node in the
-								environment. Matrices can be used to transform
-								the vector space.
-							</p>
+						<p>
+							Nodes can be added to the environment by selecting
+							one of the node types in the toolbar and clicking
+							anywhere in the environment. The nodes can be
+							connected by dragging from one handle to another.
+							Vectors will be shown in the vector space on the
+							right. You can click on a vector there to show its
+							node in the environment. Matrices can be used to
+							transform the vector space.
+						</p>
 
-							<h2 className="pt-4 pb-2 text-xl">
-								Example environments
-							</h2>
+						<h2 className="pt-4 pb-2 text-xl">
+							Example environments
+						</h2>
 
-							<div className="flex flex-col gap-4 my-4">
-								<ExampleDownload file="singular_value_decomposition.json" />
-								<ExampleDownload file="covariance_matrix.json" />
-							</div>
-
-							<h2 className="pt-4 pb-4 text-xl">
-								Keyboard shortcuts
-							</h2>
-
-							<Shortcut
-								description="Save environment"
-								hotkey="Meta S"
-							/>
-							<Shortcut
-								description="Upload environment"
-								hotkey="Meta U"
-							/>
-							<Shortcut
-								description="Fit nodes in frame"
-								hotkey="Shift F"
-							/>
-							<Shortcut
-								description="Multi-select nodes"
-								hotkey="Hold shift"
-							/>
-
-							<p className="mt-4 mb-2 text-xs text-zinc-500">
-								Every node type has its own keyboard shortcut
-								that can be discovered when hovering over its
-								button.
-							</p>
+						<div className="flex flex-col gap-4 my-4">
+							<ExampleDownload file="singular_value_decomposition.json" />
+							<ExampleDownload file="covariance_matrix.json" />
 						</div>
-					</Dialog.Content>
-				</Dialog.Portal>
+
+						<h2 className="pt-4 pb-4 text-xl">
+							Keyboard shortcuts
+						</h2>
+
+						<Shortcut
+							description="Save environment"
+							hotkey="Meta S"
+						/>
+						<Shortcut
+							description="Upload environment"
+							hotkey="Meta U"
+						/>
+						<Shortcut
+							description="Fit nodes in frame"
+							hotkey="Shift F"
+						/>
+						<Shortcut
+							description="Multi-select nodes"
+							hotkey="Hold shift"
+						/>
+
+						<p className="mt-4 mb-2 text-xs text-zinc-500">
+							Every node type has its own keyboard shortcut that
+							can be discovered when hovering over its button.
+						</p>
+					</div>
+				</Dialog.Content>
 			</Dialog.Root>
 
 			<a

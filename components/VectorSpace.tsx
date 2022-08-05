@@ -27,6 +27,7 @@ type MinimalVectorData = {
 	};
 	hidden: boolean;
 	representation: "global" | "sphere" | "vector";
+	color: string;
 	output: {
 		result: {
 			x: number;
@@ -79,12 +80,15 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 
 	useEffect(() => {
 		if (selectedVectorNode && selectedVectorFrom === "editor") {
-			const { x, y, z } = selectedVectorNode.data as VectorData;
-			const vector = new THREE.Vector3(
-				x.value,
-				y.value,
-				z.value
-			).applyMatrix3(matrix);
+			const data = selectedVectorNode.data as VectorData;
+
+			// Do not show the vector if it is hidden
+			if (data.hidden) {
+				return;
+			}
+
+			const { x, y, z } = data.output.result;
+			const vector = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
 
 			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
 				return;
@@ -251,9 +255,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 			return (
 				<Vector
 					ref={mergeRefs([innerRef, ref])}
-					color={
-						node.type === "vector" ? "#E9E9E9" : "cornflowerblue"
-					}
+					color={node.data.color ? node.data.color : "#E9E9E9"}
 					origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
 					vector={new THREE.Vector3(x, y, z)}
 					sphere={
@@ -266,7 +268,12 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					onClick={onClick}
 				/>
 			);
-		}, [showVectorsAsSpheres, node.data.hidden, node.data.representation]);
+		}, [
+			showVectorsAsSpheres,
+			node.data.hidden,
+			node.data.representation,
+			node.data.color,
+		]);
 
 		return vectorComponent;
 	}

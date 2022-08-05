@@ -111,15 +111,24 @@ const Editor = () => {
 
 	const onSelectionChange: OnSelectionChangeFunc = useCallback(
 		({ nodes }) => {
-			if (nodes.length !== 1 || nodes[0].type !== "vector") {
+			if (
+				nodes.length !== 1 ||
+				(nodes[0].type !== "vector" &&
+					nodes[0].type !== "vectorScaling" &&
+					nodes[0].type !== "transform")
+			) {
 				setSelectedVectorNode(null, null);
 				return;
 			}
 
-			const node = nodes[0] as Node<VectorData>;
-			node.data.x.value += node.data.origin.value.x;
-			node.data.y.value += node.data.origin.value.y;
-			node.data.z.value += node.data.origin.value.z;
+			const node = { ...nodes[0] };
+
+			// Add origin to camera position
+			if (node.data.origin) {
+				node.data.output.x += node.data.origin.value.x;
+				node.data.output.y += node.data.origin.value.y;
+				node.data.output.z += node.data.origin.value.z;
+			}
 
 			setSelectedVectorNode(node, "editor");
 		},
@@ -132,7 +141,10 @@ const Editor = () => {
 				return;
 			}
 
-			const position = reactFlow.project({ x: e.clientX, y: e.clientY - 48 });
+			const position = reactFlow.project({
+				x: e.clientX,
+				y: e.clientY - 48,
+			});
 
 			switch (tool) {
 				case Tool.Vector:
