@@ -74,6 +74,13 @@ type EditorState = {
 		node: Node | null,
 		selectedVectorFrom: "space" | "editor" | null
 	) => void;
+
+	/**
+	 * If true, show the vectors in the vector space as spheres. This is useful
+	 * if there are many vectors or if the vectors should represent datapoints.
+	 */
+	showVectorsAsSpheres: boolean;
+	toggleShowVectorsAsSpheres: () => void;
 };
 
 const useStore = create<EditorState>((set) => ({
@@ -99,6 +106,9 @@ const useStore = create<EditorState>((set) => ({
 	selectedVectorFrom: null,
 	setSelectedVectorNode: (node, from) =>
 		set({ selectedVectorNode: node, selectedVectorFrom: from }),
+	showVectorsAsSpheres: false,
+	toggleShowVectorsAsSpheres: () =>
+		set((state) => ({ showVectorsAsSpheres: !state.showVectorsAsSpheres })),
 }));
 
 export default useStore;

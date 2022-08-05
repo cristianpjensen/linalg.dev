@@ -38,6 +38,10 @@ export interface VectorProps {
 	 */
 	opacity?: number;
 	/**
+	 * Represent the vector by a sphere.
+	 */
+	sphere?: boolean;
+	/**
 	 * On click event.
 	 */
 	onClick?: () => void;
@@ -87,12 +91,13 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		origin: o = ORIGIN,
 		color = "#E9E9E9",
 		opacity = 1,
+		sphere = false,
 		onClick,
 	} = props;
 
 	const cylinderRef = useRef<THREE.Mesh>(null);
 	const coneRef = useRef<THREE.Mesh>(null);
-	const textRef = useRef<Text>(null);
+	const sphereRef = useRef<THREE.Mesh>(null);
 
 	const [vector] = useState(v.clone());
 	const [origin] = useState(o.clone());
@@ -121,14 +126,14 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		const cylinderOrientation = orientation.clone().multiply(X_ROTATION);
 		const coneOrientation = orientation.clone().multiply(X_NEG_ROTATION);
 
-		if (cylinderRef.current && coneRef.current) {
-			cylinderRef.current.scale.set(1, length - coneHeight, 1);
-			cylinderRef.current.setRotationFromMatrix(cylinderOrientation);
-			cylinderRef.current.position.copy(cylinderPosition);
+		cylinderRef.current?.scale.set(1, length - coneHeight, 1);
+		cylinderRef.current?.setRotationFromMatrix(cylinderOrientation);
+		cylinderRef.current?.position.copy(cylinderPosition);
 
-			coneRef.current.setRotationFromMatrix(coneOrientation);
-			coneRef.current.position.copy(conePosition);
-		}
+		coneRef.current?.setRotationFromMatrix(coneOrientation);
+		coneRef.current?.position.copy(conePosition);
+
+		sphereRef.current?.position.copy(vec.add(ori));
 	}
 
 	function rotate(mat: THREE.Matrix3) {
@@ -177,15 +182,7 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 			vector.copy(currentVector);
 			currentVector.copy(vec);
 
-			if (textRef.current) {
-				textRef.current.move(
-					vec
-						.clone()
-						.normalize()
-						.multiplyScalar(vec.length() + 0.4)
-				);
-			}
-
+			sphereRef.current?.position.copy(vec);
 			moveVector(currentOrigin, vec);
 		},
 		transform: (mat) => {
@@ -193,10 +190,6 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 			origin.copy(currentOrigin);
 			currentVector.applyMatrix3(mat);
 			currentOrigin.applyMatrix3(mat);
-
-			if (textRef.current) {
-				textRef.current.transform(mat);
-			}
 
 			if (isRotationMatrix(mat) && origin.equals(ORIGIN)) {
 				rotate(mat);
@@ -213,33 +206,36 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 	}));
 
 	useEffect(() => {
-		setMeshes(origin, vector);
-	}, []);
+		setMeshes(currentOrigin, currentVector);
+	}, [sphere]);
 
 	const material = new THREE.MeshMatcapMaterial({
 		color,
-		opacity,
+		opacity: opacity,
 		transparent: true,
 	});
 
 	return (
 		<group onClick={onClick}>
-			<mesh
-				ref={cylinderRef}
-				material={material}
-				geometry={cylinderGeometry}
-			/>
-			<mesh ref={coneRef} material={material} geometry={coneGeometry} />
+			{sphere || (
+				<>
+					<mesh
+						ref={cylinderRef}
+						material={material}
+						geometry={cylinderGeometry}
+					/>
+					<mesh
+						ref={coneRef}
+						material={material}
+						geometry={coneGeometry}
+					/>
+				</>
+			)}
 
-			{text && (
-				<Text
-					ref={textRef}
-					text={text}
-					position={vector
-						.clone()
-						.normalize()
-						.multiplyScalar(vector.length() + 0.4)}
-				/>
+			{sphere && (
+				<mesh ref={sphereRef} position={vector} material={material}>
+					<sphereGeometry args={[0.2]} />
+				</mesh>
 			)}
 		</group>
 	);

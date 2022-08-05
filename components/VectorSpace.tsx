@@ -7,7 +7,7 @@ import {
 	useRef,
 } from "react";
 import * as THREE from "three";
-import { CubeIcon, ResetIcon } from "@radix-ui/react-icons";
+import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
 import { useWindowSize } from "@react-hook/window-size";
@@ -25,10 +25,16 @@ export type VectorSpace = {
 
 export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	const matrix = useEditorStore((state) => state.matrix);
-	const showCube = useEditorStore((state) => state.showCube);
-	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const resetMatrix = useEditorStore((state) => state.resetMatrix);
+	const showCube = useEditorStore((state) => state.showCube);
 	const toggleShowCube = useEditorStore((state) => state.toggleShowCube);
+	const showVectorsAsSpheres = useEditorStore(
+		(state) => state.showVectorsAsSpheres
+	);
+	const toggleShowVectorsAsSpheres = useEditorStore(
+		(state) => state.toggleShowVectorsAsSpheres
+	);
+	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const selectedVectorNode = useEditorStore(
 		(state) => state.selectedVectorNode
 	);
@@ -54,7 +60,11 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	useEffect(() => {
 		if (selectedVectorNode && selectedVectorFrom === "editor") {
 			const { x, y, z } = selectedVectorNode.data as VectorData;
-			const vector = new THREE.Vector3(x.value, y.value, z.value).applyMatrix3(matrix);
+			const vector = new THREE.Vector3(
+				x.value,
+				y.value,
+				z.value
+			).applyMatrix3(matrix);
 
 			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
 				return;
@@ -90,6 +100,18 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 			</Space>
 
 			<div className="absolute flex gap-4 right-4 bottom-4">
+				<button
+					onClick={toggleShowVectorsAsSpheres}
+					className={
+						"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
+						(showVectorsAsSpheres
+							? "shadow-zinc-400 opacity-100"
+							: "shadow-zinc-700 opacity-60")
+					}
+				>
+					<ShadowInnerIcon />
+				</button>
+
 				<button
 					onClick={toggleShowCube}
 					className={
@@ -147,6 +169,9 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		const setSelectedVectorNode = useEditorStore(
 			(state) => state.setSelectedVectorNode
 		);
+		const showVectorsAsSpheres = useEditorStore(
+			(state) => state.showVectorsAsSpheres
+		);
 
 		const { x, y, z } = node.data.output.result;
 		const { x: ox, y: oy, z: oz } = node.data.origin.value;
@@ -194,10 +219,11 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					ref={mergeRefs([innerRef, ref])}
 					origin={new THREE.Vector3(ox, oy, oz)}
 					vector={new THREE.Vector3(x, y, z)}
+					sphere={showVectorsAsSpheres}
 					onClick={onClick}
 				/>
 			);
-		}, []);
+		}, [showVectorsAsSpheres]);
 
 		return vectorComponent;
 	}
