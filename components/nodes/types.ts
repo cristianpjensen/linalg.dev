@@ -23,12 +23,15 @@ export type Input<T extends ValidInputOutput> = {
 	isConnected: boolean;
 };
 
+export type VectorRepresentation = "global" | "sphere" | "vector";
+
 export type VectorData = {
 	x: Input<number>;
 	y: Input<number>;
 	z: Input<number>;
 	origin: Input<Vector>;
 	hidden: boolean;
+	representation: VectorRepresentation;
 	output: {
 		result: Vector;
 	};
@@ -87,6 +90,7 @@ export type TransformData = {
 	matrix: Input<Matrix>;
 	vector: Input<Vector>;
 	hidden: boolean;
+	representation: VectorRepresentation;
 	output: {
 		result: Vector;
 	};
@@ -96,6 +100,7 @@ export type VectorScalingData = {
 	vector: Input<Vector>;
 	scalar: Input<number>;
 	hidden: boolean;
+	representation: VectorRepresentation;
 	output: {
 		result: Vector;
 	};

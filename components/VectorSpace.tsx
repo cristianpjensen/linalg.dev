@@ -26,6 +26,7 @@ type MinimalVectorData = {
 		isConnected: boolean;
 	};
 	hidden: boolean;
+	representation: "global" | "sphere" | "vector";
 	output: {
 		result: {
 			x: number;
@@ -255,11 +256,17 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					}
 					origin={new THREE.Vector3(origin.x, origin.y, origin.z)}
 					vector={new THREE.Vector3(x, y, z)}
-					sphere={showVectorsAsSpheres}
+					sphere={
+						node.data.representation === "sphere"
+							? true
+							: node.data.representation === "vector"
+							? false
+							: showVectorsAsSpheres
+					}
 					onClick={onClick}
 				/>
 			);
-		}, [showVectorsAsSpheres, node.data.hidden]);
+		}, [showVectorsAsSpheres, node.data.hidden, node.data.representation]);
 
 		return vectorComponent;
 	}

@@ -1,6 +1,12 @@
 import React, { memo, useCallback } from "react";
 import { NodeProps } from "react-flow-renderer/nocss";
-import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import {
+	ArrowTopRightIcon,
+	EyeClosedIcon,
+	EyeOpenIcon,
+	GlobeIcon,
+	ShadowInnerIcon,
+} from "@radix-ui/react-icons";
 
 import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
@@ -23,6 +29,18 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 		setNodeData(id, { hidden: !data.hidden });
 	}, [data.hidden]);
 
+	const onRepresentationChange = useCallback(() => {
+		// Global -> sphere -> vector -> global -> ...
+		setNodeData(id, {
+			representation:
+				data.representation === "sphere"
+					? "vector"
+					: data.representation === "vector"
+					? "global"
+					: "sphere",
+		});
+	}, [data.representation]);
+
 	return (
 		<Node.Root
 			id={id}
@@ -34,6 +52,25 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 			height={12}
 		>
 			<Node.Dragger>
+				<Node.DraggerButton
+					onClick={onRepresentationChange}
+					tooltip={
+						data.representation === "sphere"
+							? "Show vector as sphere"
+							: data.representation === "vector"
+							? "Show vector as vector"
+							: "Let representation be decided by global setting"
+					}
+				>
+					{data.representation === "sphere" ? (
+						<ShadowInnerIcon />
+					) : data.representation === "vector" ? (
+						<ArrowTopRightIcon />
+					) : (
+						<GlobeIcon />
+					)}
+				</Node.DraggerButton>
+
 				<Node.DraggerButton tooltip="Show/hide vector" onClick={onHide}>
 					{data.hidden ? <EyeClosedIcon /> : <EyeOpenIcon />}
 				</Node.DraggerButton>
