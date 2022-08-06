@@ -11,17 +11,9 @@ import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
 
 import { Line } from "./helpers/Line";
+import gridRange from "./helpers/gridRange";
 import { DURATION } from "./constants";
-
-const gridRange = (min: number, max: number, divisions: number) => {
-	const range = max + 1 - min;
-	const step = range / (divisions + 1);
-	const values = [];
-	for (let i = 0; i < divisions + 1; i++) {
-		values.push(min + i * step);
-	}
-	return values;
-};
+import useMatrixAnimation from "../hooks/useMatrixAnimation";
 
 type IGridProps = {
 	size: number;
@@ -55,7 +47,7 @@ const Grid = forwardRef<Grid, IGridProps>((props, ref) => {
 		target: new THREE.Vector3(0, 0, 1),
 	});
 
-	const { transform, stopTransformations } = useAnimationMatrix({
+	const { transform, stopTransformations } = useMatrixAnimation({
 		update: (matrix) => {
 			xhat.current.copy(xhat.source.clone().applyMatrix4(matrix));
 			yhat.current.copy(yhat.source.clone().applyMatrix4(matrix));
@@ -496,98 +488,5 @@ const AxisLabel = forwardRef<THREE.Sprite, IAxisLabelProps>(
 		);
 	}
 );
-
-/**
- * Hook for interpolating a matrix transformation. The hook keeps track of a
- * stack of tweens, and makes sure that the tweens are executed in order. This
- * way there are no conflicts between the tweens. The transformations look more
- * pleasing, since the user is able to see the transformations they specified in
- * the order of the commands, rather than immediately after the command, which
- * could potentially be conflicting with other commands.
- * 
- * A stop function is also returned, which stops all tweens and empties the
- * stack. This is used to reset the stack.
- * 
- * @param update Called every frame with the interpolated matrix.
- * @param start Function to be called at the beginning of the interpolation.
- * @param end Function to be called at the end of the interpolation.
- * @returns Transformation and stop function.
- */
-const useAnimationMatrix = (functions: {
-	update: (matrix: THREE.Matrix4) => void;
-	start?: (matrix: THREE.Matrix4) => void;
-	end?: (matrix: THREE.Matrix4) => void;
-}): {
-	transform: (matrix: THREE.Matrix4) => void;
-	stopTransformations: () => void;
-} => {
-	const tweenStack: Array<TWEEN.Tween<number[]>> = [];
-
-	const { update, start, end } = functions;
-
-	const transform = useCallback((matrix: THREE.Matrix4) => {
-		const translation = new THREE.Vector3();
-		const rotation = new THREE.Quaternion();
-		const scale = new THREE.Vector3();
-
-		// Decompose matrix into translation, rotation, and scale
-		matrix.decompose(translation, rotation, scale);
-
-		// Define these, such that we do not need to create new vectors every frame
-		const zeroVector = new THREE.Vector3();
-		const onesVector = new THREE.Vector3(1, 1, 1);
-		const zeroQuaternion = new THREE.Quaternion();
-
-		const currentMatrix = new THREE.Matrix4();
-		const currentTranslation = new THREE.Vector3();
-		const currentRotation = new THREE.Quaternion();
-		const currentScale = new THREE.Vector3();
-
-		const tween = new TWEEN.Tween([0])
-			.to([1], DURATION)
-			.easing(TWEEN.Easing.Quadratic.InOut);
-
-		// Push to stack
-		tweenStack.push(tween);
-
-		tween.onUpdate(([t]) => {
-			// Compose the current matrix
-			currentMatrix.compose(
-				currentTranslation.lerpVectors(zeroVector, translation, t),
-				currentRotation.slerpQuaternions(zeroQuaternion, rotation, t),
-				currentScale.lerpVectors(onesVector, scale, t)
-			);
-
-			// Pass the current matrix to the callback
-			update(currentMatrix);
-		});
-
-		tween.onComplete(() => {
-			end && end(matrix);
-
-			// Remove from stack and start the next one
-			tweenStack.shift();
-			tweenStack[0] && tweenStack[0].start();
-		});
-
-		tween.onStart(() => {
-			start && start(matrix);
-		});
-
-		// Start the first tween
-		if (tweenStack.length === 1) {
-			tween.start();
-		}
-	}, []);
-
-	const stopTransformations = useCallback(() => {
-		// Remove all animations from the stack and stop them
-		while (tweenStack.length > 0) {
-			tweenStack.pop()?.stop();
-		}
-	}, []);
-
-	return { transform, stopTransformations };
-};
 
 export default memo(Grid);
