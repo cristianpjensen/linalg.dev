@@ -63,36 +63,9 @@ export interface SpaceProps {
 	 * @default true
 	 */
 	showCube?: boolean;
-	/**
-	 * Scale of the axis labels, relative to their default size, so some
-	 * experimentation may be needed to get the correct size for your usecase.
-	 * @default 1
-	 */
-	axisLabelScale?: number;
-	/**
-	 * X-axis label text.
-	 * @default "x"
-	 */
-	xLabel?: string;
-	/**
-	 * Y-axis label text.
-	 * @default "y"
-	 */
-	yLabel?: string;
-	/**
-	 * Z-axis label text.
-	 * @default "z"
-	 */
-	zLabel?: string;
 }
 
 export type Space = {
-	/**
-	 * Move the camera such that one axis is out of view. This is helpful for when
-	 * you want to see the scene in "2 dimensions". For example, after a
-	 * transformation with a 2x3 matrix.
-	 */
-	viewPlane: (plane: "XY" | "YZ" | "XZ") => void;
 	/**
 	 * Transform the space by a given matrix. This can be helpful for visualizing
 	 * what a matrix transformation does to an entire space, instead of just
@@ -121,25 +94,12 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 		showZPlanes = false,
 		showAxisLabels = true,
 		showCube = true,
-		axisLabelScale = 1,
-		xLabel = "x",
-		yLabel = "y",
-		zLabel = "z",
 	} = props;
 
 	const cameraRef = useRef<CameraControlsType>(null);
 	const gridRef = useRef<Grid>(null);
 
 	useImperativeHandle(ref, () => ({
-		viewPlane: (plane) => {
-			if (plane === "XY") {
-				cameraRef.current?.setLookAt(0, 0, gridSize / 2, 0, 0, 0, true);
-			} else if (plane === "YZ") {
-				cameraRef.current?.setLookAt(gridSize / 2, 0, 0, 0, 0, 0, true);
-			} else if (plane === "XZ") {
-				cameraRef.current?.setLookAt(0, gridSize / 2, 0, 0, 0, 0, true);
-			}
-		},
 		transform: (M) => {
 			gridRef.current?.transform(M);
 		},
@@ -172,10 +132,6 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 				showZAxis={showZAxis}
 				showZPlanes={showZPlanes}
 				showCube={showCube}
-				axisLabelScale={axisLabelScale}
-				xLabel={xLabel}
-				yLabel={yLabel}
-				zLabel={zLabel}
 			/>
 
 			<CameraControls
@@ -199,10 +155,6 @@ interface GridProps {
 	showZAxis: boolean;
 	showZPlanes: boolean;
 	showCube: boolean;
-	axisLabelScale: number;
-	xLabel: string;
-	yLabel: string;
-	zLabel: string;
 }
 
 export type Grid = {
@@ -223,10 +175,6 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		showZAxis,
 		showZPlanes,
 		showCube,
-		axisLabelScale,
-		xLabel,
-		yLabel,
-		zLabel,
 	} = props;
 
 	const size2 = size / 2;
@@ -237,12 +185,15 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const [yLabelVector] = useState(new THREE.Vector3(0, center + 0.4, 0));
 	const [zLabelVector] = useState(new THREE.Vector3(0, 0, center + 0.4));
 
+	// Mx, My, and Mz are the unit vectors' position in the current
+	// transformation.
 	const [Mx] = useState(new THREE.Vector3(1, 0, 0));
 	const [currentMx] = useState(new THREE.Vector3(1, 0, 0));
 	const [My] = useState(new THREE.Vector3(0, 1, 0));
 	const [currentMy] = useState(new THREE.Vector3(0, 1, 0));
 	const [Mz] = useState(new THREE.Vector3(0, 0, 1));
 	const [currentMz] = useState(new THREE.Vector3(0, 0, 1));
+
 	const [xLine1] = useState(new THREE.Vector3(size2, 0, 0));
 	const [currentXLine1] = useState(new THREE.Vector3(size2, 0, 0));
 	const [xLine2] = useState(new THREE.Vector3(-size2, 0, 0));
@@ -280,9 +231,9 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 	const zxLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
 	const yzLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
 	const zyLineRefs = useRef<Array<THREE.BufferGeometry | null>>([]);
-	const xLabelRef = useRef<Text>(null);
-	const yLabelRef = useRef<Text>(null);
-	const zLabelRef = useRef<Text>(null);
+	const xLabelRef = useRef<AxisLabel>(null);
+	const yLabelRef = useRef<AxisLabel>(null);
+	const zLabelRef = useRef<AxisLabel>(null);
 
 	const refCubeLeg1 = useRef<THREE.BufferGeometry>(null);
 	const refCubeLeg2 = useRef<THREE.BufferGeometry>(null);
@@ -344,6 +295,10 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 		refCubeTop2.current?.setFromPoints([ct2, ct3]);
 		refCubeTop3.current?.setFromPoints([ct3, ct4]);
 		refCubeTop4.current?.setFromPoints([ct4, ct1]);
+
+		xLabelRef.current?.setPosition(xl1.clone().add(x.clone().multiplyScalar(0.5)));
+		yLabelRef.current?.setPosition(yl1.clone().add(y.clone().multiplyScalar(0.5)));
+		zLabelRef.current?.setPosition(zl1.clone().add(z.clone().multiplyScalar(0.5)));
 
 		if (!showZPlanes && showZAxis) {
 			zxLineRefs.current[center]?.setFromPoints([zl1, zl2]);
@@ -735,8 +690,8 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 			{/* Axis labels */}
 			{showAxisLabels && (
 				<>
-					<AxisLabel position={xLabelVector} label="x" />
-					<AxisLabel position={yLabelVector} label="y" />
+					<AxisLabel ref={xLabelRef} position={xLabelVector} label="x" />
+					<AxisLabel ref={yLabelRef} position={yLabelVector} label="y" />
 				</>
 			)}
 
@@ -748,7 +703,7 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 						points={[zLine1, zLine2]}
 						color="rgb(80, 80, 80)"
 					/>
-					<AxisLabel position={zLabelVector} label="z" />
+					<AxisLabel ref={zLabelRef} position={zLabelVector} label="z" />
 				</>
 			)}
 
@@ -842,7 +797,7 @@ export const Grid = forwardRef<Grid, GridProps>((props, ref) => {
 								}
 							/>
 
-							<AxisLabel position={zLabelVector} label="z" />
+							<AxisLabel ref={zLabelRef} position={zLabelVector} label="z" />
 						</>
 					))}
 				</>
@@ -938,29 +893,48 @@ type IAxisLabelProps = {
 	label: "x" | "y" | "z";
 };
 
-const AxisLabel = ({ position, label }: IAxisLabelProps) => {
-	const texture = useLoader(THREE.TextureLoader, `/assets/${label}.png`);
-	const { gl } = useThree();
-	texture.anisotropy = gl.capabilities.getMaxAnisotropy();
-	texture.needsUpdate = true;
-
-	useFrame(() => {
-		texture.needsUpdate = true;
-	});
-
-	const yScale = label === "x" ? 0.79 : label === "y" ? 1.321 : 0.973;
-
-	return (
-		<sprite scale={[0.04, yScale * 0.04, 1]} position={position}>
-			<Suspense fallback={null}>
-				<spriteMaterial
-					sizeAttenuation={false}
-					opacity={0.5}
-					transparent
-					map={texture}
-					attach="material"
-				/>
-			</Suspense>
-		</sprite>
-	);
+type AxisLabel = {
+	setPosition: (position: THREE.Vector3) => void;
 };
+
+const AxisLabel = forwardRef<AxisLabel, IAxisLabelProps>(
+	({ position, label }, ref) => {
+		const innerRef = useRef<THREE.Sprite>(null);
+
+		useImperativeHandle(ref, () => ({
+			setPosition: (vec) => {
+				console.log("setPosition", label, vec);
+				innerRef.current?.position.copy(vec);
+			},
+		}));
+
+		const texture = useLoader(THREE.TextureLoader, `/assets/${label}.png`);
+		const { gl } = useThree();
+		texture.anisotropy = gl.capabilities.getMaxAnisotropy();
+		texture.needsUpdate = true;
+
+		useFrame(() => {
+			texture.needsUpdate = true;
+		});
+
+		const yScale = label === "x" ? 0.79 : label === "y" ? 1.321 : 0.973;
+
+		return (
+			<sprite
+				ref={innerRef}
+				scale={[0.04, yScale * 0.04, 1]}
+				position={position}
+			>
+				<Suspense fallback={null}>
+					<spriteMaterial
+						sizeAttenuation={false}
+						opacity={0.6}
+						transparent
+						map={texture}
+						attach="material"
+					/>
+				</Suspense>
+			</sprite>
+		);
+	}
+);
