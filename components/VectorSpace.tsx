@@ -353,19 +353,27 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 		const innerRef2 = useRef<Vector>(null);
 		const innerRef3 = useRef<Vector>(null);
 
+		const [vec1] = useState(new THREE.Vector3(x1, y1, z1));
+		const [vec2] = useState(new THREE.Vector3(x2, y2, z2));
+		const [vec3] = useState(new THREE.Vector3(x3, y3, z3));
+
 		const moveVectors = useCallback(
 			(vector1: _Vector, vector2: _Vector, vector3: _Vector) => {
 				const { x: x1, y: y1, z: z1 } = vector1;
 				const { x: x2, y: y2, z: z2 } = vector2;
 				const { x: x3, y: y3, z: z3 } = vector3;
 
-				const vec1 = new THREE.Vector3(x1, y1, z1);
-				const vec2 = new THREE.Vector3(x2, y2, z2);
-				const vec3 = new THREE.Vector3(x3, y3, z3);
+				if (vec1.x !== x1 || vec1.y !== y1 || vec1.z === z1) {
+					innerRef1.current?.move(origin, vec1);
+				}
 
-				innerRef1.current?.move(origin, vec1);
-				innerRef2.current?.move(origin, vec2);
-				innerRef3.current?.move(origin, vec3);
+				if (vec2.x !== x2 || vec2.y !== y2 || vec2.z === z2) {
+					innerRef2.current?.move(origin, vec2);
+				}
+
+				if (vec3.x !== x3 || vec3.y !== y3 || vec3.z === z3) {
+					innerRef3.current?.move(origin, vec3);
+				}
 			},
 			[]
 		);
@@ -395,11 +403,9 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 		// If reseting, move the vectors to their untransformed position
 		useEffect(() => {
 			if (isMatrixReset) {
-				moveVectors(
-					node.data.output.eigenvector1,
-					node.data.output.eigenvector2,
-					node.data.output.eigenvector3
-				);
+				innerRef1.current?.reset();
+				innerRef2.current?.reset();
+				innerRef3.current?.reset();
 			}
 		}, [isMatrixReset]);
 

@@ -86,6 +86,7 @@ const Grid = forwardRef<Grid, IGridProps>((props, ref) => {
 				],
 				DURATION
 			)
+			.easing(TWEEN.Easing.Quadratic.InOut)
 			.onUpdate(([x, y, z]) => {
 				setPositions(x, y, z);
 			})
