@@ -5,6 +5,7 @@ import {
 	useImperativeHandle,
 	useMemo,
 	useRef,
+	useState,
 } from "react";
 import * as THREE from "three";
 import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
@@ -240,7 +241,6 @@ type IVectorWrapperProps = {
 
 const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	({ node }, ref) => {
-		const matrix = useEditorStore((state) => state.matrix);
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
 		const setSelectedVectorNode = useEditorStore(
 			(state) => state.setSelectedVectorNode
@@ -254,33 +254,45 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 
 		const innerRef = useRef<Vector>(null);
 
-		const moveVector = useCallback((vector: _Vector) => {
+		const [vec] = useState(new THREE.Vector3(x, y, z));
+		const [ori] = useState(
+			origin
+				? new THREE.Vector3(origin.x, origin.y, origin.z)
+				: new THREE.Vector3()
+		);
+
+		const move = useCallback((origin: _Vector, vector: _Vector) => {
+			if (
+				vector.x === vec.x &&
+				vector.y === vec.y &&
+				vector.z === vec.z &&
+				origin.x === ori.x &&
+				origin.y === ori.y &&
+				origin.z === ori.z
+			) {
+				return;
+			}
+
 			const { x, y, z } = vector;
-			const vec = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
-			innerRef.current?.move(vec);
+			const { x: ox, y: oy, z: oz } = origin;
+			vec.set(x, y, z);
+			ori.set(ox, oy, oz);
+
+			innerRef.current?.move(ori, vec);
 		}, []);
 
-		const moveOrigin = useCallback((origin: _Vector) => {
-			const { x, y, z } = origin;
-			const ori = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
-			innerRef.current?.moveOrigin(ori);
-		}, []);
-
-		// Move vector when it changes in the editor
 		useEffect(() => {
-			moveVector(node.data.output.result);
-		}, [node.data.output.result]);
-
-		// Move origin when it changes in the editor
-		useEffect(() => {
-			origin && moveOrigin(origin);
-		}, [origin]);
+			if (origin) {
+				move(origin, node.data.output.result);
+			} else {
+				move({ x: 0, y: 0, z: 0 }, node.data.output.result);
+			}
+		}, [node.data.output.result, origin]);
 
 		// If reseting, move the vector to its untransformed position
 		useEffect(() => {
 			if (isMatrixReset) {
-				moveVector(node.data.output.result);
-				origin && moveOrigin(origin);
+				innerRef.current?.reset();
 			}
 		}, [isMatrixReset]);
 
@@ -301,13 +313,9 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					color={node.data.color ? node.data.color : "#E9E9E9"}
 					origin={
 						origin &&
-						new THREE.Vector3(
-							origin.x,
-							origin.y,
-							origin.z
-						).applyMatrix3(matrix)
+						new THREE.Vector3(origin.x, origin.y, origin.z)
 					}
-					vector={new THREE.Vector3(x, y, z).applyMatrix3(matrix)}
+					vector={new THREE.Vector3(x, y, z)}
 					sphere={
 						node.data.representation === "sphere"
 							? true
@@ -333,9 +341,9 @@ type IEigenvectorsWrapperProps = {
 	node: Node<EigenvectorsData>;
 };
 
+const origin = new THREE.Vector3(0, 0, 0);
 const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 	({ node }, ref) => {
-		const matrix = useEditorStore((state) => state.matrix);
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
 
 		const { x: x1, y: y1, z: z1 } = node.data.output.eigenvector1;
@@ -351,13 +359,13 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 				const { x: x2, y: y2, z: z2 } = vector2;
 				const { x: x3, y: y3, z: z3 } = vector3;
 
-				const vec1 = new THREE.Vector3(x1, y1, z1).applyMatrix3(matrix);
-				const vec2 = new THREE.Vector3(x2, y2, z2).applyMatrix3(matrix);
-				const vec3 = new THREE.Vector3(x3, y3, z3).applyMatrix3(matrix);
+				const vec1 = new THREE.Vector3(x1, y1, z1);
+				const vec2 = new THREE.Vector3(x2, y2, z2);
+				const vec3 = new THREE.Vector3(x3, y3, z3);
 
-				innerRef1.current?.move(vec1);
-				innerRef2.current?.move(vec2);
-				innerRef3.current?.move(vec3);
+				innerRef1.current?.move(origin, vec1);
+				innerRef2.current?.move(origin, vec2);
+				innerRef3.current?.move(origin, vec3);
 			},
 			[]
 		);

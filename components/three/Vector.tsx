@@ -8,19 +8,15 @@ import React, {
 import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
 
-import { isRotationMatrix } from "./matrixProperties";
-import { IDENTITYQUATERNION, ORIGIN, UP, DURATION } from "./constants";
+import { ORIGIN, UP } from "./constants";
+import useMatrixAnimation from "../hooks/useMatrixAnimation";
+import useVectorAnimation from "../hooks/useVectorAnimation";
 
 export interface VectorProps {
 	/**
 	 * Numerical representation of the vector.
 	 */
 	vector: THREE.Vector3;
-	/**
-	 * Vector name. Can get messy.
-	 * @default ""
-	 */
-	text?: string;
 	/**
 	 * Displacement of the vector, which can be seen as the new origin of the
 	 * vector.
@@ -48,19 +44,18 @@ export interface VectorProps {
 
 export type Vector = {
 	/**
-	 * Move the position of the vector with interpolation.
+	 * Move the position of the vector with interpolation. This vector will move
+	 * to the position in the space of the total transformations of the vector.
 	 */
-	move: (vec: THREE.Vector3) => void;
+	move: (origin: THREE.Vector3, vector: THREE.Vector3) => void;
 	/**
-	 * Transform vector with matrix. This checks whether the transformation is a
-	 * rotation or not and performs the interpolation as a rotation if
-	 * appropriate.
+	 * Transform the space of the vector with the matrix.
 	 */
 	transform: (matrix: THREE.Matrix3) => void;
 	/**
-	 * Move origin.
+	 * Resets the vector to its original vector space.
 	 */
-	moveOrigin: (vec: THREE.Vector3) => void;
+	reset: () => void;
 };
 
 const X_ROTATION = new THREE.Matrix4().makeRotationX(Math.PI / 2);
@@ -86,7 +81,6 @@ const coneGeometry = new THREE.ConeBufferGeometry(
 export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 	const {
 		vector: v,
-		text,
 		origin: o = ORIGIN,
 		color = "#E9E9E9",
 		opacity = 1,
@@ -98,15 +92,11 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 	const coneRef = useRef<THREE.Mesh>(null);
 	const sphereRef = useRef<THREE.Mesh>(null);
 
-	const [vector] = useState(v.clone());
-	const [origin] = useState(o.clone());
-	const [currentVector] = useState(v.clone());
-	const [currentOrigin] = useState(o.clone());
 	const orientation = new THREE.Matrix4();
-
-	function setMeshes(ori: THREE.Vector3, vec: THREE.Vector3) {
-		const length = vec.length();
-		const cylinderVector = vec
+	const position = new THREE.Vector3();
+	function setPosition(origin: THREE.Vector3, vector: THREE.Vector3) {
+		const length = vector.length();
+		const cylinderVector = vector
 			.clone()
 			.normalize()
 			.multiplyScalar(length - coneHeight);
@@ -114,14 +104,14 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		const cylinderPosition = cylinderVector
 			.clone()
 			.divideScalar(2)
-			.add(ori);
-		const conePosition = vec
+			.add(origin);
+		const conePosition = vector
 			.clone()
 			.normalize()
 			.multiplyScalar(length - coneHeight / 2)
-			.add(ori);
+			.add(origin);
 
-		orientation.lookAt(ORIGIN, vec.clone().multiplyScalar(2), UP);
+		orientation.lookAt(ORIGIN, vector.clone().multiplyScalar(2), UP);
 		const cylinderOrientation = orientation.clone().multiply(X_ROTATION);
 		const coneOrientation = orientation.clone().multiply(X_NEG_ROTATION);
 
@@ -132,84 +122,131 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		coneRef.current?.setRotationFromMatrix(coneOrientation);
 		coneRef.current?.position.copy(conePosition);
 
-		sphereRef.current?.position.copy(vec.clone().add(ori));
+		sphereRef.current?.position.copy(position.addVectors(vector, origin));
 	}
 
-	function rotate(mat: THREE.Matrix3) {
-		const mat4 = new THREE.Matrix4().setFromMatrix3(mat);
-		const quaternion = new THREE.Quaternion().setFromRotationMatrix(mat4);
+	const [vector] = useState({
+		source: v.clone(),
+		current: v.clone(),
+		target: v.clone(),
+	});
+	const [origin] = useState({
+		source: o.clone(),
+		current: o.clone(),
+		target: o.clone(),
+	});
+	const [matrix] = useState({
+		source: new THREE.Matrix4(),
+		current: new THREE.Matrix4(),
+		target: new THREE.Matrix4(),
+	});
 
-		const currentQuaternion = new THREE.Quaternion();
-		const t = { value: 0 };
-		new TWEEN.Tween(t)
-			.to({ value: 1 }, DURATION)
-			.easing(TWEEN.Easing.Quadratic.Out)
-			.onUpdate(() => {
-				currentQuaternion.slerpQuaternions(
-					IDENTITYQUATERNION,
-					quaternion,
-					t.value
+	const { transform, stopTransformations } = useMatrixAnimation({
+		update: (mat) => {
+			matrix.current.multiplyMatrices(mat, matrix.source);
+
+			setPosition(
+				origin.current.clone().applyMatrix4(matrix.current),
+				vector.current.clone().applyMatrix4(matrix.current)
+			);
+		},
+		start: (mat) => {
+			// Keep the target vector space up to date
+			matrix.target.multiplyMatrices(mat, matrix.target);
+		},
+		end: () => {
+			// Set the source to be the target, so that the next transformation starts
+			// from there
+			matrix.source.copy(matrix.target);
+
+			// Set the positions to be the target, in case the animation did not go to
+			// the correct target position
+			setPosition(
+				origin.current.clone().applyMatrix4(matrix.target),
+				vector.current.clone().applyMatrix4(matrix.target)
+			);
+		},
+	});
+
+	const { move, stopMove } = useVectorAnimation(
+		[origin.target, vector.target],
+		{
+			update: ([o, v]) => {
+				// Keep the origin and vector up to date within the original vector space
+				origin.current.copy(o);
+				vector.current.copy(v);
+
+				// Set the positions to be in the vector space defined by the matrix
+				setPosition(
+					origin.current.clone().applyMatrix4(matrix.current),
+					vector.current.clone().applyMatrix4(matrix.current)
 				);
-
-				const rotatedOrigin = origin
-					.clone()
-					.applyQuaternion(currentQuaternion);
-				const rotatedVector = vector
-					.clone()
-					.applyQuaternion(currentQuaternion);
-
-				setMeshes(rotatedOrigin, rotatedVector);
-			})
-			.onComplete(() => {
-				setMeshes(currentOrigin, currentVector);
-			})
-			.start();
-	}
-
-	function moveVector(ori: THREE.Vector3, vec: THREE.Vector3) {
-		new TWEEN.Tween([origin, vector])
-			.to([ori, vec], DURATION)
-			.easing(TWEEN.Easing.Quadratic.Out)
-			.onUpdate(() => {
-				setMeshes(origin, vector);
-			})
-			.start();
-	}
+			},
+			start: ([o, v]) => {
+				// Keep the target position up to date to where the vector is supposed to
+				// be
+				origin.target.copy(o);
+				vector.target.copy(v);
+			},
+			end: ([o, v]) => {
+				// Set the source to be the target, so that the next move starts from
+				// there
+				origin.source.copy(o);
+				vector.source.copy(v);
+			},
+		}
+	);
 
 	useImperativeHandle(ref, () => ({
-		move: (vec) => {
-			vector.copy(currentVector);
-			currentVector.copy(vec);
-
-			moveVector(currentOrigin, vec);
+		move: (ori, vec) => {
+			move([ori, vec]);
 		},
 		transform: (mat) => {
-			vector.copy(currentVector);
-			origin.copy(currentOrigin);
-			currentVector.applyMatrix3(mat);
-			currentOrigin.applyMatrix3(mat);
-
-			if (isRotationMatrix(mat)) {
-				rotate(mat);
-			} else {
-				moveVector(currentOrigin, currentVector);
-			}
+			const m = new THREE.Matrix4().setFromMatrix3(mat);
+			transform(m);
 		},
-		moveOrigin: (vec) => {
-			origin.copy(currentOrigin);
-			currentOrigin.copy(vec);
+		reset: () => {
+			// Stop all animations
+			stopTransformations();
+			stopMove();
 
-			moveVector(vec, currentVector);
+			// Move to original vector space
+			new TWEEN.Tween([
+				origin.current.clone().applyMatrix4(matrix.current),
+				vector.current.clone().applyMatrix4(matrix.current),
+			])
+				.to([origin.target, vector.target], 500)
+				.easing(TWEEN.Easing.Quadratic.InOut)
+				.onUpdate(([o, v]) => {
+					setPosition(o, v);
+				})
+				.onStart(() => {
+					origin.source.copy(origin.current);
+					vector.source.copy(vector.current);
+
+					const identityMatrix = new THREE.Matrix4();
+					matrix.source.copy(identityMatrix);
+					matrix.current.copy(identityMatrix);
+					matrix.target.copy(identityMatrix);
+				})
+				.onComplete(() => {
+					origin.source.copy(origin.target);
+					vector.source.copy(vector.target);
+				})
+				.start();
 		},
 	}));
 
 	useEffect(() => {
-		setMeshes(currentOrigin, currentVector);
+		setPosition(
+			origin.current.clone().applyMatrix4(matrix.current),
+			vector.current.clone().applyMatrix4(matrix.current)
+		);
 	}, [sphere]);
 
 	const material = new THREE.MeshMatcapMaterial({
 		color,
-		opacity: opacity,
+		opacity,
 		transparent: true,
 	});
 
@@ -231,7 +268,7 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 			)}
 
 			{sphere && (
-				<mesh ref={sphereRef} position={vector} material={material}>
+				<mesh ref={sphereRef} material={material}>
 					<sphereGeometry args={[0.2]} />
 				</mesh>
 			)}

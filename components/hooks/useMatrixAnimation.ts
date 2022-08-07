@@ -34,6 +34,7 @@ const useMatrixAnimation = (functions: {
 		(matrix: THREE.Matrix4, onUpdate: (t: number) => THREE.Matrix4) => {
 			const tween = new TWEEN.Tween([0] as [number])
 				.to([1], 500)
+				.easing(TWEEN.Easing.Quadratic.InOut)
 				.onUpdate(([t]) => {
 					const currentMatrix = onUpdate(t);
 					update(currentMatrix);
@@ -112,13 +113,12 @@ const useMatrixAnimation = (functions: {
 		const currentX = new THREE.Vector3();
 		const currentY = new THREE.Vector3();
 		const currentZ = new THREE.Vector3();
+		const currentMatrix = new THREE.Matrix4();
 
 		createTween(matrix, (t) => {
 			currentX.lerpVectors(xhat, x, t);
 			currentY.lerpVectors(yhat, y, t);
 			currentZ.lerpVectors(zhat, z, t);
-
-			const currentMatrix = new THREE.Matrix4();
 			currentMatrix.makeBasis(currentX, currentY, currentZ);
 
 			return currentMatrix;

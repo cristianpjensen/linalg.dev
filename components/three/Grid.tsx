@@ -20,7 +20,7 @@ type IGridProps = {
 	showCube: boolean;
 };
 
-type Grid = {
+export type Grid = {
 	transform: (matrix: THREE.Matrix3) => void;
 	reset: () => void;
 };
@@ -395,6 +395,7 @@ const Grid = forwardRef<Grid, IGridProps>((props, ref) => {
 					color="rgb(150, 150, 150)"
 				/>
 			</group>
+
 			<group>
 				<AxisLabel
 					ref={xLabelRef}
@@ -445,7 +446,6 @@ const Grid = forwardRef<Grid, IGridProps>((props, ref) => {
 							"green",
 							"yellow",
 						]}
-						bias={0.05}
 					/>
 				</group>
 			)}
