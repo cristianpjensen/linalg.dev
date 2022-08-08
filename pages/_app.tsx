@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "katex/dist/katex.min.css";
@@ -20,17 +21,30 @@ import "../styles/globals.css";
  * ```
  */
 const LoadingScreen = () => {
+	const [showNodesWarning, setShowNodesWarning] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setShowNodesWarning(true);
+		}, 3000);
+	}, []);
+
 	return (
 		<div
 			id="loading-screen"
-			className="absolute z-50 flex items-center justify-center w-full h-full bg-offblack"
+			className="absolute z-50 flex flex-col items-center justify-center w-full h-full gap-2 bg-offblack"
 		>
-			<div className="lds-ellipsis child:bg-zinc-100">
+			<div className="animate-fadein lds-ellipsis child:bg-zinc-100">
 				<div></div>
 				<div></div>
 				<div></div>
 				<div></div>
 			</div>
+			{showNodesWarning && (
+				<div className="absolute mt-32 text-sm animate-fadein-slow text-offwhite">
+					More nodes lengthen the loading time.
+				</div>
+			)}
 		</div>
 	);
 };
