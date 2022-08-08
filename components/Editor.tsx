@@ -48,6 +48,7 @@ const nodeClassNames: {
 	norm: "blue",
 	transform: "blue",
 	vectorScaling: "blue",
+	vectorComponents: "blue",
 	transpose: "blue",
 	matrixMultiplication: "blue",
 	eigenvalues: "purple",
