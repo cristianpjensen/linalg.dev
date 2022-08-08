@@ -89,6 +89,12 @@ type EditorState = {
 	 */
 	showSpaceTransformations: boolean;
 	toggleShowSpaceTransformations: () => void;
+
+	/**
+	 * If true, the page can stop loading.
+	 */
+	isLoaded: boolean;
+	setIsLoaded: (isLoaded: true) => void;
 };
 
 const useStore = create<EditorState>((set) => ({
@@ -122,6 +128,8 @@ const useStore = create<EditorState>((set) => ({
 		set((state) => ({
 			showSpaceTransformations: !state.showSpaceTransformations,
 		})),
+	isLoaded: false,
+	setIsLoaded: (isLoaded: true) => set({ isLoaded }),
 }));
 
 export default useStore;

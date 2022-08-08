@@ -15,20 +15,25 @@ export const TransformContext = React.createContext<TransformContext>({
 	transform: () => {},
 });
 
+THREE.DefaultLoadingManager.onLoad = () => {
+	useEditorStore.getState().setIsLoaded(true);
+};
+
 const App = () => {
 	const ref = useRef<VectorSpace>(null);
+	const loaded = useEditorStore((state) => state.isLoaded);
 
 	useEffect(() => {
 		const loadingElement = document.getElementById("loading-screen");
-		if (loadingElement) {
+		if (loadingElement && loaded) {
 			setTimeout(() => {
 				loadingElement.classList.add("animate-fadeout");
 				setTimeout(() => {
 					loadingElement.remove();
 				}, 800);
-			}, 1500);
+			}, 500);
 		}
-	}, []);
+	}, [loaded]);
 
 	const transform = useEditorStore((state) => state.transform);
 

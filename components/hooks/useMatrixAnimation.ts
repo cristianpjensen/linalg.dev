@@ -135,7 +135,10 @@ const useMatrixAnimation = (functions: {
 		const recomposedMatrix = new THREE.Matrix4();
 		recomposedMatrix.compose(translation, rotation, scale);
 
-		if (equalsMatrices(matrix, recomposedMatrix)) {
+		if (
+			equalsMatrices(matrix, recomposedMatrix) &&
+			matrix.determinant() !== 0
+		) {
 			transformNoShear(matrix);
 		} else {
 			transformShear(matrix);

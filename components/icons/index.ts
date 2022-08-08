@@ -7,3 +7,4 @@ export { default as TransposeIcon } from "./TransposeIcon";
 export { default as VectorScalingIcon } from "./VectorScalingIcon";
 export { default as FitFrameIcon } from "./FitFrameIcon";
 export { default as VectorSpaceIcon } from "./VectorSpaceIcon";
+export { default as VectorComponentsIcon } from "./VectorComponentsIcon";

@@ -17,7 +17,6 @@ import {
 	SliderIcon,
 	SunIcon,
 	ThickArrowUpIcon,
-	TransparencyGridIcon,
 	UploadIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
@@ -33,6 +32,7 @@ import {
 	TransformationIcon,
 	TransposeIcon,
 	VectorScalingIcon,
+	VectorComponentsIcon,
 } from "./icons";
 import useHotkey from "./hooks/useHotkey";
 import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
@@ -214,7 +214,7 @@ const Toolbar = () => {
 						hotkey: "z",
 					},
 					{
-						icon: <TransparencyGridIcon />,
+						icon: <VectorComponentsIcon />,
 						tool: _Tool.VectorComponents,
 						description: "Returns the components of a vector",
 						hotkey: "l",
