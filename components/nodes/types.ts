@@ -109,6 +109,15 @@ export type VectorScalingData = {
 	};
 };
 
+export type VectorComponentsData = {
+	vector: Input<Vector>;
+	output: {
+		x: number;
+		y: number;
+		z: number;
+	};
+};
+
 export type TransposeData = {
 	matrix: Input<Matrix>;
 	output: {

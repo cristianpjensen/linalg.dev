@@ -204,6 +204,23 @@ export const vectorScalingNodeObject = (
 	},
 });
 
+export const vectorComponentsNodeObject = (
+	position: Position
+): Node<T.VectorComponentsData> => ({
+	type: "vectorComponents",
+	id: getId(),
+	position: snapToGrid(position),
+	dragHandle: ".dragger",
+	data: {
+		vector: vectorInput(),
+		output: {
+			x: 0,
+			y: 0,
+			z: 0,
+		},
+	},
+});
+
 export const transposeNodeObject = (
 	position: Position
 ): Node<T.TransposeData> => ({

@@ -17,6 +17,7 @@ import {
 	SliderIcon,
 	SunIcon,
 	ThickArrowUpIcon,
+	TransparencyGridIcon,
 	UploadIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
@@ -211,6 +212,12 @@ const Toolbar = () => {
 						tool: _Tool.VectorScaling,
 						description: "Scales a vector by a scalar",
 						hotkey: "z",
+					},
+					{
+						icon: <TransparencyGridIcon />,
+						tool: _Tool.VectorComponents,
+						description: "Returns the components of a vector",
+						hotkey: "l",
 					},
 					{
 						icon: <TransposeIcon />,

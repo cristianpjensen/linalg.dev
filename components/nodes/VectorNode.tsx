@@ -1,5 +1,4 @@
 import React, { memo, useCallback, useState } from "react";
-import * as THREE from "three";
 import { NodeProps } from "react-flow-renderer/nocss";
 import {
 	ArrowTopRightIcon,
@@ -16,7 +15,6 @@ import type { VectorData } from "./types";
 import useOutput from "../hooks/useOutput";
 import * as Node from "./Node";
 import { useNodeStore } from "../../stores";
-import useVectorAnimation from "../hooks/useVectorAnimation";
 
 const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	useOutput(id, data, (data) => {

@@ -18,6 +18,7 @@ export enum Tool {
 	Norm = "Norm",
 	VectorScaling = "Vector scaling",
 	Transformed = "Transform",
+	VectorComponents = "Vector components",
 }
 
 type EditorState = {

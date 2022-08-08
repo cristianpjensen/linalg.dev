@@ -26,11 +26,11 @@ import {
 	transformNodeObject,
 	transposeNodeObject,
 	unaryOperationNodeObject,
+	vectorComponentsNodeObject,
 	vectorNodeObject,
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
 import Toolbar from "./Toolbar";
-import { VectorData } from "./nodes/types";
 
 const edgeTypes = {
 	default: Edge,
@@ -172,6 +172,10 @@ const Editor = () => {
 
 				case Tool.VectorScaling:
 					reactFlow.addNodes(vectorScalingNodeObject(position));
+					break;
+
+				case Tool.VectorComponents:
+					reactFlow.addNodes(vectorComponentsNodeObject(position));
 					break;
 
 				case Tool.Transpose:
