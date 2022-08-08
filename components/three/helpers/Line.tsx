@@ -80,3 +80,5 @@ export const Line = forwardRef<THREE.BufferGeometry, LineProps>(
 		return <primitive ref={innerRef} object={line}></primitive>;
 	}
 );
+
+Line.displayName = "Line";

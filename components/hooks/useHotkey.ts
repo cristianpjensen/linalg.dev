@@ -7,11 +7,11 @@ import { useKeyPress, KeyCode } from "react-flow-renderer/nocss";
  * react-flow-renderer documentation.
  * @param fn Function to call on pressing the key.
  */
-function useHotkey(key: KeyCode, fn: () => void) {
+function useHotkey(key: KeyCode | null | undefined, fn: () => void) {
 	const pressed = useKeyPress(key);
 
 	useEffect(() => {
-		if (pressed) {
+		if (key && pressed) {
 			fn();
 		}
 	}, [pressed]);

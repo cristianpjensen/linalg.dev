@@ -24,4 +24,6 @@ export const TransformationIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+TransformationIcon.displayName = "Transformation icon";
+
 export default TransformationIcon;

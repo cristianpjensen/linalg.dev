@@ -24,4 +24,6 @@ export const MathIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+MathIcon.displayName = "Math icon";
+
 export default MathIcon;

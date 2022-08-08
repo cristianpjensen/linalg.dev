@@ -128,7 +128,7 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 				multipliedVector.z
 			);
 		}
-	}, [selectedVectorNode, selectedVectorFrom]);
+	}, [selectedVectorNode, selectedVectorFrom, matrix]);
 
 	const [width, height] = useWindowSize();
 
@@ -179,6 +179,8 @@ export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
 	);
 });
 
+VectorSpace.displayName = "Vector space";
+
 type IToggleButtonProps = {
 	tooltip: string;
 	children?: React.ReactNode;
@@ -209,6 +211,8 @@ const ToggleButton = ({
 	);
 };
 
+ToggleButton.displayName = "Toggle button";
+
 const Vectors = forwardRef<Group, {}>((props, ref) => {
 	const nodes = useNodeStore((state) => state.nodes);
 	const vectors = nodes.filter(
@@ -234,6 +238,8 @@ const Vectors = forwardRef<Group, {}>((props, ref) => {
 		</Group>
 	);
 });
+
+Vectors.displayName = "Vectors";
 
 type IVectorWrapperProps = {
 	node: Node<MinimalVectorData>;
@@ -337,6 +343,8 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	}
 );
 
+VectorWrapper.displayName = "Vector wrapper";
+
 type IEigenvectorsWrapperProps = {
 	node: Node<EigenvectorsData>;
 };
@@ -438,3 +446,5 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 		return vectorComponent;
 	}
 );
+
+EigenvectorsWrapper.displayName = "Vector wrapper";

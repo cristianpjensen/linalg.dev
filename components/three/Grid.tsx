@@ -454,6 +454,8 @@ const Grid = forwardRef<Grid, IGridProps>((props, ref) => {
 	);
 });
 
+Grid.displayName = "Grid";
+
 type IAxisLabelProps = {
 	label: "x" | "y" | "z";
 	position: THREE.Vector3;
@@ -489,5 +491,7 @@ const AxisLabel = forwardRef<THREE.Sprite, IAxisLabelProps>(
 		);
 	}
 );
+
+AxisLabel.displayName = "Axis label";
 
 export default memo(Grid);

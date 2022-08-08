@@ -511,9 +511,7 @@ const Tool = ({
 		setTool(tool);
 	};
 
-	if (hotkey) {
-		useHotkey(hotkey, onToolChange);
-	}
+	useHotkey(hotkey, onToolChange);
 
 	return (
 		<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
@@ -561,11 +559,10 @@ const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
 	tools.forEach(({ tool, hotkey }) => {
 		// Set hotkey here, because otherwise it will only be usable when the
 		// dropdown is open
-		if (hotkey) {
-			useHotkey(hotkey, () => {
-				setTool(tool);
-			});
-		}
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useHotkey(hotkey, () => {
+			setTool(tool);
+		});
 	});
 
 	return (

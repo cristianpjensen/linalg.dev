@@ -67,4 +67,6 @@ const EigenvaluesNode = memo(
 	}
 );
 
+EigenvaluesNode.displayName = "Eigenvalues node";
+
 export default EigenvaluesNode;

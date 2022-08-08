@@ -87,7 +87,7 @@ export interface CameraControlsProps {
 	restThreshold?: number;
 }
 
-export default forwardRef<CameraControlsDefault, CameraControlsProps>(
+const Controls = forwardRef<CameraControlsDefault, CameraControlsProps>(
 	(props, ref) => {
 		const cameraControls = useRef<CameraControlsDefault | null>(null);
 		const camera = useThree((state) => state.camera);
@@ -105,6 +105,10 @@ export default forwardRef<CameraControlsDefault, CameraControlsProps>(
 		);
 	}
 );
+
+Controls.displayName = "Controls";
+
+export default Controls;
 
 export type CameraControls = CameraControlsDefault;
 

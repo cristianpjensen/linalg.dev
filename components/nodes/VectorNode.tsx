@@ -142,4 +142,6 @@ const VectorNode = memo(({ id, data, selected }: NodeProps<VectorData>) => {
 	);
 });
 
+VectorNode.displayName = "Vector node";
+
 export default VectorNode;

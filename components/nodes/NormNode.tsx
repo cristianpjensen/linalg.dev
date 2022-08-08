@@ -34,4 +34,6 @@ const NormNode = memo(({ id, data, selected }: NodeProps<NormData>) => {
 	);
 });
 
+NormNode.displayName = "Norm node";
+
 export default NormNode;

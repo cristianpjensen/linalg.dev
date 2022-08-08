@@ -40,4 +40,6 @@ const TransposeNode = memo(
 	}
 );
 
+TransposeNode.displayName = "Transpose node";
+
 export default TransposeNode;

@@ -50,4 +50,6 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 	);
 });
 
+MatrixNode.displayName = "Matrix node";
+
 export default MatrixNode;

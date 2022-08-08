@@ -24,4 +24,6 @@ export const NormIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+NormIcon.displayName = "Norm icon";
+
 export default NormIcon;

@@ -2,11 +2,14 @@
   "name": "linalg.dev",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://linalg.dev",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.6.0",

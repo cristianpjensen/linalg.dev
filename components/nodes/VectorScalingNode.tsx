@@ -145,4 +145,6 @@ const VectorScalingNode = memo(
 	}
 );
 
+VectorScalingNode.displayName = "Vector scaling node";
+
 export default VectorScalingNode;

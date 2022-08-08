@@ -48,6 +48,7 @@ const SelectInput = <T extends string>({
 							<Select.Viewport className="p-2">
 								{values.map((value) => (
 									<Select.Item
+										key={value}
 										value={value}
 										className="relative flex items-center h-8 px-6 text-sm rounded-sm select-none outline-none cursor-pointer dark:focus:bg-[rgba(255,255,255,0.08)] focus:bg-[rgba(0,0,0,0.06)] dark:focus:text-offwhite focus:text-offblack"
 									>

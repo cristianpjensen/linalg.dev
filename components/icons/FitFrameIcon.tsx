@@ -24,4 +24,6 @@ export const FitFrameIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+FitFrameIcon.displayName = "Fit frame icon";
+
 export default FitFrameIcon;

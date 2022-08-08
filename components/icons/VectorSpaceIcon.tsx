@@ -24,4 +24,6 @@ export const VectorSpaceIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+VectorSpaceIcon.displayName = "Vector space icon";
+
 export default VectorSpaceIcon;

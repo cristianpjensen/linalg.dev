@@ -275,3 +275,5 @@ export const Vector = forwardRef<Vector, VectorProps>((props, ref) => {
 		</group>
 	);
 });
+
+Vector.displayName = "Vector";

@@ -24,4 +24,6 @@ export const TransposeIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+TransposeIcon.displayName = "Transpose icon";
+
 export default TransposeIcon;

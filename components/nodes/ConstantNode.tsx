@@ -32,4 +32,6 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 	);
 });
 
+ConstantNode.displayName = "Constant node";
+
 export default ConstantNode;

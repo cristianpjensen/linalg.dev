@@ -91,4 +91,6 @@ const EigenvectorsNode = memo(
 	}
 );
 
+EigenvectorsNode.displayName = "Eigenvectors node";
+
 export default EigenvectorsNode;

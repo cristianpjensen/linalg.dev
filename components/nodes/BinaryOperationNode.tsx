@@ -81,4 +81,6 @@ const BinaryOperationNode = memo(
 	}
 );
 
+BinaryOperationNode.displayName = "Binary operation node";
+
 export default BinaryOperationNode;

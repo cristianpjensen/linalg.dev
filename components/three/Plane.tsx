@@ -170,3 +170,5 @@ export const Plane = forwardRef<Plane, PlaneProps>((props, ref) => {
 		</mesh>
 	);
 });
+
+Plane.displayName = "Plane";

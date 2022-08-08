@@ -24,4 +24,6 @@ export const VectorScalingIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+VectorScalingIcon.displayName = "Vector scaling icon";
+
 export default VectorScalingIcon;

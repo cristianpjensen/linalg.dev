@@ -77,4 +77,6 @@ const Slider = ({ value, onChange }: ISliderProps) => {
 	);
 };
 
+SliderNode.displayName = "Slider node";
+
 export default SliderNode;

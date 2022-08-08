@@ -24,4 +24,6 @@ export const LinearAlgebraIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+LinearAlgebraIcon.displayName = "Linear algebra icon";
+
 export default LinearAlgebraIcon;

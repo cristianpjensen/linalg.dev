@@ -24,4 +24,6 @@ export const VectorComponentsIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+VectorComponentsIcon.displayName = "Vector components icon";
+
 export default VectorComponentsIcon;

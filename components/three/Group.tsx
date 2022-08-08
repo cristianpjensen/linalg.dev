@@ -68,3 +68,5 @@ export const Group = forwardRef<Group, GroupProps>((props, ref) => {
 		</>
 	);
 });
+
+Group.displayName = "Group";

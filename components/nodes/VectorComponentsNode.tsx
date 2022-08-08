@@ -37,4 +37,6 @@ const VectorComponentsNode = memo(
 	}
 );
 
+VectorComponentsNode.displayName = "Vector components node";
+
 export default VectorComponentsNode;

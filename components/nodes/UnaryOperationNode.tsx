@@ -67,4 +67,6 @@ const UnaryOperationNode = memo(
 	}
 );
 
+UnaryOperationNode.displayName = "Unary operation node";
+
 export default UnaryOperationNode;

@@ -58,4 +58,6 @@ const MatrixMultiplicationNode = memo(
 	}
 );
 
+MatrixMultiplicationNode.displayName = "Matrix multiplication node";
+
 export default MatrixMultiplicationNode;

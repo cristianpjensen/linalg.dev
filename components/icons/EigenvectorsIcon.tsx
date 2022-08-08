@@ -24,4 +24,6 @@ export const EigenvectorsIcon = React.forwardRef<SVGSVGElement, IconProps>(
 	}
 );
 
+EigenvectorsIcon.displayName = "Eigenvectors icon";
+
 export default EigenvectorsIcon;

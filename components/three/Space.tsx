@@ -113,3 +113,5 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 		</Canvas>
 	);
 });
+
+Space.displayName = "Space";

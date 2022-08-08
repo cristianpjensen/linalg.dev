@@ -150,4 +150,6 @@ const TransformNode = memo(
 	}
 );
 
+TransformNode.displayName = "Transform node";
+
 export default TransformNode;
