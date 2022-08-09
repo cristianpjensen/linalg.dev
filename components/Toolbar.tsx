@@ -294,7 +294,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 						onClick={uploadEnvironment}
 					/>
 
-					<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-400 dark:text-zinc-700" />
+					<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
 
 					<Toggle
 						icon={<SunIcon />}
