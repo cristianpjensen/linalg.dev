@@ -49,6 +49,18 @@ math-field {
 	--caret: rgb(122, 122, 122);
 }
 
+/* REMOVE SCROLL BARS (they are very ugly and unnecessary on windows) */
+ /* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+	display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+* {
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+  } 
+
 /* BODY DARK MODE */
 
 body {
