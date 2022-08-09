@@ -11,7 +11,6 @@ import * as THREE from "three";
 import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
-import { useWindowSize } from "@react-hook/window-size";
 
 import { Group, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
@@ -47,137 +46,148 @@ export type VectorSpace = {
 	transform: (matrix: THREE.Matrix3) => void;
 };
 
-export const VectorSpace = forwardRef<VectorSpace, {}>((props, ref) => {
-	const matrix = useEditorStore((state) => state.matrix);
-	const resetMatrix = useEditorStore((state) => state.resetMatrix);
-	const showCube = useEditorStore((state) => state.showCube);
-	const toggleShowCube = useEditorStore((state) => state.toggleShowCube);
-	const showVectorsAsSpheres = useEditorStore(
-		(state) => state.showVectorsAsSpheres
-	);
-	const toggleShowVectorsAsSpheres = useEditorStore(
-		(state) => state.toggleShowVectorsAsSpheres
-	);
-	const showSpaceTransformations = useEditorStore(
-		(state) => state.showSpaceTransformations
-	);
-	const toggleShowSpaceTransformations = useEditorStore(
-		(state) => state.toggleShowSpaceTransformations
-	);
-	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
-	const selectedVectorNode = useEditorStore(
-		(state) => state.selectedVectorNode
-	);
-	const selectedVectorFrom = useEditorStore(
-		(state) => state.selectedVectorFrom
-	);
+type IVectorSpaceProps = {
+	style?: React.CSSProperties;
+	className?: string;
+	buttonsTopLeft?: boolean;
+};
 
-	const spaceRef = useRef<Space>(null);
-	const groupRef = useRef<Group>(null);
+export const VectorSpace = forwardRef<VectorSpace, IVectorSpaceProps>(
+	({ className, style, buttonsTopLeft }, ref) => {
+		const matrix = useEditorStore((state) => state.matrix);
+		const resetMatrix = useEditorStore((state) => state.resetMatrix);
+		const showCube = useEditorStore((state) => state.showCube);
+		const toggleShowCube = useEditorStore((state) => state.toggleShowCube);
+		const showVectorsAsSpheres = useEditorStore(
+			(state) => state.showVectorsAsSpheres
+		);
+		const toggleShowVectorsAsSpheres = useEditorStore(
+			(state) => state.toggleShowVectorsAsSpheres
+		);
+		const showSpaceTransformations = useEditorStore(
+			(state) => state.showSpaceTransformations
+		);
+		const toggleShowSpaceTransformations = useEditorStore(
+			(state) => state.toggleShowSpaceTransformations
+		);
+		const selectedVectorNode = useEditorStore(
+			(state) => state.selectedVectorNode
+		);
+		const selectedVectorFrom = useEditorStore(
+			(state) => state.selectedVectorFrom
+		);
 
-	useImperativeHandle(ref, () => ({
-		transform: (matrix) => {
-			if (showSpaceTransformations) {
-				spaceRef.current?.transform(matrix);
-			}
+		const spaceRef = useRef<Space>(null);
+		const groupRef = useRef<Group>(null);
 
-			groupRef.current?.transform(matrix);
-		},
-	}));
+		useImperativeHandle(ref, () => ({
+			transform: (matrix) => {
+				if (showSpaceTransformations) {
+					spaceRef.current?.transform(matrix);
+				}
 
-	const reset = () => {
-		spaceRef.current?.reset();
-		resetMatrix();
-	};
+				groupRef.current?.transform(matrix);
+			},
+		}));
 
-	useEffect(() => {
-		if (selectedVectorNode && selectedVectorFrom === "editor") {
-			const data = selectedVectorNode.data as MinimalVectorData;
+		const reset = () => {
+			spaceRef.current?.reset();
+			resetMatrix();
+		};
 
-			// Do not show the vector if it is hidden
-			if (data.hidden) {
-				return;
-			}
+		useEffect(() => {
+			if (selectedVectorNode && selectedVectorFrom === "editor") {
+				const data = selectedVectorNode.data as MinimalVectorData;
 
-			const { x, y, z } = data.output.result;
-			const vector = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
+				// Do not show the vector if it is hidden
+				if (data.hidden) {
+					return;
+				}
 
-			if (data.origin) {
-				const { x: ox, y: oy, z: oz } = data.origin.value;
-				const origin = new THREE.Vector3(ox, oy, oz).applyMatrix3(
-					matrix
+				const { x, y, z } = data.output.result;
+				const vector = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
+
+				if (data.origin) {
+					const { x: ox, y: oy, z: oz } = data.origin.value;
+					const origin = new THREE.Vector3(ox, oy, oz).applyMatrix3(
+						matrix
+					);
+					vector.add(origin);
+				}
+
+				if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
+					return;
+				}
+
+				const norm = vector.length();
+				vector.normalize();
+				const multipliedVector = {
+					x: vector.x * (norm + 2),
+					y: vector.y * (norm + 2),
+					z: vector.z * (norm + 2),
+				};
+
+				spaceRef.current?.moveCamera(
+					multipliedVector.x,
+					multipliedVector.y,
+					multipliedVector.z
 				);
-				vector.add(origin);
 			}
+		}, [selectedVectorNode, selectedVectorFrom, matrix]);
 
-			if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
-				return;
-			}
-
-			const norm = vector.length();
-			vector.normalize();
-			const multipliedVector = {
-				x: vector.x * (norm + 2),
-				y: vector.y * (norm + 2),
-				z: vector.z * (norm + 2),
-			};
-
-			spaceRef.current?.moveCamera(
-				multipliedVector.x,
-				multipliedVector.y,
-				multipliedVector.z
-			);
-		}
-	}, [selectedVectorNode, selectedVectorFrom, matrix]);
-
-	const [width, height] = useWindowSize();
-
-	return (
-		<div className="absolute right-0 z-30 border-l-4 border-zinc-600">
-			<Space
-				ref={spaceRef}
-				width={width / vectorSpaceSize}
-				height={height}
-				showCube={showCube}
-			>
-				<Vectors ref={groupRef} />
-			</Space>
-
-			<div className="absolute flex gap-4 right-4 bottom-4">
-				<ToggleButton
-					tooltip="Show vectors as spheres"
-					onClick={toggleShowVectorsAsSpheres}
-					active={showVectorsAsSpheres}
+		return (
+			<>
+				<Space
+					ref={spaceRef}
+					showCube={showCube}
+					className={className}
+					style={style}
 				>
-					<ShadowInnerIcon />
-				</ToggleButton>
+					<Vectors ref={groupRef} />
+				</Space>
 
-				<ToggleButton
-					tooltip="Show a cube for better overview of transformations"
-					onClick={toggleShowCube}
-					active={showCube}
+				<div
+					className={`absolute flex gap-4 ${
+						buttonsTopLeft
+							? "top-4 left-4 flex-col-reverse"
+							: "bottom-4 right-4"
+					}`}
 				>
-					<CubeIcon />
-				</ToggleButton>
+					<ToggleButton
+						tooltip="Show vectors as spheres"
+						onClick={toggleShowVectorsAsSpheres}
+						active={showVectorsAsSpheres}
+					>
+						<ShadowInnerIcon />
+					</ToggleButton>
 
-				<ToggleButton
-					tooltip="Also transform the grid"
-					onClick={toggleShowSpaceTransformations}
-					active={showSpaceTransformations}
-				>
-					<VectorSpaceIcon />
-				</ToggleButton>
+					<ToggleButton
+						tooltip="Show a cube for better overview of transformations"
+						onClick={toggleShowCube}
+						active={showCube}
+					>
+						<CubeIcon />
+					</ToggleButton>
 
-				<ToggleButton
-					tooltip="Reset space transformations"
-					onClick={reset}
-				>
-					<ResetIcon />
-				</ToggleButton>
-			</div>
-		</div>
-	);
-});
+					<ToggleButton
+						tooltip="Also transform the grid"
+						onClick={toggleShowSpaceTransformations}
+						active={showSpaceTransformations}
+					>
+						<VectorSpaceIcon />
+					</ToggleButton>
+
+					<ToggleButton
+						tooltip="Reset space transformations"
+						onClick={reset}
+					>
+						<ResetIcon />
+					</ToggleButton>
+				</div>
+			</>
+		);
+	}
+);
 
 VectorSpace.displayName = "Vector space";
 
@@ -199,10 +209,10 @@ const ToggleButton = ({
 			<button
 				onClick={onClick}
 				className={
-					"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 shadow-b1 transition-all " +
+					"flex items-center justify-center w-8 h-8 rounded bg-zinc-900 text-zinc-100 transition-all " +
 					(active
-						? "shadow-zinc-400 opacity-100"
-						: "shadow-zinc-700 opacity-60")
+						? "shadow-b2 shadow-zinc-400 opacity-100"
+						: "shadow-b1 shadow-zinc-700 opacity-60")
 				}
 			>
 				{children}

@@ -48,6 +48,18 @@ math-field {
 	--caret: rgb(122, 122, 122);
 }
 
+/* BODY DARK MODE */
+
+body {
+	background-color: #f6f6f6;
+	color: #0a0a0a;
+}
+
+body.dark {
+	background-color: #0a0a0a;
+	color: #f6f6f6;
+}
+
 /* REACT FLOW STYLING */
 
 /* Remove their branding. I think this is fair, because this is an open source

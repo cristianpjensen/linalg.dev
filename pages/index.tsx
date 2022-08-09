@@ -19,7 +19,7 @@ const Home: NextPage = () => {
 				<link rel="icon" type="image/png" href="/favicon.png" />
 			</Head>
 
-			<div className="flex flex-row text-offblack dark:text-offwhite bg-offwhite dark:bg-offblack">
+			<div className="flex text-offblack dark:text-offwhite bg-offwhite dark:bg-offblack">
 				<App />
 			</div>
 		</div>

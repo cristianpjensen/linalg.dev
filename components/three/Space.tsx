@@ -14,21 +14,6 @@ export interface SpaceProps {
 	 */
 	gridSize?: number;
 	/**
-	 * Width of the viewport.
-	 * @default window.innerWidth
-	 */
-	width?: number;
-	/**
-	 * Height of the viewport.
-	 * @default window.innerHeight
-	 */
-	height?: number;
-	/**
-	 * Background color of the scene.
-	 * @default #090909
-	 */
-	backgroundColor?: string;
-	/**
 	 * Camera configuration.
 	 */
 	camera?: any;
@@ -38,6 +23,9 @@ export interface SpaceProps {
 	 * @default true
 	 */
 	showCube?: boolean;
+
+	style?: React.CSSProperties;
+	className?: string;
 }
 
 export type Space = {
@@ -61,11 +49,10 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 	const {
 		children,
 		gridSize = 20,
-		width = window.innerWidth,
-		height = window.innerHeight,
-		backgroundColor = "#090909",
 		camera = {},
 		showCube = true,
+		style,
+		className,
 	} = props;
 
 	const cameraRef = useRef<CameraControlsType>(null);
@@ -86,7 +73,8 @@ export const Space = forwardRef<Space, SpaceProps>((props, ref) => {
 	return (
 		<Canvas
 			dpr={window.devicePixelRatio}
-			style={{ width, height, backgroundColor }}
+			style={style}
+			className={className}
 			camera={{
 				isPerspectiveCamera: true,
 				position: [0, 0, 10],

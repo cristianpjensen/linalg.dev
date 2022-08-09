@@ -6,6 +6,9 @@ import { VectorSpace } from "./VectorSpace";
 import Editor from "./Editor";
 import { useEditorStore } from "../stores";
 import { Matrix } from "./nodes/types";
+import useIsMobile from "./hooks/useIsMobile";
+import Toolbar from "./Toolbar";
+import { useWindowHeight } from "@react-hook/window-size";
 
 export type TransformContext = {
 	transform: (matrix: Matrix) => void;
@@ -43,15 +46,43 @@ const App = () => {
 		transform(mat);
 	};
 
+	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
+	const isMobile = useIsMobile();
+	const height = useWindowHeight();
+
 	return (
-		<>
-			<TransformContext.Provider value={{ transform: transformSpace }}>
-				<ReactFlowProvider>
-					<Editor />
-				</ReactFlowProvider>
-			</TransformContext.Provider>
-			<VectorSpace ref={ref} />
-		</>
+		<TransformContext.Provider value={{ transform: transformSpace }}>
+			<ReactFlowProvider>
+				<Toolbar bottom={isMobile} minify={isMobile} />
+
+				<div
+					className={
+						isMobile
+							? "absolute flex flex-col-reverse bottom-12 top-0 w-full"
+							: "absolute flex flex-row w-full top-12 bottom-0"
+					}
+					style={{ height: height - 48 }}
+				>
+					<Editor
+						minimap={!isMobile}
+						style={{
+							flex: isMobile ? 1.5 : vectorSpaceSize - 1,
+						}}
+					/>
+
+					<VectorSpace
+						ref={ref}
+						className={`bg-offblack border-zinc-600 ${
+							isMobile ? "border-b-4" : "border-l-4"
+						}`}
+						style={{
+							flex: 1,
+						}}
+						buttonsTopLeft={isMobile}
+					/>
+				</div>
+			</ReactFlowProvider>
+		</TransformContext.Provider>
 	);
 };
 

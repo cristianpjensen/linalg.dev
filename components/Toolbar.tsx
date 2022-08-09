@@ -6,6 +6,7 @@ import {
 	BoxModelIcon,
 	ButtonIcon,
 	CaretDownIcon,
+	CaretUpIcon,
 	DividerVerticalIcon,
 	DotIcon,
 	DownloadIcon,
@@ -36,8 +37,14 @@ import {
 } from "./icons";
 import useHotkey from "./hooks/useHotkey";
 import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
+import { useWindowWidth } from "@react-hook/window-size";
 
-const Toolbar = () => {
+type IToolbarProps = {
+	bottom?: boolean;
+	minify?: boolean;
+};
+
+const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 	const darkMode =
 		localStorage.getItem("theme") === "dark" ||
 		(!("theme" in localStorage) &&
@@ -139,30 +146,41 @@ const Toolbar = () => {
 	useHotkey("Meta+s", downloadEnvironment);
 	useHotkey("Shift+F", fitNodes);
 
+	const width = useWindowWidth();
+
 	return (
-		<div className="absolute top-0 left-0 z-40 flex flex-row w-screen h-12 text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap">
+		<div
+			className={`absolute left-0 z-40 flex flex-row h-12 w-full overflow-scroll text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap ${
+				bottom ? "bottom-0" : "top-0"
+			}`}
+		>
 			<Tool
 				icon={<HandIcon />}
 				tool={_Tool.Hand}
 				description="Drag to pan the canvas"
 				hotkey="h"
+				showTitle={false}
 			/>
 			<Tool
 				icon={<ArrowTopRightIcon />}
 				tool={_Tool.Vector}
 				description="Shows a vector in the vector space"
 				hotkey="v"
+				showTitle={!minify}
 			/>
 			<Tool
 				icon={<LayersIcon />}
 				tool={_Tool.Matrix}
 				description="Allows you to transform the space"
 				hotkey="m"
+				showTitle={!minify}
 			/>
 
 			<ToolDropdown
 				icon={<MathIcon />}
 				title="Math"
+				showTitle={!minify}
+				up={bottom}
 				tools={[
 					{
 						icon: <ButtonIcon />,
@@ -194,6 +212,8 @@ const Toolbar = () => {
 			<ToolDropdown
 				icon={<LinearAlgebraIcon />}
 				title="Linear algebra"
+				showTitle={!minify}
+				up={bottom}
 				tools={[
 					{
 						icon: <NormIcon />,
@@ -249,39 +269,42 @@ const Toolbar = () => {
 			/>
 
 			<div className="flex items-center justify-center text-sm grow">
-				linalg.dev
+				{minify ? "" : "linalg.dev"}
 			</div>
 
-			<VectorSpaceSizeControl />
+			{minify || (
+				<>
+					<VectorSpaceSizeControl />
+					<Toggle
+						icon={<FitFrameIcon />}
+						tip="Fit nodes into view"
+						onClick={fitNodes}
+					/>
 
-			<Toggle
-				icon={<FitFrameIcon />}
-				tip="Fit nodes into view"
-				onClick={fitNodes}
-			/>
+					<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
 
-			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-300 dark:text-zinc-700" />
+					<Toggle
+						icon={<DownloadIcon />}
+						tip="Download environment to share with others"
+						onClick={downloadEnvironment}
+					/>
+					<Toggle
+						icon={<UploadIcon />}
+						tip="Upload environment to view and edit"
+						onClick={uploadEnvironment}
+					/>
 
-			<Toggle
-				icon={<DownloadIcon />}
-				tip="Download environment to share with others"
-				onClick={downloadEnvironment}
-			/>
-			<Toggle
-				icon={<UploadIcon />}
-				tip="Upload environment to view and edit"
-				onClick={uploadEnvironment}
-			/>
+					<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-400 dark:text-zinc-700" />
 
-			<DividerVerticalIcon className="flex items-center justify-center w-4 h-12 text-zinc-400 dark:text-zinc-700" />
-
-			<Toggle
-				icon={<SunIcon />}
-				altIcon={<MoonIcon />}
-				tip="Enable/disable dark mode"
-				toggled={darkMode}
-				onClick={setDarkMode}
-			/>
+					<Toggle
+						icon={<SunIcon />}
+						altIcon={<MoonIcon />}
+						tip="Enable/disable dark mode"
+						toggled={darkMode}
+						onClick={setDarkMode}
+					/>
+				</>
+			)}
 
 			<Dialog.Root>
 				<Dialog.Trigger>
@@ -291,72 +314,77 @@ const Toolbar = () => {
 					/>
 				</Dialog.Trigger>
 
-				<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-fast bg-offblack/40 dark:bg-offwhite/10" />
-				<Dialog.Content
-					className="fixed z-50 w-[90vw] max-w-[560px] h-[60vh] max-h-[640px] py-10 px-4 top-[50%] left-[50%] animate-fadein bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite rounded shadow-lg"
-					style={{ transform: "translate(-50%, -50%)" }}
-				>
-					<div className="w-full h-full px-6 overflow-scroll">
-						<Dialog.Title className="pt-4 pb-2 text-2xl">
-							About the project
-						</Dialog.Title>
+				<Dialog.Portal>
+					<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-fast bg-offblack/40 dark:bg-offwhite/10" />
+					<Dialog.Content
+						className="fixed z-50 w-[90vw] max-w-[560px] h-[60vh] max-h-[640px] py-10 px-4 top-[50%] left-[50%] animate-fadein bg-offwhite dark:bg-offblack text-offblack dark:text-offwhite rounded shadow-lg"
+						style={{ transform: "translate(-50%, -50%)" }}
+					>
+						<div className="w-full h-full px-6 overflow-scroll">
+							<Dialog.Title className="pt-4 pb-2 text-2xl">
+								About the project
+							</Dialog.Title>
 
-						<p className="pb-2 text-sm">
-							This is a web application for visualising and
-							editing linear algebra problems in three dimensions
-							with a node environment. Its purpose is to be a tool
-							for students studying linear algebra to get an
-							intuition of the underlying mathematics behind the
-							concepts in linear algebra.
-						</p>
+							<p className="pb-2 text-sm">
+								This is a web application for visualising and
+								editing linear algebra problems in three
+								dimensions with a node environment. Its purpose
+								is to be a tool for students studying linear
+								algebra to get an intuition of the underlying
+								mathematics behind the concepts in linear
+								algebra.
+							</p>
 
-						<p className="text-sm">
-							Nodes can be added to the environment by selecting
-							one of the node types in the toolbar and clicking
-							anywhere in the environment. The nodes can be
-							connected by dragging from one handle to another.
-							Vectors will be shown in the vector space on the
-							right. You can click on a vector there to show its
-							node in the environment. Matrices can be used to
-							transform the vector space.
-						</p>
+							<p className="text-sm">
+								Nodes can be added to the environment by
+								selecting one of the node types in the toolbar
+								and clicking anywhere in the environment. The
+								nodes can be connected by dragging from one
+								handle to another. Vectors will be shown in the
+								vector space on the right. You can click on a
+								vector there to show its node in the
+								environment. Matrices can be used to transform
+								the vector space.
+							</p>
 
-						<h2 className="pt-4 pb-2 text-xl">
-							Example environments
-						</h2>
+							<h2 className="pt-4 pb-2 text-xl">
+								Example environments
+							</h2>
 
-						<div className="flex flex-col gap-4 my-4">
-							<ExampleDownload file="svd.json" />
-							<ExampleDownload file="pca.json" />
+							<div className="flex flex-col gap-4 my-4">
+								<ExampleDownload file="svd.json" />
+								<ExampleDownload file="pca.json" />
+							</div>
+
+							<h2 className="pt-4 pb-4 text-xl">
+								Keyboard shortcuts
+							</h2>
+
+							<Shortcut
+								description="Save environment"
+								hotkey="Meta S"
+							/>
+							<Shortcut
+								description="Upload environment"
+								hotkey="Meta U"
+							/>
+							<Shortcut
+								description="Fit nodes in frame"
+								hotkey="Shift F"
+							/>
+							<Shortcut
+								description="Multi-select nodes"
+								hotkey="Hold shift"
+							/>
+
+							<p className="mt-4 mb-2 text-xs text-zinc-500">
+								Every node type has its own keyboard shortcut
+								that can be discovered when hovering over its
+								button.
+							</p>
 						</div>
-
-						<h2 className="pt-4 pb-4 text-xl">
-							Keyboard shortcuts
-						</h2>
-
-						<Shortcut
-							description="Save environment"
-							hotkey="Meta S"
-						/>
-						<Shortcut
-							description="Upload environment"
-							hotkey="Meta U"
-						/>
-						<Shortcut
-							description="Fit nodes in frame"
-							hotkey="Shift F"
-						/>
-						<Shortcut
-							description="Multi-select nodes"
-							hotkey="Hold shift"
-						/>
-
-						<p className="mt-4 mb-2 text-xs text-zinc-500">
-							Every node type has its own keyboard shortcut that
-							can be discovered when hovering over its button.
-						</p>
-					</div>
-				</Dialog.Content>
+					</Dialog.Content>
+				</Dialog.Portal>
 			</Dialog.Root>
 
 			<a
@@ -494,6 +522,7 @@ interface IToolProps {
 	tooltipSide?: "left" | "right" | "top" | "bottom";
 	hotkey?: string;
 	dropdown?: boolean;
+	showTitle?: boolean;
 }
 
 const Tool = ({
@@ -503,6 +532,7 @@ const Tool = ({
 	tooltipSide,
 	hotkey,
 	dropdown = false,
+	showTitle = true,
 }: IToolProps) => {
 	const currentTool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
@@ -516,7 +546,7 @@ const Tool = ({
 	return (
 		<Tooltip tip={description} side={tooltipSide} hotkey={hotkey}>
 			<div
-				className={`flex justify-center items-center px-4 h-12 cursor-pointer ${
+				className={`flex justify-center items-center px-4 h-12 cursor-pointer text-ellipsis ${
 					currentTool === tool
 						? "bg-offblack dark:bg-offwhite text-white dark:text-black"
 						: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
@@ -532,10 +562,10 @@ const Tool = ({
 					</>
 				) : (
 					<>
-						<div className={`${tool !== _Tool.Hand ? "mr-2" : ""}`}>
+						<div className={`${showTitle ? "mr-2" : ""}`}>
 							{icon}
 						</div>
-						{tool === _Tool.Hand ? null : tool}
+						{!showTitle ? null : tool}
 					</>
 				)}
 			</div>
@@ -547,9 +577,17 @@ interface IToolDropdownProps {
 	title: string;
 	icon: React.ReactElement;
 	tools: Array<IToolProps>;
+	showTitle?: boolean;
+	up?: boolean;
 }
 
-const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
+const ToolDropdown = ({
+	icon,
+	title,
+	tools,
+	showTitle = true,
+	up = false,
+}: IToolDropdownProps) => {
 	const currentTool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
 
@@ -569,25 +607,37 @@ const ToolDropdown = ({ icon, title, tools }: IToolDropdownProps) => {
 		<Popover.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Popover.Trigger>
 				<div
-					className={`flex justify-center items-center h-12 px-4 cursor-pointer ${
+					className={`flex justify-center items-center h-12 px-4 cursor-pointer overflow-hidden text-ellipsis ${
 						isSelected
 							? "bg-offblack dark:bg-offwhite text-white dark:text-black"
 							: "hover:bg-zinc-200 dark:hover:bg-zinc-700"
 					}`}
 				>
 					{cloneElement(icon, {
-						className: title !== "" ? "mr-2" : "",
+						className: showTitle ? "mr-2" : "",
 					})}{" "}
-					{title}
-					<CaretDownIcon
-						className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
-							isOpen ? "translate-y-0.5" : ""
-						}`}
-					/>
+					{showTitle ? title : null}
+					{up ? (
+						<CaretUpIcon
+							className={`ml-0.5 hover:-translate-y-0.5 transition-transform ${
+								isOpen ? "-translate-y-0.5" : ""
+							}`}
+						/>
+					) : (
+						<CaretDownIcon
+							className={`ml-0.5 hover:translate-y-0.5 transition-transform ${
+								isOpen ? "translate-y-0.5" : ""
+							}`}
+						/>
+					)}
 				</div>
 			</Popover.Trigger>
 
-			<Popover.Content className="flex flex-col text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+			<Popover.Content
+				className={`flex flex-col text-xs text-black bg-white dark:bg-black dark:text-white ${
+					up ? "rounded-t" : "rounded-b shadow-md"
+				}`}
+			>
 				{tools.map((tool) => (
 					<Tool
 						key={tool.tool}

@@ -30,7 +30,6 @@ import {
 	vectorNodeObject,
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
-import Toolbar from "./Toolbar";
 
 const edgeTypes = {
 	default: Edge,
@@ -61,12 +60,17 @@ const nodeClassName = (node: Node<any>) => {
 		: "basic";
 };
 
-const Editor = () => {
+type IEditorProps = {
+	minimap?: boolean;
+	className?: string;
+	style?: React.CSSProperties;
+};
+
+const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 	const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
 		useNodeStore();
 	const tool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
-	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
 	const selectedVectorNode = useEditorStore(
 		(state) => state.selectedVectorNode
 	);
@@ -96,8 +100,6 @@ const Editor = () => {
 			setSelectedVectorNode(null, null);
 		}
 	}, [selectedVectorNode, selectedVectorFrom]);
-
-	const [width, height] = useWindowSize();
 
 	const reactFlow = useReactFlow();
 	const isShiftPressed = useKeyPress("Shift");
@@ -205,10 +207,8 @@ const Editor = () => {
 
 	return (
 		<>
-			<Toolbar />
 			<ReactFlow
 				style={{
-					position: "absolute",
 					cursor:
 						isConnecting || tool !== Tool.Hand
 							? "crosshair"
@@ -217,10 +217,9 @@ const Editor = () => {
 							: isDragging
 							? "grabbing"
 							: "grab",
-					width: (1 - 1 / vectorSpaceSize) * width,
-					height: height - 48,
-					marginTop: 48,
+					...style,
 				}}
+				className={className}
 				nodes={nodes}
 				edges={edges}
 				nodeTypes={nodeTypes}
@@ -252,13 +251,15 @@ const Editor = () => {
 					gap={24}
 					size={1}
 				/>
-				<MiniMap
-					className="bg-zinc-300 dark:bg-zinc-900"
-					nodeClassName={nodeClassName}
-					nodeBorderRadius={4}
-					nodeStrokeWidth={2}
-					maskColor="none"
-				/>
+				{minimap && (
+					<MiniMap
+						className="bg-zinc-300 dark:bg-zinc-900"
+						nodeClassName={nodeClassName}
+						nodeBorderRadius={4}
+						nodeStrokeWidth={2}
+						maskColor="none"
+					/>
+				)}
 			</ReactFlow>
 		</>
 	);
