@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
@@ -9,7 +9,6 @@ import ReactFlow, {
 	useReactFlow,
 } from "react-flow-renderer/nocss";
 import "react-flow-renderer/dist/style.css";
-import { useWindowSize } from "@react-hook/window-size";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
@@ -30,6 +29,7 @@ import {
 	vectorNodeObject,
 	vectorScalingNodeObject,
 } from "./nodes/nodeObjects";
+import useIsMobile from "./hooks/useIsMobile";
 
 const edgeTypes = {
 	default: Edge,
@@ -129,15 +129,20 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 		[]
 	);
 
+	const ref = useRef<HTMLDivElement>(null);
+
 	const onAddNode = useCallback(
 		(e: React.MouseEvent<HTMLElement>) => {
 			if (tool === Tool.Hand) {
 				return;
 			}
 
+			const bounds = ref.current?.getBoundingClientRect();
+			const x = bounds ? bounds.x : 0;
+			const y = bounds ? bounds.y : 0;
 			const position = reactFlow.project({
-				x: e.clientX,
-				y: e.clientY - 48,
+				x: e.clientX - x,
+				y: e.clientY - y,
 			});
 
 			switch (tool) {
@@ -202,12 +207,13 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 
 			setTool(Tool.Hand);
 		},
-		[tool]
+		[tool, ref.current]
 	);
 
 	return (
 		<>
 			<ReactFlow
+				ref={ref}
 				style={{
 					cursor:
 						isConnecting || tool !== Tool.Hand
