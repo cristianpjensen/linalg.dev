@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-const App = dynamic(() => import("../components/App"), {
+const App = dynamic(() => import("../src/App"), {
 	ssr: false,
 });
 
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 	return (
 		<div>
 			<Head>
-				<title>linalg.dev</title>
+				<title>Linear algebra node environment</title>
 				<meta
 					name="description"
 					content="Linear algebra node environment."

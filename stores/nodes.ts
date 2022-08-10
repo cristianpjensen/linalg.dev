@@ -11,7 +11,7 @@ import {
 	applyEdgeChanges,
 } from "react-flow-renderer/nocss";
 
-import { getAllIndices, getHandleType } from "../components/helpers";
+import { getAllIndices, getHandleType } from "../src/nodes/helpers";
 
 type NodeState = {
 	nodes: Node[];
