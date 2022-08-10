@@ -274,7 +274,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 			/>
 
 			<div className="flex items-center justify-center text-sm grow">
-				{minify ? "" : "linalg.dev"}
+				{minify ? "" : "#SoME2"}
 			</div>
 
 			{minify || (

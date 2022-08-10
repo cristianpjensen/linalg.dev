@@ -1,6 +1,7 @@
 <div align="center">
   <h3>Linear algebra node environment</h3>
   <a href="https://linalg.dev">linalg.dev</a>
+  <p>Submission for the [Summer of Math Exposition 2022](https://www.youtube.com/watch?v=hZuYICAEN9Y)</p>
 
   <img src="./docs/preview-light-mode.png#gh-light-mode-only">
   <img src="./docs/preview-dark-mode.png#gh-dark-mode-only">
@@ -23,11 +24,12 @@ Contributions are always welcome. Please open an issue with an example environme
 ## Credits
 
 The major open source projects that this project relies on are
- - [THREE.js](https://github.com/mrdoob/three.js/) — The three-dimensional vector space.
- - [React three fiber](https://github.com/pmndrs/react-three-fiber) — Using THREE.js in React.
- - [React flow](https://github.com/wbkd/react-flow) — The node-based editor.
- - [Radix UI](https://github.com/radix-ui) — The accessible user interface components and icons in React.
- 
+
+-   [THREE.js](https://github.com/mrdoob/three.js/) — The three-dimensional vector space.
+-   [React three fiber](https://github.com/pmndrs/react-three-fiber) — Using THREE.js in React.
+-   [React flow](https://github.com/wbkd/react-flow) — The node-based editor.
+-   [Radix UI](https://github.com/radix-ui) — The accessible user interface components and icons in React.
+
 ## License
 
 MIT License
