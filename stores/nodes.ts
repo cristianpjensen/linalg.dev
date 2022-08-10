@@ -33,6 +33,20 @@ const useStore = create(
 			nodes: [],
 			edges: [],
 			onNodesChange: (changes) => {
+				// Disconnect all connected targets before removing the nodes,
+				// otherwise they won't be able to reconnect
+				changes.forEach((change) => {
+					if (change.type !== "remove") {
+						return;
+					}
+
+					for (const edge of get().edges) {
+						if (edge.source === change.id && edge.targetHandle) {
+							get().deleteEdge(edge.target, edge.targetHandle);
+						}
+					}
+				});
+
 				set({
 					nodes: applyNodeChanges(changes, get().nodes),
 				});
@@ -83,10 +97,25 @@ const useStore = create(
 				const node = get().nodes.find((node) => node.id === target);
 
 				if (node) {
-					// Reset origin on disconnect
-					if (targetHandle === "origin") {
+					if (node.type === "vector" && targetHandle === "origin") {
+						// Reset origin on disconnect
 						get().setNodeData(target, {
 							origin: {
+								isConnected: false,
+								value: {
+									x: 0,
+									y: 0,
+									z: 0,
+								},
+							},
+						});
+					} else if (
+						node.type === "plane" &&
+						targetHandle === "point"
+					) {
+						// Reset point of plane on disconnect
+						get().setNodeData(target, {
+							point: {
 								isConnected: false,
 								value: {
 									x: 0,
