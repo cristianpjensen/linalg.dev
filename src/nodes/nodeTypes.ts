@@ -12,6 +12,7 @@ import TransposeNode from "./TransposeNode";
 import MatrixMultiplicationNode from "./MatrixMultiplicationNode";
 import EigenvaluesNode from "./EigenvaluesNode";
 import EigenvectorsNode from "./EigenvectorsNode";
+import PlaneNode from "./PlaneNode";
 
 const nodeTypes = {
 	constant: ConstantNode,
@@ -28,6 +29,7 @@ const nodeTypes = {
 	matrixMultiplication: MatrixMultiplicationNode,
 	eigenvalues: EigenvaluesNode,
 	eigenvectors: EigenvectorsNode,
+	plane: PlaneNode,
 };
 
 export default nodeTypes;

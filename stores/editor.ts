@@ -19,6 +19,7 @@ export enum Tool {
 	VectorScaling = "Vector scaling",
 	Transformed = "Transform",
 	VectorComponents = "Vector components",
+	Plane = "Plane",
 }
 
 type EditorState = {
@@ -71,7 +72,7 @@ type EditorState = {
 	 * space.
 	 */
 	selectedVectorFrom: "space" | "editor" | null;
-	setSelectedVectorNode: (
+	setSelectedNode: (
 		node: Node | null,
 		selectedVectorFrom: "space" | "editor" | null
 	) => void;
@@ -118,7 +119,7 @@ const useStore = create<EditorState>((set) => ({
 	toggleShowCube: () => set((state) => ({ showCube: !state.showCube })),
 	selectedVectorNode: null,
 	selectedVectorFrom: null,
-	setSelectedVectorNode: (node, from) =>
+	setSelectedNode: (node, from) =>
 		set({ selectedVectorNode: node, selectedVectorFrom: from }),
 	showVectorsAsSpheres: false,
 	toggleShowVectorsAsSpheres: () =>

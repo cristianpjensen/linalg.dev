@@ -298,3 +298,17 @@ export const eigenvectorsNodeObject = (
 		},
 	},
 });
+
+export const planeNodeObject = (position: Position): Node<T.PlaneData> => ({
+	type: "plane",
+	id: getId(),
+	position: snapToGrid(position),
+	dragHandle: ".dragger",
+	data: {
+		point: vectorInput(),
+		direction1: vectorInput(),
+		direction2: vectorInput(),
+		hidden: false,
+		color: "#E9E9E9",
+	},
+});

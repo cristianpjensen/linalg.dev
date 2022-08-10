@@ -35,6 +35,8 @@ type IPlaneProps = {
 	 * @default 0.8
 	 */
 	opacity?: number;
+
+	onClick?: () => void;
 };
 
 type Plane = {
@@ -61,6 +63,7 @@ const Plane = forwardRef<Plane, IPlaneProps>((props, ref) => {
 		direction2: d2,
 		color = "#e9e9e9",
 		opacity = 0.8,
+		onClick,
 	} = props;
 
 	const planeRef = useRef<THREE.Mesh>(null);
@@ -215,7 +218,7 @@ const Plane = forwardRef<Plane, IPlaneProps>((props, ref) => {
 	}, []);
 
 	return (
-		<mesh ref={planeRef} geometry={planeGeometry}>
+		<mesh ref={planeRef} geometry={planeGeometry} onClick={onClick}>
 			<meshMatcapMaterial
 				color={color}
 				opacity={opacity}

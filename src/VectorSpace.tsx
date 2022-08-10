@@ -12,9 +12,9 @@ import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
 import { type Node } from "react-flow-renderer/nocss";
 
-import { Group, Space, Vector } from "./three";
+import { Group, Plane, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";
-import { Vector as _Vector, EigenvectorsData } from "./nodes/types";
+import { Vector as _Vector, EigenvectorsData, PlaneData } from "./nodes/types";
 import { Tooltip } from "./utils";
 import { VectorSpaceIcon } from "./icons";
 
@@ -225,7 +225,7 @@ const ToggleButton = ({
 
 ToggleButton.displayName = "Toggle button";
 
-const Vectors = forwardRef<Group, {}>((props, ref) => {
+const Vectors = forwardRef<Group>((props, ref) => {
 	const nodes = useNodeStore((state) => state.nodes);
 	const vectors = nodes.filter(
 		(node) =>
@@ -238,6 +238,10 @@ const Vectors = forwardRef<Group, {}>((props, ref) => {
 		(node) => node.type === "eigenvectors"
 	) as Node<EigenvectorsData>[];
 
+	const planes = nodes.filter(
+		(node) => node.type === "plane"
+	) as Node<PlaneData>[];
+
 	return (
 		<Group ref={ref}>
 			{vectors.map((node) => (
@@ -246,6 +250,10 @@ const Vectors = forwardRef<Group, {}>((props, ref) => {
 
 			{eigenvectors.map((node) => (
 				<EigenvectorsWrapper key={node.id} node={node} />
+			))}
+
+			{planes.map((node) => (
+				<PlaneWrapper key={node.id} node={node} />
 			))}
 		</Group>
 	);
@@ -260,8 +268,8 @@ type IVectorWrapperProps = {
 const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	({ node }, ref) => {
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
-		const setSelectedVectorNode = useEditorStore(
-			(state) => state.setSelectedVectorNode
+		const setSelectedNode = useEditorStore(
+			(state) => state.setSelectedNode
 		);
 		const showVectorsAsSpheres = useEditorStore(
 			(state) => state.showVectorsAsSpheres
@@ -318,7 +326,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		// re-rendered every time, which makes it not animate on move
 		const vectorComponent = useMemo(() => {
 			const onClick = () => {
-				setSelectedVectorNode(node, "space");
+				setSelectedNode(node, "space");
 			};
 
 			if (node.data.hidden) {
@@ -329,11 +337,8 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 				<Vector
 					ref={mergeRefs([innerRef, ref])}
 					color={node.data.color ? node.data.color : "#E9E9E9"}
-					origin={
-						origin &&
-						new THREE.Vector3(origin.x, origin.y, origin.z)
-					}
-					vector={new THREE.Vector3(x, y, z)}
+					origin={ori}
+					vector={vec}
 					sphere={
 						node.data.representation === "sphere"
 							? true
@@ -436,21 +441,9 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 
 			return (
 				<>
-					<Vector
-						ref={innerRef1}
-						vector={new THREE.Vector3(x1, y1, z1)}
-						color="#e16bf2"
-					/>
-					<Vector
-						ref={innerRef2}
-						vector={new THREE.Vector3(x2, y2, z2)}
-						color="#e16bf2"
-					/>
-					<Vector
-						ref={innerRef3}
-						vector={new THREE.Vector3(x3, y3, z3)}
-						color="#e16bf2"
-					/>
+					<Vector ref={innerRef1} vector={vec1} color="#e16bf2" />
+					<Vector ref={innerRef2} vector={vec2} color="#e16bf2" />
+					<Vector ref={innerRef3} vector={vec3} color="#e16bf2" />
 				</>
 			);
 		}, [node.data.hidden]);
@@ -460,3 +453,90 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 );
 
 EigenvectorsWrapper.displayName = "Vector wrapper";
+
+type IPlaneWrapperProps = {
+	node: Node<PlaneData>;
+};
+
+const PlaneWrapper = forwardRef<Plane, IPlaneWrapperProps>(({ node }, ref) => {
+	const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
+	const setSelectedNode = useEditorStore((state) => state.setSelectedNode);
+
+	const pt = node.data.point.value;
+	const dir1 = node.data.direction1.value;
+	const dir2 = node.data.direction2.value;
+
+	const innerRef = useRef<Plane>(null);
+
+	const [point] = useState(new THREE.Vector3(pt.x, pt.y, pt.z));
+	const [direction1] = useState(new THREE.Vector3(dir1.x, dir1.y, dir1.z));
+	const [direction2] = useState(new THREE.Vector3(dir2.x, dir2.y, dir2.z));
+
+	const move = useCallback((p: _Vector, d1: _Vector, d2: _Vector) => {
+		if (
+			p.x === point.x &&
+			p.y === point.y &&
+			p.z === point.z &&
+			d1.x === direction1.x &&
+			d1.y === direction1.y &&
+			d1.z === direction1.z &&
+			d2.x === direction2.x &&
+			d2.y === direction2.y &&
+			d2.z === direction2.z
+		) {
+			return;
+		}
+
+		point.set(p.x, p.y, p.z);
+		direction1.set(d1.x, d1.y, d1.z);
+		direction2.set(d2.x, d2.y, d2.z);
+
+		innerRef.current?.move(point, direction1, direction2);
+	}, []);
+
+	useEffect(() => {
+		move(
+			node.data.point.value,
+			node.data.direction1.value,
+			node.data.direction2.value
+		);
+	}, [
+		node.data.point.value,
+		node.data.direction1.value,
+		node.data.direction2.value,
+	]);
+
+	// If reseting, move the plane to its untransformed position
+	useEffect(() => {
+		if (isMatrixReset) {
+			innerRef.current?.reset();
+		}
+	}, [isMatrixReset]);
+
+	// Memoize the plane component, so that it is only created once and not
+	// re-rendered every time, which makes it not animate on move
+	const planeComponent = useMemo(() => {
+		const onClick = () => {
+			setSelectedNode(node, "space");
+		};
+
+		if (node.data.hidden) {
+			return null;
+		}
+
+		return (
+			<Plane
+				ref={mergeRefs([innerRef, ref])}
+				color={node.data.color}
+				point={point}
+				direction1={direction1}
+				direction2={direction2}
+				onClick={onClick}
+			/>
+		);
+	}, [node.data.hidden, node.data.color]);
+
+	return planeComponent;
+});
+
+PlaneWrapper.displayName = "Plane wrapper";

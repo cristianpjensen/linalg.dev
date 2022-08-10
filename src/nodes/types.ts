@@ -151,3 +151,11 @@ export type EigenvectorsData = {
 		eigenvector3: Vector;
 	};
 };
+
+export type PlaneData = {
+	point: Input<Vector>;
+	direction1: Input<Vector>;
+	direction2: Input<Vector>;
+	hidden: boolean;
+	color: string;
+};

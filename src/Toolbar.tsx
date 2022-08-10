@@ -34,6 +34,7 @@ import {
 	TransposeIcon,
 	VectorScalingIcon,
 	VectorComponentsIcon,
+	PlaneIcon,
 } from "./icons";
 import { useHotkey } from "./hooks";
 import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
@@ -235,6 +236,13 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 						tool: _Tool.VectorComponents,
 						description: "Returns the components of a vector",
 						hotkey: "l",
+					},
+					{
+						icon: <PlaneIcon />,
+						tool: _Tool.Plane,
+						description:
+							"Defines a plane by a point and two direction vectors",
+						hotkey: "p",
 					},
 					{
 						icon: <TransposeIcon />,

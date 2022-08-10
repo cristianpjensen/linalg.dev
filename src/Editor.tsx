@@ -28,6 +28,7 @@ import {
 	vectorComponentsNodeObject,
 	vectorNodeObject,
 	vectorScalingNodeObject,
+	planeNodeObject,
 } from "./nodes/nodeObjects";
 
 const edgeTypes = {
@@ -35,7 +36,7 @@ const edgeTypes = {
 };
 
 const nodeClassNames: {
-	[key: string]: "green" | "yellow" | "blue" | "purple";
+	[key: string]: "green" | "yellow" | "blue" | "purple" | "red";
 } = {
 	vector: "blue",
 	matrix: "blue",
@@ -51,6 +52,7 @@ const nodeClassNames: {
 	matrixMultiplication: "blue",
 	eigenvalues: "purple",
 	eigenvectors: "purple",
+	plane: "red",
 };
 
 const nodeClassName = (node: Node<any>) => {
@@ -76,8 +78,8 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 	const selectedVectorFrom = useEditorStore(
 		(state) => state.selectedVectorFrom
 	);
-	const setSelectedVectorNode = useEditorStore(
-		(state) => state.setSelectedVectorNode
+	const setSelectedNode = useEditorStore(
+		(state) => state.setSelectedNode
 	);
 
 	useEffect(() => {
@@ -96,7 +98,7 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 			reactFlow.setCenter(x, y, { zoom, duration: 400 });
 
 			// Reset selection after moving toward the node
-			setSelectedVectorNode(null, null);
+			setSelectedNode(null, null);
 		}
 	}, [selectedVectorNode, selectedVectorFrom]);
 
@@ -119,11 +121,11 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 					nodes[0].type !== "vectorScaling" &&
 					nodes[0].type !== "transform")
 			) {
-				setSelectedVectorNode(null, null);
+				setSelectedNode(null, null);
 				return;
 			}
 
-			setSelectedVectorNode(nodes[0], "editor");
+			setSelectedNode(nodes[0], "editor");
 		},
 		[]
 	);
@@ -201,6 +203,10 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 
 				case Tool.Eigenvectors:
 					reactFlow.addNodes(eigenvectorsNodeObject(position));
+					break;
+
+				case Tool.Plane:
+					reactFlow.addNodes(planeNodeObject(position));
 					break;
 			}
 
