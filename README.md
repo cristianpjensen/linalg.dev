@@ -1,7 +1,6 @@
 <div align="center">
   <h3>Linear algebra node environment</h3>
-  <a href="https://linalg.dev">linalg.dev</a>
-  <p>Submission for the [Summer of Math Exposition 2022](https://www.youtube.com/watch?v=hZuYICAEN9Y)</p>
+  <p>Submission for the <a href="https://www.youtube.com/watch?v=hZuYICAEN9Y">Summer of Math Exposition 2022</a></p>
 
   <img src="./docs/preview-light-mode.png#gh-light-mode-only">
   <img src="./docs/preview-dark-mode.png#gh-dark-mode-only">
