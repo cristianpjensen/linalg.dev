@@ -9,6 +9,8 @@ import {
 	OnConnect,
 	applyNodeChanges,
 	applyEdgeChanges,
+	EdgeChange,
+	EdgeSelectionChange,
 } from "react-flow-renderer/nocss";
 
 import { getAllIndices, getHandleType } from "../src/nodes/helpers";
@@ -33,25 +35,88 @@ const useStore = create(
 			nodes: [],
 			edges: [],
 			onNodesChange: (changes) => {
-				// Disconnect all connected targets before removing the nodes,
-				// otherwise they won't be able to reconnect
-				changes.forEach((change) => {
-					if (change.type !== "remove") {
-						return;
-					}
-
-					for (const edge of get().edges) {
-						if (edge.source === change.id && edge.targetHandle) {
-							get().deleteEdge(edge.target, edge.targetHandle);
+				for (const change of changes) {
+					// Disconnect all connected targets before removing the nodes,
+					// otherwise they won't be able to reconnect
+					if (change.type === "remove") {
+						for (const edge of get().edges) {
+							if (
+								edge.source === change.id &&
+								edge.targetHandle
+							) {
+								get().deleteEdge(
+									edge.target,
+									edge.targetHandle
+								);
+							}
 						}
 					}
-				});
+				}
+
+				// Select all edges connected to the selected nodes
+				const edgeSelections: EdgeSelectionChange[] = [];
+				for (const change of changes) {
+					if (change.type === "select") {
+						for (const edge of get().edges) {
+							if (
+								edge.source === change.id ||
+								edge.target === change.id
+							) {
+								edgeSelections.push({
+									id: edge.id,
+									type: "select",
+									selected: change.selected,
+								});
+							}
+						}
+					}
+				}
+
+				// Remove all duplicates
+				const deduplicatedEdgeSelections = edgeSelections.filter(
+					(selection, index, array) => {
+						const edge = get().edges.find(
+							(edge) => edge.id === selection.id
+						);
+
+						if (edge && selection.selected === false) {
+							for (let i = 0; i < array.length; i++) {
+								if (i === index) {
+									continue;
+								}
+
+								const otherEdge = get().edges.find(
+									(edge) => edge.id === array[i].id
+								);
+
+								if (otherEdge && otherEdge.id === edge.id) {
+									return false;
+								}
+							}
+						}
+
+						return true;
+					}
+				);
+
+				// Wait for the onEdgesChange to be called to deselect current
+				// edges. Afterward the correct edges will get selected.
+				setTimeout(() => {
+					set({
+						edges: applyEdgeChanges(
+							deduplicatedEdgeSelections,
+							get().edges
+						),
+					});
+				}, 10);
 
 				set({
 					nodes: applyNodeChanges(changes, get().nodes),
 				});
 			},
 			onEdgesChange: (changes) => {
+				console.log(changes);
+
 				changes.forEach((change) => {
 					// If an edge gets removed, disconnect the target handle
 					if (change.type === "remove") {
