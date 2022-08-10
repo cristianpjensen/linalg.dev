@@ -7,6 +7,7 @@ import {
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import { HexColorPicker } from "react-colorful";
+import TeX from "@matejmazur/react-katex";
 
 import { PlaneData } from "./types";
 import { useNodeStore } from "../../stores";
@@ -45,7 +46,7 @@ const PlaneNode = memo(({ id, data, selected }: NodeProps<PlaneData>) => {
 			selected={selected}
 			title="Plane"
 			color="red-ext"
-			width={8}
+			width={10}
 			height={11}
 		>
 			<Node.Dragger>
@@ -84,9 +85,26 @@ const PlaneNode = memo(({ id, data, selected }: NodeProps<PlaneData>) => {
 			<Node.Handle type="target" id="direction2" top={207} />
 
 			<div className="flex flex-col gap-2">
-				<Node.DisplayVector vector={data.point.value} />
-				<Node.DisplayVector vector={data.direction1.value} />
-				<Node.DisplayVector vector={data.direction2.value} />
+				<div className="flex flex-row gap-2">
+					<TeX math="\vec{p}" className="pt-0.5 pl-0.5" block />
+					<Node.DisplayVector vector={data.point.value} />
+				</div>
+
+				<div className="flex flex-row gap-2">
+					<TeX math="\vec{v}_1" className="pt-0.5 pl-0.5" block />
+					<Node.DisplayVector
+						vector={data.direction1.value}
+						noValue={!data.direction1.isConnected}
+					/>
+				</div>
+
+				<div className="flex flex-row gap-2">
+					<TeX math="\vec{v}_2" className="pt-0.5 pl-0.5" block />
+					<Node.DisplayVector
+						vector={data.direction2.value}
+						noValue={!data.direction2.isConnected}
+					/>
+				</div>
 			</div>
 		</Node.Root>
 	);

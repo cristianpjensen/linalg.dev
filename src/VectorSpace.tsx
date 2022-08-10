@@ -252,9 +252,18 @@ const Vectors = forwardRef<Group>((props, ref) => {
 				<EigenvectorsWrapper key={node.id} node={node} />
 			))}
 
-			{planes.map((node) => (
-				<PlaneWrapper key={node.id} node={node} />
-			))}
+			{planes.map((node) => {
+				const d1 = node.data.direction1.isConnected;
+				const d2 = node.data.direction2.isConnected;
+
+				return (
+					<PlaneWrapper
+						key={node.id}
+						node={node}
+						hide={!(d1 && d2)}
+					/>
+				);
+			})}
 		</Group>
 	);
 });
@@ -456,87 +465,88 @@ EigenvectorsWrapper.displayName = "Vector wrapper";
 
 type IPlaneWrapperProps = {
 	node: Node<PlaneData>;
+	hide: boolean;
 };
 
-const PlaneWrapper = forwardRef<Plane, IPlaneWrapperProps>(({ node }, ref) => {
-	const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
-	const setSelectedNode = useEditorStore((state) => state.setSelectedNode);
+const PlaneWrapper = forwardRef<Plane, IPlaneWrapperProps>(
+	({ node, hide }, ref) => {
+		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
 
-	const pt = node.data.point.value;
-	const dir1 = node.data.direction1.value;
-	const dir2 = node.data.direction2.value;
+		const pt = node.data.point.value;
+		const dir1 = node.data.direction1.value;
+		const dir2 = node.data.direction2.value;
 
-	const innerRef = useRef<Plane>(null);
+		const innerRef = useRef<Plane>(null);
 
-	const [point] = useState(new THREE.Vector3(pt.x, pt.y, pt.z));
-	const [direction1] = useState(new THREE.Vector3(dir1.x, dir1.y, dir1.z));
-	const [direction2] = useState(new THREE.Vector3(dir2.x, dir2.y, dir2.z));
+		const [point] = useState(new THREE.Vector3(pt.x, pt.y, pt.z));
+		const [direction1] = useState(
+			new THREE.Vector3(dir1.x, dir1.y, dir1.z)
+		);
+		const [direction2] = useState(
+			new THREE.Vector3(dir2.x, dir2.y, dir2.z)
+		);
 
-	const move = useCallback((p: _Vector, d1: _Vector, d2: _Vector) => {
-		if (
-			p.x === point.x &&
-			p.y === point.y &&
-			p.z === point.z &&
-			d1.x === direction1.x &&
-			d1.y === direction1.y &&
-			d1.z === direction1.z &&
-			d2.x === direction2.x &&
-			d2.y === direction2.y &&
-			d2.z === direction2.z
-		) {
-			return;
-		}
+		const move = useCallback((p: _Vector, d1: _Vector, d2: _Vector) => {
+			if (
+				p.x === point.x &&
+				p.y === point.y &&
+				p.z === point.z &&
+				d1.x === direction1.x &&
+				d1.y === direction1.y &&
+				d1.z === direction1.z &&
+				d2.x === direction2.x &&
+				d2.y === direction2.y &&
+				d2.z === direction2.z
+			) {
+				return;
+			}
 
-		point.set(p.x, p.y, p.z);
-		direction1.set(d1.x, d1.y, d1.z);
-		direction2.set(d2.x, d2.y, d2.z);
+			point.set(p.x, p.y, p.z);
+			direction1.set(d1.x, d1.y, d1.z);
+			direction2.set(d2.x, d2.y, d2.z);
 
-		innerRef.current?.move(point, direction1, direction2);
-	}, []);
+			innerRef.current?.move(point, direction1, direction2);
+		}, []);
 
-	useEffect(() => {
-		move(
+		useEffect(() => {
+			move(
+				node.data.point.value,
+				node.data.direction1.value,
+				node.data.direction2.value
+			);
+		}, [
 			node.data.point.value,
 			node.data.direction1.value,
-			node.data.direction2.value
-		);
-	}, [
-		node.data.point.value,
-		node.data.direction1.value,
-		node.data.direction2.value,
-	]);
+			node.data.direction2.value,
+		]);
 
-	// If reseting, move the plane to its untransformed position
-	useEffect(() => {
-		if (isMatrixReset) {
-			innerRef.current?.reset();
-		}
-	}, [isMatrixReset]);
+		// If reseting, move the plane to its untransformed position
+		useEffect(() => {
+			if (isMatrixReset) {
+				innerRef.current?.reset();
+			}
+		}, [isMatrixReset]);
 
-	// Memoize the plane component, so that it is only created once and not
-	// re-rendered every time, which makes it not animate on move
-	const planeComponent = useMemo(() => {
-		const onClick = () => {
-			setSelectedNode(node, "space");
-		};
+		// Memoize the plane component, so that it is only created once and not
+		// re-rendered every time, which makes it not animate on move
+		const planeComponent = useMemo(() => {
+			if (node.data.hidden || hide) {
+				return null;
+			}
 
-		if (node.data.hidden) {
-			return null;
-		}
+			return (
+				<Plane
+					ref={mergeRefs([innerRef, ref])}
+					color={node.data.color}
+					point={point}
+					direction1={direction1}
+					direction2={direction2}
+				/>
+			);
+		}, [node.data.hidden, node.data.color, hide]);
 
-		return (
-			<Plane
-				ref={mergeRefs([innerRef, ref])}
-				color={node.data.color}
-				point={point}
-				direction1={direction1}
-				direction2={direction2}
-				onClick={onClick}
-			/>
-		);
-	}, [node.data.hidden, node.data.color]);
-
-	return planeComponent;
-});
+		return planeComponent;
+	}
+);
 
 PlaneWrapper.displayName = "Plane wrapper";
