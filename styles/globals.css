@@ -49,6 +49,10 @@ math-field {
 	--caret: rgb(122, 122, 122);
 }
 
+div#__next {
+	height: 10000px;
+}
+
 /* REMOVE SCROLL BARS (they are very ugly and unnecessary on windows) */
 /* Chrome, Safari and Opera */
 ::-webkit-scrollbar {
