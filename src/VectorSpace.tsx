@@ -70,12 +70,6 @@ const VectorSpace = forwardRef<VectorSpace, IVectorSpaceProps>(
 		const toggleShowSpaceTransformations = useEditorStore(
 			(state) => state.toggleShowSpaceTransformations
 		);
-		const selectedVectorNode = useEditorStore(
-			(state) => state.selectedVectorNode
-		);
-		const selectedVectorFrom = useEditorStore(
-			(state) => state.selectedVectorFrom
-		);
 
 		const spaceRef = useRef<Space>(null);
 		const groupRef = useRef<Group>(null);
@@ -94,46 +88,6 @@ const VectorSpace = forwardRef<VectorSpace, IVectorSpaceProps>(
 			spaceRef.current?.reset();
 			resetMatrix();
 		};
-
-		useEffect(() => {
-			if (selectedVectorNode && selectedVectorFrom === "editor") {
-				const data = selectedVectorNode.data as MinimalVectorData;
-
-				// Do not show the vector if it is hidden
-				if (data.hidden) {
-					return;
-				}
-
-				const { x, y, z } = data.output.result;
-				const vector = new THREE.Vector3(x, y, z).applyMatrix3(matrix);
-
-				if (data.origin) {
-					const { x: ox, y: oy, z: oz } = data.origin.value;
-					const origin = new THREE.Vector3(ox, oy, oz).applyMatrix3(
-						matrix
-					);
-					vector.add(origin);
-				}
-
-				if (vector.x === 0 && vector.y === 0 && vector.z === 0) {
-					return;
-				}
-
-				const norm = vector.length();
-				vector.normalize();
-				const multipliedVector = {
-					x: vector.x * (norm + 2),
-					y: vector.y * (norm + 2),
-					z: vector.z * (norm + 2),
-				};
-
-				spaceRef.current?.moveCamera(
-					multipliedVector.x,
-					multipliedVector.y,
-					multipliedVector.z
-				);
-			}
-		}, [selectedVectorNode, selectedVectorFrom, matrix]);
 
 		return (
 			<>
@@ -277,9 +231,6 @@ type IVectorWrapperProps = {
 const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 	({ node }, ref) => {
 		const isMatrixReset = useEditorStore((state) => state.isMatrixReset);
-		const setSelectedNode = useEditorStore(
-			(state) => state.setSelectedNode
-		);
 		const showVectorsAsSpheres = useEditorStore(
 			(state) => state.showVectorsAsSpheres
 		);
@@ -334,10 +285,6 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 		// Memoize the vector component, so that it is only created once and not
 		// re-rendered every time, which makes it not animate on move
 		const vectorComponent = useMemo(() => {
-			const onClick = () => {
-				setSelectedNode(node, "space");
-			};
-
 			if (node.data.hidden) {
 				return null;
 			}
@@ -348,6 +295,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 					color={node.data.color ? node.data.color : "#E9E9E9"}
 					origin={ori}
 					vector={vec}
+					opacity={node.selected ? 0.6 : 1}
 					sphere={
 						node.data.representation === "sphere"
 							? true
@@ -355,7 +303,6 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 							? false
 							: showVectorsAsSpheres
 					}
-					onClick={onClick}
 				/>
 			);
 		}, [
@@ -363,6 +310,7 @@ const VectorWrapper = forwardRef<Vector, IVectorWrapperProps>(
 			node.data.hidden,
 			node.data.representation,
 			node.data.color,
+			node.selected,
 		]);
 
 		return vectorComponent;
@@ -450,12 +398,27 @@ const EigenvectorsWrapper = forwardRef<Group, IEigenvectorsWrapperProps>(
 
 			return (
 				<>
-					<Vector ref={innerRef1} vector={vec1} color="#e16bf2" />
-					<Vector ref={innerRef2} vector={vec2} color="#e16bf2" />
-					<Vector ref={innerRef3} vector={vec3} color="#e16bf2" />
+					<Vector
+						ref={innerRef1}
+						vector={vec1}
+						opacity={node.selected ? 0.6 : 1}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={innerRef2}
+						vector={vec2}
+						opacity={node.selected ? 0.6 : 1}
+						color="#e16bf2"
+					/>
+					<Vector
+						ref={innerRef3}
+						vector={vec3}
+						opacity={node.selected ? 0.6 : 1}
+						color="#e16bf2"
+					/>
 				</>
 			);
-		}, [node.data.hidden]);
+		}, [node.data.hidden, node.selected]);
 
 		return vectorComponent;
 	}
@@ -541,6 +504,7 @@ const PlaneWrapper = forwardRef<Plane, IPlaneWrapperProps>(
 					point={point}
 					direction1={direction1}
 					direction2={direction2}
+					opacity={0.4}
 				/>
 			);
 		}, [node.data.hidden, node.data.color, hide]);

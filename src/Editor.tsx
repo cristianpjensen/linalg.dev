@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
+	ConnectionLineType,
 	MiniMap,
 	Node,
 	OnSelectionChangeFunc,
@@ -72,35 +73,6 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 		useNodeStore();
 	const tool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
-	const selectedVectorNode = useEditorStore(
-		(state) => state.selectedVectorNode
-	);
-	const selectedVectorFrom = useEditorStore(
-		(state) => state.selectedVectorFrom
-	);
-	const setSelectedNode = useEditorStore(
-		(state) => state.setSelectedNode
-	);
-
-	useEffect(() => {
-		if (
-			selectedVectorNode &&
-			selectedVectorNode.width &&
-			selectedVectorNode.height &&
-			selectedVectorFrom === "space"
-		) {
-			const x =
-				selectedVectorNode.position.x + selectedVectorNode.width / 2;
-			const y =
-				selectedVectorNode.position.y + selectedVectorNode.height / 2;
-			const zoom = 1.85;
-
-			reactFlow.setCenter(x, y, { zoom, duration: 400 });
-
-			// Reset selection after moving toward the node
-			setSelectedNode(null, null);
-		}
-	}, [selectedVectorNode, selectedVectorFrom]);
 
 	const reactFlow = useReactFlow();
 	const isShiftPressed = useKeyPress("Shift");
@@ -112,23 +84,6 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 	const onConnectEnd = useCallback(() => setIsConnecting(false), []);
 	const onDragStart = useCallback(() => setIsDragging(true), []);
 	const onDragEnd = useCallback(() => setIsDragging(false), []);
-
-	const onSelectionChange: OnSelectionChangeFunc = useCallback(
-		({ nodes }) => {
-			if (
-				nodes.length !== 1 ||
-				(nodes[0].type !== "vector" &&
-					nodes[0].type !== "vectorScaling" &&
-					nodes[0].type !== "transform")
-			) {
-				setSelectedNode(null, null);
-				return;
-			}
-
-			setSelectedNode(nodes[0], "editor");
-		},
-		[]
-	);
 
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -240,6 +195,7 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 				onConnect={onConnect}
 				onConnectStart={onConnectStart}
 				onConnectEnd={onConnectEnd}
+				connectionLineType={ConnectionLineType.SmoothStep}
 				onNodeDragStart={onDragStart}
 				onNodeDragStop={onDragEnd}
 				onSelectionDragStart={onDragStart}
@@ -247,7 +203,6 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 				onPointerDown={onDragStart}
 				onPointerUp={onDragEnd}
 				onClick={onAddNode}
-				onSelectionChange={onSelectionChange}
 				snapGrid={[24, 24]}
 				defaultZoom={1}
 				minZoom={0.2}

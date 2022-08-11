@@ -2,6 +2,51 @@
   "nodes": [
     {
       "width": 240,
+      "height": 264,
+      "type": "plane",
+      "id": "1660221336478-69",
+      "position": {
+        "x": 9996,
+        "y": 2844
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "point": {
+          "isConnected": true,
+          "value": {
+            "x": 0,
+            "y": 2.3333333333333335,
+            "z": 1
+          }
+        },
+        "direction1": {
+          "isConnected": true,
+          "value": {
+            "x": 8.091971539574777,
+            "y": -2.3802177582266686,
+            "z": 5.775447786612255
+          }
+        },
+        "direction2": {
+          "isConnected": true,
+          "value": {
+            "x": 0.9611808738642846,
+            "y": 1.8423676169615975,
+            "z": -0.5874197606779326
+          }
+        },
+        "hidden": false,
+        "color": "#F68383"
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 9996,
+        "y": 2844
+      }
+    },
+    {
+      "width": 240,
       "height": 192,
       "type": "matrixMultiplication",
       "id": "1659973261459-1",
@@ -563,7 +608,7 @@
             4
           ]
         },
-        "hidden": true,
+        "hidden": false,
         "output": {
           "eigenvector1": {
             "x": 0.7915778454792831,
@@ -6845,6 +6890,78 @@
       "target": "1659973261459-1",
       "targetHandle": "right",
       "id": "reactflow__edge-1659973078240-92result-1659973261459-1right",
+      "selected": false
+    },
+    {
+      "source": "1659973008924-30",
+      "sourceHandle": "result",
+      "target": "1660221336478-69",
+      "targetHandle": "direction1",
+      "id": "reactflow__edge-1659973008924-30result-1660221336478-69direction1",
+      "selected": false
+    },
+    {
+      "source": "1659973009387-27",
+      "sourceHandle": "result",
+      "target": "1660221336478-69",
+      "targetHandle": "direction2",
+      "id": "reactflow__edge-1659973009387-27result-1660221336478-69direction2",
+      "selected": false
+    },
+    {
+      "source": "1659971549170-47",
+      "sourceHandle": "result",
+      "target": "1660221336478-69",
+      "targetHandle": "point",
+      "id": "reactflow__edge-1659971549170-47result-1660221336478-69point",
+      "selected": false
+    },
+    {
+      "source": "1659973009387-27",
+      "sourceHandle": "result",
+      "target": "1660221492066-44",
+      "targetHandle": "direction1",
+      "id": "reactflow__edge-1659973009387-27result-1660221492066-44direction1",
+      "selected": true
+    },
+    {
+      "source": "1659973010040-43",
+      "sourceHandle": "result",
+      "target": "1660221492066-44",
+      "targetHandle": "direction2",
+      "id": "reactflow__edge-1659973010040-43result-1660221492066-44direction2",
+      "selected": true
+    },
+    {
+      "source": "1659973008924-30",
+      "sourceHandle": "result",
+      "target": "1660221502635-95",
+      "targetHandle": "direction1",
+      "id": "reactflow__edge-1659973008924-30result-1660221502635-95direction1",
+      "selected": false
+    },
+    {
+      "source": "1659973010040-43",
+      "sourceHandle": "result",
+      "target": "1660221502635-95",
+      "targetHandle": "direction2",
+      "id": "reactflow__edge-1659973010040-43result-1660221502635-95direction2",
+      "selected": false
+    },
+    {
+      "source": "1659971549170-47",
+      "sourceHandle": "result",
+      "target": "1660221492066-44",
+      "targetHandle": "point",
+      "id": "reactflow__edge-1659971549170-47result-1660221492066-44point",
+      "selected": true
+    },
+    {
+      "source": "1659971549170-47",
+      "sourceHandle": "result",
+      "target": "1660221502635-95",
+      "targetHandle": "point",
+      "id": "reactflow__edge-1659971549170-47result-1660221502635-95point",
       "selected": false
     }
   ]

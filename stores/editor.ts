@@ -57,27 +57,6 @@ type EditorState = {
 	toggleShowCube: () => void;
 
 	/**
-	 * React flow does have a selected property on all nodes, but in this
-	 * application we only want to move the camera to a vector if it is the only
-	 * node selected. This is impossible to do with the selected property, so
-	 * this variable will be used for it.
-	 */
-	selectedVectorNode: Node | null;
-
-	/**
-	 * This variable is used for determining where the selection took place. If
-	 * the selection took place in the vector space, we want to move the editor
-	 * viewport to the node of the vector. If the selection took place in the
-	 * node editor, we want to move the camera toward the vector in the vector
-	 * space.
-	 */
-	selectedVectorFrom: "space" | "editor" | null;
-	setSelectedNode: (
-		node: Node | null,
-		selectedVectorFrom: "space" | "editor" | null
-	) => void;
-
-	/**
 	 * If true, show the vectors in the vector space as spheres. This is useful
 	 * if there are many vectors or if the vectors should represent datapoints.
 	 */
@@ -117,10 +96,6 @@ const useStore = create<EditorState>((set) => ({
 		})),
 	showCube: false,
 	toggleShowCube: () => set((state) => ({ showCube: !state.showCube })),
-	selectedVectorNode: null,
-	selectedVectorFrom: null,
-	setSelectedNode: (node, from) =>
-		set({ selectedVectorNode: node, selectedVectorFrom: from }),
 	showVectorsAsSpheres: false,
 	toggleShowVectorsAsSpheres: () =>
 		set((state) => ({ showVectorsAsSpheres: !state.showVectorsAsSpheres })),
