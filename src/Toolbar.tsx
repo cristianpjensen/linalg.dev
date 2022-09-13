@@ -151,6 +151,16 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 	useHotkey("Meta+s", downloadEnvironment);
 	useHotkey("Shift+F", fitNodes);
 
+	const [isInfoOpen, setIsInfoOpen] = useState(localStorage.getItem("info") === null);
+
+	const handleInfo = (open: boolean) => {
+		if (!open) {
+			localStorage.setItem("info", "seen")
+		}
+
+		setIsInfoOpen(open);
+	}
+
 	return (
 		<div
 			className={`absolute left-0 z-40 flex flex-row h-12 w-full overflow-scroll text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap ${
@@ -316,7 +326,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 				</>
 			)}
 
-			<Dialog.Root>
+			<Dialog.Root open={isInfoOpen} onOpenChange={handleInfo}>
 				<Dialog.Trigger>
 					<Toggle
 						icon={<InfoCircledIcon />}
@@ -425,6 +435,18 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 								/>
 
 								<Control
+									title="Download current environment"
+									icon={<DownloadIcon />}
+									description="Encodes your current environment as a JSON file and downloads it. This is used for sharing environments."
+								/>
+
+								<Control
+									title="Upload environment"
+									icon={<UploadIcon />}
+									description="Uploads a JSON file that encodes an environment. Example environments to upload can be found under Example environments."
+								/>
+
+								<Control
 									title="Show this dialog"
 									icon={<InfoCircledIcon />}
 								/>
@@ -490,7 +512,7 @@ type IControlProps = {
 const Control = ({ title, icon, description, video }: IControlProps) => {
 	return (
 		<div className="flex flex-col gap-2">
-			<div className="flex items-center gap-4 px-2">
+			<div className="flex items-center gap-4">
 				<div className="flex items-center justify-center flex-none w-8 h-8 transition-all duration-200 rounded shadow-b1 shadow-zinc-400 dark:shadow-zinc-600 hover:shadow-zinc-600 dark:hover:shadow-zinc-400 hover:shadow-b2">
 					{icon}
 				</div>
