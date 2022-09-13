@@ -7,6 +7,7 @@ import {
 	ButtonIcon,
 	CaretDownIcon,
 	CaretUpIcon,
+	CubeIcon,
 	DividerVerticalIcon,
 	DotIcon,
 	DownloadIcon,
@@ -15,10 +16,13 @@ import {
 	InfoCircledIcon,
 	LayersIcon,
 	MoonIcon,
+	ResetIcon,
+	ShadowInnerIcon,
 	SliderIcon,
 	SunIcon,
 	ThickArrowUpIcon,
 	UploadIcon,
+	VideoIcon,
 } from "@radix-ui/react-icons";
 import * as Popover from "@radix-ui/react-popover";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -35,6 +39,7 @@ import {
 	VectorScalingIcon,
 	VectorComponentsIcon,
 	PlaneIcon,
+	VectorSpaceIcon,
 } from "./icons";
 import { useHotkey } from "./hooks";
 import { useEditorStore, Tool as _Tool, setDarkMode } from "../stores";
@@ -274,7 +279,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 			/>
 
 			<div className="flex items-center justify-center text-sm grow">
-				{minify ? "" : "#SoME2"}
+				{minify ? "" : "linalg.dev"}
 			</div>
 
 			{minify || (
@@ -330,7 +335,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 								About the project
 							</Dialog.Title>
 
-							<p className="pb-2 text-sm">
+							<p className="pb-2">
 								This is a web application for visualising and
 								editing linear algebra problems in three
 								dimensions with a node environment. Its purpose
@@ -340,17 +345,90 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 								algebra.
 							</p>
 
-							<p className="text-sm">
+							<p className="pb-2">
 								Nodes can be added to the environment by
 								selecting one of the node types in the toolbar
 								and clicking anywhere in the environment. The
-								nodes can be connected by dragging from one
-								handle to another. Vectors will be shown in the
-								vector space on the right. You can click on a
-								vector there to show its node in the
-								environment. Matrices can be used to transform
-								the vector space.
+								real power of this application comes from the
+								ability to connect nodes together to form a
+								graph. Nodes can be connected by dragging an
+								edge from one handle to another.
 							</p>
+
+							<p>
+								Vectors will be shown in the vector space on the
+								right. You can click on a vector there to show
+								its node in the environment. Matrices can be
+								used to transform the vector space.
+							</p>
+
+							<h2 className="pt-4 pb-2 text-xl">Controls</h2>
+
+							<div className="flex flex-col gap-4 mt-2 mb-4">
+								<Control
+									title="Vector node"
+									icon={<ArrowTopRightIcon />}
+									description="Select this tool by clicking on it in the toolbar or by pressing the V hotkey. Click anywhere in the environment to add a vector node. The x-, y-, and z-components of the vector can be edited by clicking on the corresponding input field. They can also be edited by connecting it to other nodes that output numbers, like the constant node. The vector can then be seen in the vector space on the right. It animates as the vector changes and as the vector space is transformed. The vector node itself also has some settings that can be played around with, such as the color and how it is represented."
+								/>
+
+								<Control
+									title="Matrix node"
+									icon={<LayersIcon />}
+									description="This node can be added to the environment in the same way as the vector node. The matrix can be edited by clicking on the corresponding input fields. The matrix can then be used to transform the vector space by clicking on the Transform button."
+								/>
+
+								<Control
+									title="Elementary math nodes"
+									icon={<MathIcon />}
+									description="These nodes can be used to perform basic arithmetic operations on numbers. These nodes output numbers and can be connected to other nodes that take numbers as input, like vector nodes. If you want to control a matrix in this way, you must first pass it to a vector which is then passed to the matrix. If you do not want to show this vector in the vector space, you can click on the eye icon to hide it."
+								/>
+
+								<Control
+									title="Linear algebra nodes"
+									icon={<LinearAlgebraIcon />}
+									description="These nodes can be used to perform linear algebra operations on vectors and matrices."
+								/>
+
+								<Control
+									title="Plane node"
+									icon={<PlaneIcon />}
+									description="This node represents a plane in the vector space. It is defined by a point and two direction vectors. It can be found under the linear algebra nodes."
+								/>
+
+								<Control
+									title="Undo all transformations"
+									icon={<ResetIcon />}
+									description="This button will reset the vector space to its original state. It can be found in the bottom right."
+								/>
+
+								<Control
+									title="Transform grid with transformations"
+									icon={<VectorSpaceIcon />}
+									description="If on (default), the grid in the vector space will be transformed with the transformations applied to the vector space. If off, the grid will remain static."
+								/>
+
+								<Control
+									title="Show colorful cube"
+									icon={<CubeIcon />}
+									description="Shows a colorful cube that gives a better overview of the transformations."
+								/>
+
+								<Control
+									title="Show vectors as data points"
+									icon={<ShadowInnerIcon />}
+									description="If on, vectors will be shown as spheres in the vector space. This can be turned off or on individually for each vector as well."
+								/>
+
+								<Control
+									title="Fit nodes in frame"
+									icon={<FitFrameIcon />}
+								/>
+
+								<Control
+									title="Show this dialog"
+									icon={<InfoCircledIcon />}
+								/>
+							</div>
 
 							<h2 className="pt-4 pb-2 text-xl">
 								Example environments
@@ -402,6 +480,39 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 	);
 };
 
+type IControlProps = {
+	title: string;
+	icon: React.ReactNode;
+	description?: string;
+	video?: string;
+};
+
+const Control = ({ title, icon, description, video }: IControlProps) => {
+	return (
+		<div className="flex flex-col gap-2">
+			<div className="flex items-center gap-4 px-2">
+				<div className="flex items-center justify-center flex-none w-8 h-8 transition-all duration-200 rounded shadow-b1 shadow-zinc-400 dark:shadow-zinc-600 hover:shadow-zinc-600 dark:hover:shadow-zinc-400 hover:shadow-b2">
+					{icon}
+				</div>
+
+				<div className="grow">{title}</div>
+
+				{video && (
+					<div className="flex items-center justify-center flex-none w-8 h-8 rounded hover:bg-zinc-200 dark:hover:bg-zinc-800">
+						<VideoIcon />
+					</div>
+				)}
+			</div>
+
+			{description && (
+				<p className="text-sm text-zinc-600 dark:text-zinc-400">
+					{description}
+				</p>
+			)}
+		</div>
+	);
+};
+
 type IExampleDownloadProps = {
 	file: string;
 };
@@ -409,11 +520,11 @@ type IExampleDownloadProps = {
 const ExampleDownload = ({ file }: IExampleDownloadProps) => {
 	return (
 		<a
-			className="flex items-center justify-between w-full h-12 p-4 border rounded-md cursor-pointer border-zinc-300 dark:border-zinc-700 hover:bg-offblack/10 dark:hover:bg-offwhite/10"
+			className="flex items-center justify-between w-full h-12 p-4 transition-all duration-200 rounded-md cursor-pointer shadow-b1 shadow-zinc-400 dark:shadow-zinc-600 hover:shadow-b2 hover:shadow-zinc-600 dark:hover:shadow-zinc-400"
 			download={file}
 			href={`/examples/${file}`}
 		>
-			<div className="font-mono text-sm grow">{file}</div>
+			<div className="font-mono grow">{file}</div>
 			<DownloadIcon />
 		</a>
 	);
@@ -437,8 +548,8 @@ const Shortcut = ({ description, hotkey }: IShortcutProps) => {
 
 	return (
 		<div className="flex items-center justify-between w-full h-10 p-2">
-			<div className="text-sm text-left grow">{description}</div>
-			<div className="text-xs text-zinc-500">{hk}</div>
+			<div className="text-left grow">{description}</div>
+			<div className="text-sm text-zinc-500">{hk}</div>
 		</div>
 	);
 };
