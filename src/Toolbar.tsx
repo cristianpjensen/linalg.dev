@@ -127,7 +127,6 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					// Read file
-
 					try {
 						const json = JSON.parse(
 							(e.target as FileReader).result as string
@@ -151,15 +150,17 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 	useHotkey("Meta+s", downloadEnvironment);
 	useHotkey("Shift+F", fitNodes);
 
-	const [isInfoOpen, setIsInfoOpen] = useState(localStorage.getItem("info") === null);
+	const [isInfoOpen, setIsInfoOpen] = useState(
+		localStorage.getItem("info") === null
+	);
 
 	const handleInfo = (open: boolean) => {
 		if (!open) {
-			localStorage.setItem("info", "seen")
+			localStorage.setItem("info", "seen");
 		}
 
 		setIsInfoOpen(open);
-	}
+	};
 
 	return (
 		<div
@@ -379,18 +380,21 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 									title="Vector node"
 									icon={<ArrowTopRightIcon />}
 									description="Select this tool by clicking on it in the toolbar or by pressing the V hotkey. Click anywhere in the environment to add a vector node. The x-, y-, and z-components of the vector can be edited by clicking on the corresponding input field. They can also be edited by connecting it to other nodes that output numbers, like the constant node. The vector can then be seen in the vector space on the right. It animates as the vector changes and as the vector space is transformed. The vector node itself also has some settings that can be played around with, such as the color and how it is represented."
+									video="/assets/vector.gif"
 								/>
 
 								<Control
 									title="Matrix node"
 									icon={<LayersIcon />}
 									description="This node can be added to the environment in the same way as the vector node. The matrix can be edited by clicking on the corresponding input fields. The matrix can then be used to transform the vector space by clicking on the Transform button."
+									video="/assets/matrix.gif"
 								/>
 
 								<Control
 									title="Elementary math nodes"
 									icon={<MathIcon />}
 									description="These nodes can be used to perform basic arithmetic operations on numbers. These nodes output numbers and can be connected to other nodes that take numbers as input, like vector nodes. If you want to control a matrix in this way, you must first pass it to a vector which is then passed to the matrix. If you do not want to show this vector in the vector space, you can click on the eye icon to hide it."
+									video="/assets/math.gif"
 								/>
 
 								<Control
@@ -403,12 +407,14 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 									title="Plane node"
 									icon={<PlaneIcon />}
 									description="This node represents a plane in the vector space. It is defined by a point and two direction vectors. It can be found under the linear algebra nodes."
+									video="/assets/plane.gif"
 								/>
 
 								<Control
 									title="Undo all transformations"
 									icon={<ResetIcon />}
 									description="This button will reset the vector space to its original state. It can be found in the bottom right."
+									video="/assets/matrix.gif"
 								/>
 
 								<Control
@@ -421,6 +427,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 									title="Show colorful cube"
 									icon={<CubeIcon />}
 									description="Shows a colorful cube that gives a better overview of the transformations."
+									video="/assets/matrix.gif"
 								/>
 
 								<Control
@@ -520,9 +527,18 @@ const Control = ({ title, icon, description, video }: IControlProps) => {
 				<div className="grow">{title}</div>
 
 				{video && (
-					<div className="flex items-center justify-center flex-none w-8 h-8 rounded hover:bg-zinc-200 dark:hover:bg-zinc-800">
-						<VideoIcon />
-					</div>
+					<Popover.Root>
+						<Popover.Trigger>
+							<div className="flex items-center justify-center flex-none w-8 h-8 rounded cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800">
+								<VideoIcon />
+							</div>
+						</Popover.Trigger>
+
+
+						<Popover.Content className="p-4 bg-white rounded w-[600px] max-w-[100vw] shadow-b1 shadow-zinc-400 dark:shadow-zinc-600 dark:bg-black">
+							<img src={video} className="w-full aspect-video" />
+						</Popover.Content>
+					</Popover.Root>
 				)}
 			</div>
 
