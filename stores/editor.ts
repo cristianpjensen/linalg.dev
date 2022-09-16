@@ -1,8 +1,6 @@
 import create from "zustand";
 import * as THREE from "three";
 
-import { Node } from "react-flow-renderer/nocss";
-
 export enum Tool {
 	Hand = "Hand",
 	Vector = "Vector",
