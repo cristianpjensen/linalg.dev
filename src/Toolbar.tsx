@@ -165,7 +165,7 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 	return (
 		<div
 			className={`absolute left-0 z-40 flex flex-row h-12 w-full overflow-scroll text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap ${
-				bottom ? "bottom-0" : "top-0"
+				bottom ? "top-[calc(100%-48px)]" : "top-0"
 			}`}
 		>
 			<Tool
@@ -533,7 +533,6 @@ const Control = ({ title, icon, description, video }: IControlProps) => {
 								<VideoIcon />
 							</div>
 						</Popover.Trigger>
-
 
 						<Popover.Content className="p-4 bg-white rounded w-[600px] max-w-[100vw] shadow-b1 shadow-zinc-400 dark:shadow-zinc-600 dark:bg-black">
 							<img src={video} className="w-full aspect-video" />
