@@ -164,8 +164,8 @@ const Toolbar = ({ bottom = false, minify = false }: IToolbarProps) => {
 
 	return (
 		<div
-			className={`absolute left-0 z-40 flex flex-row h-12 w-full overflow-scroll text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap ${
-				bottom ? "top-[calc(100%-48px)]" : "top-0"
+			className={`fixed left-0 z-40 flex flex-row h-12 w-full overflow-scroll text-xs antialiased bg-white shadow-sm dark:bg-black flex-nowrap ${
+				bottom ? "bottom-0" : "top-0"
 			}`}
 		>
 			<Tool
