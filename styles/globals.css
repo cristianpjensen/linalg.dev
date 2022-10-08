@@ -194,6 +194,7 @@ will bug. */
 	box-shadow: 0 0 0 24px rgba(56, 189, 246, 0.15);
 	outline: 1px solid rgba(2, 132, 199, 0.6);
 	outline-offset: 24px;
+	border: none !important;
 }
 
 .dark .react-flow__nodesselection-rect {

@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from "react";
-import { NodeProps } from "react-flow-renderer/nocss";
+import { NodeProps } from "reactflow";
 
 import { BinaryOperationData } from "./types";
 import { useNodeStore } from "../../stores";

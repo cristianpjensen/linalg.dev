@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useKeyPress, KeyCode } from "react-flow-renderer/nocss";
+import { useKeyPress, KeyCode } from "reactflow";
 
 /**
  * Calls a function when a key is pressed.

@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from "react";
-import { NodeProps } from "react-flow-renderer/nocss";
+import { NodeProps } from "reactflow";
 import { EigenvalueDecomposition } from "ml-matrix";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-import { ReactFlowProvider } from "react-flow-renderer/nocss";
+import { ReactFlowProvider } from "reactflow";
 import { useWindowHeight } from "@react-hook/window-size";
 
 import { useEditorStore } from "../stores";

@@ -10,7 +10,7 @@ import {
 import * as THREE from "three";
 import { CubeIcon, ResetIcon, ShadowInnerIcon } from "@radix-ui/react-icons";
 import { mergeRefs } from "react-merge-refs";
-import { type Node } from "react-flow-renderer/nocss";
+import { type Node } from "reactflow";
 
 import { Group, Plane, Space, Vector } from "./three";
 import { useEditorStore, useNodeStore } from "../stores";

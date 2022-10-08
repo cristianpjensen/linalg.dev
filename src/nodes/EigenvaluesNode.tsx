@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { NodeProps } from "react-flow-renderer/nocss";
+import { NodeProps } from "reactflow";
 import { EigenvalueDecomposition } from "ml-matrix";
 import TeX from "@matejmazur/react-katex";
 

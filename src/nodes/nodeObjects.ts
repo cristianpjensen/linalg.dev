@@ -1,4 +1,4 @@
-import { Node } from "react-flow-renderer/nocss";
+import { Node } from "reactflow";
 
 import * as T from "./types";
 

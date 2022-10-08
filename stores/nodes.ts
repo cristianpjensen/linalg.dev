@@ -10,7 +10,7 @@ import {
 	applyNodeChanges,
 	applyEdgeChanges,
 	EdgeSelectionChange,
-} from "react-flow-renderer/nocss";
+} from "reactflow";
 
 import { getAllIndices, getHandleType } from "../src/nodes/helpers";
 import { defaultEdges, defaultNodes } from "./defaultNodes";

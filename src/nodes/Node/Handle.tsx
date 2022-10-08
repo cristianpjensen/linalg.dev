@@ -4,7 +4,7 @@ import {
 	Handle as InternalHandle,
 	HandleProps as InternalHandleProps,
 	Position,
-} from "react-flow-renderer/nocss";
+} from "reactflow";
 
 import { getHandleType } from "../helpers";
 import { Input, ValidInputOutput } from "../types";

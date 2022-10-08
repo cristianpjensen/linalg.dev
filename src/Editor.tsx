@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
 	ConnectionLineType,
 	MiniMap,
 	Node,
-	OnSelectionChangeFunc,
+	SmoothStepEdge,
 	useKeyPress,
 	useReactFlow,
-} from "react-flow-renderer/nocss";
-import "react-flow-renderer/dist/style.css";
+} from "reactflow";
+import "reactflow/dist/base.css";
 
 import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
-import Edge from "./nodes/custom/Edge";
 import {
 	binaryOperationNodeObject,
 	constantNodeObject,
@@ -33,7 +32,7 @@ import {
 } from "./nodes/nodeObjects";
 
 const edgeTypes = {
-	default: Edge,
+	default: SmoothStepEdge,
 };
 
 const nodeClassNames: {
@@ -204,7 +203,11 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 				onPointerUp={onDragEnd}
 				onClick={onAddNode}
 				snapGrid={[24, 24]}
-				defaultZoom={1}
+				defaultViewport={{
+					x: 0,
+					y: 0,
+					zoom: 1
+				}}
 				minZoom={0.2}
 				maxZoom={2}
 				panOnDrag={tool === Tool.Hand}
@@ -219,7 +222,7 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 				/>
 				{minimap && (
 					<MiniMap
-						className="bg-zinc-300 dark:bg-zinc-900"
+						className="bg-zinc-300 dark:bg-zinc-900 !right-auto"
 						nodeClassName={nodeClassName}
 						nodeBorderRadius={4}
 						nodeStrokeWidth={2}
