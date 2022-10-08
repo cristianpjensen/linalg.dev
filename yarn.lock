@@ -2632,18 +2632,6 @@ react-dom@18.1.0:
     loose-envify "^1.1.0"
     scheduler "^0.22.0"
 
-react-flow-renderer@^10.3.12:
-  version "10.3.12"
-  resolved "https://registry.yarnpkg.com/react-flow-renderer/-/react-flow-renderer-10.3.12.tgz#ed603e7cab298aee7003e325cebc08372a4e2ca0"
-  integrity sha512-DTaz4HV0rA/qtvY80fjdb/QwIvtZEhqCQ2iAqfzFH08RjWCrLmESX4Nc400EB3CGcCK8/pDn/ta4cOS3udunTw==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    classcat "^5.0.3"
-    d3-drag "^3.0.0"
-    d3-selection "^3.0.0"
-    d3-zoom "^3.0.0"
-    zustand "^3.7.2"
-
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -3095,7 +3083,7 @@ yaml@^1.10.2:
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
-zustand@^3.7.1, zustand@^3.7.2:
+zustand@^3.7.1:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/zustand/-/zustand-3.7.2.tgz#7b44c4f4a5bfd7a8296a3957b13e1c346f42514d"
   integrity sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==
