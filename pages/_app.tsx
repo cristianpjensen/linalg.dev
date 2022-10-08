@@ -26,7 +26,7 @@ const LoadingScreen = () => {
 	useEffect(() => {
 		setTimeout(() => {
 			setShowNodesWarning(true);
-		}, 3000);
+		}, 5000);
 	}, []);
 
 	return (

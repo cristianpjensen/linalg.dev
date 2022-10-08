@@ -1,6 +1,5 @@
 <div align="center">
   <h3>Linear algebra node environment</h3>
-  <p>Submission for the <a href="https://www.youtube.com/watch?v=hZuYICAEN9Y">Summer of Math Exposition 2022</a></p>
 
   <img src="./docs/preview-light-mode.png#gh-light-mode-only">
   <img src="./docs/preview-dark-mode.png#gh-dark-mode-only">
@@ -32,5 +31,3 @@ The major open source projects that this project relies on are
 ## License
 
 MIT License
-
-Do whatever you want.

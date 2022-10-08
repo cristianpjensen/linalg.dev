@@ -9,11 +9,11 @@ import {
 	OnConnect,
 	applyNodeChanges,
 	applyEdgeChanges,
-	EdgeChange,
 	EdgeSelectionChange,
 } from "react-flow-renderer/nocss";
 
 import { getAllIndices, getHandleType } from "../src/nodes/helpers";
+import { defaultEdges, defaultNodes } from "./defaultNodes";
 
 type NodeState = {
 	nodes: Node[];
@@ -32,8 +32,8 @@ type NodeState = {
 const useStore = create(
 	persist<NodeState>(
 		(set, get) => ({
-			nodes: [],
-			edges: [],
+			nodes: defaultNodes,
+			edges: defaultEdges,
 			onNodesChange: (changes) => {
 				for (const change of changes) {
 					// Disconnect all connected targets before removing the nodes,

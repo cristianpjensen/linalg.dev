@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 				<title>Linear algebra node environment</title>
 				<meta
 					name="description"
-					content="Linear algebra node environment."
+					content="linalg.dev"
 				/>
 				<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 				<link rel="icon" type="image/png" href="/favicon.png" />
