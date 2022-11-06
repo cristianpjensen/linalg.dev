@@ -29,8 +29,8 @@ const Dragger = ({ children, className, style }: IDraggerProps) => {
 		<div
 			className={`dragger absolute top-0 left-0 flex flex-row rounded-t w-full h-6 pl-2 text-xs flex-nowrap ${colorStyling} ${className}`}
 			style={{
-				cursor: pointerDown ? "grabbing" : "grab",
 				...style,
+				cursor: pointerDown ? "grabbing" : "grab",
 			}}
 			onPointerDown={onPointerDown}
 			onPointerUp={onPointerUp}

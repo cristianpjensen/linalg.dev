@@ -81,7 +81,7 @@ const Handle = ({
 					top,
 					...style,
 				}}
-				className={`flex z-10 items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-zinc-400 dark:text-zinc-500 bg-zinc-50 dark:bg-zinc-900 ${
+				className={`flex z-10 items-center justify-center w-6 h-6 text-[10px] border-2 rounded-full text-zinc-400 dark:text-zinc-500 !bg-zinc-50 dark:!bg-zinc-900 ${
 					isConnectable === true || isConnectable === undefined
 						? "cursor-crosshair"
 						: "opacity-40 cursor-default"

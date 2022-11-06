@@ -205,6 +205,10 @@ will bug. */
 	outline-offset: 24px;
 }
 
+.react-flow__pane {
+	cursor: revert !important;
+}
+
 /* COLORPICKER STYLING */
 
 /* Container */

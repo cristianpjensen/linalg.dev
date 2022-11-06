@@ -2,10 +2,8 @@ import React, { useCallback, useState, useRef } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
-	ConnectionLineType,
 	MiniMap,
 	Node,
-	SmoothStepEdge,
 	useKeyPress,
 	useReactFlow,
 } from "reactflow";
@@ -30,10 +28,6 @@ import {
 	vectorScalingNodeObject,
 	planeNodeObject,
 } from "./nodes/nodeObjects";
-
-const edgeTypes = {
-	default: SmoothStepEdge,
-};
 
 const nodeClassNames: {
 	[key: string]: "green" | "yellow" | "blue" | "purple" | "red";
@@ -174,6 +168,7 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 			<ReactFlow
 				ref={ref}
 				style={{
+					...style,
 					cursor:
 						isConnecting || tool !== Tool.Hand
 							? "crosshair"
@@ -182,19 +177,16 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 							: isDragging
 							? "grabbing"
 							: "grab",
-					...style,
 				}}
 				className={className}
 				nodes={nodes}
 				edges={edges}
 				nodeTypes={nodeTypes}
-				edgeTypes={edgeTypes}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
 				onConnectStart={onConnectStart}
 				onConnectEnd={onConnectEnd}
-				connectionLineType={ConnectionLineType.SmoothStep}
 				onNodeDragStart={onDragStart}
 				onNodeDragStop={onDragEnd}
 				onSelectionDragStart={onDragStart}
@@ -202,23 +194,21 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 				onPointerDown={onDragStart}
 				onPointerUp={onDragEnd}
 				onClick={onAddNode}
-				snapGrid={[24, 24]}
 				defaultViewport={{
 					x: 0,
 					y: 0,
-					zoom: 1
+					zoom: 1,
 				}}
 				minZoom={0.2}
 				maxZoom={2}
 				panOnDrag={tool === Tool.Hand}
-				snapToGrid
 				elevateEdgesOnSelect
 			>
 				<Background
-					className="bg-offwhite dark:bg-offblack grandchild:stroke-zinc-300 dark:grandchild:stroke-zinc-800 grandchild:opacity-20"
-					variant={BackgroundVariant.Lines}
+					className="bg-offwhite dark:bg-offblack grandchild:stroke-zinc-300 dark:grandchild:stroke-zinc-800 grandchild:opacity-40"
+					variant={BackgroundVariant.Dots}
 					gap={24}
-					size={1}
+					size={2}
 				/>
 				{minimap && (
 					<MiniMap
