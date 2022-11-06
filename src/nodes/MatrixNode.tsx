@@ -12,7 +12,7 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 		const m3 = data.m3.value;
 
 		return {
-			result: [m1.x, m1.y, m1.z, m2.x, m2.y, m2.z, m3.x, m3.y, m3.z],
+			result: [m1.x, m2.x, m3.x, m1.y, m2.y, m3.y, m1.z, m2.z, m3.z],
 		};
 	});
 
@@ -34,7 +34,7 @@ const MatrixNode = memo(({ id, data, selected }: NodeProps<MatrixData>) => {
 			<Node.Handle type="target" id="m2" top={119} />
 			<Node.Handle type="target" id="m3" top={174} />
 
-			<div className="grid grid-flow-row grid-cols-3 gap-2">
+			<div className="grid grid-flow-col grid-rows-3 gap-2">
 				<Node.VectorInput id="m1" />
 				<Node.VectorInput id="m2" />
 				<Node.VectorInput id="m3" />
