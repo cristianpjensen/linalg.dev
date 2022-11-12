@@ -126,6 +126,7 @@ function ToolbarComponent({
 				</button>
 			</div>
 
+			{minified || <VectorSpaceSizeDropdown />}
 			<DarkModeToggle />
 			<MenuDialog bottom={bottom} />
 		</Toolbar.Root>
@@ -251,6 +252,56 @@ const DropdownToolButton = ({ tool, title, children }: IToolButtonProps) => {
 			<div className={title ? "mr-2" : ""}>{children}</div>
 			<span>{title}</span>
 		</Toolbar.Button>
+	);
+};
+
+const VectorSpaceSizeDropdown = () => {
+	const vectorSpaceSize = useEditorStore((state) => state.vectorSpaceSize);
+
+	return (
+		<DropdownMenu.Root>
+			<Toolbar.Button
+				className="inline-flex items-center justify-center h-full px-4 text-ellipsis hover:bg-black/10 dark:hover:bg-white/10"
+				asChild
+			>
+				<DropdownMenu.Trigger>
+					<div className="flex items-center justify-center h-12 px-2 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
+						1&thinsp;/&thinsp;
+						{vectorSpaceSize === 1e99 ? "∞" : vectorSpaceSize}
+						<CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
+					</div>
+				</DropdownMenu.Trigger>
+			</Toolbar.Button>
+
+			<DropdownMenu.Portal>
+				<DropdownMenu.Content className="z-30 flex flex-col w-32 text-xs text-black bg-white rounded-b shadow-md dark:bg-black dark:text-white">
+					<VectorSpaceSizeButton size={1} />
+					<VectorSpaceSizeButton size={2} />
+					<VectorSpaceSizeButton size={3} />
+					<VectorSpaceSizeButton size={4} />
+				</DropdownMenu.Content>
+			</DropdownMenu.Portal>
+		</DropdownMenu.Root>
+	);
+};
+
+type VectorSpaceSizeButton = {
+	size: 1 | 2 | 3 | 4 | 1e99;
+};
+
+const VectorSpaceSizeButton = ({ size }: VectorSpaceSizeButton) => {
+	const setVectorSpaceSize = useEditorStore(
+		(state) => state.setVectorSpaceSize
+	);
+	const onClick = () => setVectorSpaceSize(size);
+
+	return (
+		<button
+			onClick={onClick}
+			className="flex items-center justify-center w-full h-10 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+		>
+			1&thinsp;/&thinsp;{size === 1e99 ? "∞" : size}
+		</button>
 	);
 };
 
