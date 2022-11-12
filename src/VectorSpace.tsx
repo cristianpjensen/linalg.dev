@@ -54,7 +54,6 @@ type IVectorSpaceProps = {
 
 const VectorSpace = forwardRef<VectorSpace, IVectorSpaceProps>(
 	({ className, style, buttonsTopLeft }, ref) => {
-		const matrix = useEditorStore((state) => state.matrix);
 		const resetMatrix = useEditorStore((state) => state.resetMatrix);
 		const showCube = useEditorStore((state) => state.showCube);
 		const toggleShowCube = useEditorStore((state) => state.toggleShowCube);
@@ -180,7 +179,9 @@ const ToggleButton = ({
 ToggleButton.displayName = "Toggle button";
 
 const Vectors = forwardRef<Group>((props, ref) => {
-	const nodes = useNodeStore((state) => state.nodes);
+	const envs = useNodeStore((state) => state.envs);
+	const currentEnv = useNodeStore((state) => state.currentEnv);
+	const nodes = envs[currentEnv].nodes;
 	const vectors = nodes.filter(
 		(node) =>
 			node.type === "vector" ||

@@ -62,8 +62,9 @@ type IEditorProps = {
 };
 
 const Editor = ({ minimap = true, className, style }: IEditorProps) => {
-	const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
+	const { envs, currentEnv, onNodesChange, onEdgesChange, onConnect } =
 		useNodeStore();
+	const { nodes, edges } = envs[currentEnv];
 	const tool = useEditorStore((state) => state.tool);
 	const setTool = useEditorStore((state) => state.setTool);
 
