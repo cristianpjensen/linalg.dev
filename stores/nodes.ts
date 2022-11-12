@@ -24,6 +24,13 @@ type Environment = {
 type NodeState = {
 	envs: Array<Environment>;
 	currentEnv: number;
+	setCurrentEnv: (env: number) => void;
+	addEnv: (
+		title: string,
+		env: { nodes: Array<Node>; edges: Array<Edge> } | null
+	) => void;
+	removeEnv: (env: number) => void;
+	renameEnv: (env: number, title: string) => void;
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
 	deleteEdge: (target: string, targetHandle: string) => void;
@@ -46,6 +53,39 @@ const useStore = create(
 				},
 			],
 			currentEnv: 0,
+			setCurrentEnv: (env) => set({ currentEnv: env }),
+			addEnv: (title, env) => {
+				set((state) => ({
+					envs: [
+						...state.envs,
+						{
+							title,
+							nodes: env ? env.nodes : defaultNodes,
+							edges: env ? env.edges : defaultEdges,
+						},
+					],
+				}));
+			},
+			removeEnv: (env) => {
+				if (get().currentEnv === env) {
+					return;
+				}
+
+				set((state) => ({
+					currentEnv:
+						env < state.currentEnv
+							? state.currentEnv - 1
+							: state.currentEnv,
+					envs: state.envs.filter((_, index) => index !== env),
+				}));
+			},
+			renameEnv: (env, title) => {
+				set((state) => {
+					const newEnvs = [...state.envs];
+					newEnvs[env].title = title;
+					return { envs: newEnvs };
+				});
+			},
 			onNodesChange: (changes) => {
 				const { envs, currentEnv } = get();
 				const edges = envs[currentEnv].edges;
@@ -302,7 +342,6 @@ const useStore = create(
 			updateChildren: (nodeId, sourceHandle, value) => {
 				const { envs, currentEnv } = get();
 				const edges = envs[currentEnv].edges;
-				console.log(envs);
 
 				// Get all connected children
 				const childrenEdges = edges.filter((edge) => {

@@ -1,26 +1,33 @@
 import React, { useMemo, useState } from "react";
 import {
+	ArrowRightIcon,
 	ArrowTopRightIcon,
 	BoxModelIcon,
 	CaretDownIcon,
 	CaretUpIcon,
 	CircleIcon,
+	Cross1Icon,
+	Cross2Icon,
+	DownloadIcon,
 	FrameIcon,
 	HamburgerMenuIcon,
 	HandIcon,
 	LayersIcon,
 	MoonIcon,
+	Pencil1Icon,
+	Pencil2Icon,
 	PlusIcon,
 	SliderIcon,
 	SunIcon,
 	ThickArrowUpIcon,
+	UploadIcon,
 } from "@radix-ui/react-icons";
 import * as Toolbar from "@radix-ui/react-toolbar";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
 
-import { useEditorStore, Tool, setDarkMode } from "../stores";
+import { useEditorStore, Tool, setDarkMode, useNodeStore } from "../stores";
 import {
 	EigenvectorsIcon,
 	LinearAlgebraIcon,
@@ -42,6 +49,17 @@ function ToolbarComponent({
 	bottom = false,
 	minified = false,
 }: IToolbarComponentProps) {
+	const envs = useNodeStore((state) => state.envs);
+	const currentEnv = useNodeStore((state) => state.currentEnv);
+	const renameEnv = useNodeStore((state) => state.renameEnv);
+
+	const onTitleChange = () => {
+		const newTitle = prompt("Enter a new title");
+		if (newTitle) {
+			renameEnv(currentEnv, newTitle);
+		}
+	};
+
 	return (
 		<Toolbar.Root
 			className={`fixed z-40 overflow-scroll antialiased flex-nowrap flex w-full h-12 text-xs text-black bg-white shadow-sm dark:bg-black dark:text-white ${
@@ -98,7 +116,15 @@ function ToolbarComponent({
 				<LinearAlgebraIcon />
 			</ToolDropdown>
 
-			<div className="flex grow" />
+			<div className="flex items-center justify-center text-sm grow">
+				<button
+					onClick={onTitleChange}
+					className="flex items-center gap-2"
+				>
+					{envs[currentEnv].title}
+					<Pencil1Icon className="text-zinc-600 dark:text-zinc-400" />
+				</button>
+			</div>
 
 			<DarkModeToggle />
 			<MenuDialog bottom={bottom} />
@@ -278,21 +304,25 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 						defaultValue="env"
 						orientation={bottom ? "horizontal" : "vertical"}
 					>
-						<Tabs.List className={`flex gap-2 p-4 pr-8 rounded-l-md ${bottom ? "flex-row justify-between" : "flex-col"}`}>
+						<Tabs.List
+							className={`flex gap-2 p-4 pr-8 rounded-l-md ${
+								bottom ? "flex-row justify-between" : "flex-col"
+							}`}
+						>
 							<TabTrigger value="env">Environments</TabTrigger>
 							<TabTrigger value="exercises">Exercises</TabTrigger>
 							<TabTrigger value="about">About</TabTrigger>
 						</Tabs.List>
 
-						<Tabs.Content value="env">
+						<Tabs.Content className="w-full p-4" value="env">
 							<Environments />
 						</Tabs.Content>
 
-						<Tabs.Content value="exercises">
+						<Tabs.Content className="w-full p-4" value="exercises">
 							<Exercises />
 						</Tabs.Content>
 
-						<Tabs.Content value="about">
+						<Tabs.Content className="w-full p-4" value="about">
 							<About />
 						</Tabs.Content>
 					</Tabs.Root>
@@ -319,16 +349,176 @@ const TabTrigger = ({ children, value }: ITabTriggerProps) => {
 };
 
 const Environments = () => {
+	const envs = useNodeStore((state) => state.envs);
+	const currentEnv = useNodeStore((state) => state.currentEnv);
+	const addEnv = useNodeStore((state) => state.addEnv);
+	const onAddClick = () => {
+		addEnv("New environment", null);
+	};
+	const onUploadClick = () => {
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = "application/json";
+
+		input.onchange = (e) => {
+			const file = (e.target as HTMLInputElement).files?.[0];
+
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					// Read file
+					try {
+						const json = JSON.parse(
+							(e.target as FileReader).result as string
+						);
+
+						addEnv(json.title, {
+							nodes: json.nodes,
+							edges: json.edges,
+						});
+					} catch (e) {
+						console.error(e);
+					}
+				};
+				reader.readAsText(file);
+			}
+		};
+
+		input.click();
+		input.remove();
+	};
+
 	return (
-		<div className="p-4">
-			<h1 className="text-xl">Environments</h1>
+		<div>
+			<div className="flex items-center justify-between w-full h-10 mb-2">
+				<h1 className="text-xl">Your environments</h1>
+				<div className="flex gap-2">
+					<button
+						onClick={onUploadClick}
+						className="flex items-center justify-center w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
+					>
+						<UploadIcon />
+					</button>
+
+					<button
+						onClick={onAddClick}
+						className="flex items-center justify-center w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
+					>
+						<PlusIcon />
+					</button>
+				</div>
+			</div>
+
+			<p className="mb-2 text-sm text-zinc-500 dark:text-zinc-500">
+				These environments are stored locally, so they will be deleted
+				if you clear the browser's local storage.
+			</p>
+
+			<div className="flex flex-col gap-1 overflow-y-scroll h-96">
+				{envs.map((env, index) => (
+					<Environment
+						key={index}
+						id={index}
+						title={env.title}
+						nodeCount={env.nodes.length}
+						edgeCount={env.edges.length}
+						selected={index === currentEnv}
+					/>
+				))}
+			</div>
+		</div>
+	);
+};
+
+type IEnvironmentProps = {
+	id: number;
+	title: string;
+	nodeCount: number;
+	edgeCount: number;
+	selected?: boolean;
+};
+
+const Environment = ({
+	id,
+	title,
+	nodeCount,
+	edgeCount,
+	selected = false,
+}: IEnvironmentProps) => {
+	const envs = useNodeStore((state) => state.envs);
+	const setCurrentEnv = useNodeStore((state) => state.setCurrentEnv);
+	const removeEnv = useNodeStore((state) => state.removeEnv);
+	const onClick = () => {
+		setCurrentEnv(id);
+	};
+	const onRemoveClick = () => {
+		removeEnv(id);
+	};
+	const onDownloadClick = () => {
+		const json = JSON.stringify(envs[id], null, 2);
+		const blob = new Blob([json], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+
+		a.href = url;
+		a.download = `${title}.json`;
+		a.click();
+
+		// Clean up
+		URL.revokeObjectURL(url);
+		a.remove();
+	};
+
+	return (
+		<div
+			className={`w-full px-4 py-2 rounded ${
+				selected
+					? "bg-black/5 dark:bg-white/5"
+					: "hover:bg-black/10 dark:hover:bg-white/10"
+			}`}
+		>
+			<div className="flex items-center w-full">
+				<button
+					onClick={onClick}
+					className="flex flex-col items-start gap-1 grow"
+				>
+					<h2 className="flex items-center gap-1">
+						{title}
+						<ArrowRightIcon />
+					</h2>
+					<div>
+						<p className="text-sm text-zinc-600 dark:text-zinc-400">
+							{nodeCount} nodes
+						</p>
+						<p className="text-sm text-zinc-600 dark:text-zinc-400">
+							{edgeCount} edges
+						</p>
+					</div>
+				</button>
+
+				<div className="flex gap-2">
+					<button
+						onClick={onDownloadClick}
+						className="flex items-center justify-center w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
+					>
+						<DownloadIcon />
+					</button>
+
+					<button
+						onClick={onRemoveClick}
+						className="flex items-center justify-center w-8 h-8 rounded hover:bg-black/10 dark:hover:bg-white/10"
+					>
+						<Cross2Icon />
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 };
 
 const Exercises = () => {
 	return (
-		<div className="p-4">
+		<div>
 			<h1 className="text-xl">Exercises</h1>
 		</div>
 	);
@@ -336,7 +526,7 @@ const Exercises = () => {
 
 const About = () => {
 	return (
-		<div className="p-4">
+		<div>
 			<h1 className="text-xl">About</h1>
 		</div>
 	);
