@@ -1,0 +1,100 @@
+{
+  "title": "Create a plane using only one input vector node.",
+  "nodes": [
+    {
+      "type": "plane",
+      "id": "1668771211518-10",
+      "position": {
+        "x": 862.3151238487902,
+        "y": 289.3634288659262
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "point": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "direction1": {
+          "isConnected": false,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "direction2": {
+          "isConnected": false,
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "hidden": false,
+        "color": "#EB6262"
+      },
+      "width": 240,
+      "height": 264,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 862.3151238487902,
+        "y": 289.3634288659262
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1668771208884-7",
+      "position": {
+        "x": 95.0546284536295,
+        "y": 280.036799381555
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 0,
+          "isConnected": false
+        },
+        "y": {
+          "value": 0,
+          "isConnected": false
+        },
+        "z": {
+          "value": 0,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "global",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95.0546284536295,
+        "y": 280.036799381555
+      },
+      "dragging": false
+    }
+  ],
+  "edges": []
+}

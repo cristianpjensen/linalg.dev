@@ -6,7 +6,6 @@ import {
 	CaretDownIcon,
 	CaretUpIcon,
 	CircleIcon,
-	Cross1Icon,
 	Cross2Icon,
 	DownloadIcon,
 	FrameIcon,
@@ -15,7 +14,6 @@ import {
 	LayersIcon,
 	MoonIcon,
 	Pencil1Icon,
-	Pencil2Icon,
 	PlusIcon,
 	SliderIcon,
 	SunIcon,
@@ -365,15 +363,15 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 							<TabTrigger value="about">About</TabTrigger>
 						</Tabs.List>
 
-						<Tabs.Content className="w-full p-4" value="env">
+						<Tabs.Content className="w-full p-8" value="env">
 							<Environments />
 						</Tabs.Content>
 
-						<Tabs.Content className="w-full p-4" value="exercises">
+						<Tabs.Content className="w-full p-8" value="exercises">
 							<Exercises />
 						</Tabs.Content>
 
-						<Tabs.Content className="w-full p-4" value="about">
+						<Tabs.Content className="w-full p-8" value="about">
 							<About />
 						</Tabs.Content>
 					</Tabs.Root>
@@ -524,8 +522,8 @@ const Environment = ({
 		<div
 			className={`w-full px-4 py-2 rounded ${
 				selected
-					? "bg-black/5 dark:bg-white/5"
-					: "hover:bg-black/10 dark:hover:bg-white/10"
+					? "bg-black/5 dark:bg-white/10"
+					: "hover:bg-black/10 dark:hover:bg-white/20"
 			}`}
 		>
 			<div className="flex items-center w-full">
@@ -570,8 +568,160 @@ const Environment = ({
 const Exercises = () => {
 	return (
 		<div>
-			<h1 className="text-xl">Exercises</h1>
+			<h1 className="mb-4 text-xl">Exercises</h1>
+			<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+				<Exercise
+					title="Basics"
+					description="Basic linear algebra concepts."
+					questions={[
+						{
+							question:
+								"Compute the dot product of two vector nodes.",
+							result: "Scalar node.",
+							environment: "dot-product",
+						},
+						{
+							question:
+								"Compute the cross product of two vector nodes.",
+							result: "Green vector.",
+							environment: "cross-product",
+						},
+						{
+							question:
+								"Given a vector node, find a perpendicular vector.",
+							result: "Red vector.",
+							environment: "perpendicular-vector",
+						},
+					]}
+				/>
+
+				<Exercise
+					title="Intermediate"
+					description="Intermediate linear algebra concepts."
+					questions={[
+						{
+							question:
+								"Create a plane using only one input vector node.",
+							result: "Plane created from one vector node. In the space, the original vector should be perpendicular to the plane (hint: normal vector).",
+							environment: "one-vector-plane",
+						},
+					]}
+				/>
+
+				<Exercise
+					title="Advanced"
+					description="Advanced linear algebra concepts."
+					questions={[]}
+				/>
+
+				<Exercise
+					title="Singular Value Decomposition"
+					description="Questions regarding the SVD."
+					questions={[]}
+				/>
+
+				<Exercise
+					title="Principal Component Analysis"
+					description="Questions regarding PCA."
+					questions={[]}
+				/>
+			</div>
 		</div>
+	);
+};
+
+type Question = {
+	question: string;
+	result: string;
+	environment?: string;
+};
+
+type IExerciseProps = {
+	title: string;
+	description: string;
+	questions: Array<Question>; // Questions
+};
+
+const Exercise = ({ title, description, questions }: IExerciseProps) => {
+	const addEnv = useNodeStore((state) => state.addEnv);
+	const setCurrentEnv = useNodeStore((state) => state.setCurrentEnv);
+
+	const onExerciseStart = (env: string | undefined, question: string) => {
+		if (env === undefined) {
+			const environment = {
+				nodes: [],
+				edges: [],
+			};
+
+			addEnv(question, environment);
+			setCurrentEnv(-1);
+			return;
+		}
+
+		// Get environment from file
+		fetch(`/envs/${env}.json`)
+			.then((res) => res.json())
+			.then((env) => {
+				console.log(env);
+				const environment = {
+					nodes: env.nodes,
+					edges: env.edges,
+				};
+
+				addEnv(question, environment);
+				setCurrentEnv(-1);
+			});
+	};
+
+	return (
+		<Dialog.Root>
+			<Dialog.Trigger>
+				<button className="w-full h-full p-3 rounded text-start bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20">
+					<h2 className="mb-2 text-lg leading-6">{title}</h2>
+					<p className="text-sm text-zinc-600 dark:text-zinc-400">
+						{description}
+					</p>
+				</button>
+			</Dialog.Trigger>
+
+			<Dialog.Portal>
+				<Dialog.Overlay className="fixed inset-0 z-[60] animate-fadein-slow bg-black/40 dark:bg-black/60" />
+				<Dialog.Content className="fixed z-[70] w-[calc(100vw-32px)] max-w-xl p-6 sm:p-8 h- -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-offwhite dark:bg-black top-1/2 left-1/2">
+					<h1 className="mb-2 text-2xl leading-6">{title}</h1>
+
+					<div className="flex flex-col gap-4 mt-4 overflow-y-scroll h-72">
+						{questions.map(
+							({ question, result, environment }, index) => (
+								<div className="flex items-center gap-2">
+									<div className="flex-grow">
+										<h2>
+											{index + 1}&ensp;{question}
+										</h2>
+										<p className="pl-4 text-zinc-500 dark:text-zinc-400">
+											The results should be a{" "}
+											{result.slice(0, 1).toLowerCase() +
+												result.slice(1)}
+										</p>
+									</div>
+
+									<button
+										onClick={() =>
+											onExerciseStart(
+												environment,
+												question
+											)
+										}
+										className="flex items-center justify-center flex-shrink-0 w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
+									>
+										<ArrowRightIcon />
+									</button>
+								</div>
+							)
+						)}
+					</div>
+				</Dialog.Content>
+			</Dialog.Portal>
+		</Dialog.Root>
 	);
 };
 

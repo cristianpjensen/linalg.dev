@@ -1,0 +1,153 @@
+{
+  "title": "Compute the cross product of two vector nodes.",
+  "nodes": [
+    {
+      "type": "vector",
+      "id": "1668771053558-31",
+      "position": {
+        "x": 885,
+        "y": 337
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 0,
+          "isConnected": false
+        },
+        "y": {
+          "value": 0,
+          "isConnected": false
+        },
+        "z": {
+          "value": 1,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "global",
+        "color": "#00FF00",
+        "output": {
+          "result": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 885,
+        "y": 337
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1668770979506-10",
+      "position": {
+        "x": 156,
+        "y": 510
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 0,
+          "isConnected": false
+        },
+        "y": {
+          "value": 1,
+          "isConnected": false
+        },
+        "z": {
+          "value": 0,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "global",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 156,
+        "y": 510
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1668770977990-49",
+      "position": {
+        "x": 156,
+        "y": 165
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 1,
+          "isConnected": false
+        },
+        "y": {
+          "value": 0,
+          "isConnected": false
+        },
+        "z": {
+          "value": 0,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "global",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 156,
+        "y": 165
+      },
+      "dragging": false
+    }
+  ],
+  "edges": []
+}

@@ -53,7 +53,15 @@ const useStore = create(
 				},
 			],
 			currentEnv: 0,
-			setCurrentEnv: (env) => set({ currentEnv: env }),
+			setCurrentEnv: (env) =>
+				set(({ envs }) => ({
+					currentEnv:
+						env < 0
+							? envs.length + env
+							: env > envs.length - 1
+							? 0
+							: env,
+				})),
 			addEnv: (title, env) => {
 				set((state) => ({
 					envs: [
