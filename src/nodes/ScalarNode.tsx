@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import { NodeProps } from "reactflow";
 
-import { ConstantData } from "./types";
+import { ScalarData } from "./types";
 import { useOutput } from "./hooks";
 import * as Node from "./Node";
 
-const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
+const ScalarNode = memo(({ id, data, selected }: NodeProps<ScalarData>) => {
 	useOutput(id, data, (data) => {
 		return {
 			result: data.value.value,
@@ -17,7 +17,7 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 			id={id}
 			data={data}
 			selected={selected}
-			title="Constant"
+			title="Scalar"
 			color="green-ext"
 			width={6}
 			height={5}
@@ -32,6 +32,6 @@ const ConstantNode = memo(({ id, data, selected }: NodeProps<ConstantData>) => {
 	);
 });
 
-ConstantNode.displayName = "Constant node";
+ScalarNode.displayName = "Scalar node";
 
-export default ConstantNode;
+export default ScalarNode;

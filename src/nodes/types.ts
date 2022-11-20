@@ -47,7 +47,7 @@ export type MatrixData = {
 	};
 };
 
-export type ConstantData = {
+export type ScalarData = {
 	value: Input<number>;
 	output: {
 		result: number;

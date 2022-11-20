@@ -82,10 +82,10 @@ export const matrixNodeObject = (position: Position): Node<T.MatrixData> => ({
 	},
 });
 
-export const constantNodeObject = (
+export const scalarNodeObject = (
 	position: Position
-): Node<T.ConstantData> => ({
-	type: "constant",
+): Node<T.ScalarData> => ({
+	type: "scalar",
 	id: getId(),
 	position: snapToGrid(position),
 	dragHandle: ".dragger",

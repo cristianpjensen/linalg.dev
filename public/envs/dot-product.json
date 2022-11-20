@@ -2,7 +2,7 @@
   "title": "Compute the dot product of two vector nodes.",
   "nodes": [
     {
-      "type": "constant",
+      "type": "scalar",
       "id": "1668771116975-98",
       "position": {
         "x": 923,

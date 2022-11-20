@@ -32,7 +32,7 @@ const LoadingScreen = () => {
 	return (
 		<div
 			id="loading-screen"
-			className="absolute z-50 flex flex-col items-center justify-center w-full h-full gap-2 bg-offblack"
+			className="absolute z-[900] flex flex-col items-center justify-center w-full h-full gap-2 bg-offblack"
 		>
 			<div className="animate-fadein lds-ellipsis child:bg-zinc-100">
 				<div></div>

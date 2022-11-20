@@ -13,7 +13,7 @@ import { Tool, useEditorStore, useNodeStore } from "../stores";
 import nodeTypes from "./nodes/nodeTypes";
 import {
 	binaryOperationNodeObject,
-	constantNodeObject,
+	scalarNodeObject,
 	eigenvaluesNodeObject,
 	eigenvectorsNodeObject,
 	matrixMultiplicationNodeObject,
@@ -34,7 +34,7 @@ const nodeClassNames: {
 } = {
 	vector: "blue",
 	matrix: "blue",
-	constant: "green",
+	scalar: "green",
 	slider: "green",
 	unaryOperation: "yellow",
 	binaryOperation: "yellow",
@@ -104,8 +104,8 @@ const Editor = ({ minimap = true, className, style }: IEditorProps) => {
 					reactFlow.addNodes(matrixNodeObject(position));
 					break;
 
-				case Tool.Constant:
-					reactFlow.addNodes(constantNodeObject(position));
+				case Tool.Scalar:
+					reactFlow.addNodes(scalarNodeObject(position));
 					break;
 
 				case Tool.Slider:

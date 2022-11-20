@@ -5,7 +5,7 @@ export enum Tool {
 	Hand = "Hand",
 	Vector = "Vector",
 	Matrix = "Matrix",
-	Constant = "Constant",
+	Scalar = "Scalar",
 	Slider = "Slider",
 	UnaryOperation = "Unary operation",
 	BinaryOperation = "Binary operation",
