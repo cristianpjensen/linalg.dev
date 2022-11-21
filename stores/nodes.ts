@@ -56,15 +56,19 @@ const useStore = create(
 			currentEnv: 0,
 			currentTitle: "Your first environment",
 			setCurrentEnv: (env) =>
-				set(({ envs }) => ({
-					currentEnv:
+				set(({ envs }) => {
+					const index =
 						env < 0
 							? envs.length + env
 							: env > envs.length - 1
 							? 0
-							: env,
-					currentTitle: envs[env].title,
-				})),
+							: env;
+
+					return {
+						currentEnv: index,
+						currentTitle: envs[index].title,
+					};
+				}),
 			addEnv: (title, env) => {
 				set((state) => ({
 					envs: [
