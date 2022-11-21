@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import {
 	ArrowRightIcon,
 	ArrowTopRightIcon,
+	ArrowUpIcon,
 	BoxModelIcon,
 	CaretDownIcon,
 	CaretUpIcon,
@@ -37,6 +38,8 @@ import {
 	VectorComponentsIcon,
 	VectorScalingIcon,
 } from "./icons";
+import { KeyCode } from "reactflow";
+import { useHotkey } from "./hooks";
 
 type IToolbarComponentProps = {
 	bottom?: boolean;
@@ -47,7 +50,7 @@ function ToolbarComponent({
 	bottom = false,
 	minified = false,
 }: IToolbarComponentProps) {
-	const envs = useNodeStore((state) => state.envs);
+	const title = useNodeStore((state) => state.currentTitle);
 	const currentEnv = useNodeStore((state) => state.currentEnv);
 	const renameEnv = useNodeStore((state) => state.renameEnv);
 
@@ -64,29 +67,44 @@ function ToolbarComponent({
 				bottom ? "bottom-0" : "top-0"
 			}`}
 		>
-			<ToolButton tool={Tool.Hand} minified={minified}>
+			<ToolButton tool={Tool.Hand} hotkey="H" minified={minified}>
 				<HandIcon />
 			</ToolButton>
 
-			<ToolButton tool={Tool.Vector} title="Vector" minified={minified}>
+			<ToolButton
+				tool={Tool.Vector}
+				hotkey="V"
+				title="Vector"
+				minified={minified}
+			>
 				<ArrowTopRightIcon />
 			</ToolButton>
 
-			<ToolButton tool={Tool.Plane} title="Plane" minified={minified}>
+			<ToolButton
+				tool={Tool.Plane}
+				hotkey="P"
+				title="Plane"
+				minified={minified}
+			>
 				<PlaneIcon />
 			</ToolButton>
 
-			<ToolButton tool={Tool.Matrix} title="Matrix" minified={minified}>
+			<ToolButton
+				tool={Tool.Matrix}
+				hotkey="M"
+				title="Matrix"
+				minified={minified}
+			>
 				<LayersIcon />
 			</ToolButton>
 
 			{/* prettier-ignore */}
 			<ToolDropdown
 				tools={[
-					[Tool.Constant, <FrameIcon />, "Constant"],
-					[Tool.Slider, <SliderIcon />, "Slider"],
-					[Tool.UnaryOperation, <CircleIcon />, "Unary operation"],
-					[Tool.BinaryOperation, <PlusIcon />, "Binary operation"],
+					[Tool.Scalar, <FrameIcon />, "Scalar", "S"],
+					[Tool.Slider, <SliderIcon />, "Slider", "L"],
+					[Tool.UnaryOperation, <CircleIcon />, "Unary operation", "U"],
+					[Tool.BinaryOperation, <PlusIcon />, "Binary operation", "B"],
 				]}
 				bottom={bottom}
 				minified={minified}
@@ -98,14 +116,14 @@ function ToolbarComponent({
 			{/* prettier-ignore */}
 			<ToolDropdown
 				tools={[
-					[Tool.Norm, <NormIcon />, "Norm"],
-					[Tool.Transformed, <TransformationIcon />, "Transform"],
-					[Tool.VectorScaling, <VectorScalingIcon />, "Vector scaling"],
-					[Tool.VectorComponents, <VectorComponentsIcon />, "Vector components"],
-					[Tool.Transpose, <TransposeIcon />, "Transpose"],
-					[Tool.MatrixMultiplication, <BoxModelIcon />, "Matrix multiplication"],
-					[Tool.Eigenvalues, <ThickArrowUpIcon />, "Eigenvalues"],
-					[Tool.Eigenvectors, <EigenvectorsIcon />, "Eigenvectors"],
+					[Tool.Norm, <NormIcon />, "Norm", "N"],
+					[Tool.Transformed, <TransformationIcon />, "Transform", "R"],
+					[Tool.VectorScaling, <VectorScalingIcon />, "Vector scaling", "O"],
+					[Tool.VectorComponents, <VectorComponentsIcon />, "Vector components", "C"],
+					[Tool.Transpose, <TransposeIcon />, "Transpose", "T"],
+					[Tool.MatrixMultiplication, <BoxModelIcon />, "Matrix multiplication", "A"],
+					[Tool.Eigenvalues, <ThickArrowUpIcon />, "Eigenvalues", "E"],
+					[Tool.Eigenvectors, <EigenvectorsIcon />, "Eigenvectors", "I"],
 				]} 
 				bottom={bottom}
 				minified={minified}
@@ -119,7 +137,7 @@ function ToolbarComponent({
 					onClick={onTitleChange}
 					className="flex items-center gap-2"
 				>
-					{envs[currentEnv].title}
+					{title}
 					<Pencil1Icon className="text-zinc-600 dark:text-zinc-400" />
 				</button>
 			</div>
@@ -133,6 +151,7 @@ function ToolbarComponent({
 
 type IToolButtonProps = {
 	tool: Tool;
+	hotkey: KeyCode | undefined;
 	minified?: boolean;
 	title?: string;
 	children?: React.ReactNode;
@@ -140,6 +159,7 @@ type IToolButtonProps = {
 
 const ToolButton = ({
 	tool,
+	hotkey,
 	minified = false,
 	title,
 	children,
@@ -149,6 +169,8 @@ const ToolButton = ({
 	const onToolChange = () => {
 		setToolState(tool);
 	};
+
+	useHotkey(`Shift+${hotkey}`, onToolChange);
 
 	return (
 		<Toolbar.Button
@@ -161,12 +183,17 @@ const ToolButton = ({
 		>
 			<div className={title && !minified ? "mr-2" : ""}>{children}</div>
 			{minified || <span>{title}</span>}
+			{hotkey && !minified && title && (
+				<span className="inline-flex items-center ml-2 text-xs text-zinc-500">
+					<ThickArrowUpIcon className="mr-[0.0625rem]" /> {hotkey}
+				</span>
+			)}
 		</Toolbar.Button>
 	);
 };
 
 type IToolDropdownProps = {
-	tools: Array<[Tool, React.ReactNode, string]>; // [tool, icon, title]
+	tools: Array<[Tool, React.ReactNode, string, KeyCode | undefined]>; // [tool, icon, title, hotkey]
 	bottom?: boolean;
 	minified?: boolean;
 	title?: string;
@@ -181,9 +208,19 @@ const ToolDropdown = ({
 	children,
 }: IToolDropdownProps) => {
 	const toolState = useEditorStore((state) => state.tool);
+	const setToolState = useEditorStore((state) => state.setTool);
 	const isSelected = useMemo(() => {
 		return tools.some(([tool]) => tool === toolState);
 	}, [tools, toolState]);
+
+	tools.forEach(([tool, , , hotkey]) => {
+		// Set hotkey here, because otherwise it will only be usable when the
+		// dropdown is open
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useHotkey(`Shift+${hotkey}`, () => {
+			setToolState(tool);
+		});
+	});
 
 	return (
 		<DropdownMenu.Root>
@@ -217,10 +254,12 @@ const ToolDropdown = ({
 						bottom ? "rounded-t" : "rounded-b"
 					}`}
 				>
-					{tools.map(([tool, icon, title]) => (
+					{tools.map(([tool, icon, title, hotkey]) => (
 						<DropdownToolButton
 							key={tool}
 							tool={tool}
+							hotkey={hotkey}
+							minified={minified}
 							title={title}
 							children={icon}
 						/>
@@ -231,7 +270,13 @@ const ToolDropdown = ({
 	);
 };
 
-const DropdownToolButton = ({ tool, title, children }: IToolButtonProps) => {
+const DropdownToolButton = ({
+	tool,
+	title,
+	minified,
+	hotkey,
+	children,
+}: IToolButtonProps) => {
 	const toolState = useEditorStore((state) => state.tool);
 	const setToolState = useEditorStore((state) => state.setTool);
 	const onToolChange = () => {
@@ -249,6 +294,11 @@ const DropdownToolButton = ({ tool, title, children }: IToolButtonProps) => {
 		>
 			<div className={title ? "mr-2" : ""}>{children}</div>
 			<span>{title}</span>
+			{hotkey && !minified && title && (
+				<span className="inline-flex items-center ml-2 text-xs text-zinc-500">
+					<ThickArrowUpIcon className="mr-[0.0625rem]" /> {hotkey}
+				</span>
+			)}
 		</Toolbar.Button>
 	);
 };
@@ -263,7 +313,7 @@ const VectorSpaceSizeDropdown = () => {
 				asChild
 			>
 				<DropdownMenu.Trigger>
-					<div className="flex items-center justify-center h-12 px-2 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700">
+					<div className="flex items-center justify-center h-12 px-2 cursor-pointer">
 						1&thinsp;/&thinsp;
 						{vectorSpaceSize === 1e99 ? "∞" : vectorSpaceSize}
 						<CaretDownIcon className="ml-05 hover:translate-y-0.5 transition-transform" />
@@ -335,7 +385,7 @@ type IMenuDialogProps = {
 
 const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 	return (
-		<Dialog.Root>
+		<Dialog.Root defaultOpen={true}>
 			<Toolbar.Button
 				className="inline-flex items-center justify-center h-full px-4 text-ellipsis hover:bg-black/10 dark:hover:bg-white/10"
 				asChild
@@ -360,7 +410,8 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 						>
 							<TabTrigger value="env">Environments</TabTrigger>
 							<TabTrigger value="exercises">Exercises</TabTrigger>
-							<TabTrigger value="about">About</TabTrigger>
+							<TabTrigger value="manual">Manual</TabTrigger>
+							<TabTrigger value="shortcuts">Shortcuts</TabTrigger>
 						</Tabs.List>
 
 						<Tabs.Content className="w-full p-8" value="env">
@@ -371,8 +422,12 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 							<Exercises />
 						</Tabs.Content>
 
-						<Tabs.Content className="w-full p-8" value="about">
-							<About />
+						<Tabs.Content className="w-full p-8" value="manual">
+							<Manual />
+						</Tabs.Content>
+
+						<Tabs.Content className="w-full p-8" value="shortcuts">
+							<Shortcuts />
 						</Tabs.Content>
 					</Tabs.Root>
 				</Dialog.Content>
@@ -389,7 +444,7 @@ type ITabTriggerProps = {
 const TabTrigger = ({ children, value }: ITabTriggerProps) => {
 	return (
 		<Tabs.Trigger
-			className="flex transition-colors hover:text-zinc-700 dark:hover:text-zinc-300 data-state-active:text-black dark:data-state-active:text-white text-zinc-400 dark:text-zinc-600"
+			className="flex transition-colors hover:text-zinc-700 dark:hover:text-zinc-300 data-state-active:text-black dark:data-state-active:text-white text-zinc-400 dark:text-zinc-500"
 			value={value}
 		>
 			{children}
@@ -572,7 +627,7 @@ const Exercises = () => {
 			<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 				<Exercise
 					title="Basics"
-					description="Basic linear algebra concepts."
+					description="The basics of vectors and matrices."
 					questions={[
 						{
 							question:
@@ -597,7 +652,7 @@ const Exercises = () => {
 
 				<Exercise
 					title="Intermediate"
-					description="Intermediate linear algebra concepts."
+					description="Harder linear algebra concepts, such as planes."
 					questions={[
 						{
 							question:
@@ -610,19 +665,19 @@ const Exercises = () => {
 
 				<Exercise
 					title="Advanced"
-					description="Advanced linear algebra concepts."
+					description="Problems that require a deeper understanding of linear algebra."
 					questions={[]}
 				/>
 
 				<Exercise
 					title="Singular Value Decomposition"
-					description="Questions regarding the SVD."
+					description="Problems regarding the SVD."
 					questions={[]}
 				/>
 
 				<Exercise
 					title="Principal Component Analysis"
-					description="Questions regarding PCA."
+					description="Exercises for understanding PCA better."
 					questions={[]}
 				/>
 			</div>
@@ -697,10 +752,8 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 										<h2>
 											{index + 1}&ensp;{question}
 										</h2>
-										<p className="pl-4 text-zinc-500 dark:text-zinc-400">
-											The results should be a{" "}
-											{result.slice(0, 1).toLowerCase() +
-												result.slice(1)}
+										<p className="pl-4 text-zinc-500 dark:text-zinc-500">
+											Result: {result}
 										</p>
 									</div>
 
@@ -725,10 +778,20 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 	);
 };
 
-const About = () => {
+const Manual = () => {
 	return (
 		<div>
-			<h1 className="text-xl">About</h1>
+			<h1 className="mb-2 text-xl">Manual</h1>
+			<p className="text-zinc-500">Coming soon.</p>
+		</div>
+	);
+};
+
+const Shortcuts = () => {
+	return (
+		<div>
+			<h1 className="mb-2 text-xl">Shortcuts</h1>
+			<p className="text-zinc-500">Coming soon.</p>
 		</div>
 	);
 };
