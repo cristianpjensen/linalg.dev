@@ -24,6 +24,7 @@ type Environment = {
 type NodeState = {
 	envs: Array<Environment>;
 	currentEnv: number;
+	currentTitle: string;
 	setCurrentEnv: (env: number) => void;
 	addEnv: (
 		title: string,
@@ -53,6 +54,7 @@ const useStore = create(
 				},
 			],
 			currentEnv: 0,
+			currentTitle: "Your first environment",
 			setCurrentEnv: (env) =>
 				set(({ envs }) => ({
 					currentEnv:
@@ -61,6 +63,7 @@ const useStore = create(
 							: env > envs.length - 1
 							? 0
 							: env,
+					currentTitle: envs[env].title,
 				})),
 			addEnv: (title, env) => {
 				set((state) => ({
@@ -91,6 +94,11 @@ const useStore = create(
 				set((state) => {
 					const newEnvs = [...state.envs];
 					newEnvs[env].title = title;
+
+					if (env === state.currentEnv) {
+						return { envs: newEnvs, currentTitle: title };
+					}
+
 					return { envs: newEnvs };
 				});
 			},
@@ -165,6 +173,10 @@ const useStore = create(
 				// Wait for the onEdgesChange to be called to deselect current
 				// edges. Afterward the correct edges will get selected.
 				setTimeout(() => {
+					if (deduplicatedEdgeSelections.length == 0) {
+						return;
+					}
+
 					envs[currentEnv].edges = applyEdgeChanges(
 						deduplicatedEdgeSelections,
 						envs[currentEnv].edges
@@ -227,7 +239,9 @@ const useStore = create(
 				envs[currentEnv] = {
 					...envs[currentEnv],
 					edges: envs[currentEnv].edges.filter(
-						(edge) => edge.id !== edge?.id
+						(edge) =>
+							edge.target !== target ||
+							edge.targetHandle !== targetHandle
 					),
 				};
 
@@ -315,7 +329,7 @@ const useStore = create(
 					targetHandle &&
 					targetNode
 				) {
-					// Only connect, if the handles are both of the same type
+					// Only connect if the handles are both of the same type
 					if (
 						getHandleType(sourceNode.data.output[sourceHandle]) ===
 						getHandleType(targetNode.data[targetHandle].value)
@@ -404,6 +418,7 @@ const useStore = create(
 		{
 			name: "nodes",
 			getStorage: () => localStorage,
+			version: 1,
 		}
 	)
 );
