@@ -53,7 +53,7 @@ const App = () => {
 	return (
 		<TransformContext.Provider value={{ transform: transformSpace }}>
 			<ReactFlowProvider>
-				<Toolbar bottom={isMobile} minify={isMobile} />
+				<Toolbar bottom={isMobile} minified={isMobile} />
 
 				<div
 					className={

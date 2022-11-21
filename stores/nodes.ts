@@ -15,9 +15,23 @@ import {
 import { getAllIndices, getHandleType } from "../src/nodes/helpers";
 import { defaultEdges, defaultNodes } from "./defaultNodes";
 
+type Environment = {
+	title: string;
+	nodes: Array<Node>;
+	edges: Array<Edge>;
+};
+
 type NodeState = {
-	nodes: Node[];
-	edges: Edge[];
+	envs: Array<Environment>;
+	currentEnv: number;
+	currentTitle: string;
+	setCurrentEnv: (env: number) => void;
+	addEnv: (
+		title: string,
+		env: { nodes: Array<Node>; edges: Array<Edge> } | null
+	) => void;
+	removeEnv: (env: number) => void;
+	renameEnv: (env: number, title: string) => void;
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
 	deleteEdge: (target: string, targetHandle: string) => void;
@@ -32,14 +46,75 @@ type NodeState = {
 const useStore = create(
 	persist<NodeState>(
 		(set, get) => ({
-			nodes: defaultNodes,
-			edges: defaultEdges,
+			envs: [
+				{
+					title: "Your first environment",
+					nodes: defaultNodes,
+					edges: defaultEdges,
+				},
+			],
+			currentEnv: 0,
+			currentTitle: "Your first environment",
+			setCurrentEnv: (env) =>
+				set(({ envs }) => {
+					const index =
+						env < 0
+							? envs.length + env
+							: env > envs.length - 1
+							? 0
+							: env;
+
+					return {
+						currentEnv: index,
+						currentTitle: envs[index].title,
+					};
+				}),
+			addEnv: (title, env) => {
+				set((state) => ({
+					envs: [
+						...state.envs,
+						{
+							title,
+							nodes: env ? env.nodes : defaultNodes,
+							edges: env ? env.edges : defaultEdges,
+						},
+					],
+				}));
+			},
+			removeEnv: (env) => {
+				if (get().currentEnv === env) {
+					return;
+				}
+
+				set((state) => ({
+					currentEnv:
+						env < state.currentEnv
+							? state.currentEnv - 1
+							: state.currentEnv,
+					envs: state.envs.filter((_, index) => index !== env),
+				}));
+			},
+			renameEnv: (env, title) => {
+				set((state) => {
+					const newEnvs = [...state.envs];
+					newEnvs[env].title = title;
+
+					if (env === state.currentEnv) {
+						return { envs: newEnvs, currentTitle: title };
+					}
+
+					return { envs: newEnvs };
+				});
+			},
 			onNodesChange: (changes) => {
+				const { envs, currentEnv } = get();
+				const edges = envs[currentEnv].edges;
+
 				for (const change of changes) {
 					// Disconnect all connected targets before removing the nodes,
 					// otherwise they won't be able to reconnect
 					if (change.type === "remove") {
-						for (const edge of get().edges) {
+						for (const edge of edges) {
 							if (
 								edge.source === change.id &&
 								edge.targetHandle
@@ -57,7 +132,7 @@ const useStore = create(
 				const edgeSelections: EdgeSelectionChange[] = [];
 				for (const change of changes) {
 					if (change.type === "select") {
-						for (const edge of get().edges) {
+						for (const edge of edges) {
 							if (
 								edge.source === change.id ||
 								edge.target === change.id
@@ -75,7 +150,7 @@ const useStore = create(
 				// Remove all duplicates
 				const deduplicatedEdgeSelections = edgeSelections.filter(
 					(selection, index, array) => {
-						const edge = get().edges.find(
+						const edge = edges.find(
 							(edge) => edge.id === selection.id
 						);
 
@@ -85,7 +160,7 @@ const useStore = create(
 									continue;
 								}
 
-								const otherEdge = get().edges.find(
+								const otherEdge = edges.find(
 									(edge) => edge.id === array[i].id
 								);
 
@@ -102,32 +177,41 @@ const useStore = create(
 				// Wait for the onEdgesChange to be called to deselect current
 				// edges. Afterward the correct edges will get selected.
 				setTimeout(() => {
-					set({
-						edges: applyEdgeChanges(
-							deduplicatedEdgeSelections,
-							get().edges
-						),
-					});
+					if (deduplicatedEdgeSelections.length == 0) {
+						return;
+					}
+
+					envs[currentEnv].edges = applyEdgeChanges(
+						deduplicatedEdgeSelections,
+						envs[currentEnv].edges
+					);
+
+					set({ envs: envs.map((env) => ({ ...env })) });
 				}, 10);
 
-				set({
-					nodes: applyNodeChanges(changes, get().nodes),
-				});
+				envs[currentEnv].nodes = applyNodeChanges(
+					changes,
+					envs[currentEnv].nodes
+				);
+
+				set({ envs: envs.map((env) => ({ ...env })) });
 			},
 			onEdgesChange: (changes) => {
-				console.log(changes);
+				const { envs, currentEnv } = get();
+				const nodes = envs[currentEnv].nodes;
+				const edges = envs[currentEnv].edges;
 
 				changes.forEach((change) => {
 					// If an edge gets removed, disconnect the target handle
 					if (change.type === "remove") {
-						const edge = get().edges.find(
+						const edge = edges.find(
 							(edge) => edge.id === change.id
 						);
 
 						if (edge) {
 							const target = edge.target;
 							const targetHandle = edge.targetHandle;
-							const node = get().nodes.find(
+							const node = nodes.find(
 								(node) => node.id === target
 							);
 
@@ -146,20 +230,30 @@ const useStore = create(
 					}
 				});
 
-				set({
-					edges: applyEdgeChanges(changes, get().edges),
-				});
+				envs[currentEnv].edges = applyEdgeChanges(
+					changes,
+					envs[currentEnv].edges
+				);
+
+				set({ envs: envs.map((env) => ({ ...env })) });
 			},
 			deleteEdge: (target, targetHandle) => {
-				set({
-					edges: get().edges.filter(
+				const { envs, currentEnv } = get();
+
+				envs[currentEnv] = {
+					...envs[currentEnv],
+					edges: envs[currentEnv].edges.filter(
 						(edge) =>
 							edge.target !== target ||
 							edge.targetHandle !== targetHandle
 					),
-				});
+				};
 
-				const node = get().nodes.find((node) => node.id === target);
+				set({ envs: envs.map((env) => ({ ...env })) });
+
+				const node = envs[currentEnv].nodes.find(
+					(node) => node.id === target
+				);
 
 				if (node) {
 					if (node.type === "vector" && targetHandle === "origin") {
@@ -202,9 +296,12 @@ const useStore = create(
 				}
 			},
 			onConnect: (connection) => {
+				const { envs, currentEnv } = get();
+				const nodes = envs[currentEnv].nodes;
+				const edges = envs[currentEnv].edges;
+
 				const { source, sourceHandle, target, targetHandle } =
 					connection;
-				const edges = get().edges;
 
 				// Do not allow a node to connect with itself
 				if (source === target) {
@@ -222,10 +319,10 @@ const useStore = create(
 					return;
 				}
 
-				const sourceNode = get().nodes.find(
+				const sourceNode = nodes.find(
 					(node) => source && node.id === source
 				);
-				const targetNode = get().nodes.find(
+				const targetNode = nodes.find(
 					(node) => target && node.id === target
 				);
 
@@ -236,14 +333,13 @@ const useStore = create(
 					targetHandle &&
 					targetNode
 				) {
-					// Only connect, if the handles are both of the same type
+					// Only connect if the handles are both of the same type
 					if (
 						getHandleType(sourceNode.data.output[sourceHandle]) ===
 						getHandleType(targetNode.data[targetHandle].value)
 					) {
-						set({
-							edges: addEdge(connection, get().edges),
-						});
+						envs[currentEnv].edges = addEdge(connection, edges);
+						set({ envs: envs.map((env) => ({ ...env })) });
 					}
 
 					get().updateChildren(
@@ -254,22 +350,27 @@ const useStore = create(
 				}
 			},
 			setNodeData: (nodeId, changes) => {
-				set({
-					nodes: get().nodes.map((node) => {
-						if (node.id === nodeId) {
-							return {
-								...node,
-								data: { ...node.data, ...changes },
-							};
-						} else {
-							return node;
-						}
-					}),
+				const { envs, currentEnv } = get();
+
+				envs[currentEnv].nodes = envs[currentEnv].nodes.map((node) => {
+					if (node.id === nodeId) {
+						return {
+							...node,
+							data: { ...node.data, ...changes },
+						};
+					} else {
+						return node;
+					}
 				});
+
+				set({ envs: envs.map((env) => ({ ...env })) });
 			},
 			updateChildren: (nodeId, sourceHandle, value) => {
+				const { envs, currentEnv } = get();
+				const edges = envs[currentEnv].edges;
+
 				// Get all connected children
-				const childrenEdges = get().edges.filter((edge) => {
+				const childrenEdges = edges.filter((edge) => {
 					return (
 						edge.source === nodeId &&
 						edge.sourceHandle === sourceHandle
@@ -277,50 +378,51 @@ const useStore = create(
 				});
 
 				// Update the value of all children
-				set({
-					nodes: get().nodes.map((node) => {
-						// Update the node itself aswell
-						if (node.id === nodeId) {
-							// Do not update the reference to the node, because it will
-							// otherwise result in an infinite loop of useOutput
-							// reacting to data changing and then changing the data in
-							// here
-							node.data.output[sourceHandle] = value;
-							return node;
-						}
-
-						const edgeIndices = getAllIndices(
-							childrenEdges,
-							(edge) => edge.target === node.id
-						);
-
-						const newData = { ...node.data };
-
-						edgeIndices.forEach((index) => {
-							const edge = childrenEdges[index];
-
-							if (edge.targetHandle) {
-								newData[edge.targetHandle] = {
-									isConnected: true,
-									value,
-								};
-							}
-						});
-
-						// Only update the reference to the node if the data was changed
-						// in some way
-						if (edgeIndices.length > 0) {
-							return { ...node, data: newData };
-						}
-
+				envs[currentEnv].nodes = envs[currentEnv].nodes.map((node) => {
+					// Update the node itself aswell
+					if (node.id === nodeId) {
+						// Do not update the reference to the node, because it will
+						// otherwise result in an infinite loop of useOutput
+						// reacting to data changing and then changing the data in
+						// here
+						node.data.output[sourceHandle] = value;
 						return node;
-					}),
+					}
+
+					const edgeIndices = getAllIndices(
+						childrenEdges,
+						(edge) => edge.target === node.id
+					);
+
+					const newData = { ...node.data };
+
+					edgeIndices.forEach((index) => {
+						const edge = childrenEdges[index];
+
+						if (edge.targetHandle) {
+							newData[edge.targetHandle] = {
+								isConnected: true,
+								value,
+							};
+						}
+					});
+
+					// Only update the reference to the node if the data was changed
+					// in some way
+					if (edgeIndices.length > 0) {
+						return { ...node, data: newData };
+					}
+
+					return node;
 				});
+
+				set({ envs: envs.map((env) => ({ ...env })) });
 			},
 		}),
 		{
 			name: "nodes",
 			getStorage: () => localStorage,
+			version: 1,
 		}
 	)
 );

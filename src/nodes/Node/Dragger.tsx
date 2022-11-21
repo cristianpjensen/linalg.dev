@@ -27,23 +27,27 @@ const Dragger = ({ children, className, style }: IDraggerProps) => {
 
 	return (
 		<div
-			className={`dragger absolute top-0 left-0 flex flex-row rounded-t w-full h-6 pl-2 text-xs flex-nowrap ${colorStyling} ${className}`}
+			className={`absolute top-0 left-0 flex flex-row rounded-t w-full h-6 text-xs flex-nowrap ${colorStyling} ${className}`}
 			style={{
 				...style,
 				cursor: pointerDown ? "grabbing" : "grab",
 			}}
-			onPointerDown={onPointerDown}
-			onPointerUp={onPointerUp}
 		>
-			<div className="flex items-center select-none grow justify-left">
+			<div
+				onPointerDown={onPointerDown}
+				onPointerUp={onPointerUp}
+				className="inline-flex items-center pl-2 select-none dragger grow justify-left"
+			>
 				{title}
 			</div>
 
-			{children}
+			<div className="flex cursor-pointer">
+				{children}
 
-			<DraggerButton tooltip="Remove node" onClick={onRemove}>
-				<CrossCircledIcon />
-			</DraggerButton>
+				<DraggerButton tooltip="Remove node" onClick={onRemove}>
+					<CrossCircledIcon />
+				</DraggerButton>
+			</div>
 		</div>
 	);
 };

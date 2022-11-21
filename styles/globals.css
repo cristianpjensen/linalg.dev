@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	ul,
+	ol {
+		list-style: revert;
+	}
+}
+
 @font-face {
 	font-family: "Computer Modern";
 	src: url("https://d3bea6zkj5zg2g.cloudfront.net/cmunrm.woff");

@@ -1,4 +1,4 @@
-import ConstantNode from "./ConstantNode";
+import ScalarNode from "./ScalarNode";
 import UnaryOperationNode from "./UnaryOperationNode";
 import BinaryOperationNode from "./BinaryOperationNode";
 import VectorNode from "./VectorNode";
@@ -15,7 +15,7 @@ import EigenvectorsNode from "./EigenvectorsNode";
 import PlaneNode from "./PlaneNode";
 
 const nodeTypes = {
-	constant: ConstantNode,
+	scalar: ScalarNode,
 	unaryOperation: UnaryOperationNode,
 	binaryOperation: BinaryOperationNode,
 	vector: VectorNode,

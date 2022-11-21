@@ -122,6 +122,16 @@ module.exports = {
 					});
 				}
 			);
+			addVariant(
+				"data-state-active",
+				({ modifySelectors, separator }) => {
+					modifySelectors(({ className }) => {
+						return `.${e(
+							`data-state-active${separator}${className}`
+						)}[data-state='active']`;
+					});
+				}
+			);
 		}),
 		function ({ addVariant }) {
 			addVariant("child", "& > *");
