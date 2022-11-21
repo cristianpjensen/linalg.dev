@@ -411,7 +411,6 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 							<TabTrigger value="env">Environments</TabTrigger>
 							<TabTrigger value="exercises">Exercises</TabTrigger>
 							<TabTrigger value="manual">Manual</TabTrigger>
-							<TabTrigger value="shortcuts">Shortcuts</TabTrigger>
 						</Tabs.List>
 
 						<Tabs.Content className="w-full p-8" value="env">
@@ -424,10 +423,6 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 
 						<Tabs.Content className="w-full p-8" value="manual">
 							<Manual />
-						</Tabs.Content>
-
-						<Tabs.Content className="w-full p-8" value="shortcuts">
-							<Shortcuts />
 						</Tabs.Content>
 					</Tabs.Root>
 				</Dialog.Content>
@@ -782,15 +777,6 @@ const Manual = () => {
 	return (
 		<div>
 			<h1 className="mb-2 text-xl">Manual</h1>
-			<p className="text-zinc-500">Coming soon.</p>
-		</div>
-	);
-};
-
-const Shortcuts = () => {
-	return (
-		<div>
-			<h1 className="mb-2 text-xl">Shortcuts</h1>
 			<p className="text-zinc-500">Coming soon.</p>
 		</div>
 	);
