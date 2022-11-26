@@ -1,26 +1,26 @@
 {
-  "title": "Compute the cross product of two vector nodes.",
+  "title": "Vector addition",
   "nodes": [
     {
       "type": "vector",
-      "id": "1668771053558-31",
+      "id": "1669458475771-4",
       "position": {
-        "x": 885,
-        "y": 337
+        "x": 977,
+        "y": 300
       },
       "dragHandle": ".dragger",
       "data": {
         "x": {
-          "value": 0,
-          "isConnected": false
+          "isConnected": false,
+          "value": 4.140000000000001
         },
         "y": {
-          "value": 0,
-          "isConnected": false
+          "isConnected": false,
+          "value": -6
         },
         "z": {
-          "value": 1,
-          "isConnected": false
+          "isConnected": false,
+          "value": 1
         },
         "origin": {
           "value": {
@@ -31,12 +31,12 @@
           "isConnected": false
         },
         "hidden": false,
-        "representation": "global",
-        "color": "#00FF00",
+        "representation": "vector",
+        "color": "#1FFF26",
         "output": {
           "result": {
-            "x": 0,
-            "y": 0,
+            "x": 4.140000000000001,
+            "y": -6,
             "z": 1
           }
         }
@@ -45,30 +45,30 @@
       "height": 288,
       "selected": false,
       "positionAbsolute": {
-        "x": 885,
-        "y": 337
+        "x": 977,
+        "y": 300
       },
       "dragging": false
     },
     {
       "type": "vector",
-      "id": "1668770979506-10",
+      "id": "1669458375305-61",
       "position": {
-        "x": 156,
-        "y": 510
+        "x": 94,
+        "y": 379
       },
       "dragHandle": ".dragger",
       "data": {
         "x": {
-          "value": 0,
-          "isConnected": false
-        },
-        "y": {
           "value": 1,
           "isConnected": false
         },
+        "y": {
+          "value": -3,
+          "isConnected": false
+        },
         "z": {
-          "value": 0,
+          "value": 3,
           "isConnected": false
         },
         "origin": {
@@ -80,62 +80,13 @@
           "isConnected": false
         },
         "hidden": false,
-        "representation": "global",
-        "color": "#E9E9E9",
-        "output": {
-          "result": {
-            "x": 0,
-            "y": 1,
-            "z": 0
-          }
-        }
-      },
-      "width": 192,
-      "height": 288,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 156,
-        "y": 510
-      },
-      "dragging": false
-    },
-    {
-      "type": "vector",
-      "id": "1668770977990-49",
-      "position": {
-        "x": 156,
-        "y": 165
-      },
-      "dragHandle": ".dragger",
-      "data": {
-        "x": {
-          "value": 1,
-          "isConnected": false
-        },
-        "y": {
-          "value": 0,
-          "isConnected": false
-        },
-        "z": {
-          "value": 0,
-          "isConnected": false
-        },
-        "origin": {
-          "value": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "isConnected": false
-        },
-        "hidden": false,
-        "representation": "global",
-        "color": "#E9E9E9",
+        "representation": "vector",
+        "color": "#636EFF",
         "output": {
           "result": {
             "x": 1,
-            "y": 0,
-            "z": 0
+            "y": -3,
+            "z": 3
           }
         }
       },
@@ -143,11 +94,68 @@
       "height": 288,
       "selected": false,
       "positionAbsolute": {
-        "x": 156,
-        "y": 165
+        "x": 94,
+        "y": 379
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1669457724871-96",
+      "position": {
+        "x": 97.7832579855866,
+        "y": 56.51512223975499
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 3.14,
+          "isConnected": false
+        },
+        "y": {
+          "value": -3,
+          "isConnected": false
+        },
+        "z": {
+          "value": -2,
+          "isConnected": false
+        },
+        "origin": {
+          "isConnected": true,
+          "value": {
+            "x": 1,
+            "y": -3,
+            "z": 3
+          }
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#FF2929",
+        "output": {
+          "result": {
+            "x": 3.14,
+            "y": -3,
+            "z": -2
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 97.7832579855866,
+        "y": 56.51512223975499
       },
       "dragging": false
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "1669458375305-61",
+      "sourceHandle": "result",
+      "target": "1669457724871-96",
+      "targetHandle": "origin",
+      "id": "reactflow__edge-1669458375305-61result-1669457724871-96origin"
+    }
+  ]
 }
