@@ -1,23 +1,53 @@
 <div align="center">
   <h3>Linear algebra node environment</h3>
+  <h3>A node editor webapp for building linear algebra intuition in three dimensions</h3>
 
   <img src="./docs/preview-light-mode.png#gh-light-mode-only">
   <img src="./docs/preview-dark-mode.png#gh-dark-mode-only">
 </div>
 
-The idea behind this project is to provide the user with mostly elementary mathematical tools and letting them use these to form vectors. Its purpose is to be a tool for students studying linear algebra to get an intuition of the underlying mathematics behind the concepts in linear algebra. By recreating the concepts, the user will be able to remember them better. By letting the user play with the vector space in three dimensions, the user may be able to get a better understanding of the concepts. It is also a lot more fun to play with an actual three-dimensional environment than having to draw it out in mere two dimensions.
+The intention of linalg.dev is to provide the user with mostly elementary
+mathematical tools and letting them use these to form vectors, planes, and
+matrices. Its purpose is to be a tool for students studying linear algebra to
+get an intuition of the underlying mathematics behind the concepts in linear
+algebra. By letting the user play with the vector space in three dimensions, the
+user may be able to get a better understanding of the concepts. It is also a lot
+more engaging to play with an actual three-dimensional environment than having
+to draw it out in mere two dimensions. It can also be used by linear algebra
+educators, because it is easy to download environments and hand them in as part
+of assignments.
 
 ## Usage
 
-Nodes can be added to the environment by selecting one of the node types in the toolbar and clicking anywhere in the environment. The nodes can be connected by dragging from one handle to another — on mobile, you just have to click on one and then the next for a connection between the two. Vectors and planes will be shown in the vector space on the right. You can click on a vector there to show its node in the environment and vice versa. Lastly, you can also define matrices and use these to transform the entire vector space.
+linalg.dev consists of two parts; the node editor and the three dimensional
+space that contains the vectors and planes defined by the node editor. The
+purpose of this tool is to build linear algebra intuition for what the various
+operations in linear algebra do and represent. By building the concepts with
+only elementary mathematical operators in the form of nodes, students will
+learn how the concepts work "behind the scenes" and relate it to whatever is
+happening in the vector space. It is also faster to iterate in linalg.dev than
+it is to redraw a two-dimensional space with pen and paper while studying
+certain concepts. Additionally, it can be used by educators for assignments,
+because environments can be downloaded and uploaded, so it is easy to hand in
+environments as part of an assignment.
 
-You are also provided with two examples — these can be found in the info tab in the toolbar. One example is of the [singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition). The matrix can be changed dynamically and the decomposed matrices will also change. How the matrix gets decomposed can be seen by looking at the intermediary nodes. This is useful, because as you transform the space with the decomposed matrices, it highlights the rotation → scale → rotation nicely. The other example is of [principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis). In this example, 6 vectors are used as three-dimensional data points and can be changed dynamically. These 6 data points get turned into their [covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix). The eigenvectors of this matrix are the principal components of the data points. The user can transform the space with these eigenvectors as its basis to align the axes with the principal components. Then, the space can be transformed to one or two dimensions.
+Many nodes are defined in linalg.dev and can be connected with edges in the node
+editor. For example, the output of a multiplication node can be connected to the
+x-axis of a vector. Relations between nodes can be defined in this way and is
+what makes the tool powerful.
 
-Environments can be downloaded and uploaded. This is useful for sharing environments with others. The download and upload buttons in the toolbar are used for this. They are pretty self-explanatory.
+In the space, all vector and plane nodes are shown in a three-dimensional
+vector space. As the components of the vectors and planes change, they animate
+to their new position. Furthermore, it is possible to apply matrix
+transformations to the vector space. These transformations are animated as well.
+
+An in depth manual can be found in [the manual](./docs/manual.pdf).
 
 ## Contributing
 
-Contributions are always welcome. Please open an issue with an example environment if you encounter a bug. Also feel free to open an issue with feature requests, like ideas for new nodes.
+Contributions are always welcome. Please open an issue with an example
+environment if you encounter a bug. Also feel free to open an issue with feature
+requests, such as ideas for new nodes.
 
 ## Credits
 
