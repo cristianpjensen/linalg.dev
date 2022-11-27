@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import {
 	ArrowRightIcon,
 	ArrowTopRightIcon,
-	ArrowUpIcon,
 	BoxModelIcon,
 	CaretDownIcon,
 	CaretUpIcon,
@@ -396,7 +395,7 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 			</Toolbar.Button>
 
 			<Dialog.Portal>
-				<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-slow bg-black/40 dark:bg-black/60" />
+				<Dialog.Overlay className="fixed inset-0 z-40 animate-fadein-slow bg-black/40 dark:bg-white/10" />
 				<Dialog.Content className="fixed z-50 w-[calc(100vw-16px)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-offwhite dark:bg-black top-1/2 left-1/2">
 					<Tabs.Root
 						className={bottom ? "flex flex-col" : "flex flex-row"}
@@ -410,7 +409,7 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 						>
 							<TabTrigger value="env">Environments</TabTrigger>
 							<TabTrigger value="exercises">Exercises</TabTrigger>
-							<TabTrigger value="manual">Manual</TabTrigger>
+							<TabTrigger value="about">About</TabTrigger>
 						</Tabs.List>
 
 						<Tabs.Content className="w-full p-8" value="env">
@@ -421,8 +420,8 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 							<Exercises />
 						</Tabs.Content>
 
-						<Tabs.Content className="w-full p-8" value="manual">
-							<Manual />
+						<Tabs.Content className="w-full p-8" value="about">
+							<About />
 						</Tabs.Content>
 					</Tabs.Root>
 				</Dialog.Content>
@@ -622,58 +621,106 @@ const Exercises = () => {
 			<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 				<Exercise
 					title="Basics"
-					description="The basics of vectors and matrices."
+					description="The basics of vectors."
 					questions={[
 						{
-							question:
-								"Compute the dot product of two vector nodes.",
-							result: "Scalar node.",
-							environment: "dot-product",
+							title: "Dot product",
+							description:
+								"Given two vectors, compute their dot product.",
+							environment: "/envs/dot_product/setup.json",
+							answer: "/envs/dot_product/answer.json",
 						},
 						{
-							question:
-								"Compute the cross product of two vector nodes.",
-							result: "Green vector.",
-							environment: "cross-product",
+							title: "Vector addition",
+							description:
+								"Given two vectors, compute the addition of them. What do you notice about the relationship between the two vectors and the resulting vector?",
+							environment: "/envs/vector_addition/setup.json",
+							answer: "/envs/vector_addition/answer.json",
 						},
 						{
-							question:
-								"Given a vector node, find a perpendicular vector.",
-							result: "Red vector.",
-							environment: "perpendicular-vector",
+							title: "Vector distance",
+							description:
+								"Given two vectors, compute their distance. What do you notice about what the scalar represents (in terms of vectors)?",
+							environment: "/envs/vector_distance/setup.json",
+							answer: "/envs/vector_distance/answer.json",
 						},
-					]}
-				/>
-
-				<Exercise
-					title="Intermediate"
-					description="Harder linear algebra concepts, such as planes."
-					questions={[
 						{
-							question:
-								"Create a plane using only one input vector node.",
-							result: "Plane created from one vector node. In the space, the original vector should be perpendicular to the plane (hint: normal vector).",
-							environment: "one-vector-plane",
+							title: "Cosine angle",
+							description:
+								"Given two vectors, compute the cosine of the angle between them. What is the relationship between the angle and the dot product of the two vectors?",
+							environment: "/envs/cosine_angle/setup.json",
+							answer: "/envs/cosine_angle/answer.json",
+						},
+						{
+							title: "Unit vector",
+							description:
+								"Given a vector, compute its unit vector. What does the unit vector represent?",
+							environment: "/envs/unit_vector/setup.json",
+							answer: "/envs/unit_vector/answer.json",
 						},
 					]}
 				/>
 
 				<Exercise
 					title="Advanced"
-					description="Problems that require a deeper understanding of linear algebra."
-					questions={[]}
+					description="Harder linear algebra concepts."
+					questions={[
+						{
+							title: "Perpendicular vector",
+							description:
+								"Given a vector, find any perpendicular vector to it. Verify that the two vectors are perpendicular by observing the space (hint: dot product).",
+							environment:
+								"/envs/perpendicular_vector/setup.json",
+							answer: "/envs/perpendicular_vector/answer.json",
+						},
+						{
+							title: "Cross product",
+							description:
+								"Given two vectors, find their cross product. What does the cross product represent (hint: look at the space)?",
+							environment: "/envs/cross_product/setup.json",
+							answer: "/envs/cross_product/answer.json",
+						},
+						{
+							title: "Normal vector",
+							description:
+								"Create a plane using an arbitrary normal vector, i.e. a vector that is perpendicular to the plane (hint: first do the previous two exercises).",
+							environment: "/envs/normal_vector/setup.json",
+							answer: "/envs/normal_vector/answer.json",
+						},
+						{
+							title: "Singular value decomposition",
+							description:
+								"Given a 3×3 matrix, find its singular value decomposition. Transform the space with the decomposed matrix and the decomposition to the space, verify that the transformations are the same.",
+							environment: "/envs/svd/setup.json",
+							answer: "/envs/svd/answer.json",
+						},
+						{
+							title: "Principal component analysis",
+							description:
+								"Given four vectors (data points), compute the matrix that transforms them to two dimensions such that as much information as possible is still available (PCA).",
+							environment: "/envs/pca/setup.json",
+							answer: "/envs/pca/answer.json",
+						},
+						{
+							title: "Principal component analysis, continued",
+							description:
+								"Add a data point to the answer of the previous exercise.",
+							environment: "/envs/pca/answer.json",
+						},
+					]}
 				/>
 
 				<Exercise
-					title="Singular Value Decomposition"
-					description="Problems regarding the SVD."
-					questions={[]}
-				/>
-
-				<Exercise
-					title="Principal Component Analysis"
-					description="Exercises for understanding PCA better."
-					questions={[]}
+					title="Theory visualized"
+					description="Visualizations of linear algebra concepts."
+					questions={[
+						{
+							title: "Eigenpairs",
+							description:
+								"Play around with the matrix and apply them to the space, what do you notice about how the eigenvectors behave with respect to their eigenvalues?",
+							environment: "/envs/eigen/setup.json",
+						},
+					]}
 				/>
 			</div>
 		</div>
@@ -681,9 +728,10 @@ const Exercises = () => {
 };
 
 type Question = {
-	question: string;
-	result: string;
-	environment?: string;
+	title: string;
+	description: string;
+	environment: string;
+	answer?: string;
 };
 
 type IExerciseProps = {
@@ -696,29 +744,28 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 	const addEnv = useNodeStore((state) => state.addEnv);
 	const setCurrentEnv = useNodeStore((state) => state.setCurrentEnv);
 
-	const onExerciseStart = (env: string | undefined, question: string) => {
+	const onExerciseStart = (env: string | undefined, title: string) => {
 		if (env === undefined) {
 			const environment = {
 				nodes: [],
 				edges: [],
 			};
 
-			addEnv(question, environment);
+			addEnv(title, environment);
 			setCurrentEnv(-1);
 			return;
 		}
 
 		// Get environment from file
-		fetch(`/envs/${env}.json`)
+		fetch(env)
 			.then((res) => res.json())
 			.then((env) => {
-				console.log(env);
 				const environment = {
 					nodes: env.nodes,
 					edges: env.edges,
 				};
 
-				addEnv(question, environment);
+				addEnv(title, environment);
 				setCurrentEnv(-1);
 			});
 	};
@@ -735,37 +782,54 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 			</Dialog.Trigger>
 
 			<Dialog.Portal>
-				<Dialog.Overlay className="fixed inset-0 z-[60] animate-fadein-slow bg-black/40 dark:bg-black/60" />
-				<Dialog.Content className="fixed z-[70] w-[calc(100vw-32px)] max-w-xl p-6 sm:p-8 h- -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-offwhite dark:bg-black top-1/2 left-1/2">
+				<Dialog.Overlay className="fixed inset-0 z-[60] animate-fadein-slow bg-black/40 dark:bg-white/10" />
+				<Dialog.Content className="fixed z-[70] w-[calc(100vw-32px)] max-w-xl p-6 sm:p-8 -translate-x-1/2 -translate-y-1/2 rounded-md shadow-md bg-offwhite dark:bg-black top-1/2 left-1/2">
 					<h1 className="mb-2 text-2xl leading-6">{title}</h1>
 
-					<div className="flex flex-col gap-4 mt-4 overflow-y-scroll h-72">
-						{questions.map(
-							({ question, result, environment }, index) => (
-								<div className="flex items-center gap-2">
-									<div className="flex-grow">
-										<h2>
-											{index + 1}&ensp;{question}
-										</h2>
-										<p className="pl-4 text-zinc-500 dark:text-zinc-500">
-											Result: {result}
-										</p>
-									</div>
-
-									<button
-										onClick={() =>
-											onExerciseStart(
-												environment,
-												question
-											)
-										}
-										className="flex items-center justify-center flex-shrink-0 w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
-									>
-										<ArrowRightIcon />
-									</button>
+					<div className="flex flex-col gap-4 mt-4 overflow-y-scroll h-96">
+						{questions.map((question, index) => (
+							<div className="flex items-center gap-2">
+								<div className="flex-grow">
+									<h2 className="text-lg font-medium">
+										<span className="font-mono text-sm">
+											{index + 1}
+										</span>
+										&ensp;{question.title}
+									</h2>
+									<p className="pl-[1.125rem] text-zinc-800 dark:text-zinc-100">
+										{question.description}
+									</p>
 								</div>
-							)
-						)}
+
+								{question.answer && (
+									<button
+										onClick={() => {
+											if (question.answer) {
+												onExerciseStart(
+													question.answer,
+													`${question.title} (answer)`
+												);
+											}
+										}}
+										className="p-2 text-sm transition-colors rounded hover:bg-black/10 dark:hover:bg-white/10"
+									>
+										Answer
+									</button>
+								)}
+
+								<button
+									onClick={() =>
+										onExerciseStart(
+											question.environment,
+											question.title
+										)
+									}
+									className="flex items-center justify-center flex-shrink-0 w-8 h-8 text-white transition-opacity rounded bg-offblack dark:bg-offwhite dark:text-black hover:opacity-70"
+								>
+									<ArrowRightIcon />
+								</button>
+							</div>
+						))}
 					</div>
 				</Dialog.Content>
 			</Dialog.Portal>
@@ -773,11 +837,54 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 	);
 };
 
-const Manual = () => {
+const About = () => {
 	return (
-		<div>
-			<h1 className="mb-2 text-xl">Manual</h1>
-			<p className="text-zinc-500">Coming soon.</p>
+		<div className="flex flex-col gap-4 overflow-y-scroll h-96">
+			<h1 className="mb-2 text-xl">About</h1>
+			<p>
+				The intention of linalg.dev is to provide the user with mostly
+				elementary mathematical tools and letting them use these to form
+				vectors, planes, and matrices. Its purpose is to be a tool for
+				students studying linear algebra to get an intuition of the
+				underlying mathematics behind the concepts in linear algebra. By
+				letting the user play with the vector space in three dimensions,
+				the user may be able to get a better understanding of the
+				concepts. It is also a lot more fun to play with an actual
+				three-dimensional environment than having to draw it out in mere
+				two dimensions. It can also be used by linear algebra educators,
+				because it is easy to download environments and hand them in as
+				part of assignments.
+			</p>
+			<p>
+				linalg.dev consists of two parts; the node editor and the three
+				di- mensional space that contains the vectors and planes defined
+				by the node editor. The purpose of this tool is to build linear
+				algebra intuition for what the various operations in linear
+				algebra do and represent. By building the concepts with only
+				elementary math- ematical operators in the form of nodes,
+				students will learn how the concepts work "behind the scenes"
+				and relate it to whatever is happening in the vector space. It
+				is also faster to iterate in linalg.dev than it is to redraw a
+				two-dimensional space with pen and paper while studying certain
+				concepts. Additionally, it can be used by educators for
+				assignments, because environments can be downloaded and
+				uploaded, so it is easy to hand in environments as part of an
+				assignment.
+			</p>
+			<p>
+				Many nodes are defined in linalg.dev and can be connected with
+				edges in the node editor. For example, the output of a
+				multiplication node can be connected to the x-axis of a vector.
+				Relations between nodes can be defined in this way and is what
+				makes the tool powerful.
+			</p>
+			<p>
+				In the space, all vector and plane nodes are shown in a three-
+				dimensional vector space. As the components of the vectors and
+				planes change, they animate to their new position. Furthermore,
+				it is possible to apply matrix transformations to the vector
+				space. These transformations are animated as well.
+			</p>
 		</div>
 	);
 };

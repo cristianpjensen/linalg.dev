@@ -1,0 +1,55 @@
+{
+  "title": "Unit vector",
+  "nodes": [
+    {
+      "type": "vector",
+      "id": "1669457724871-96",
+      "position": {
+        "x": 96.7832579855866,
+        "y": 265.515122239755
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 3.14,
+          "isConnected": false
+        },
+        "y": {
+          "value": -3,
+          "isConnected": false
+        },
+        "z": {
+          "value": -2,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": true,
+        "representation": "global",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 3.14,
+            "y": -3,
+            "z": -2
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 96.7832579855866,
+        "y": 265.515122239755
+      },
+      "dragging": false
+    }
+  ],
+  "edges": []
+}

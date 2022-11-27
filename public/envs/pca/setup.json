@@ -1,0 +1,384 @@
+{
+  "title": "Principal component analysis",
+  "nodes": [
+    {
+      "width": 240,
+      "height": 120,
+      "type": "vectorComponents",
+      "id": "1659970501054-32",
+      "position": {
+        "x": 321.81551478895597,
+        "y": 983.7445800605096
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": -2,
+            "y": 5,
+            "z": -1
+          }
+        },
+        "output": {
+          "x": -2,
+          "y": 5,
+          "z": -1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 321.81551478895597,
+        "y": 983.7445800605096
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 120,
+      "type": "vectorComponents",
+      "id": "1659970498846-7",
+      "position": {
+        "x": 321.81551478895597,
+        "y": 671.7445800605096
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 2,
+            "y": 2,
+            "z": 3
+          }
+        },
+        "output": {
+          "x": 2,
+          "y": 2,
+          "z": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 321.81551478895597,
+        "y": 671.7445800605096
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 120,
+      "type": "vectorComponents",
+      "id": "1659970495716-27",
+      "position": {
+        "x": 321.81551478895597,
+        "y": 359.7445800605097
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 3,
+            "y": 2,
+            "z": 1
+          }
+        },
+        "output": {
+          "x": 3,
+          "y": 2,
+          "z": 1
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 321.81551478895597,
+        "y": 359.7445800605097
+      },
+      "dragging": false
+    },
+    {
+      "width": 240,
+      "height": 120,
+      "type": "vectorComponents",
+      "id": "1659970493049-71",
+      "position": {
+        "x": 321.81551478895597,
+        "y": 47.74458006050969
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 1,
+            "y": 2,
+            "z": 3
+          }
+        },
+        "output": {
+          "x": 1,
+          "y": 2,
+          "z": 3
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 321.81551478895597,
+        "y": 47.74458006050969
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659970479874-10",
+      "position": {
+        "x": 81.815514788956,
+        "y": 887.7445800605096
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": -2,
+          "isConnected": false
+        },
+        "y": {
+          "value": 5,
+          "isConnected": false
+        },
+        "z": {
+          "value": -1,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "sphere",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": -2,
+            "y": 5,
+            "z": -1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 81.815514788956,
+        "y": 887.7445800605096
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659970478733-36",
+      "position": {
+        "x": 81.815514788956,
+        "y": 575.7445800605096
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 2,
+          "isConnected": false
+        },
+        "y": {
+          "isConnected": false,
+          "value": 2
+        },
+        "z": {
+          "value": 3,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "sphere",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 2,
+            "y": 2,
+            "z": 3
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 81.815514788956,
+        "y": 575.7445800605096
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659970477230-44",
+      "position": {
+        "x": 81.815514788956,
+        "y": 263.7445800605097
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 3,
+          "isConnected": false
+        },
+        "y": {
+          "value": 2,
+          "isConnected": false
+        },
+        "z": {
+          "value": 1,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "sphere",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 3,
+            "y": 2,
+            "z": 1
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 81.815514788956,
+        "y": 263.7445800605097
+      },
+      "dragging": false
+    },
+    {
+      "width": 192,
+      "height": 288,
+      "type": "vector",
+      "id": "1659970476118-82",
+      "position": {
+        "x": 81.815514788956,
+        "y": -48.25541993949031
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 1,
+          "isConnected": false
+        },
+        "y": {
+          "value": 2,
+          "isConnected": false
+        },
+        "z": {
+          "value": 3,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "sphere",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 1,
+            "y": 2,
+            "z": 3
+          }
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 81.815514788956,
+        "y": -48.25541993949031
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1659659150256-24",
+      "sourceHandle": "result",
+      "target": "1659659163344-78",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659659150256-24result-1659659163344-78m1"
+    },
+    {
+      "source": "1659659150256-24",
+      "sourceHandle": "result",
+      "target": "1659659694574-88",
+      "targetHandle": "m1",
+      "id": "reactflow__edge-1659659150256-24result-1659659694574-88m1"
+    },
+    {
+      "source": "1659697075354-41",
+      "sourceHandle": "result",
+      "target": "1659697132992-85",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659697075354-41result-1659697132992-85matrix"
+    },
+    {
+      "source": "1659970476118-82",
+      "sourceHandle": "result",
+      "target": "1659970493049-71",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659970476118-82result-1659970493049-71vector",
+      "selected": false
+    },
+    {
+      "source": "1659970477230-44",
+      "sourceHandle": "result",
+      "target": "1659970495716-27",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659970477230-44result-1659970495716-27vector",
+      "selected": false
+    },
+    {
+      "source": "1659970478733-36",
+      "sourceHandle": "result",
+      "target": "1659970498846-7",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659970478733-36result-1659970498846-7vector",
+      "selected": false
+    },
+    {
+      "source": "1659970479874-10",
+      "sourceHandle": "result",
+      "target": "1659970501054-32",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1659970479874-10result-1659970501054-32vector",
+      "selected": false
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "title": "Vector scaling",
+  "nodes": [
+    {
+      "type": "vectorComponents",
+      "id": "1669457801222-25",
+      "position": {
+        "x": 795.3261980231275,
+        "y": 406.490234276833
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 1,
+            "y": -1.41,
+            "z": 0.79
+          }
+        },
+        "output": {
+          "x": 1,
+          "y": -1.41,
+          "z": 0.79
+        }
+      },
+      "width": 240,
+      "height": 120,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 795.3261980231275,
+        "y": 406.490234276833
+      },
+      "dragging": false
+    },
+    {
+      "type": "vectorScaling",
+      "id": "1669457743405-17",
+      "position": {
+        "x": 468.78395167008466,
+        "y": 361.70768300049735
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 1,
+            "y": -1.41,
+            "z": 0.79
+          }
+        },
+        "scalar": {
+          "isConnected": true,
+          "value": 1
+        },
+        "hidden": false,
+        "representation": "global",
+        "color": "#FFFFFF",
+        "output": {
+          "result": {
+            "x": 1,
+            "y": -1.41,
+            "z": 0.79
+          }
+        }
+      },
+      "width": 240,
+      "height": 192,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 468.78395167008466,
+        "y": 361.70768300049735
+      },
+      "dragging": false
+    },
+    {
+      "type": "slider",
+      "id": "1669457735204-79",
+      "position": {
+        "x": 162.8655880687793,
+        "y": 534.0693723260099
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "min": {
+          "value": -5,
+          "isConnected": false
+        },
+        "max": {
+          "value": 5,
+          "isConnected": false
+        },
+        "value": 0.6,
+        "output": {
+          "result": 1
+        }
+      },
+      "width": 192,
+      "height": 144,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 162.8655880687793,
+        "y": 534.0693723260099
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1669457724871-96",
+      "position": {
+        "x": 161.7832579855866,
+        "y": 183.515122239755
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 1,
+          "isConnected": false
+        },
+        "y": {
+          "value": -1.41,
+          "isConnected": false
+        },
+        "z": {
+          "value": 0.79,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": true,
+        "representation": "global",
+        "color": "#E9E9E9",
+        "output": {
+          "result": {
+            "x": 1,
+            "y": -1.41,
+            "z": 0.79
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 161.7832579855866,
+        "y": 183.515122239755
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1669457735204-79",
+      "sourceHandle": "result",
+      "target": "1669457743405-17",
+      "targetHandle": "scalar",
+      "id": "reactflow__edge-1669457735204-79result-1669457743405-17scalar",
+      "selected": false
+    },
+    {
+      "source": "1669457724871-96",
+      "sourceHandle": "result",
+      "target": "1669457743405-17",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669457724871-96result-1669457743405-17vector",
+      "selected": false
+    },
+    {
+      "source": "1669457743405-17",
+      "sourceHandle": "result",
+      "target": "1669457801222-25",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669457743405-17result-1669457801222-25vector",
+      "selected": false
+    }
+  ]
+}

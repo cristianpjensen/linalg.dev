@@ -1,51 +1,25 @@
 {
-  "title": "Compute the dot product of two vector nodes.",
+  "title": "Perpendicular vector",
   "nodes": [
     {
-      "type": "scalar",
-      "id": "1668771116975-98",
+      "type": "vector",
+      "id": "1669458758305-41",
       "position": {
-        "x": 923,
-        "y": 374
+        "x": 935.4627434630913,
+        "y": 268.9420465485367
       },
       "dragHandle": ".dragger",
       "data": {
-        "value": {
+        "x": {
           "value": 0,
           "isConnected": false
         },
-        "output": {
-          "result": 0
-        }
-      },
-      "width": 144,
-      "height": 120,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 923,
-        "y": 374
-      },
-      "dragging": false
-    },
-    {
-      "type": "vector",
-      "id": "1668770868465-4",
-      "position": {
-        "x": 191,
-        "y": 469
-      },
-      "dragHandle": ".dragger",
-      "data": {
-        "x": {
-          "value": 1.4142135623730951,
-          "isConnected": false
-        },
         "y": {
-          "value": -3,
+          "value": 0,
           "isConnected": false
         },
         "z": {
-          "value": -2,
+          "value": 0,
           "isConnected": false
         },
         "origin": {
@@ -58,12 +32,12 @@
         },
         "hidden": false,
         "representation": "global",
-        "color": "#E9E9E9",
+        "color": "#00FF30",
         "output": {
           "result": {
-            "x": 1.4142135623730951,
-            "y": -3,
-            "z": -2
+            "x": 0,
+            "y": 0,
+            "z": 0
           }
         }
       },
@@ -71,32 +45,32 @@
       "height": 288,
       "selected": false,
       "positionAbsolute": {
-        "x": 191,
-        "y": 469
+        "x": 935.4627434630913,
+        "y": 268.9420465485367
       },
       "dragging": false
     },
     {
       "type": "vector",
-      "id": "1668770865599-50",
+      "id": "1669458685539-43",
       "position": {
-        "x": 191,
-        "y": 122
+        "x": 93.84176586726258,
+        "y": 270.8478833984365
       },
       "dragHandle": ".dragger",
       "data": {
         "x": {
+          "value": -1,
+          "isConnected": false
+        },
+        "y": {
+          "value": -1.41,
+          "isConnected": false
+        },
+        "z": {
           "value": 3.141592653589793,
           "isConnected": false
         },
-        "y": {
-          "value": 3,
-          "isConnected": false
-        },
-        "z": {
-          "value": 0.5,
-          "isConnected": false
-        },
         "origin": {
           "value": {
             "x": 0,
@@ -107,12 +81,12 @@
         },
         "hidden": false,
         "representation": "global",
-        "color": "#E9E9E9",
+        "color": "#FF3D3D",
         "output": {
           "result": {
-            "x": 3.141592653589793,
-            "y": 3,
-            "z": 0.5
+            "x": -1,
+            "y": -1.41,
+            "z": 3.141592653589793
           }
         }
       },
@@ -120,8 +94,8 @@
       "height": 288,
       "selected": false,
       "positionAbsolute": {
-        "x": 191,
-        "y": 122
+        "x": 93.84176586726258,
+        "y": 270.8478833984365
       },
       "dragging": false
     }

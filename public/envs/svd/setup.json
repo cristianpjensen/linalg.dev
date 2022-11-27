@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "width": 264,
+      "height": 264,
+      "type": "matrix",
+      "id": "1659603425841-57",
+      "position": {
+        "x": 69.49776912764352,
+        "y": 406.2836283488973
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "m1": {
+          "value": {
+            "x": 1,
+            "y": 2,
+            "z": 3
+          },
+          "isConnected": false
+        },
+        "m2": {
+          "value": {
+            "x": 3,
+            "y": 2,
+            "z": 1
+          },
+          "isConnected": false
+        },
+        "m3": {
+          "value": {
+            "x": 2,
+            "y": 1,
+            "z": 3
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": [
+            1,
+            3,
+            2,
+            2,
+            2,
+            1,
+            3,
+            1,
+            3
+          ]
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 69.49776912764352,
+        "y": 406.2836283488973
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1659604040577-55",
+      "sourceHandle": "result",
+      "target": "1669471839599-19",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659604040577-55result-1669471839599-19left"
+    }
+  ],
+  "title": "Singular value decomposition"
+}

@@ -1,0 +1,249 @@
+{
+  "title": "Cross product",
+  "nodes": [
+    {
+      "type": "vectorComponents",
+      "id": "1669462435274-91",
+      "position": {
+        "x": 344,
+        "y": 495
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 3.141592653589793,
+            "y": 2,
+            "z": -1.73
+          }
+        },
+        "output": {
+          "x": 3.141592653589793,
+          "y": 2,
+          "z": -1.73
+        }
+      },
+      "width": 240,
+      "height": 120,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 344,
+        "y": 495
+      },
+      "dragging": false
+    },
+    {
+      "type": "vectorComponents",
+      "id": "1669462434225-3",
+      "position": {
+        "x": 347,
+        "y": 163
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "vector": {
+          "isConnected": true,
+          "value": {
+            "x": 2,
+            "y": -1.41,
+            "z": 3.141592653589793
+          }
+        },
+        "output": {
+          "x": 2,
+          "y": -1.41,
+          "z": 3.141592653589793
+        }
+      },
+      "width": 240,
+      "height": 120,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 347,
+        "y": 163
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1669462269939-42",
+      "position": {
+        "x": 919.7958305474332,
+        "y": 239.66157921892903
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 0,
+          "isConnected": false
+        },
+        "y": {
+          "value": 0,
+          "isConnected": false
+        },
+        "z": {
+          "value": 0,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#00FF21",
+        "output": {
+          "result": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 919.7958305474332,
+        "y": 239.66157921892903
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1669459411123-6",
+      "position": {
+        "x": 99,
+        "y": 404
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 3.141592653589793,
+          "isConnected": false
+        },
+        "y": {
+          "value": 2,
+          "isConnected": false
+        },
+        "z": {
+          "value": -1.73,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#4584FF",
+        "output": {
+          "result": {
+            "x": 3.141592653589793,
+            "y": 2,
+            "z": -1.73
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 99,
+        "y": 404
+      },
+      "dragging": false
+    },
+    {
+      "type": "vector",
+      "id": "1669458685539-43",
+      "position": {
+        "x": 99.84176586726258,
+        "y": 71.84788339843652
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "x": {
+          "value": 2,
+          "isConnected": false
+        },
+        "y": {
+          "value": -1.41,
+          "isConnected": false
+        },
+        "z": {
+          "value": 3.141592653589793,
+          "isConnected": false
+        },
+        "origin": {
+          "value": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "isConnected": false
+        },
+        "hidden": false,
+        "representation": "vector",
+        "color": "#FF3D3D",
+        "output": {
+          "result": {
+            "x": 2,
+            "y": -1.41,
+            "z": 3.141592653589793
+          }
+        }
+      },
+      "width": 192,
+      "height": 288,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 99.84176586726258,
+        "y": 71.84788339843652
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1669459411123-6",
+      "sourceHandle": "result",
+      "target": "1669460374759-54",
+      "targetHandle": "origin",
+      "id": "reactflow__edge-1669459411123-6result-1669460374759-54origin",
+      "selected": false
+    },
+    {
+      "source": "1669459411123-6",
+      "sourceHandle": "result",
+      "target": "1669461937520-23",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669459411123-6result-1669461937520-23vector"
+    },
+    {
+      "source": "1669459411123-6",
+      "sourceHandle": "result",
+      "target": "1669462435274-91",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669459411123-6result-1669462435274-91vector",
+      "selected": false
+    },
+    {
+      "source": "1669458685539-43",
+      "sourceHandle": "result",
+      "target": "1669462434225-3",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669458685539-43result-1669462434225-3vector",
+      "selected": false
+    }
+  ]
+}

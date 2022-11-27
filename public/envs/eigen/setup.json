@@ -1,0 +1,175 @@
+{
+  "nodes": [
+    {
+      "type": "eigenvectors",
+      "id": "1669472718172-28",
+      "position": {
+        "x": 685,
+        "y": 469
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "matrix": {
+          "isConnected": true,
+          "value": [
+            1,
+            3,
+            2,
+            2,
+            2,
+            1,
+            3,
+            1,
+            3
+          ]
+        },
+        "hidden": false,
+        "output": {
+          "eigenvector1": {
+            "x": -0.5517752174657568,
+            "y": -0.45145245065380096,
+            "z": -0.7022593676836907
+          },
+          "eigenvector2": {
+            "x": -0.25513648436361974,
+            "y": -0.615953960806841,
+            "z": 0.8710904451704604
+          },
+          "eigenvector3": {
+            "x": 0.8125199200687458,
+            "y": -0.33655677059077743,
+            "z": -0.4759631494779679
+          }
+        }
+      },
+      "width": 240,
+      "height": 216,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 685,
+        "y": 469
+      },
+      "dragging": false
+    },
+    {
+      "type": "eigenvalues",
+      "id": "1669472716872-6",
+      "position": {
+        "x": 685,
+        "y": 229
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "matrix": {
+          "isConnected": true,
+          "value": [
+            1,
+            3,
+            2,
+            2,
+            2,
+            1,
+            3,
+            1,
+            3
+          ]
+        },
+        "output": {
+          "eigenvalue1": 6.000000000000004,
+          "eigenvalue2": 1.4142135623730954,
+          "eigenvalue3": -1.414213562373095
+        }
+      },
+      "width": 144,
+      "height": 192,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 685,
+        "y": 229
+      },
+      "dragging": false
+    },
+    {
+      "width": 264,
+      "height": 264,
+      "type": "matrix",
+      "id": "1659603425841-57",
+      "position": {
+        "x": 290.49776912764355,
+        "y": 282.2836283488973
+      },
+      "dragHandle": ".dragger",
+      "data": {
+        "m1": {
+          "value": {
+            "x": 1,
+            "y": 2,
+            "z": 3
+          },
+          "isConnected": false
+        },
+        "m2": {
+          "value": {
+            "x": 3,
+            "y": 2,
+            "z": 1
+          },
+          "isConnected": false
+        },
+        "m3": {
+          "value": {
+            "x": 2,
+            "y": 1,
+            "z": 3
+          },
+          "isConnected": false
+        },
+        "output": {
+          "result": [
+            1,
+            3,
+            2,
+            2,
+            2,
+            1,
+            3,
+            1,
+            3
+          ]
+        }
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 290.49776912764355,
+        "y": 282.2836283488973
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1659604040577-55",
+      "sourceHandle": "result",
+      "target": "1669471839599-19",
+      "targetHandle": "left",
+      "id": "reactflow__edge-1659604040577-55result-1669471839599-19left"
+    },
+    {
+      "source": "1659603425841-57",
+      "sourceHandle": "result",
+      "target": "1669472718172-28",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659603425841-57result-1669472718172-28matrix",
+      "selected": false
+    },
+    {
+      "source": "1659603425841-57",
+      "sourceHandle": "result",
+      "target": "1669472716872-6",
+      "targetHandle": "matrix",
+      "id": "reactflow__edge-1659603425841-57result-1669472716872-6matrix",
+      "selected": false
+    }
+  ],
+  "title": "Eigenpairs"
+}

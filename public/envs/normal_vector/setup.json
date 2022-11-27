@@ -1,12 +1,12 @@
 {
-  "title": "Create a plane using only one input vector node.",
+  "title": "Normal vector",
   "nodes": [
     {
       "type": "plane",
-      "id": "1668771211518-10",
+      "id": "1669463423730-19",
       "position": {
-        "x": 862.3151238487902,
-        "y": 289.3634288659262
+        "x": 876.1953409507487,
+        "y": 283.4413325699013
       },
       "dragHandle": ".dragger",
       "data": {
@@ -22,36 +22,36 @@
           "isConnected": false,
           "value": {
             "x": 0,
-            "y": 0,
-            "z": 0
+            "y": 3,
+            "z": -2.864788975654116
           }
         },
         "direction2": {
           "isConnected": false,
           "value": {
-            "x": 0,
+            "x": -18.019144887731727,
             "y": 0,
             "z": 0
           }
         },
         "hidden": false,
-        "color": "#EB6262"
+        "color": "#53FF59"
       },
       "width": 240,
       "height": 264,
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
-        "x": 862.3151238487902,
-        "y": 289.3634288659262
+        "x": 876.1953409507487,
+        "y": 283.4413325699013
       },
       "dragging": false
     },
     {
       "type": "vector",
-      "id": "1668771208884-7",
+      "id": "1669458685539-43",
       "position": {
-        "x": 95.0546284536295,
-        "y": 280.036799381555
+        "x": 92.84176586726255,
+        "y": 266.8478833984365
       },
       "dragHandle": ".dragger",
       "data": {
@@ -60,11 +60,11 @@
           "isConnected": false
         },
         "y": {
-          "value": 0,
+          "value": 3,
           "isConnected": false
         },
         "z": {
-          "value": 0,
+          "value": 3.141592653589793,
           "isConnected": false
         },
         "origin": {
@@ -77,12 +77,12 @@
         },
         "hidden": false,
         "representation": "global",
-        "color": "#E9E9E9",
+        "color": "#FF3D3D",
         "output": {
           "result": {
             "x": 0,
-            "y": 0,
-            "z": 0
+            "y": 3,
+            "z": 3.141592653589793
           }
         }
       },
@@ -90,11 +90,20 @@
       "height": 288,
       "selected": false,
       "positionAbsolute": {
-        "x": 95.0546284536295,
-        "y": 280.036799381555
+        "x": 92.84176586726255,
+        "y": 266.8478833984365
       },
       "dragging": false
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "1669458685539-43",
+      "sourceHandle": "result",
+      "target": "1669458794255-27",
+      "targetHandle": "vector",
+      "id": "reactflow__edge-1669458685539-43result-1669458794255-27vector",
+      "selected": false
+    }
+  ]
 }
