@@ -409,7 +409,7 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 						>
 							<TabTrigger value="env">Environments</TabTrigger>
 							<TabTrigger value="exercises">Exercises</TabTrigger>
-							<TabTrigger value="manual">Manual</TabTrigger>
+							<TabTrigger value="about">About</TabTrigger>
 						</Tabs.List>
 
 						<Tabs.Content className="w-full p-8" value="env">
@@ -420,8 +420,8 @@ const MenuDialog = ({ bottom = false }: IMenuDialogProps) => {
 							<Exercises />
 						</Tabs.Content>
 
-						<Tabs.Content className="w-full p-8" value="manual">
-							<Manual />
+						<Tabs.Content className="w-full p-8" value="about">
+							<About />
 						</Tabs.Content>
 					</Tabs.Root>
 				</Dialog.Content>
@@ -837,11 +837,54 @@ const Exercise = ({ title, description, questions }: IExerciseProps) => {
 	);
 };
 
-const Manual = () => {
+const About = () => {
 	return (
-		<div>
-			<h1 className="mb-2 text-xl">Manual</h1>
-			<p className="text-zinc-500">Coming soon.</p>
+		<div className="flex flex-col gap-4 overflow-y-scroll h-96">
+			<h1 className="mb-2 text-xl">About</h1>
+			<p>
+				The intention of linalg.dev is to provide the user with mostly
+				elementary mathematical tools and letting them use these to form
+				vectors, planes, and matrices. Its purpose is to be a tool for
+				students studying linear algebra to get an intuition of the
+				underlying mathematics behind the concepts in linear algebra. By
+				letting the user play with the vector space in three dimensions,
+				the user may be able to get a better understanding of the
+				concepts. It is also a lot more fun to play with an actual
+				three-dimensional environment than having to draw it out in mere
+				two dimensions. It can also be used by linear algebra educators,
+				because it is easy to download environments and hand them in as
+				part of assignments.
+			</p>
+			<p>
+				linalg.dev consists of two parts; the node editor and the three
+				di- mensional space that contains the vectors and planes defined
+				by the node editor. The purpose of this tool is to build linear
+				algebra intuition for what the various operations in linear
+				algebra do and represent. By building the concepts with only
+				elementary math- ematical operators in the form of nodes,
+				students will learn how the concepts work "behind the scenes"
+				and relate it to whatever is happening in the vector space. It
+				is also faster to iterate in linalg.dev than it is to redraw a
+				two-dimensional space with pen and paper while studying certain
+				concepts. Additionally, it can be used by educators for
+				assignments, because environments can be downloaded and
+				uploaded, so it is easy to hand in environments as part of an
+				assignment.
+			</p>
+			<p>
+				Many nodes are defined in linalg.dev and can be connected with
+				edges in the node editor. For example, the output of a
+				multiplication node can be connected to the x-axis of a vector.
+				Relations between nodes can be defined in this way and is what
+				makes the tool powerful.
+			</p>
+			<p>
+				In the space, all vector and plane nodes are shown in a three-
+				dimensional vector space. As the components of the vectors and
+				planes change, they animate to their new position. Furthermore,
+				it is possible to apply matrix transformations to the vector
+				space. These transformations are animated as well.
+			</p>
 		</div>
 	);
 };
