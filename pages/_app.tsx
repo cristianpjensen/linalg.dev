@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "katex/dist/katex.min.css";
+import { Analytics } from "@vercel/analytics/react";
 
 import "../styles/globals.css";
 
@@ -61,6 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 			<LoadingScreen />
 			<Component {...pageProps} />
+			<Analytics />
 		</>
 	);
 }
