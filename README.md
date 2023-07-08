@@ -1,5 +1,4 @@
 <div align="center">
-  <h3>Linear algebra node environment</h3>
   <h3>A node editor webapp for building linear algebra intuition in three dimensions</h3>
 
   <img src="./docs/preview-light-mode.png#gh-light-mode-only">
